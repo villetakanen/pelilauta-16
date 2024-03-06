@@ -13,6 +13,7 @@ specifiers:
   prettier: ^3.2.5
   prettier-plugin-astro: ^0.13.0
   typescript: ^5.3.3
+  zod: ^3.22.4
 
 dependencies:
   '@11thdeg/cyan-next': 1.0.0-alpha.17
@@ -25,6 +26,7 @@ dependencies:
   i18next: 23.10.0
   i18next-fs-backend: 2.3.1
   typescript: 5.3.3
+  zod: 3.22.4
 
 devDependencies:
   prettier: 3.2.5

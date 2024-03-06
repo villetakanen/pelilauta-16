@@ -1,0 +1,39 @@
+---
+import SingleColumnLayout from '../../layouts/SingleColumnLayout.astro'
+import { app, getSessionUser } from '../../firebase/server'
+import { getFirestore } from "firebase-admin/firestore";
+import { z } from 'zod'
+
+const SiteSchema = z.object({
+  name: z.string()
+})
+type Site = z.infer<typeof SiteSchema>
+
+const db = getFirestore(app)
+const sitesRef = db.collection('sites');
+
+const snapshot = await sitesRef.where('hidden', '==', false).get();
+
+if (snapshot.empty) {
+  console.log('No matching documents.');
+}
+const sites:Array<Site> = []
+snapshot.forEach(doc => {
+  sites.push(SiteSchema.parse(doc.data()))
+});
+
+const user = await getSessionUser(Astro.cookies)
+if ( user?.uid ) {
+  const userSitesRef = db.collection('sites').where('owners', 'array-contains', user.uid)
+  const userSitesSnapshot = await userSitesRef.get();
+  userSitesSnapshot.forEach(doc => {
+    sites.push(SiteSchema.parse(doc.data()))
+  });
+}
+
+---
+<SingleColumnLayout>
+{ sites.map(site => 
+  <div>{site.name}</div>
+)}
+</SingleColumnLayout>
