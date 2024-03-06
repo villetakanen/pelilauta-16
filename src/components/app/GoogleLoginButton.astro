@@ -1,0 +1,30 @@
+---
+import { t } from 'i18next';
+---
+<button data-google-login-button>
+  <cn-icon noun="google"></cn-icon>
+  { t('actions:loginWithGoogle')} 
+</button>
+
+<script>
+import { getAuth, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import { app } from "../../firebase/client";
+
+const buttons = document.querySelectorAll('[data-google-login-button]');
+
+async function login() {
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider(
+    auth
+  );
+  const token = signInWithRedirect(auth, provider);
+  console.log(token);
+}
+
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    console.log('Login button click');
+    login();
+  });
+});
+</script>
