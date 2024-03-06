@@ -1,9 +1,10 @@
 ---
-import { changeLanguage } from "i18next";
-import BaseHead from "../components/app/BaseHead.astro";
-import GoogleLoginButton from "../components/app/GoogleLoginButton.astro";
+import { changeLanguage } from 'i18next'
+import BaseHead from '../components/app/BaseHead.astro'
+import LoginSection from '../components/app/LoginSection.astro'
+import LogoutButton from '../components/app/LogoutButton.astro'
 
-changeLanguage("fi");
+changeLanguage('fi')
 ---
 
 <html lang="fi">
@@ -11,7 +12,8 @@ changeLanguage("fi");
   <body>
     <h1>Astro</h1>
     <main>
-      <GoogleLoginButton />
+      <LoginSection />
+      <LogoutButton />
     </main>
   </body>
 </html>
