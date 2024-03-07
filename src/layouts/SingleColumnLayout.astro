@@ -1,10 +1,12 @@
 ---
+import AppRail from '../components/app/AppRail.astro';
 import BaseHead from '../components/app/BaseHead.astro';
 ---
 <html lang="fi">
   <BaseHead />
   <body>
-    <main class="container-grid">
+    <AppRail />
+    <main class="content-grid">
       <slot></slot>
     </main>
   </body>

@@ -1,19 +1,15 @@
 ---
 import { changeLanguage } from 'i18next'
-import BaseHead from '../components/app/BaseHead.astro'
 import LoginSection from '../components/app/LoginSection.astro'
 import LogoutButton from '../components/app/LogoutButton.astro'
+import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
 
 changeLanguage('fi')
 ---
 
-<html lang="fi">
-  <BaseHead />
-  <body>
-    <h1>Astro</h1>
-    <main>
+<SingleColumnLayout>
       <LoginSection />
       <LogoutButton />
     </main>
   </body>
-</html>
+</SingleColumnLayout>
