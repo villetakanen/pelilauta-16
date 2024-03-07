@@ -1,0 +1,16 @@
+---
+import SingleColumnLayout from '../../../layouts/SingleColumnLayout.astro'
+import { app } from '../../../firebase/server'
+import { getFirestore } from "firebase-admin/firestore";
+import { SiteSchema } from '../../../schema/Site'
+
+const { sitekey } = Astro.params
+
+const db = getFirestore(app)
+const siteRef = db.collection('sites').doc(sitekey + '')
+const siteDoc = await siteRef.get()
+const site = SiteSchema.parse({ ...siteDoc.data(), key: siteDoc.id})
+---
+<SingleColumnLayout title={site.name}>
+  <div>sitekey: { sitekey } </div>
+</SingleColumnLayout>

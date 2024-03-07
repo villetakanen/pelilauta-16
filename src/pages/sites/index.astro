@@ -1,13 +1,13 @@
 ---
 import SingleColumnLayout from '../../layouts/SingleColumnLayout.astro'
+import SiteListItem from '../../components/sites/SiteListItem.astro'
 import { app, getSessionUser } from '../../firebase/server'
 import { getFirestore } from "firebase-admin/firestore";
-import { z } from 'zod'
+import { SiteSchema } from '../../schema/Site'
+import type { Site } from '../../schema/Site'
+import { t } from 'i18next'
 
-const SiteSchema = z.object({
-  name: z.string()
-})
-type Site = z.infer<typeof SiteSchema>
+
 
 const db = getFirestore(app)
 const sitesRef = db.collection('sites');
@@ -19,21 +19,34 @@ if (snapshot.empty) {
 }
 const sites:Array<Site> = []
 snapshot.forEach(doc => {
-  sites.push(SiteSchema.parse(doc.data()))
+  if (!doc.exists) return
+    sites.push(SiteSchema.parse(
+      {
+        ...doc.data(),
+        key: doc.id
+    }))
 });
 
 const user = await getSessionUser(Astro.cookies)
 if ( user?.uid ) {
   const userSitesRef = db.collection('sites').where('owners', 'array-contains', user.uid)
   const userSitesSnapshot = await userSitesRef.get();
-  userSitesSnapshot.forEach(doc => {
-    sites.push(SiteSchema.parse(doc.data()))
+  userSitesSnapshot.forEach((doc) => {
+    if (!doc.exists) return
+    sites.push(SiteSchema.parse(
+      {
+        ...doc.data(),
+        key: doc.id
+    }))
   });
 }
 
 ---
 <SingleColumnLayout>
+  <div class="grid">
+    <h4 class="small">{t('sites:siteListTitle')}</h4>
+  </div>
 { sites.map(site => 
-  <div>{site.name}</div>
+  <SiteListItem site={site} />
 )}
 </SingleColumnLayout>

@@ -1,0 +1,20 @@
+---
+const { site } = Astro.props
+---
+<a href=`/sites/${site.key}` class="SiteListItem grid">
+  <span class="fr-full">{ site.name }</span>
+  <span class="fr-1">{ site.system }</span>
+</a>
+
+<style>
+.SiteListItem + .SiteListItem {
+  border-top: 1px solid var(--cn-color-border);
+  padding-top: var(--cn-grid-size);
+  margin-top: var(--cn-grid-size);
+}
+.grid {
+  display: grid;
+  gap: var(--cn-gap);
+  grid-template-columns: 7fr 1fr;
+}
+</style>
