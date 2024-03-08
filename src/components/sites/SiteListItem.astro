@@ -1,9 +1,14 @@
 ---
 const { site } = Astro.props
+import { DateTime } from 'luxon'
+
+const flowDate = DateTime.fromSeconds(site.flowTime/1000)
+const flowTime = site.flowTime ? flowDate.toFormat('dd.MM.yyyy – HH:mm') : '-'
 ---
 <a href=`/sites/${site.key}` class="SiteListItem grid">
   <span class="fr-full">{ site.name }</span>
   <span class="fr-1">{ site.system }</span>
+  <spann class="typeBody_2">{ flowTime }</span>
 </a>
 
 <style>
@@ -15,6 +20,6 @@ const { site } = Astro.props
 .grid {
   display: grid;
   gap: var(--cn-gap);
-  grid-template-columns: 7fr 1fr;
+  grid-template-columns: 5fr 1fr 2fr;
 }
 </style>

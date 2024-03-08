@@ -1,0 +1,6 @@
+.cn-app-tray {
+  container: cnAppTray;
+}
+:root {
+  --cn-color-shadow: black;
+}

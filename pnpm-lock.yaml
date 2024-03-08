@@ -4,12 +4,14 @@ specifiers:
   '@11thdeg/cyan-next': 1.0.0-alpha.19
   '@astrojs/check': ^0.5.6
   '@astrojs/vercel': ^7.3.5
+  '@types/luxon': ^3.4.2
   astro: ^4.4.13
   astro-i18next: 1.0.0-beta.21
   firebase: ^10.8.1
   firebase-admin: ^12.0.0
   i18next: ^23.10.0
   i18next-fs-backend: ^2.3.1
+  luxon: ^3.4.4
   prettier: ^3.2.5
   prettier-plugin-astro: ^0.13.0
   typescript: ^5.4.2
@@ -25,10 +27,12 @@ dependencies:
   firebase-admin: 12.0.0
   i18next: 23.10.0
   i18next-fs-backend: 2.3.1
+  luxon: 3.4.4
   typescript: 5.4.2
   zod: 3.22.4
 
 devDependencies:
+  '@types/luxon': 3.4.2
   prettier: 3.2.5
   prettier-plugin-astro: 0.13.0
 
@@ -1550,6 +1554,10 @@ packages:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
     dev: false
     optional: true
+
+  /@types/luxon/3.4.2:
+    resolution: {integrity: sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==}
+    dev: true
 
   /@types/mdast/4.0.3:
     resolution: {integrity: sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==}
@@ -3737,6 +3745,11 @@ packages:
     dependencies:
       lodash.clonedeep: 4.5.0
       lru-cache: 4.0.2
+    dev: false
+
+  /luxon/3.4.4:
+    resolution: {integrity: sha512-zobTr7akeGHnv7eBOXcRgMeCP6+uyYsczwmeRCauvpvaAltgNyTbLH/+VaEAPUeWBT+1GuNmz4wC/6jtQzbbVA==}
+    engines: {node: '>=12'}
     dev: false
 
   /magic-string/0.30.8:

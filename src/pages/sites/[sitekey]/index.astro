@@ -1,16 +1,25 @@
 ---
-import SingleColumnLayout from '../../../layouts/SingleColumnLayout.astro'
+import SingleColumnWithTray from '../../../layouts/SingleColumnWithTray.astro'
 import { app } from '../../../firebase/server'
 import { getFirestore } from "firebase-admin/firestore";
 import { SiteSchema } from '../../../schema/Site'
+import SiteTrayHeader from '../../../components/sites/SiteTrayHeader.astro'
+import { extractFlowTime } from '../../../firebase/helpers'
 
 const { sitekey } = Astro.params
 
 const db = getFirestore(app)
 const siteRef = db.collection('sites').doc(sitekey + '')
 const siteDoc = await siteRef.get()
-const site = SiteSchema.parse({ ...siteDoc.data(), key: siteDoc.id})
+const site = SiteSchema.parse({
+  ...siteDoc.data(),
+  key: siteDoc.id,
+  flowTime: extractFlowTime(siteDoc.data())
+})
 ---
-<SingleColumnLayout title={site.name}>
+<SingleColumnWithTray title={site.name}>
+  <div slot="tray">
+    <SiteTrayHeader site={site} />
+  </div>
   <div>sitekey: { sitekey } </div>
-</SingleColumnLayout>
+</SingleColumnWithTray>

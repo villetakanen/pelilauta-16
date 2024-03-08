@@ -1,0 +1,33 @@
+---
+import type { Site } from '../../schema/Site'
+interface Props {
+  site: Site
+}
+const { site } = Astro.props
+
+const systemsToIcons:Record<string, string> = {
+}
+
+const iconURL = site.system && systemsToIcons[site.system] ? systemsToIcons[site.system] : 'd12'
+---
+<div class="SiteIcon">
+  { site.avatarURL && <img src={site.avatarURL} alt={site.system} /> }
+  { !site.avatarURL && <cn-icon large noun={iconURL} /> }
+</div>
+
+<style lang="css">
+.SiteIcon {
+  text-align: center;
+  margin-top: calc(var(--cn-icon-size-large) / 4 * -3.5);
+  z-index: 1000;
+  position: relative;
+}
+.SiteIcon img {
+  height: var(--cn-icon-size-large);
+  width: var(--cn-icon-size-large);
+  border-radius: 50%;
+  box-shadow: 0 0 14px -2px var(--cn-color-shadow);
+}
+</style>
+
+ 

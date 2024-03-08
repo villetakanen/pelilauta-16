@@ -6,6 +6,7 @@ import { getFirestore } from "firebase-admin/firestore";
 import { SiteSchema } from '../../schema/Site'
 import type { Site } from '../../schema/Site'
 import { t } from 'i18next'
+import { extractFlowTime } from '../../firebase/helpers'
 
 
 
@@ -23,7 +24,8 @@ snapshot.forEach(doc => {
     sites.push(SiteSchema.parse(
       {
         ...doc.data(),
-        key: doc.id
+        key: doc.id,
+        flowTime: extractFlowTime(doc.data())
     }))
 });
 
@@ -36,10 +38,18 @@ if ( user?.uid ) {
     sites.push(SiteSchema.parse(
       {
         ...doc.data(),
-        key: doc.id
+        key: doc.id,
+        flowTime: extractFlowTime(doc.data())
     }))
   });
 }
+
+sites.sort((a, b) => {
+  if (a.flowTime && b.flowTime) {
+    return b.flowTime - a.flowTime
+  }
+  return 0
+})
 
 ---
 <SingleColumnLayout>
