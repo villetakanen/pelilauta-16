@@ -1,6 +1,5 @@
 ---
 import SingleColumnWithTray from '../../../layouts/SingleColumnWithTray.astro'
-import { app } from '../../../firebase/server'
 import { getFirestore } from "firebase-admin/firestore";
 import { CharacterSchema } from '../../../schema/Character'
 import { extractFlowTime } from '../../../firebase/helpers'
@@ -11,7 +10,7 @@ interface Props {
 }
 const { characterkey } = Astro.params
 
-const db = getFirestore(app)
+const db = getFirestore()
 const siteRef = db.collection('characters').doc(characterkey+'')
 const siteDoc = await siteRef.get()
 const character = CharacterSchema.parse({
@@ -22,5 +21,7 @@ const character = CharacterSchema.parse({
 
 ---
 <SingleColumnWithTray title={character.name}>
-  <CharacterSheet character={character} />
+  <div>
+  <CharacterSheet character={character} client:visible/>
+</div>
 </SingleColumnWithTray>
