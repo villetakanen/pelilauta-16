@@ -1,0 +1,26 @@
+---
+import SingleColumnWithTray from '../../../layouts/SingleColumnWithTray.astro'
+import { app } from '../../../firebase/server'
+import { getFirestore } from "firebase-admin/firestore";
+import { CharacterSchema } from '../../../schema/Character'
+import { extractFlowTime } from '../../../firebase/helpers'
+import { PelilautaFreeformCharacterSheet } from '../../../components/lit/PelilautaFreeformCharacterSheet'
+
+interface Props {
+  characterkey: string
+}
+const { characterkey } = Astro.params
+
+const db = getFirestore(app)
+const siteRef = db.collection('characters').doc(characterkey+'')
+const siteDoc = await siteRef.get()
+const character = CharacterSchema.parse({
+  ...siteDoc.data(),
+  key: siteDoc.id,
+  flowTime: extractFlowTime(siteDoc.data())
+})
+
+---
+<SingleColumnWithTray title={character.name}>
+  <PelilautaFreeformCharacterSheet character={character} />
+</SingleColumnWithTray>
