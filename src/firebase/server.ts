@@ -1,4 +1,5 @@
 import type { ServiceAccount } from 'firebase-admin'
+import admin from 'firebase-admin'
 import { initializeApp, cert } from 'firebase-admin/app'
 import { getAuth } from "firebase-admin/auth"
 import type { AstroCookies } from 'astro'
@@ -16,9 +17,17 @@ const serviceAccount = {
   client_x509_cert_url: import.meta.env.FIREBASE_CLIENT_CERT_URL,
 }
 
-export const app = initializeApp({
-  credential: cert(serviceAccount as ServiceAccount),
-})
+let firebaseApp;
+
+if (!admin.apps.length) {
+  initializeApp({
+    credential: cert(serviceAccount as ServiceAccount),
+  })
+} else {
+    firebaseApp = admin.app(); // Reuse existing instance
+}
+
+export const app = firebaseApp;
 
 export async function getSessionUser(cookies: AstroCookies) {
   const auth = getAuth(app);

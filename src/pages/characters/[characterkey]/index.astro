@@ -4,7 +4,7 @@ import { app } from '../../../firebase/server'
 import { getFirestore } from "firebase-admin/firestore";
 import { CharacterSchema } from '../../../schema/Character'
 import { extractFlowTime } from '../../../firebase/helpers'
-import { PelilautaFreeformCharacterSheet } from '../../../components/lit/PelilautaFreeformCharacterSheet'
+import CharacterSheet from '../../../components/solid/character/CharacterSheet.tsx'
 
 interface Props {
   characterkey: string
@@ -22,5 +22,5 @@ const character = CharacterSchema.parse({
 
 ---
 <SingleColumnWithTray title={character.name}>
-  <PelilautaFreeformCharacterSheet character={character} />
+  <CharacterSheet character={character} />
 </SingleColumnWithTray>
