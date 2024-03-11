@@ -1,33 +1,35 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@11thdeg/cyan-next': 1.0.0-alpha.19
+  '@11thdeg/cyan-next': 1.0.0-alpha.25
   '@astrojs/check': ^0.5.6
   '@astrojs/vercel': ^7.3.5
   '@types/luxon': ^3.4.2
-  astro: ^4.4.13
+  astro: ^4.4.15
   astro-i18next: 1.0.0-beta.21
   firebase: ^10.8.1
   firebase-admin: ^12.0.0
-  i18next: ^23.10.0
+  i18next: ^23.10.1
   i18next-fs-backend: ^2.3.1
   luxon: ^3.4.4
+  marked: ^12.0.1
   prettier: ^3.2.5
   prettier-plugin-astro: ^0.13.0
   typescript: ^5.4.2
   zod: ^3.22.4
 
 dependencies:
-  '@11thdeg/cyan-next': 1.0.0-alpha.19
+  '@11thdeg/cyan-next': 1.0.0-alpha.25
   '@astrojs/check': 0.5.6_cje4pbx6yakjsfrma7zcakwvam
-  '@astrojs/vercel': 7.3.5_astro@4.4.13
-  astro: 4.4.13_typescript@5.4.2
-  astro-i18next: 1.0.0-beta.21_astro@4.4.13
+  '@astrojs/vercel': 7.3.5_astro@4.4.15
+  astro: 4.4.15_typescript@5.4.2
+  astro-i18next: 1.0.0-beta.21_astro@4.4.15
   firebase: 10.8.1
   firebase-admin: 12.0.0
-  i18next: 23.10.0
+  i18next: 23.10.1
   i18next-fs-backend: 2.3.1
   luxon: 3.4.4
+  marked: 12.0.1
   typescript: 5.4.2
   zod: 3.22.4
 
@@ -38,8 +40,8 @@ devDependencies:
 
 packages:
 
-  /@11thdeg/cyan-next/1.0.0-alpha.19:
-    resolution: {integrity: sha512-2/XNX4v9eZ3HN0fP+o8mLKEviYNwyzERUcA0RehXgUp85OIzHoONnSrBmbSMAfGeeTsXYOwGowOQGiOFcqkCXg==}
+  /@11thdeg/cyan-next/1.0.0-alpha.25:
+    resolution: {integrity: sha512-h2oI5Rzyd5glH7CODN8SudvAtLKBTVp351xHI8akzwJcPmjMDeZyH28uoB5eyKf0KeRMvf5MmZvLN8XA/+1NCg==}
     dependencies:
       lit: 3.1.2
     dev: false
@@ -157,7 +159,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vercel/7.3.5_astro@4.4.13:
+  /@astrojs/vercel/7.3.5_astro@4.4.15:
     resolution: {integrity: sha512-fWfWu1jHDKJnNp2qJfX+EjDtM7uV6od+D2UHvIwfGu12YFmqggwmuukntvB/X+b/E/AVBA8geftHobpoBJEY0g==}
     peerDependencies:
       astro: ^4.2.0
@@ -165,7 +167,7 @@ packages:
       '@astrojs/internal-helpers': 0.2.1
       '@vercel/analytics': 1.2.2
       '@vercel/nft': 0.26.4
-      astro: 4.4.13_typescript@5.4.2
+      astro: 4.4.15_typescript@5.4.2
       esbuild: 0.19.12
       fast-glob: 3.3.2
       set-cookie-parser: 2.6.0
@@ -1887,7 +1889,7 @@ packages:
     dev: false
     optional: true
 
-  /astro-i18next/1.0.0-beta.21_astro@4.4.13:
+  /astro-i18next/1.0.0-beta.21_astro@4.4.15:
     resolution: {integrity: sha512-1YPqwexumHpK/d9afEoi52CBFTu6k4MYv/oHjsaAasZDvFClU6U5VPttC/OgZcXRYggCM6ee2LOnyHqlmXOeLA==}
     hasBin: true
     peerDependencies:
@@ -1895,7 +1897,7 @@ packages:
     dependencies:
       '@proload/core': 0.3.3
       '@proload/plugin-tsm': 0.2.1_@proload+core@0.3.3
-      astro: 4.4.13_typescript@5.4.2
+      astro: 4.4.15_typescript@5.4.2
       i18next: 22.5.1
       i18next-browser-languagedetector: 7.2.0
       i18next-fs-backend: 2.3.1
@@ -1907,8 +1909,8 @@ packages:
       - encoding
     dev: false
 
-  /astro/4.4.13_typescript@5.4.2:
-    resolution: {integrity: sha512-kx2k2DJd9Os15zJBo8fK01/2F7/4wH6sAKmlBHlkGHIFm6CKSSzWCK/IWQ0DybNWtthK9A3HDZ4VYWv0BJDOBg==}
+  /astro/4.4.15_typescript@5.4.2:
+    resolution: {integrity: sha512-RTiAnlO8hDp6GqMVvaeJxyuCJhHNEho09lHshMNQBqgRabYPOJGW0HZZrbLRGNOqN9I14ivhZIunYGgAaGQpWw==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
@@ -3351,8 +3353,8 @@ packages:
       '@babel/runtime': 7.24.0
     dev: false
 
-  /i18next/23.10.0:
-    resolution: {integrity: sha512-/TgHOqsa7/9abUKJjdPeydoyDc0oTi/7u9F8lMSj6ufg4cbC1Oj3f/Jja7zj7WRIhEQKB7Q4eN6y68I9RDxxGQ==}
+  /i18next/23.10.1:
+    resolution: {integrity: sha512-NDiIzFbcs3O9PXpfhkjyf7WdqFn5Vq6mhzhtkXzj51aOcNuPNcTwuYNuXCpHsanZGHlHKL35G7huoFeVic1hng==}
     dependencies:
       '@babel/runtime': 7.24.0
     dev: false
@@ -3768,6 +3770,12 @@ packages:
 
   /markdown-table/3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
+    dev: false
+
+  /marked/12.0.1:
+    resolution: {integrity: sha512-Y1/V2yafOcOdWQCX0XpAKXzDakPOpn6U0YLxTJs3cww6VxOzZV1BTOOYWLvH3gX38cq+iLwljHHTnMtlDfg01Q==}
+    engines: {node: '>= 18'}
+    hasBin: true
     dev: false
 
   /mdast-util-definitions/6.0.0:

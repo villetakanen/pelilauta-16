@@ -1,25 +1,25 @@
 ---
+import type { Site } from '../../schema/Site'
+interface Props {
+  site: Site
+}
 const { site } = Astro.props
 import { DateTime } from 'luxon'
 
 const flowDate = DateTime.fromSeconds(site.flowTime/1000)
 const flowTime = site.flowTime ? flowDate.toFormat('dd.MM.yyyy – HH:mm') : '-'
----
-<a href=`/sites/${site.key}` class="SiteListItem grid">
-  <span class="fr-full">{ site.name }</span>
-  <span class="fr-1">{ site.system }</span>
-  <spann class="typeBody_2">{ flowTime }</span>
-</a>
 
-<style>
-.SiteListItem + .SiteListItem {
-  border-top: 1px solid var(--cn-color-border);
-  padding-top: var(--cn-grid-size);
-  margin-top: var(--cn-grid-size);
+const systemsToNouns:Record<string, string> = {
+  mekanismi: 'mekanismi',
+  myrrys: 'fox'
 }
-.grid {
-  display: grid;
-  gap: var(--cn-gap);
-  grid-template-columns: 5fr 1fr 2fr;
-}
-</style>
+
+const noun = systemsToNouns[site.system + ''] ? systemsToNouns[site.system + ''] : 'd12'
+---
+<cn-card
+  title={site.name}
+  href=`/sites/${site.key}`
+  description=`${site.system} – ${flowTime}`
+  cover={site.posterURL}
+  noun={noun}
+></cn-card>

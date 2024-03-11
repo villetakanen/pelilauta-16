@@ -52,11 +52,13 @@ sites.sort((a, b) => {
 })
 
 ---
-<SingleColumnLayout>
+<SingleColumnLayout title={t('sites:title')}>
   <div class="grid">
-    <h4 class="small">{t('sites:siteListTitle')}</h4>
+    <h4 class="small">{t('sites:siteList.title')}</h4>
   </div>
-{ sites.map(site => 
-  <SiteListItem site={site} />
-)}
+  <div class="card-grid">
+    { sites.map(site => 
+      <SiteListItem site={site} />
+    )}
+  </div>
 </SingleColumnLayout>

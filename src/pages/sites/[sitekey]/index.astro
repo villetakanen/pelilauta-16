@@ -1,5 +1,6 @@
 ---
 import SingleColumnWithTray from '../../../layouts/SingleColumnWithTray.astro'
+import PageArticle from '../../../components/pages/PageArticle.astro'
 import { app } from '../../../firebase/server'
 import { getFirestore } from "firebase-admin/firestore";
 import { SiteSchema } from '../../../schema/Site'
@@ -16,10 +17,13 @@ const site = SiteSchema.parse({
   key: siteDoc.id,
   flowTime: extractFlowTime(siteDoc.data())
 })
+
+const homepageSlug = site.homepage || site.key
+
 ---
 <SingleColumnWithTray title={site.name}>
   <div slot="tray">
     <SiteTrayHeader site={site} />
   </div>
-  <div>sitekey: { sitekey } </div>
+  <PageArticle sitekey={site.key} pagekey={homepageSlug} />
 </SingleColumnWithTray>

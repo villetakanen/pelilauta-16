@@ -2,6 +2,6 @@
 export default {
     defaultLocale: "fi",
     locales: ["fi", "en"],
-    namespaces: ["actions"],
+    namespaces: ["actions", "navigation", "sites"],
     defaultNamespace: "actions",
   };

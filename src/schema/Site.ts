@@ -7,7 +7,8 @@ export const SiteSchema = z.object({
     posterURL: z.string().optional(),
     hidden: z.boolean(),
     avatarURL: z.string().optional(),
-    flowTime: z.number()
+    flowTime: z.number(),
+    homepage: z.string().optional(),
   })
   
 export type Site = z.infer<typeof SiteSchema>

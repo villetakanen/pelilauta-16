@@ -1,0 +1,25 @@
+---
+import { app } from '../../firebase/server'
+import { getFirestore } from "firebase-admin/firestore";
+import { PageSchema } from '../../schema/Page'
+import { extractFlowTime } from '../../firebase/helpers'
+import { marked } from 'marked'
+
+interface Props {
+  sitekey: string,
+  pagekey: string,
+}
+const { sitekey, pagekey } = Astro.props
+
+const db = getFirestore(app)
+const pageRef = db.collection('sites').doc(sitekey).collection('pages').doc(pagekey)
+const pageDoc = await pageRef.get()
+const page = PageSchema.parse({
+  ...pageDoc.data(),
+  key: pagekey,
+  parentKey: sitekey,
+  flowTime: extractFlowTime(pageDoc.data())
+})
+const content = marked.parse(page.markdownContent)
+---
+<article set:html={content} />
