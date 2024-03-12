@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@11thdeg/cyan-next': 1.0.0-alpha.26
+  '@11thdeg/cyan-next': 1.0.0-alpha.29
   '@astrojs/check': ^0.5.6
   '@astrojs/lit': ^4.0.1
   '@astrojs/solid-js': ^4.0.1
@@ -24,7 +24,7 @@ specifiers:
   zod: ^3.22.4
 
 dependencies:
-  '@11thdeg/cyan-next': 1.0.0-alpha.26
+  '@11thdeg/cyan-next': 1.0.0-alpha.29
   '@astrojs/check': 0.5.6_cje4pbx6yakjsfrma7zcakwvam
   '@astrojs/lit': 4.0.1_fftgejkswtiyza5zo6nfilunc4
   '@astrojs/solid-js': 4.0.1_solid-js@1.8.15
@@ -50,10 +50,11 @@ devDependencies:
 
 packages:
 
-  /@11thdeg/cyan-next/1.0.0-alpha.26:
-    resolution: {integrity: sha512-xjOMPN9qNk2CNxePvE6FAYjCvZzsWM76OdOHdYrKvUTNwB9YorGJD6Npdt5YB/Cwnli4LnkXq7P/0mL765bL0g==}
+  /@11thdeg/cyan-next/1.0.0-alpha.29:
+    resolution: {integrity: sha512-JORSrFbNt3kw7FhETy0tqcaF7nHRlPAETMOLsUQQ8zF0mZ/jRxw+oLoqqmrKWfBQQBXfJg0ucsywHn9OuPDbKA==}
     dependencies:
       lit: 3.1.2
+      solid: 0.2.1
     dev: false
 
   /@ampproject/remapping/2.3.0:
@@ -2436,6 +2437,15 @@ packages:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: false
 
+  /connect/1.9.2:
+    resolution: {integrity: sha512-6Z9RPjQOHjaI47gK385djHVv7SEkRm1Y9AAvBhiI7gSXpO5sFktTkAD+dkbcaiEo2xaNlS1KIJU3XRxqbPLx6w==}
+    deprecated: connect 1.x series is deprecated
+    dependencies:
+      formidable: 1.0.17
+      mime: 3.0.0
+      qs: 0.4.2
+    dev: false
+
   /console-control-strings/1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
     dev: false
@@ -2944,6 +2954,17 @@ packages:
     dev: false
     optional: true
 
+  /express/2.5.11:
+    resolution: {integrity: sha512-gc3jJ0P3Bh1Zjkxe0ICSNmjhDvYWKiXfQIdDWuRPr8S4IZAZexzJHjrzNz56LsRKHTL0OiXQq602GfwZjZ8xPQ==}
+    deprecated: express 2.x series is deprecated
+    hasBin: true
+    dependencies:
+      connect: 1.9.2
+      mime: 1.2.4
+      mkdirp: 0.3.0
+      qs: 0.4.2
+    dev: false
+
   /extend-shallow/2.0.1:
     resolution: {integrity: sha512-zCnTtlxNoAiDc3gqY2aYAWFx7XWWiasuF2K8Me5WbN8otHKTUKBwjPtNpRs/rbUZm7KxWAaNj7P1a/p52GbVug==}
     engines: {node: '>=0.10.0'}
@@ -3112,6 +3133,12 @@ packages:
     engines: {node: '>=12.20.0'}
     dependencies:
       fetch-blob: 3.2.0
+    dev: false
+
+  /formidable/1.0.17:
+    resolution: {integrity: sha512-95MFT5qipMvUiesmuvGP1BI4hh5XWCzyTapiNJ/k8JBQda7rPy7UCWYItz2uZEdTgGNy1eInjzlL9Wx1O9fedg==}
+    engines: {node: '>=0.8.0'}
+    deprecated: 'Please upgrade to latest, formidable@v2 or formidable@v3! Check these notes: https://bit.ly/2ZEqIau'
     dev: false
 
   /fs-constants/1.0.0:
@@ -4354,6 +4381,10 @@ packages:
     dev: false
     optional: true
 
+  /mime/1.2.4:
+    resolution: {integrity: sha512-u4y8WFj7SnfbHxyzCMSV2nL/GKbfZ+lidPf1V4/XUKCJ49N6ttQWp/xnqpbMQEx3naBSt93i2qtPLFj/mjPDaA==}
+    dev: false
+
   /mime/3.0.0:
     resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
     engines: {node: '>=10.0.0'}
@@ -4411,6 +4442,11 @@ packages:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
     dev: false
     optional: true
+
+  /mkdirp/0.3.0:
+    resolution: {integrity: sha512-OHsdUcVAQ6pOtg5JYWpCBo9W/GySVuwvP9hueRMW7UqshC0tbfzLv8wjySTPm3tfUZ/21CE9E1pJagOA91Pxew==}
+    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+    dev: false
 
   /mkdirp/1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
@@ -4802,6 +4838,10 @@ packages:
       once: 1.4.0
     dev: false
     optional: true
+
+  /qs/0.4.2:
+    resolution: {integrity: sha512-VAtfWeUtlBOnGiWFok2vOIMmwumiLmpqXDcXQcAEIQmLYgDbjrkHrcFBfth+YVDeRsz7jX44dhJr7IBJR0t/FQ==}
+    dev: false
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -5203,6 +5243,13 @@ packages:
       solid-js: 1.8.15
     dev: false
 
+  /solid/0.2.1:
+    resolution: {integrity: sha512-kVdiCZd2dMH7ESvmHrEZuOUgjADW2nWjiDzyhgPfC79i6UnZyzyspaMbpjxPh1JTul6Zh3bLocY9FaFY/ikyKA==}
+    dependencies:
+      express: 2.5.11
+      thermos: 0.1.0
+    dev: false
+
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -5432,6 +5479,10 @@ packages:
 
   /text-decoding/1.0.0:
     resolution: {integrity: sha512-/0TJD42KDnVwKmDK6jj3xP7E2MG7SHAOG4tyTgyUCRPdHwvkquYNLEQltmdMa3owq3TkddCVcTsoctJI8VQNKA==}
+    dev: false
+
+  /thermos/0.1.0:
+    resolution: {integrity: sha512-1sYrbXxpUJyoBpPlDzXpiB4uS8OzwPL+C/chT58X8gD+EpQpIeLOAYEBx/JnCDIKa53ur9WYMvYEuAjbXwr8UQ==}
     dev: false
 
   /to-fast-properties/2.0.0:

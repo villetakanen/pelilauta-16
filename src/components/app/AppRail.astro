@@ -1,12 +1,12 @@
 ---
 import { t } from 'i18next'
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname
 
 type RailItem = {
-  label?: string;
-  href: string;
-  icon: string;
-};
+  label?: string
+  href: string
+  icon: string
+}
 
 const rail: Array<RailItem> = [
   {
@@ -16,29 +16,30 @@ const rail: Array<RailItem> = [
   {
     href: '/sites',
     icon: 'mekanismi',
-    label: t('navigation:sites')
+    label: t('navigation:sites'),
   },
   {
     href: '/characters',
     icon: 'tokens',
-    label: t('navigation:characters')
-  }
-];
+    label: t('navigation:characters'),
+  },
+]
 ---
+
 <nav class="rail">
   {
     rail.map((item) => {
-      const isActive = currentPath === item.href;
+      const isActive = currentPath === item.href
       return (
         <a href={item.href}>
           <cn-navigation-icon
-            !active = {isActive}
+            active={isActive}
             noun={item.icon}
             label={item.label}
             checked={currentPath === item.href}
           />
         </a>
-      );
+      )
     })
   }
 </nav>

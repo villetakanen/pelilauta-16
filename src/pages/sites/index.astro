@@ -2,46 +2,48 @@
 import SingleColumnLayout from '../../layouts/SingleColumnLayout.astro'
 import SiteListItem from '../../components/sites/SiteListItem.astro'
 import { app, getSessionUser } from '../../firebase/server'
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestore } from 'firebase-admin/firestore'
 import { SiteSchema } from '../../schema/Site'
 import type { Site } from '../../schema/Site'
 import { t } from 'i18next'
 import { extractFlowTime } from '../../firebase/helpers'
 
-
-
 const db = getFirestore(app)
-const sitesRef = db.collection('sites');
+const sitesRef = db.collection('sites')
 
-const snapshot = await sitesRef.where('hidden', '==', false).get();
+const snapshot = await sitesRef.where('hidden', '==', false).get()
 
 if (snapshot.empty) {
-  console.log('No matching documents.');
+  console.log('No matching documents.')
 }
-const sites:Array<Site> = []
-snapshot.forEach(doc => {
+const sites: Array<Site> = []
+snapshot.forEach((doc) => {
   if (!doc.exists) return
-    sites.push(SiteSchema.parse(
-      {
-        ...doc.data(),
-        key: doc.id,
-        flowTime: extractFlowTime(doc.data())
-    }))
-});
+  sites.push(
+    SiteSchema.parse({
+      ...doc.data(),
+      key: doc.id,
+      flowTime: extractFlowTime(doc.data()),
+    }),
+  )
+})
 
 const user = await getSessionUser(Astro.cookies)
-if ( user?.uid ) {
-  const userSitesRef = db.collection('sites').where('owners', 'array-contains', user.uid)
-  const userSitesSnapshot = await userSitesRef.get();
+if (user?.uid) {
+  const userSitesRef = db
+    .collection('sites')
+    .where('owners', 'array-contains', user.uid)
+  const userSitesSnapshot = await userSitesRef.get()
   userSitesSnapshot.forEach((doc) => {
     if (!doc.exists) return
-    sites.push(SiteSchema.parse(
-      {
+    sites.push(
+      SiteSchema.parse({
         ...doc.data(),
         key: doc.id,
-        flowTime: extractFlowTime(doc.data())
-    }))
-  });
+        flowTime: extractFlowTime(doc.data()),
+      }),
+    )
+  })
 }
 
 sites.sort((a, b) => {
@@ -50,15 +52,13 @@ sites.sort((a, b) => {
   }
   return 0
 })
-
 ---
+
 <SingleColumnLayout title={t('sites:title')}>
   <div class="grid">
     <h4 class="small">{t('sites:siteList.title')}</h4>
   </div>
   <div class="card-grid">
-    { sites.map(site => 
-      <SiteListItem site={site} />
-    )}
+    {sites.map((site) => <SiteListItem site={site} />)}
   </div>
 </SingleColumnLayout>

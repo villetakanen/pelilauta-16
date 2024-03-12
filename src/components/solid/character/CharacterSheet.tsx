@@ -69,6 +69,7 @@ const handleDelete = (event: Event) => {
                 <form onSubmit={handleDelete}>
                     <input type="hidden" name="name" value={statBlock.name} hidden />
                     <button type="submit"><cn-icon noun="fox"></cn-icon></button>
+                    <cn-card title=""></cn-card>
                 </form>
                 </h4> {/* Localized stat block title */}
 

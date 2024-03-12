@@ -1,22 +1,22 @@
 ---
-import AppRail from '../components/app/AppRail.astro';
-import BaseHead from '../components/app/BaseHead.astro';
-import AppBar from '../components/app/AppBar.astro';
-import AppTray from '../components/app/AppTray.astro';
+import AppRail from '../components/app/AppRail.astro'
+import BaseHead from '../components/app/BaseHead.astro'
+import AppBar from '../components/app/AppBar.astro'
+import AppTray from '../components/app/AppTray.astro'
 
 const { title } = Astro.props
-
 ---
+
 <html lang="fi">
   <BaseHead />
   <body>
     <AppBar title={title} />
     <AppRail />
     <AppTray>
-      <slot name="tray"></slot>
+      <slot name="tray" />
     </AppTray>
     <main class="content-grid">
-      <slot></slot>
+      <slot />
     </main>
   </body>
 </html>

@@ -6,20 +6,22 @@ interface Props {
 const { site } = Astro.props
 import { DateTime } from 'luxon'
 
-const flowDate = DateTime.fromSeconds(site.flowTime/1000)
+const flowDate = DateTime.fromSeconds(site.flowTime / 1000)
 const flowTime = site.flowTime ? flowDate.toFormat('dd.MM.yyyy – HH:mm') : '-'
 
-const systemsToNouns:Record<string, string> = {
+const systemsToNouns: Record<string, string> = {
   mekanismi: 'mekanismi',
-  myrrys: 'fox'
+  myrrys: 'fox',
 }
 
-const noun = systemsToNouns[site.system + ''] ? systemsToNouns[site.system + ''] : 'd12'
+const noun = systemsToNouns[site.system + '']
+  ? systemsToNouns[site.system + '']
+  : 'd12'
 ---
+
 <cn-card
   title={site.name}
   href=`/sites/${site.key}`
   description=`${site.system} – ${flowTime}`
   cover={site.posterURL}
-  noun={noun}
-></cn-card>
+  noun={noun}></cn-card>

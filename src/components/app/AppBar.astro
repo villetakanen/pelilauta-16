@@ -2,9 +2,10 @@
 const { title } = Astro.props
 const barTitle = title || 'Pelilauta 2'
 ---
+
 <header class="cn-app-bar">
   <h3>{barTitle}</h3>
   <div style="flex: 1"></div>
-  <slot></slot>
+  <slot />
   <cn-lightmode-button></cn-lightmode-button>
 </header>

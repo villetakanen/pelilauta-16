@@ -1,37 +1,41 @@
 ---
 /**
- * This page lists all the characters of a player (account). The characters are stored in 
- * the firestore, and are fetched from there as "cn-card" components. Each card links to 
+ * This page lists all the characters of a player (account). The characters are stored in
+ * the firestore, and are fetched from there as "cn-card" components. Each card links to
  * the character's page `/characters/[characterkey]`.
  */
-import SingleColumnWithTray from "../../layouts/SingleColumnWithTray.astro"
+import SingleColumnWithTray from '../../layouts/SingleColumnWithTray.astro'
 import { t } from 'i18next'
 import { app } from '../../firebase/server'
-import { getFirestore } from "firebase-admin/firestore"
-import { CharacterSchema } from "../../schema/Character"
-import type { Character } from "../../schema/Character"
-import { extractFlowTime } from "../../firebase/helpers"
+import { getFirestore } from 'firebase-admin/firestore'
+import { CharacterSchema } from '../../schema/Character'
+import type { Character } from '../../schema/Character'
+import { extractFlowTime } from '../../firebase/helpers'
 
 const db = getFirestore(app)
 const charactersRef = db.collection('characters')
 const characters = await charactersRef.get()
 
-const characterList:Array<Character> = characters.docs.map(doc => {
+const characterList: Array<Character> = characters.docs.map((doc) => {
   return CharacterSchema.parse({
     ...doc.data(),
     key: doc.id,
-    flowTime: extractFlowTime(doc.data())
+    flowTime: extractFlowTime(doc.data()),
   })
 })
 ---
+
 <SingleColumnWithTray>
   <h1 class="head_4">{t('characters:characterListTitle')}</h1>
   <div class="card-grid">
-    { characterList.map(character => (
-      <cn-card 
-        title={character.name} 
-        href={`/characters/${character.key}`}
-        elevation="0"
-      ></cn-card>)) }
+    {
+      characterList.map((character) => (
+        <cn-card
+          title={character.name}
+          href={`/characters/${character.key}`}
+          elevation="0"
+        />
+      ))
+    }
   </div>
 </SingleColumnWithTray>
