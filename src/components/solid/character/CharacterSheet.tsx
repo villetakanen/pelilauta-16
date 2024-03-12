@@ -8,6 +8,45 @@ interface CharacterSheetProps {
 }
 
 const CharacterSheet: Component<CharacterSheetProps> = (props) => {
+
+const handleSubmit = (event: Event) => {
+    event.preventDefault();
+    // Get the form data
+    const formData = new FormData(event.target as HTMLFormElement);
+    const name = formData.get('name') as string;
+    
+    // Make the API request to post the stat block
+    fetch(`/api/characters/${props.character.key}/statblocks`, {
+        method: 'POST',
+        body: JSON.stringify({ name }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    // Refresh the page
+    .then(() => location.reload());
+};
+
+const handleDelete = (event: Event) => {
+    event.preventDefault();
+    // Get the form data
+    const formData = new FormData(event.target as HTMLFormElement);
+    const name = formData.get('name') as string;
+
+    console.debug('Deleting stat block', name);
+
+    // Make the API request to delete the stat block
+    fetch(`/api/characters/${props.character.key}/statblocks`, {
+        method: 'DELETE',
+        body: JSON.stringify({ name }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    // Refresh the page
+    .then(() => location.reload());
+}
+
     // Add your component logic here
 
     return (
@@ -15,12 +54,23 @@ const CharacterSheet: Component<CharacterSheetProps> = (props) => {
         <h4>
             {props.character.name}
         </h4>
+
+        <form action={`/api/characters/${props.character.key}/statblocks`} method="post" onSubmit={handleSubmit}>
+            <input type="text" name="name" placeholder={t('stats:statBlockName')} />
+            <button type="submit">{t('stats:addStatBlock')}</button>
+        </form>
+
         <div class="flex">
         {/* Iterate through stat blocks */}
         {props.character.statBlocks && 
           props.character.statBlocks.map((statBlock) => (
             <div data-key={statBlock.name}> 
-                <h4>{t(`stats:${statBlock.name}`)}</h4> {/* Localized stat block title */}
+                <h4>{t(`stats:${statBlock.name}`)}
+                <form onSubmit={handleDelete}>
+                    <input type="hidden" name="name" value={statBlock.name} hidden />
+                    <button type="submit"><cn-icon noun="fox"></cn-icon></button>
+                </form>
+                </h4> {/* Localized stat block title */}
 
                 {/* Iterate through attributes in the block */}
                 <ul>
