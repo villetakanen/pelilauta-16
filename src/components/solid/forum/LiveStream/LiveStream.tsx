@@ -1,79 +1,107 @@
-import { createSignal, type Component, onMount, For } from "solid-js";
-import { app } from "../../../../firebase/client";
-import { DocumentReference, collection, getDocs, getFirestore, limit, onSnapshot, orderBy, query, startAfter } from 'firebase/firestore'
-import { z } from "zod";
-import { extractFlowTime } from "../../../../firebase/helpers";
-
-
-const PostSchema = z.object({
-    key: z.string(),
-    flowTime: z.number(),
-    title: z.string(),
-})
-type Post = z.infer<typeof PostSchema>
+import { createSignal, type Component, onMount, For, onCleanup } from 'solid-js'
+import { app } from '../../../../firebase/client'
+import {
+  QueryDocumentSnapshot,
+  collection,
+  getDocs,
+  getFirestore,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  startAfter,
+  type DocumentData,
+} from 'firebase/firestore'
+import { extractFlowTime } from '../../../../firebase/helpers'
+import { marked } from 'marked'
+import { ThreadSchema, type Thread } from '../../../../schema/Thread'
+import { ThreadCard } from './ThreadCard'
 
 /**
  * This is a Pelilauta live stream component. It subscribes to the 'steam' and displays
  * the latest 5 posts in the stream.
- * 
- * Further posts will be auto-loaded as the user scrolls down. 
- * 
+ *
+ * Further posts will be auto-loaded as the user scrolls down.
+ *
  * @returns The live stream component.
  */
 export const LiveStream: Component = () => {
-  const [posts, setPosts] = createSignal([] as Array<Post>);
+  const [posts, setPosts] = createSignal([] as Array<Thread>)
 
-  let lastPost:DocumentReference|undefined = undefined;
+  let paginationRef: QueryDocumentSnapshot<DocumentData> | undefined = undefined
 
   onMount(async () => {
-    const db = getFirestore(app);
-    const postsQuery = query(collection(db, 'stream'), orderBy('flowTime', 'desc'), limit(5));
-  
+    const db = getFirestore(app)
+    const postsQuery = query(
+      collection(db, 'stream'),
+      orderBy('flowTime', 'desc'),
+      limit(5),
+    )
+
     console.log('Subscribing to live stream...')
 
     // Subscribe to the query, and add the posts to the state
     const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
-      const newPosts:Array<Post> = [...posts()];
+      const newPosts: Array<Thread> = []
       snapshot.forEach((doc) => {
-        console.log('Post:', doc.data());
+        console.log('Post:', doc.data())
         // if the post is already in the state, splice it
-        const index = newPosts.findIndex((post) => post.key === doc.id);
-        if (index !== -1) newPosts.splice(index, 1);
-        newPosts.push(PostSchema.parse({ ...doc.data(), key: doc.id, flowTime: extractFlowTime(doc.data()) }));
-        lastPost = doc.ref;
-      });
+        const index = newPosts.findIndex((post) => post.key === doc.id)
+        if (index !== -1) newPosts.splice(index, 1)
+        newPosts.push(
+          ThreadSchema.parse({
+            ...doc.data(),
+            key: doc.id,
+            flowTime: extractFlowTime(doc.data()),
+          }),
+        )
+        paginationRef = doc
+      })
 
-      setPosts(newPosts);
+      onCleanup(() => unsubscribe())
+
+      setPosts([...posts(), ...newPosts])
       console.log('Subscibed.')
-    });
-  });
+    })
+  })
 
   // When the load more button is visible, load more posts
   async function loadMore(event: Event) {
-    event.preventDefault();
-    if (lastPost === undefined) return;
-    const db = getFirestore(app);
-    const postsQuery = query(collection(db, 'stream'), orderBy('flowTime', 'desc'), limit(5), startAfter(lastPost));
-    const newPosts = await getDocs(postsQuery);
+    event.preventDefault()
+    if (paginationRef === undefined) return
+    const db = getFirestore(app)
+    const postsQuery = query(
+      collection(db, 'stream'),
+      orderBy('flowTime', 'desc'),
+      limit(5),
+      startAfter(paginationRef),
+    )
+    const newPosts = await getDocs(postsQuery)
 
-    const newPostsData:Array<Post> = [];
+    const newPostsData: Array<Thread> = []
     newPosts.forEach((doc) => {
-      newPostsData.push(PostSchema.parse({ ...doc.data(), key: doc.id, flowTime: extractFlowTime(doc.data()) }));
-      lastPost = doc.ref;
-    });
+      newPostsData.push(
+        ThreadSchema.parse({
+          ...doc.data(),
+          key: doc.id,
+          flowTime: extractFlowTime(doc.data()),
+        }),
+      )
+      paginationRef = doc
+    })
 
-    setPosts([...posts(), ...newPostsData]);
+    setPosts([...posts(), ...newPostsData])
+    console.log('Loaded more posts.')
   }
-
 
   return (
     <div>
-        <div class="flex flex-column">
-            <For each={posts()} fallback={<p>Loading...</p>}>{ post => 
-              <cn-card title={post.title} />
-            }</For>
-        </div>
-        <button onClick={loadMore}>Load more</button>
+      <div class="flex flex-column">
+        <For each={posts()} fallback={<p>Loading...</p>}>
+          {(post) => <ThreadCard {...post} />}
+        </For>
+      </div>
+      <button onClick={loadMore}>Load more</button>
     </div>
-  );
+  )
 }

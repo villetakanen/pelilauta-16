@@ -51,14 +51,23 @@ const CharacterSheet: Component<CharacterSheetProps> = (props) => {
 
   return (
     <div>
-      <CharacterSheetNameField name={props.character.name} characterId={props.character.key} />
+      <CharacterSheetNameField
+        name={props.character.name}
+        characterId={props.character.key}
+      />
 
       <form
         action={`/api/characters/${props.character.key}/statblocks`}
         method="post"
         onSubmit={handleSubmit}
-      > <fieldset>
-          <input type="text" name="name" placeholder={t('stats:statBlockName')} />
+      >
+        {' '}
+        <fieldset>
+          <input
+            type="text"
+            name="name"
+            placeholder={t('stats:statBlockName')}
+          />
           <button type="submit">{t('stats:addStatBlock')}</button>
         </fieldset>
       </form>
