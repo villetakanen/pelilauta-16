@@ -1,6 +1,6 @@
 import { createSignal, type Component, onMount, For } from "solid-js";
 import { app } from "../../../../firebase/client";
-import { collection, getFirestore, limit, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { DocumentReference, collection, getDocs, getFirestore, limit, onSnapshot, orderBy, query, startAfter } from 'firebase/firestore'
 import { z } from "zod";
 import { extractFlowTime } from "../../../../firebase/helpers";
 
@@ -23,6 +23,8 @@ type Post = z.infer<typeof PostSchema>
 export const LiveStream: Component = () => {
   const [posts, setPosts] = createSignal([] as Array<Post>);
 
+  let lastPost:DocumentReference|undefined = undefined;
+
   onMount(async () => {
     const db = getFirestore(app);
     const postsQuery = query(collection(db, 'stream'), orderBy('flowTime', 'desc'), limit(5));
@@ -38,12 +40,30 @@ export const LiveStream: Component = () => {
         const index = newPosts.findIndex((post) => post.key === doc.id);
         if (index !== -1) newPosts.splice(index, 1);
         newPosts.push(PostSchema.parse({ ...doc.data(), key: doc.id, flowTime: extractFlowTime(doc.data()) }));
+        lastPost = doc.ref;
       });
 
       setPosts(newPosts);
       console.log('Subscibed.')
     });
   });
+
+  // When the load more button is visible, load more posts
+  async function loadMore(event: Event) {
+    event.preventDefault();
+    if (lastPost === undefined) return;
+    const db = getFirestore(app);
+    const postsQuery = query(collection(db, 'stream'), orderBy('flowTime', 'desc'), limit(5), startAfter(lastPost));
+    const newPosts = await getDocs(postsQuery);
+
+    const newPostsData:Array<Post> = [];
+    newPosts.forEach((doc) => {
+      newPostsData.push(PostSchema.parse({ ...doc.data(), key: doc.id, flowTime: extractFlowTime(doc.data()) }));
+      lastPost = doc.ref;
+    });
+
+    setPosts([...posts(), ...newPostsData]);
+  }
 
 
   return (
@@ -53,6 +73,7 @@ export const LiveStream: Component = () => {
               <cn-card title={post.title} />
             }</For>
         </div>
+        <button onClick={loadMore}>Load more</button>
     </div>
   );
 }
