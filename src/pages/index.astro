@@ -3,6 +3,7 @@ import { changeLanguage } from 'i18next'
 import LoginSection from '../components/app/LoginSection.astro'
 import LogoutButton from '../components/app/LogoutButton.astro'
 import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
+import { LiveStream } from '../components/solid/forum/LiveStream/LiveStream'
 
 changeLanguage('fi')
 ---
@@ -10,4 +11,7 @@ changeLanguage('fi')
 <SingleColumnLayout>
   <LoginSection />
   <LogoutButton />
+  <div>
+    <LiveStream client:load/>
+  </div>
 </SingleColumnLayout>
