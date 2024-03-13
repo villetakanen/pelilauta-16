@@ -3,6 +3,56 @@ import type { Thread } from '../../../../schema/Thread'
 import { marked } from 'marked'
 import { topicToNoun } from '../../../../schema/conversions'
 
+function truncateHTML(rootElement: HTMLElement, maxLength = 277) {
+  traverseAndTruncate(rootElement, maxLength)
+  return rootElement.innerHTML
+}
+
+function truncateTextNode(node:Node, maxLength=277) {
+  if (node.nodeType === Node.TEXT_NODE) {
+      let textContent = node.textContent || "";
+      if (textContent.length > maxLength) {
+          // Truncate the text content
+          node.textContent = textContent.substring(0, maxLength) + "..."; 
+      }
+  }
+}
+
+function traverseAndTruncate(rootElement:Node, maxLength=0) {
+  let currentTextLength = 0;
+  const nodesToProcess = [rootElement]; // Like a work queue
+
+  while (nodesToProcess.length > 0) {
+      const currentNode = nodesToProcess.pop(); // Remove the last element
+      if (!currentNode) continue;
+      if (currentNode.nodeType === Node.TEXT_NODE) {
+          const textContent = currentNode.textContent || "";
+          currentTextLength += textContent.length;
+          if (currentTextLength > maxLength) {
+              truncateTextNode(currentNode, maxLength - (currentTextLength - textContent.length));
+
+              // Remove subsequent siblings
+              let nextSibling = currentNode.nextSibling;
+              while (nextSibling) {
+                  if (!nextSibling.parentNode) throw new Error("Node has no parent, this is an internal error in the browser's DOM implementation.");
+                  nextSibling.parentNode.removeChild(nextSibling);
+                  nextSibling = currentNode.nextSibling;
+              }
+              continue; // Skip processing child nodes 
+          }
+      } else if (currentNode.nodeType === Node.ELEMENT_NODE) {
+          // Add child nodes in reverse (maintains depth-first order)
+          const childNodes = Array.from(currentNode.childNodes);
+          for (let i = childNodes.length - 1; i >= 0; i--) {
+              nodesToProcess.push(childNodes[i]);
+          }
+      }
+  }
+  // a bug in the current implementation adds an extra text-node "..." at the end of the rootElement
+  rootElement.lastChild?.remove()
+}
+
+
 export const ThreadCard: Component<Thread> = (props) => {
   const [extract, setExtract] = createSignal('')
 
@@ -11,30 +61,17 @@ export const ThreadCard: Component<Thread> = (props) => {
       ? await marked(props.markdownContent)
       : props.htmlContent
 
-    const domNodes = new DOMParser().parseFromString(rawHTML || '', 'text/html')
-      .body.childNodes
-    let e = ''
-    for (let i = 0; i < domNodes.length; i++) {
-      const node = domNodes[i]
-      if (node.textContent) {
-        let text = node.textContent
-        if (e.length + text.length > 277) {
-          text = text.substring(0, 277 - e.length) + '...'
-        }
-        e += text + ' '
-      }
-      if (e.length > 277) {
-        break
-      }
-    }
-    setExtract(e)
+    const rootNode = new DOMParser().parseFromString(rawHTML || '', 'text/html').body
+    setExtract(truncateHTML(rootNode))
   })
 
   return (
     <cn-card
+      style="align-self: flex-start; width: 100%;"
       noun={topicToNoun(props.topic)}
       title={props.title}
-      description={props.topic}
-    ></cn-card>
+    >
+      <div class="small" innerHTML={extract()}></div>
+    </cn-card>
   )
 }

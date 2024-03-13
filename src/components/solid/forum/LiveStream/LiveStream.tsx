@@ -96,7 +96,7 @@ export const LiveStream: Component = () => {
 
   return (
     <div>
-      <div class="flex flex-column">
+      <div class="flex flex-column" style="aling-items: flex-start">
         <For each={posts()} fallback={<p>Loading...</p>}>
           {(post) => <ThreadCard {...post} />}
         </For>
