@@ -34,7 +34,7 @@ export const ThreadCard: Component<Thread> = (props) => {
     <cn-card
       noun={topicToNoun(props.topic)}
       title={props.title}
-      description={extract()}
+      description={props.topic}
     ></cn-card>
   )
 }

@@ -1,7 +1,6 @@
 ---
 import SingleColumnWithTray from '../../../layouts/SingleColumnWithTray.astro'
 import PageArticle from '../../../components/pages/PageArticle.astro'
-import { app } from '../../../firebase/server'
 import { getFirestore } from 'firebase-admin/firestore'
 import { SiteSchema } from '../../../schema/Site'
 import SiteTrayHeader from '../../../components/sites/SiteTrayHeader.astro'
@@ -9,7 +8,7 @@ import { extractFlowTime } from '../../../firebase/helpers'
 
 const { sitekey } = Astro.params
 
-const db = getFirestore(app)
+const db = getFirestore()
 const siteRef = db.collection('sites').doc(sitekey + '')
 const siteDoc = await siteRef.get()
 const site = SiteSchema.parse({

@@ -1,24 +1,18 @@
 ---
 import type { Site } from '../../schema/Site'
+import { systemToNoun } from '../../schema/conversions'
+import { DateTime } from 'luxon'
+
 interface Props {
   site: Site
 }
 const { site } = Astro.props
-import { DateTime } from 'luxon'
 
 const flowDate = DateTime.fromSeconds(site.flowTime / 1000)
 const flowTime = site.flowTime ? flowDate.toFormat('dd.MM.yyyy – HH:mm') : '-'
 
-const systemsToNouns: Record<string, string> = {
-  mekanismi: 'mekanismi',
-  myrrys: 'fox',
-}
-
-const noun = systemsToNouns[site.system + '']
-  ? systemsToNouns[site.system + '']
-  : 'd12'
+const noun = systemToNoun(site.system)
 ---
-
 <cn-card
   title={site.name}
   href=`/sites/${site.key}`
