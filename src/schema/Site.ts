@@ -9,6 +9,7 @@ export const SiteSchema = z.object({
   avatarURL: z.string().optional(),
   flowTime: z.number(),
   homepage: z.string().optional(),
+  description: z.string().optional(),
 })
 
 export type Site = z.infer<typeof SiteSchema>

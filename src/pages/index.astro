@@ -4,14 +4,22 @@ import LoginSection from '../components/app/LoginSection.astro'
 import LogoutButton from '../components/app/LogoutButton.astro'
 import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
 import { LiveStream } from '../components/solid/forum/LiveStream/LiveStream'
+import TopSitesCTA from '../components/home/TopSitesCTA.astro'
 
 changeLanguage('fi')
 ---
 
 <SingleColumnLayout>
-  <LoginSection />
-  <LogoutButton />
-  <div>
-    <LiveStream client:load />
+  <div class="content-columns">
+    <div>
+      <LiveStream client:load />
+    </div>
+    <div class="small-width">
+      <TopSitesCTA />
+    </div>
+    <div class="small-width">
+      <LoginSection />
+      <LogoutButton />
+    </div>
   </div>
 </SingleColumnLayout>

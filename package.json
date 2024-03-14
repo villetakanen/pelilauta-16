@@ -1,7 +1,7 @@
 {
   "name": "pelilauta",
   "type": "module",
-  "version": "15.0.0-alpha.3",
+  "version": "15.0.0-alpha.4",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -11,7 +11,7 @@
     "lint": "prettier --write src --plugin=prettier-plugin-astro"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-alpha.32",
+    "@11thdeg/cyan-next": "1.0.0-alpha.34",
     "@astrojs/check": "^0.5.6",
     "@astrojs/lit": "^4.0.1",
     "@astrojs/solid-js": "^4.0.1",
