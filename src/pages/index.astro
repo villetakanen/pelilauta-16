@@ -5,6 +5,7 @@ import LogoutButton from '../components/app/LogoutButton.astro'
 import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
 import { LiveStream } from '../components/solid/forum/LiveStream/LiveStream'
 import TopSitesCTA from '../components/home/TopSitesCTA.astro'
+import MyrrysRSSCTA from '../components/home/MyrrysRSSCTA.astro'
 
 changeLanguage('fi')
 ---
@@ -14,10 +15,13 @@ changeLanguage('fi')
     <div>
       <LiveStream client:load />
     </div>
+    
+    <div class="small-width">
+      <MyrrysRSSCTA />
+    </div>
+
     <div class="small-width">
       <TopSitesCTA />
-    </div>
-    <div class="small-width">
       <LoginSection />
       <LogoutButton />
     </div>

@@ -1,0 +1,27 @@
+---
+/** This is a CTA section for the frontpage that captures the last 3 updates of 
+ * https://www.myrrys.com/rss.xml and shows them as small info-blocks with a
+ * link to the full article.
+ */
+import { t } from "i18next"
+import Parser from 'rss-parser';
+
+const parser = new Parser();
+const rssFeed = "https://www.myrrys.com/rss.xml"
+const rssFeedCount = 3
+
+const feed = await parser.parseURL(rssFeed)
+feed.items = feed.items.slice(0, rssFeedCount)
+console.log(feed.items)
+
+---
+<section class="cta">
+  <img class="poster" alt="Myrrys.com" src="/images/myrrys-com-poster.png" />
+  { feed.items.map((item, index) => (
+    <div class="cta_item downscaled">
+      <h4 class="cta_title small">{ item.title }</h3>
+      <p class="cta_description">{ item.contentSnippet }</p>
+      <a class="cta_link" href={ item.link }>{t('actions:readMore')}</a>
+    </div>
+  )) }
+</section>
