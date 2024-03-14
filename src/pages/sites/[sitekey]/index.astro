@@ -5,6 +5,7 @@ import { getFirestore } from 'firebase-admin/firestore'
 import { SiteSchema } from '../../../schema/Site'
 import SiteTrayHeader from '../../../components/sites/SiteTrayHeader.astro'
 import { extractFlowTime } from '../../../firebase/helpers'
+import SiteListItem from '../../../components/sites/SiteListItem.astro'
 
 const { sitekey } = Astro.params
 
@@ -24,5 +25,10 @@ const homepageSlug = site.homepage || site.key
   <div slot="tray">
     <SiteTrayHeader site={site} />
   </div>
-  <PageArticle sitekey={site.key} pagekey={homepageSlug} />
+  <div class="content-columns">
+    <PageArticle sitekey={site.key} pagekey={homepageSlug} />
+    <div class="small-width">
+      <SiteListItem site={site}/>
+    </div>
+  </div>
 </SingleColumnWithTray>

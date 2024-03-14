@@ -1,11 +1,9 @@
+import { EntrySchema } from './Entry'
 import { z } from 'zod'
 
-export const PageSchema = z.object({
-  key: z.string(),
-  parentKey: z.string(),
+export const PageSchema = EntrySchema.extend({
   name: z.string(),
-  flowTime: z.number(),
-  markdownContent: z.string(),
+  parentKey: z.string(),
 })
 
 export type Page = z.infer<typeof PageSchema>
