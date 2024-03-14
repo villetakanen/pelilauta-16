@@ -1,60 +1,15 @@
 ---
-import SiteIcon from './SiteIcon.astro'
 import type { Site } from '../../schema/Site'
+import { systemToNoun } from '../../schema/conversions'
 interface Props {
   site: Site
 }
 const { site } = Astro.props
 ---
 
-<section class="SiteTrayHeader">
-  {
-    site.posterURL && (
-      <div class="sitePoster" aria-disabled="true">
-        <img src={site.posterURL} alt="" />
-        <div class="sitePosterTint" />
-      </div>
-    )
-  }
-  <SiteIcon site={site} />
-  <h4 class="small">{site.name}</h4>
+<section>
+  <h3 class="small">
+    <cn-icon noun={systemToNoun(site.system)} />
+    {site.name}
+  </h3>
 </section>
-
-<style lang="css">
-  .SiteTrayHeader {
-    position: relative;
-  }
-  .sitePoster {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--cn-gap);
-    margin-bottom: var(--cn-grid-size);
-  }
-  .sitePoster img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: var(--cn-gap);
-  }
-  .sitePosterTint {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background-image: linear-gradient(
-      0deg,
-      var(--color-primary),
-      rgba(195, 239, 72, 0.5)
-    );
-    opacity: 0.5;
-    z-index: 1;
-    background-blend-mode: multiply;
-  }
-  h4 {
-    margin-top: 0;
-    text-align: center;
-  }
-</style>

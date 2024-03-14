@@ -16,6 +16,13 @@ const noun = systemToNoun(site.system)
 <cn-card
   title={site.name}
   href=`/sites/${site.key}`
-  description=`${site.system} – ${flowTime}`
   cover={site.posterURL}
-  noun={noun}></cn-card>
+  noun={noun}>
+  <p class="small">
+    {site.description}
+  </p>
+  <p>{site.system}</p>
+  <div slot="actions" style="flex small">
+    <p>{ flowTime }</p>
+  </div>
+</cn-card>

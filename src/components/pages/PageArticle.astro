@@ -24,5 +24,19 @@ const page = PageSchema.parse({
 })
 const content = page.markdownContent ? marked.parse(page.markdownContent || '') : page.htmlContent
 ---
+<div class="large-width">
 
-<article set:html={content} class="large-width"/>
+  <div class="page-header flex small border-b">
+    <p>{page.name}</p>
+    <div class="flex-grow"></div>
+    <p>{new Date(page.flowTime).toLocaleDateString('fi')}</p>
+  </div>
+
+  <article set:html={content} />
+
+  <div class="page-tailer flex small border-t">
+    <p>{page.name}</p>
+    <div class="flex-grow"></div>
+    <p>{new Date(page.flowTime).toLocaleDateString('fi')}</p>
+  </div>
+</div>

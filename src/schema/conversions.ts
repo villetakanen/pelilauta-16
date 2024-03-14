@@ -15,9 +15,15 @@ export function systemToNoun(system: string|undefined): string {
       return 'll-ampersand'
     case 'dd':
       return 'dd5'
+    case 'mekanismi':
+      return 'mekanismi'
+    case 'hood':
+      return 'hood'
     case 'quick':
       return 'thequick'
+    case 'myrrys':
+      return 'myrrys-scarlet'
     default:
-      return 'mekanismi'
+      return 'homebrew'
   }
 }
