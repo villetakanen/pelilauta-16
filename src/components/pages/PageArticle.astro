@@ -26,13 +26,13 @@ const content = page.markdownContent ? marked.parse(page.markdownContent || '') 
 ---
 <div class="large-width">
 
-  <div class="page-header flex small border-b">
-    <p>{page.name}</p>
+  <div class="page-header flex small border-b pb-1 mb-1">
+    <span>{page.name}</span>
     <div class="flex-grow"></div>
-    <p>{new Date(page.flowTime).toLocaleDateString('fi')}</p>
+    <span>{new Date(page.flowTime).toLocaleDateString('fi')}</span>
   </div>
 
-  <article set:html={content} />
+  <article set:html={content} class="pt-1"/>
 
   <div class="page-tailer flex small border-t">
     <p>{page.name}</p>
