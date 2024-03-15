@@ -6,6 +6,7 @@ import { SiteSchema } from '../../../schema/Site'
 import SiteTrayHeader from '../../../components/sites/SiteTrayHeader.astro'
 import { extractFlowTime } from '../../../firebase/helpers'
 import SiteListItem from '../../../components/sites/SiteListItem.astro'
+import SitePageListNav from '../../../components/sites/SitePageListNav.astro'
 
 const { sitekey } = Astro.params
 
@@ -24,6 +25,7 @@ const homepageSlug = site.homepage || site.key
 <SingleColumnWithTray title={site.name}>
   <div slot="tray">
     <SiteTrayHeader site={site} />
+    <SitePageListNav site={site} />
   </div>
   <div class="content-columns">
     <PageArticle sitekey={site.key} pagekey={homepageSlug} />
