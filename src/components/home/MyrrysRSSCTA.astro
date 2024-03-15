@@ -15,12 +15,38 @@ feed.items = feed.items.slice(0, rssFeedCount)
 
 ---
 <section class="cta">
-  <img class="poster" alt="Myrrys.com" src="/images/myrrys-com-poster.png" />
+  <div class="on-top-of-cover">
+    <cn-icon noun="myrrys-scarlet" large alt="Myrrys.com" />
+  </div>
+  <img class="cover" alt="Myrrys.com" src="/images/LetL_gm_screen_splash.webp" />
+  <h4 class="branding downscaled border-b pb-1 mb-1">MYRRYS</h4>
   { feed.items.map((item, index) => (
-    <div class="cta_item downscaled">
+    <div class="cta_item downscaled pb-1 border-b mb-1">
       <h4 class="cta_title small">{ item.title }</h3>
       <p class="cta_description">{ item.contentSnippet }</p>
-      <a class="cta_link" href={ item.link }>{t('actions:readMore')}</a>
+      <p class="align-right">
+        <a class="cta_link" href={ item.link }>{t('actions:readMore')}</a>
+      </p>
     </div>
   )) }
 </section>
+
+<style>
+.cta {
+  position: relative;
+}
+.branding {
+  text-align: center;
+}
+.on-top-of-cover {
+  position: absolute;
+  top: calc(var(--cn-gap) * 6);
+  left: 0;
+  z-index: 1;
+  text-align: center;
+  width: 100%;
+}
+.align-right {
+  text-align: right;
+}
+</style>
