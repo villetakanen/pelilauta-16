@@ -1,0 +1,15 @@
+---
+import type { Thread } from '../../schema/Thread'
+
+interface Props {
+  thread: Thread
+}
+const { thread } = Astro.props
+
+const cover = thread.youtubeId ? 
+  `https://img.youtube.com/vi/${thread.youtubeId}/0.jpg` :
+  thread.images && thread.images.length > 0 ?
+    thread.images[0] : 
+    undefined
+---
+<cn-card

@@ -55,6 +55,7 @@ function traverseAndTruncate(rootElement:Node, maxLength=0) {
 
 export const ThreadCard: Component<Thread> = (props) => {
   const [extract, setExtract] = createSignal('')
+  const [coverImageUrl, setCoverImageUrl] = createSignal<string | undefined>(undefined)
 
   onMount(async () => {
     const rawHTML = props.markdownContent
@@ -63,13 +64,21 @@ export const ThreadCard: Component<Thread> = (props) => {
 
     const rootNode = new DOMParser().parseFromString(rawHTML || '', 'text/html').body
     setExtract(truncateHTML(rootNode))
+
+    if (props.youtubeId) {
+      setCoverImageUrl(`https://img.youtube.com/vi/${props.youtubeId}/0.jpg`)
+    } else if (props.images && props.images.length > 0) {
+      setCoverImageUrl(props.images[0])
+    }
   })
 
+  
   return (
     <cn-card
       style="align-self: flex-start; width: 100%;"
       noun={topicToNoun(props.topic)}
       title={props.title}
+      cover={coverImageUrl()}
     >
       <div class="small" innerHTML={extract()}></div>
     </cn-card>

@@ -4,6 +4,8 @@ export function topicToNoun(topic: string|undefined): string {
       return 'd20'
     case 'Yleinen':
       return 'discussion'
+    case 'Videot':
+      return 'youtube'
     default:
       return 'fox'
   }
