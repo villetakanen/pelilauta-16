@@ -45,5 +45,5 @@ export async function getSessionUser(cookies: AstroCookies) {
       }
     }
   }
-  return null
+  return { uid: '', name: '' }
 }

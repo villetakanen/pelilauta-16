@@ -2,6 +2,12 @@
 export default {
     defaultLocale: "fi",
     locales: ["fi", "en"],
-    namespaces: ["actions", "navigation", "sites"],
+    namespaces: [
+      "account",
+      "actions",
+      "app",
+      "navigation", 
+      "profile",
+      "sites"],
     defaultNamespace: "actions",
   };

@@ -1,5 +1,7 @@
 ---
 import { t } from 'i18next'
+import { ProfileButton } from '../solid/app/ProfileButton'
+import { getSessionUser } from '../../firebase/server'
 const currentPath = Astro.url.pathname
 
 type RailItem = {
@@ -24,6 +26,8 @@ const rail: Array<RailItem> = [
     label: t('navigation:characters'),
   },
 ]
+
+const { uid } = await getSessionUser(Astro.cookies)
 ---
 
 <nav class="rail">
@@ -42,4 +46,6 @@ const rail: Array<RailItem> = [
       )
     })
   }
+  <div style="flex-grow: 1;"></div>
+  <ProfileButton client:load uid={uid}></ProfileButton>
 </nav>

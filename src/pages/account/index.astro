@@ -1,0 +1,26 @@
+---
+import SingleColumnWithTray from '../../layouts/SingleColumnWithTray.astro'
+import { getSessionUser } from '../../firebase/server'
+import { ProfileForm } from '../../components/solid/account/ProfileForm'
+import { t } from "i18next"
+
+const user = await getSessionUser(Astro.cookies)
+if (!user.uid) {
+  // This page requires authentication, so redirect to the login page
+  Astro.redirect('/login')  
+}
+
+const profile = {
+  nick: 'aaa',
+}
+
+---
+<SingleColumnWithTray title={t('account:title')}>
+  <div slot="tray">
+    <h3>{t('app:title')}</h3>
+  </div>
+  <div>
+    <ProfileForm {...profile} client:visible/>
+  </div>
+...  
+</SingleColumnWithTray>
