@@ -24,7 +24,7 @@ export const ProfileButton: Component<ProfileButtonProps> = (props) => {
     isAuth.set(false)
   }
 
-  return $uid() ? (
+  return props.uid ? (
     <a href={`/account`}>
       <cn-navigation-icon noun="avatar" label={t('navigation:Profile')} />
     </a>
