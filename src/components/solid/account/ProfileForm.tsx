@@ -28,15 +28,23 @@ export const ProfileForm: Component<Profile> = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div class="flex">
-        <img class="avatar-preview" src={props.avatarURL} alt={props.nick} />
-        <div class="flex flex-col">
+        <cn-avatar-button
+          onClick={() => {alert('!')}}
+          src={props.avatarURL}></cn-avatar-button>
+        <div class="flex flex-col flex-grow">
           <label>{t('profile:nick')}
             <input id="nick" type="text" value={props.nick} />
           </label>
         </div>
       </div>
       <label>{t('profile:bio')}
-        <textarea id="bio" value={props.bio} />
+        <textarea
+          data-auto-expand
+          placeholder={t('profile:bioPlaceholder')}
+          id="bio"
+          rows={5}
+          maxLength={220}
+          value={props.bio || ''}>{props.bio}</textarea>
       </label>
       <label>{t('profile:tags')}
         <input id="tags" type="text" value={props.tags?.join(', ')} />

@@ -3,17 +3,17 @@ import SingleColumnWithTray from '../../layouts/SingleColumnWithTray.astro'
 import { getSessionUser } from '../../firebase/server'
 import { ProfileForm } from '../../components/solid/account/ProfileForm'
 import { t } from "i18next"
+import { db } from '../../firebase/server'
+import { ProfileSchema } from '../../schema/Profile'
 
 const user = await getSessionUser(Astro.cookies)
 if (!user.uid) {
   // This page requires authentication, so redirect to the login page
   Astro.redirect('/login')  
 }
+const profileData = (await db.collection('profiles').doc(user.uid).get()).data()
 
-const profile = {
-  nick: 'aaa',
-}
-
+const profile = ProfileSchema.parse(profileData)
 ---
 <SingleColumnWithTray title={t('account:title')}>
   <div slot="tray">

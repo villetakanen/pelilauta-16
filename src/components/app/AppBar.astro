@@ -1,9 +1,15 @@
 ---
-const { title } = Astro.props
+interface Props {
+  title?: string
+  menu?: boolean
+}
+
+const { title, menu } = Astro.props
 const barTitle = title || 'Pelilauta 2'
 ---
 
 <header class="cn-app-bar">
+  {menu && <cn-app-menu-button></cn-app-menu-button>}
   <h3>{barTitle}</h3>
   <div style="flex: 1"></div>
   <slot />
