@@ -16,6 +16,11 @@ const rail: Array<RailItem> = [
     icon: 'veil-advance',
   },
   {
+    href: '/forum',
+    icon: 'discussion',
+    label: t('navigation:discussion'),
+  },
+  {
     href: '/sites',
     icon: 'mekanismi',
     label: t('navigation:sites'),
@@ -25,6 +30,11 @@ const rail: Array<RailItem> = [
     icon: 'tokens',
     label: t('navigation:characters'),
   },
+  {
+    href: '/library',
+    icon: 'books',
+    label: t('navigation:library'),
+  }
 ]
 
 const { uid } = await getSessionUser(Astro.cookies)

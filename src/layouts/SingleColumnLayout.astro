@@ -2,6 +2,7 @@
 import AppRail from '../components/app/AppRail.astro'
 import BaseHead from '../components/app/BaseHead.astro'
 import AppBar from '../components/app/AppBar.astro'
+import AppTray from '../components/app/AppTray.astro'
 
 const { title } = Astro.props
 ---
@@ -10,6 +11,7 @@ const { title } = Astro.props
   <BaseHead />
   <body>
     <AppBar title={title} />
+    <AppTray />
     <AppRail />
     <main class="content-grid">
       <slot />
