@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
-import { app } from '../../../firebase/server'
+import { app, db } from '../../../firebase/server'
 import { getAuth } from 'firebase-admin/auth'
+import { AccountSchema } from '../../../schema/Account'
 
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   const auth = getAuth(app)
@@ -11,9 +12,10 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     return new Response('No token found', { status: 401 })
   }
 
+  let uid = ''
   /* Verify id token */
   try {
-    await auth.verifyIdToken(idToken)
+    uid = (await auth.verifyIdToken(idToken)).uid
   } catch (error) {
     return new Response('Invalid token', { status: 401 })
   }
@@ -27,6 +29,39 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   cookies.set('session', sessionCookie, {
     path: '/',
   })
+
+  console.log('User signed in:', uid)
+
+  // Get users account data
+  const accountData = (await db.collection('account').doc(uid).get()).data()
+
+  console.log('Account data:', accountData)
+
+  const account = AccountSchema.parse({
+    ...accountData,
+    uid,
+    lastLogin: accountData?.lastLogin?.toDate(),
+    updatedAt: accountData?.updatedAt.toDate()
+  })
+
+  // Check if the user has accepted the EULA
+  if (!account.eulaAccepted) {
+    return redirect('/eula')
+  }
+
+  // Add light mode to cookie
+  if (account.lightMode) {
+    cookies.set('lightMode', account.lightMode, {
+      path: '/',
+    })
+  }
+
+  // Add admin tools to cookie
+  if (account.showAdminTools) {
+    cookies.set('showAdminTools', account.showAdminTools, {
+      path: '/',
+    })
+  }
 
   return redirect('/')
 }
