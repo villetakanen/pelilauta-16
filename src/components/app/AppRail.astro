@@ -38,6 +38,7 @@ const rail: Array<RailItem> = [
 ]
 
 const { uid } = await getSessionUser(Astro.cookies)
+const showAdminTools = Astro.cookies.get('showAdminTools')?.value === 'true'
 ---
 
 <nav class="rail">
@@ -57,5 +58,12 @@ const { uid } = await getSessionUser(Astro.cookies)
     })
   }
   <div style="flex-grow: 1;"></div>
+  { showAdminTools && <a href="/admin">
+    <cn-navigation-icon
+      noun="admin"
+      label={t('navigation:admin')}
+      checked={currentPath === '/admin'}
+    />  
+  </a>}
   <ProfileButton client:load uid={uid}></ProfileButton>
 </nav>
