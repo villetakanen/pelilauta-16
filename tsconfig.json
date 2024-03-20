@@ -5,5 +5,11 @@
     "jsxImportSource": "solid-js",
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
+    "baseUrl": ".",
+    "paths": {
+      "@layouts/*": ["src/layouts/*"],
+      "@firebase/*": ["src/firebase/*"]
+    }
   }
+  
 }

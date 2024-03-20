@@ -1,0 +1,42 @@
+---
+import Page from '@layouts/Page.astro'
+import { db } from '@firebase/server'
+import { ThreadSchema } from 'src/schema/Thread';
+import { extractFlowTime } from '@firebase/helpers';
+import { marked } from 'marked';
+
+const { threadkey } = Astro.params;
+
+if (!threadkey) {
+  return {
+    status: 404,
+    error: 'Not Found'
+  }
+}
+
+const threadData = (await db.collection('stream').doc(threadkey).get()).data();
+
+if (!threadData) {
+  return {
+    status: 404,
+    error: 'Not Found'
+  }
+}
+
+const thread = ThreadSchema.parse({
+  ...threadData,
+  key: threadkey,
+  flowTime: extractFlowTime(threadData)
+});
+
+const pageContent = thread.markdownContent ? marked(thread.markdownContent) : thread.htmlContent;
+
+---
+<Page title={thread.title}>
+  <article class="column-large">
+    <h1 class="downscaled small">{thread.title}</h1>
+    <section set:html={pageContent} />
+  </article>
+[{threadkey}]
+</Page>
+

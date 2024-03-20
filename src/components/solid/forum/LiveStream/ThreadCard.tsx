@@ -75,6 +75,7 @@ export const ThreadCard: Component<Thread> = (props) => {
   
   return (
     <cn-card
+      href={`/threads/${props.key}`}
       style="align-self: flex-start; width: 100%;"
       noun={topicToNoun(props.topic)}
       title={props.title}
