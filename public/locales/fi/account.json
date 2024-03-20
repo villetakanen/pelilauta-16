@@ -1,3 +1,8 @@
 {
-  "title": "Tili"
+  "title": "Tili",
+  "createAccount": "Luo tili",
+  "createAccountTitle": "Luo tili",
+  "createAccountAction": "Hyväksy ja jatka",
+  "nickLabel": "Valitse käyttäjänimi",
+  "nickPlaceholder": "Njord"
 }

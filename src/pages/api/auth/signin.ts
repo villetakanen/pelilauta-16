@@ -31,13 +31,8 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     path: '/',
   })
 
-  console.log('User signed in:', uid)
-
   // Get users account data
   const accountData = (await db.collection('account').doc(uid).get()).data()
-
-  console.log('Account data:', accountData)
-
   const account = AccountSchema.parse({
     ...accountData,
     uid,

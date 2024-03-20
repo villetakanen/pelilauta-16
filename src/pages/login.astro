@@ -1,0 +1,15 @@
+---
+import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
+import GoogleLoginButton from '../components/app/GoogleLoginButton.astro'
+import { t } from 'i18next'
+---
+<SingleColumnLayout>
+  <h1>{t('login:title')}</h1>
+  <p>{t('login:info')}</p>
+  <section class="flex flex-column border border-radius p-2">
+    <div class="align-center">
+      <GoogleLoginButton />
+      <GoogleLoginButton />
+    </div>
+  </section>
+</SingleColumnLayout>

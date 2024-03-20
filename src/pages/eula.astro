@@ -1,10 +1,14 @@
 ---
-import { changeLanguage } from 'i18next'
 import EulaText from'../content/fi/eula.md'
 import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
+import { CreateAccountForm } from '../components/solid/register/CreateAccountForm'
+import { getSessionUser } from '../firebase/server'
 
-changeLanguage('fi')
+const { uid } = await getSessionUser(Astro.cookies)
 ---
 <SingleColumnLayout>
-  <EulaText />
+  <div>
+    <EulaText />
+    <CreateAccountForm client:visible {uid} />
+  </div>
 </SingleColumnLayout>

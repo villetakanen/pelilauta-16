@@ -26,12 +26,11 @@ export const ProfileButton: Component<ProfileButtonProps> = (props) => {
 
   return props.uid ? (
     <a href={`/account`}>
-      <cn-navigation-icon noun="avatar" label={t('navigation:Profile')} />
+      <cn-navigation-icon noun="avatar" label={t('navigation:profile')} />
     </a>
   ) : (
     <a href="/login">
-      <cn-navigation-icon noun="login" label={t('navigation:Login')} />
-      uid: { props.uid }
+      <cn-navigation-icon noun="login" label={t('navigation:login')} />
     </a>
     
   )
