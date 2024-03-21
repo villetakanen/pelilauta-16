@@ -33,10 +33,12 @@ const pageContent = thread.markdownContent ? marked(thread.markdownContent) : th
 
 ---
 <Page title={thread.title}>
-  <article class="column-large">
-    <h1 class="downscaled small">{thread.title}</h1>
-    <section set:html={pageContent} />
-  </article>
+  <div class="content-columns">
+    <article class="column-l">
+      <h1 class="downscaled">{thread.title}</h1>
+      <section set:html={pageContent} />
+    </article> 
+  </div>
 [{threadkey}]
 </Page>
 

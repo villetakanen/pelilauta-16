@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@11thdeg/cyan-next': 1.0.0-alpha.45
+  '@11thdeg/cyan-next': 1.0.0-alpha.46
   '@astrojs/check': ^0.5.6
   '@astrojs/lit': ^4.0.1
   '@astrojs/solid-js': ^4.0.1
@@ -27,7 +27,7 @@ specifiers:
   zod: ^3.22.4
 
 dependencies:
-  '@11thdeg/cyan-next': 1.0.0-alpha.45
+  '@11thdeg/cyan-next': 1.0.0-alpha.46
   '@astrojs/check': 0.5.6_cje4pbx6yakjsfrma7zcakwvam
   '@astrojs/lit': 4.0.1_fftgejkswtiyza5zo6nfilunc4
   '@astrojs/solid-js': 4.0.1_solid-js@1.8.15
@@ -56,8 +56,8 @@ devDependencies:
 
 packages:
 
-  /@11thdeg/cyan-next/1.0.0-alpha.45:
-    resolution: {integrity: sha512-Sm9c5xXkM7TbcMTA791oo5TXfaaQ77AfnvaaxW4PajbfWodM68zlOR+QB2hQvPuoLzV6PHheZN6M4Ldn2oaRfA==}
+  /@11thdeg/cyan-next/1.0.0-alpha.46:
+    resolution: {integrity: sha512-5blY+WLXNKSYfQQVbOrtsq8lWjgGzaZJ0IAK09pZng0Gm0sKx6/90EafSoe/wLWQkuhIC+mdnT0PKWCUY3wddQ==}
     dependencies:
       lit: 3.1.2
       solid: 0.2.1

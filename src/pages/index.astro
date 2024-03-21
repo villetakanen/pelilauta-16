@@ -2,28 +2,28 @@
 import { changeLanguage } from 'i18next'
 import LoginSection from '../components/app/LoginSection.astro'
 import LogoutButton from '../components/app/LogoutButton.astro'
-import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
 import { LiveStream } from '../components/solid/forum/LiveStream/LiveStream'
 import TopSitesCTA from '../components/home/TopSitesCTA.astro'
 import MyrrysRSSCTA from '../components/home/MyrrysRSSCTA.astro'
+import Page from '@layouts/Page.astro'
 
 changeLanguage('fi')
 ---
 
-<SingleColumnLayout>
+<Page>
   <div class="content-columns">
     <div>
       <LiveStream client:load />
     </div>
     
-    <div class="small-width">
+    <div class="column-s">
       <MyrrysRSSCTA />
     </div>
 
-    <div class="small-width">
+    <div class="column-s">
       <TopSitesCTA />
       <LoginSection />
       <LogoutButton />
     </div>
   </div>
-</SingleColumnLayout>
+</Page>
