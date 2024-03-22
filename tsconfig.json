@@ -8,7 +8,8 @@
     "baseUrl": ".",
     "paths": {
       "@layouts/*": ["src/layouts/*"],
-      "@firebase/*": ["src/firebase/*"]
+      "@firebase/*": ["src/firebase/*"],
+      "@schemas/*": ["src/schemas/*"]
     }
   }
   

@@ -1,5 +1,5 @@
 import type { Component } from "solid-js"
-import type { Profile } from "../../../schema/Profile"
+import type { Profile } from "@schemas/Profile"
 import { t } from "i18next"
 
 export const ProfileForm: Component<Profile> = (props) => {

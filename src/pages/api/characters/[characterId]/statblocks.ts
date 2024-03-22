@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro'
 import { getFirestore } from 'firebase-admin/firestore'
 import { z } from 'zod'
-import type { StatBlock } from '../../../../schema/Character'
+import type { StatBlock } from '@schemas/Character'
 import { getSessionUser } from '../../../../firebase/server'
 
 const AddStatBlockSchema = z.object({
@@ -10,7 +10,7 @@ const AddStatBlockSchema = z.object({
 
 export const POST: APIRoute = async ({ params, request, cookies }) => {
   const characterId = params.characterId
-  const db = await getFirestore() // Get the Firestore instance
+  const db = getFirestore() // Get the Firestore instance
   const user = await getSessionUser(cookies) // Get the user's UID from the session cookie
 
   if (!characterId)
@@ -59,7 +59,7 @@ export const POST: APIRoute = async ({ params, request, cookies }) => {
 
 export const DELETE: APIRoute = async ({ params, request, cookies }) => {
   const characterId = params.characterId
-  const db = await getFirestore() // Get the Firestore instance
+  const db = getFirestore() // Get the Firestore instance
   const user = await getSessionUser(cookies) // Get the user's UID from the session cookie
   if (!characterId)
     return new Response('A characterId is required', { status: 400 })

@@ -5,10 +5,10 @@
  */
 
 import { db } from '../../firebase/server'
-import type { Site } from '../../schema/Site'
-import { SiteSchema } from '../../schema/Site'
+import type { Site } from '@schemas/Site'
+import { SiteSchema } from '@schemas/Site'
 import { extractFlowTime } from '../../firebase/helpers'
-import { systemToNoun } from '../../schema/conversions'
+import { systemToNoun } from '@schemas/conversions'
 
 const query = db.collection('sites')
   .orderBy('flowTime', 'desc')

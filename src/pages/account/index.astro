@@ -4,7 +4,7 @@ import { getSessionUser } from '../../firebase/server'
 import { ProfileForm } from '../../components/solid/account/ProfileForm'
 import { t } from "i18next"
 import { db } from '../../firebase/server'
-import { ProfileSchema } from '../../schema/Profile'
+import { ProfileSchema } from '@schemas/Profile'
 
 const user = await getSessionUser(Astro.cookies)
 if (!user.uid) {
@@ -24,3 +24,4 @@ const profile = ProfileSchema.parse(profileData)
   </div>
 ...  
 </SingleColumnWithTray>
+@schemass/Profile

@@ -1,7 +1,7 @@
 ---
 import Page from '@layouts/Page.astro'
 import { db } from '@firebase/server'
-import { ThreadSchema } from 'src/schema/Thread';
+import { ThreadSchema } from '@schemas/Thread';
 import { extractFlowTime } from '@firebase/helpers';
 import { marked } from 'marked';
 
@@ -42,3 +42,4 @@ const pageContent = thread.markdownContent ? marked(thread.markdownContent) : th
 [{threadkey}]
 </Page>
 
+@schemas/Thread

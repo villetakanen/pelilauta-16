@@ -3,8 +3,8 @@ import SingleColumnLayout from '../../layouts/SingleColumnLayout.astro'
 import SiteListItem from '../../components/sites/SiteListItem.astro'
 import { getSessionUser } from '../../firebase/server'
 import { getFirestore } from 'firebase-admin/firestore'
-import { SiteSchema } from '../../schema/Site'
-import type { Site } from '../../schema/Site'
+import { SiteSchema } from '@schemas/Site'
+import type { Site } from '@schemas/Site'
 import { t } from 'i18next'
 import { extractFlowTime } from '../../firebase/helpers'
 
@@ -62,3 +62,4 @@ sites.sort((a, b) => {
     {sites.map((site) => <SiteListItem site={site} />)}
   </div>
 </SingleColumnLayout>
+@schemass/Site@schemass/Site

@@ -1,0 +1,13 @@
+---
+import type { Thread } from '@schemas/Thread'
+
+interface Props {
+  thread: Thread
+}
+const { thread } = Astro.props
+---
+<article class="column-l">
+  <h1>{thread.title}</h1>
+</article>
+
+

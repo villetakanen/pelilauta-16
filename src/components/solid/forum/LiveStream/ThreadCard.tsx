@@ -1,7 +1,7 @@
 import { createSignal, type Component, onMount } from 'solid-js'
-import type { Thread } from '../../../../schema/Thread'
+import type { Thread } from '@schemas/Thread'
 import { marked } from 'marked'
-import { topicToNoun } from '../../../../schema/conversions'
+import { topicToNoun } from '@schemas/conversions'
 
 function truncateHTML(rootElement: HTMLElement, maxLength = 277) {
   traverseAndTruncate(rootElement, maxLength)

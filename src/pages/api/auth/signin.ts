@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro'
 import { app, db } from '../../../firebase/server'
 import { getAuth } from 'firebase-admin/auth'
-import { AccountSchema } from '../../../schema/Account'
+import { AccountSchema } from '@schemas/Account'
 import { FieldValue } from 'firebase-admin/firestore'
 
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {

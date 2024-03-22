@@ -1,11 +1,11 @@
 import { getFirestore } from 'firebase-admin/firestore'
 import { getSessionUser } from '../../../../firebase/server'
 import type { APIRoute } from 'astro'
-import { CharacterSchema } from '../../../../schema/Character'
+import { CharacterSchema } from '@schemas/Character'
 
 export const PATCH: APIRoute = async ({ params, request, cookies }) => {
   const characterId = params.characterId
-  const db = await getFirestore() // Get the Firestore instance
+  const db = getFirestore() // Get the Firestore instance
   const user = await getSessionUser(cookies) // Get the user's UID from the session cookie
 
   // The data should be partial of a Zod schema CharacterSchema

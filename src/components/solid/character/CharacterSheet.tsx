@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js'
-import type { Character } from '../../../schema/Character'
+import type { Character } from '@schemas/Character'
 import { t } from 'i18next'
 import { CharacterSheetNameField } from './CharacterNameField'
 

@@ -13,8 +13,7 @@ import {
   type DocumentData,
 } from 'firebase/firestore'
 import { extractFlowTime } from '../../../../firebase/helpers'
-import { marked } from 'marked'
-import { ThreadSchema, type Thread } from '../../../../schema/Thread'
+import { ThreadSchema, type Thread } from '@schemas/Thread'
 import { ThreadCard } from './ThreadCard'
 
 /**
@@ -96,12 +95,14 @@ export const LiveStream: Component = () => {
 
   return (
     <div>
-      <div class="flex flex-column">
+      <section class="flex flex-column">
         <For each={posts()} fallback={<p>Loading...</p>}>
           {(post) => <ThreadCard {...post} />}
         </For>
-      </div>
-      <button onClick={loadMore}>Load more</button>
+      </section>
+      <section class="flex">
+        <button class="justify-self-center" onClick={loadMore}>Load more</button>
+      </section>
     </div>
   )
 }
