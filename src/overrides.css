@@ -4,3 +4,16 @@
 :root {
   --cn-color-shadow: black;
 }
+.avatar {
+  container: avatar;
+  width: calc(var(--cn-grid) * 8);
+  height: calc(var(--cn-grid) * 8);
+  border-radius: 50%;
+}
+.avatar .placeholder {
+  font-size: calc(var(--cn-grid) * 4);
+  text-align: center;
+  text-transform: uppercase;
+  line-height: calc(var(--cn-grid) * 8);
+  display: block;
+}

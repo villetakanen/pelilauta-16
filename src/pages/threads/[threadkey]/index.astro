@@ -2,8 +2,10 @@
 import Page from '@layouts/Page.astro'
 import { db } from '@firebase/server'
 import { ThreadSchema } from '@schemas/Thread';
+import { ProfileSchema } from '@schemas/Profile';
 import { extractFlowTime } from '@firebase/helpers';
 import { marked } from 'marked';
+import ThreadArticle from 'src/components/threads/ThreadArticle.astro';
 
 const { threadkey } = Astro.params;
 
@@ -23,23 +25,21 @@ if (!threadData) {
   }
 }
 
+const authorData = (await db.collection('profiles').doc(threadData.author).get()).data();
+const author = ProfileSchema.parse({
+  ...authorData,
+  key: threadData.author
+});
+
+
 const thread = ThreadSchema.parse({
   ...threadData,
   key: threadkey,
   flowTime: extractFlowTime(threadData)
 });
-
-const pageContent = thread.markdownContent ? marked(thread.markdownContent) : thread.htmlContent;
-
 ---
 <Page title={thread.title}>
   <div class="content-columns">
-    <article class="column-l">
-      <h1 class="downscaled">{thread.title}</h1>
-      <section set:html={pageContent} />
-    </article> 
+    <ThreadArticle thread={thread} author={author}/>
   </div>
-[{threadkey}]
 </Page>
-
-@schemas/Thread
