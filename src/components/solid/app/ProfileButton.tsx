@@ -1,6 +1,6 @@
 import type { Component } from "solid-js"
 import { z } from "zod"
-import { isActive, isAuth, uid } from "../../../store/SessionStore"
+import { isActive, isAuth, $uid } from "../../../store/SessionStore"
 import { useStore } from '@nanostores/solid'
 import { t } from "i18next"
 
@@ -13,10 +13,10 @@ export const ProfileButton: Component<ProfileButtonProps> = (props) => {
 
   // const $isActive = useStore(isActive)
   // const $isAuth = useStore(isAuth)
-  const $uid = useStore(uid)
+  const uid = useStore($uid)
 
   if (props.uid) {
-    uid.set(props.uid)
+    $uid.set(props.uid)
     isActive.set(true)
     isAuth.set(true)
   } else {

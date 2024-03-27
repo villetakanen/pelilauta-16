@@ -3,6 +3,7 @@ import type { Profile } from '@schemas/Profile';
 import type { Thread } from '@schemas/Thread'
 import { marked } from 'marked'
 import ThreadInfoSection from './ThreadInfoSection.astro'
+import { ThreadDiscussion } from '@components/solid/forum/ThreadDiscussion';
 
 interface Props {
   thread: Thread,
@@ -15,4 +16,6 @@ const pageContent = thread.markdownContent ? marked(thread.markdownContent) : th
   <h1 class="downscaled">{thread.title}</h1>
   <ThreadInfoSection thread={thread} author={author} />
   <section set:html={pageContent}/>
+  <hr>
+  <ThreadDiscussion {...thread} client:visible/>
 </article>

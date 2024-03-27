@@ -10,4 +10,4 @@ import { atom } from 'nanostores';
 
 export const isActive = atom<boolean>(false);
 export const isAuth = atom<boolean>(false);
-export const uid = atom<string>('');
+export const $uid = atom<string>('');

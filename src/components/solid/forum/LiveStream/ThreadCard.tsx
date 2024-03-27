@@ -2,6 +2,7 @@ import { createSignal, type Component, onMount } from 'solid-js'
 import type { Thread } from '@schemas/Thread'
 import { marked } from 'marked'
 import { topicToNoun } from '@schemas/conversions'
+import { ProfileLink } from '@components/solid/profile/ProfileLink'
 
 function truncateHTML(rootElement: HTMLElement, maxLength = 277) {
   traverseAndTruncate(rootElement, maxLength)
@@ -82,6 +83,9 @@ export const ThreadCard: Component<Thread> = (props) => {
       cover={coverImageUrl()}
     >
       <div class="small" innerHTML={extract()}></div>
+      <div slot="actions" class="flex">
+        <p class="text-caption"><ProfileLink profileKey={props.owners[0]} /></p>
+      </div>
     </cn-card>
   )
 }
