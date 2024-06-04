@@ -8,14 +8,17 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "vitest"
+    "test": "vitest",
+    "check": "npx @biomejs/biome check --apply src"
   },
   "dependencies": {
+    "@11thdeg/cyan-next": "1.0.0-alpha.78",
     "@astrojs/check": "^0.7.0",
     "astro": "^4.9.2",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.7.3",
     "vitest": "^1.6.0"
   }
 }
