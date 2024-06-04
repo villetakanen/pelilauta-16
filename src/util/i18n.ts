@@ -5,6 +5,10 @@ import { locales } from '../locales'; // Your default locale structure
 // Define a recursive type to handle nested translations
 export type NestedTranslation = string | { [key: string]: NestedTranslation };
 
+export type Locale = {
+  [namespace: string]: NestedTranslation;
+};
+
 export interface Locales {
   [locale: string]: {
     [namespace: string]: NestedTranslation;
@@ -19,7 +23,9 @@ export function t(key: string, currentLocale = defaultLocale): string {
     const path = pathSegments.join(':'); // Join the remaining segments
   
     // Function to recursively traverse and find the translation
-    function findTranslation(obj: NestedTranslation, path: string): string | undefined {
+    function findTranslation(obj: NestedTranslation | undefined, path: string): string | undefined {
+        if (!obj) return undefined; // Handle undefined object
+        
       const keys = path.split('.');
       let currentObj = obj;
   

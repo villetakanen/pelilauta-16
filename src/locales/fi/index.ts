@@ -1,6 +1,6 @@
-import type { NestedTranslation } from '../../util/i18n';
-export const fi:NestedTranslation = {
+import type { Locale } from '../../util/i18n';
+export const fi:Locale = {
   app: {
-    title: 'Pelilauta 2 -  Release 16 Alpha Build'
+    title: 'Pelilauta 2 - Versio 16 - Alfajulkaisu'
   }
 }
