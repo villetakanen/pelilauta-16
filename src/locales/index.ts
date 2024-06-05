@@ -1,4 +1,4 @@
-import type { Locales } from '../util/i18n';
+import type { Locales } from '../utils/i18n';
 import { en } from './en';
 import { fi } from './fi';
 

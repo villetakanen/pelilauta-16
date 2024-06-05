@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { t } from '../../src/util/i18n'
+import { t } from '../../src/utils/i18n'
 
 test('Prints out app name in Finnish', () => {
     expect(t('app:title')).toBe('Pelilauta 2 - Versio 16 - Alfajulkaisu')
