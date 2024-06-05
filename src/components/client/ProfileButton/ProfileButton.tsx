@@ -1,15 +1,13 @@
 import { makePersisted } from '@solid-primitives/storage';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
-import { createSignal, type Component } from 'solid-js';
+import { type Component, createSignal } from 'solid-js';
 import { auth } from 'src/firebase/client';
 
 export const ProfileButton: Component = (props) => {
-  const [uid, setUid] = makePersisted(
-    createSignal(''), 
-    {
-      name: "uid"
-    });
+  const [uid, setUid] = makePersisted(createSignal(''), {
+    name: 'uid',
+  });
 
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -19,7 +17,7 @@ export const ProfileButton: Component = (props) => {
       logDebug('User state changed to anonymous');
       setUid('');
     }
-  })
+  });
 
   return uid() ? (
     <a href="/settings">
