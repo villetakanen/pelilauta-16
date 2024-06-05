@@ -1,0 +1,24 @@
+---
+import { EmailLoginSection } from '@client/login/EmailLoginSection';
+import { SyndicatedLoginSection } from '@client/login/SyndicatedLoginSection';
+import { t } from '@utils/i18n';
+import Page from 'src/layouts/Page.astro';
+
+/* A server side rendered login page: we only provide client side session, as all
+ * reactive/interactive elements are handled by the client side solid apps.
+ */
+---
+<Page title={t('app:login.title')}>
+  <main>
+    <div class="content-columns">
+      <div class="column-l">
+        <h1>{t('login:title')}</h1>
+        <p>{t('login:info')}</p>
+      </div>
+    </div>
+    <div class="content-columns">
+      <EmailLoginSection />
+      <SyndicatedLoginSection />
+    </div>
+  </main>
+</Page>

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@client/*": ["src/components/client/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"
