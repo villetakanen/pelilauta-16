@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Force biome check on each commit
+pnpm check
