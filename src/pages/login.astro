@@ -17,7 +17,9 @@ import Page from 'src/layouts/Page.astro';
       </div>
     </div>
     <div class="content-columns">
-      <EmailLoginSection />
+      <div>
+        <EmailLoginSection client:only="solid-js"/>
+      </div>
       <SyndicatedLoginSection />
     </div>
   </main>

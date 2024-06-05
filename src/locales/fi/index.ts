@@ -1,4 +1,5 @@
 import type { Locale } from '../../utils/i18n';
+import { actions } from './actions';
 import { login } from './login';
 export const fi: Locale = {
   app: {
@@ -10,4 +11,5 @@ export const fi: Locale = {
     },
   },
   login,
+  actions,
 };

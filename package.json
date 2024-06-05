@@ -17,6 +17,7 @@
     "@astrojs/solid-js": "^4.2.0",
     "@solid-primitives/storage": "^3.5.0",
     "astro": "^4.9.2",
+    "firebase": "^10.12.2",
     "solid-js": "^1.8.17",
     "typescript": "^5.4.5"
   },

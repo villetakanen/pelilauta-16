@@ -6,5 +6,7 @@ export const login: Locale = {
   withEmail: {
     title: 'Linkillä',
     info: 'Voit kirjautua sovellukseen sähköpostiosoitteen avulla. Syötä sähköpostiosoitteesi allaolevaan kenttään ja paina kirjaudu. Lähetämme sähköpostiisi maagisen linkin, jonka avulla voit kirjautua Pelilaudalle.',
+    placeholder: 'Sähköpostiosoite',
+    sent: 'Linkki lähetetty sähköpostiisi. Kirjaudu linkkiä klikkaamalla.',
   },
 };
