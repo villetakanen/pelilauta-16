@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "0.0.1",
+  "version": "16.0.0-a0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest",
-    "check": "npx @biomejs/biome check --apply src"
+    "check": "npx @biomejs/biome check --apply ."
   },
   "dependencies": {
     "@11thdeg/cyan-next": "1.0.0-alpha.78",
