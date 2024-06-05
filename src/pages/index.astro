@@ -1,17 +1,12 @@
 ---
+import BaseHead from '../components/server/BaseHead.astro';
 import { t } from '../util/i18n';
-import '@11thdeg/cyan-next/dist/style.css';
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
+	<BaseHead />
 	<body>
 		<h1>{t('app:title')}</h1>
+		<cn-icon large noun="fox" />
 	</body>
 </html>
