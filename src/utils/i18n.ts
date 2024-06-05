@@ -1,4 +1,6 @@
-// src/i18n/t.ts
+// Description: A simple i18n utility function to handle nested translations.
+//
+// Does not support any interpolation or pluralization.
 
 import { locales } from '../locales'; // Your default locale structure
 
