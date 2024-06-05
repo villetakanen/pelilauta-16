@@ -19,6 +19,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "lefthook": "^1.6.15",
     "vitest": "^1.6.0"
   }

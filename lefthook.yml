@@ -7,3 +7,8 @@ pre-push:
       glob: '*.{ts,js,{spec,test}.{ts,js}}'
       run: >
         npx vitest --run
+
+commit-msg:
+  commands:
+    lint:commit:
+      run: npx commitlint --from HEAD~1 --to HEAD
