@@ -1,5 +1,5 @@
-import type { Component } from "solid-js";
-import { auth } from "src/firebase/client";
+import type { Component } from 'solid-js';
+import { auth } from 'src/firebase/client';
 
 export const ProfileSection: Component = (props) => {
   async function handleLogout() {
@@ -8,10 +8,12 @@ export const ProfileSection: Component = (props) => {
     window.location.href = '/';
   }
 
-    return (
-        <section>
-        <h3>Profile</h3>
-        <button type="submit" onclick={handleLogout}>Logout</button>
-        </section>
-    );
-}
+  return (
+    <section>
+      <h3>Profile</h3>
+      <button type="submit" onclick={handleLogout}>
+        Logout
+      </button>
+    </section>
+  );
+};
