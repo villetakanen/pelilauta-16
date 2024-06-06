@@ -9,4 +9,11 @@ export const login: Locale = {
     placeholder: 'Sähköpostiosoite',
     sent: 'Linkki lähetetty sähköpostiisi. Kirjaudu linkkiä klikkaamalla.',
   },
+  withProvider: {
+    title: 'Tunnuksella',
+    info: 'Kirjaudu Pelilaudalle käyttämällä jonkin seuraavista palveluista tunnistautumista.',
+  },
+  withGoogle: {
+    action: 'Google-tilillä',
+  },
 };
