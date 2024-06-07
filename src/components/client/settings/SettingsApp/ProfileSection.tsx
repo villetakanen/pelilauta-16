@@ -1,5 +1,6 @@
 import { makePersisted } from '@solid-primitives/storage';
 import { toDisplayString } from '@utils/contentHelpers';
+import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { auth } from 'src/firebase/client';
@@ -18,7 +19,8 @@ export const ProfileSection: Component = (props) => {
 
   return (
     <section>
-      <h3>Profile</h3>
+      <h3>{t('settings:profile.title')}</h3>
+      <p>{t('settings:profile.info')}</p>
       <p>uid: {account.uid}</p>
       <p>lightMode: {account.lightMode}</p>
       <p>showAdminTools: {account.showAdminTools ? 'true' : 'false'}</p>

@@ -1,6 +1,8 @@
+import { settings } from './settings';
 import type { Locale } from '../../utils/i18n';
 import { actions } from './actions';
 import { login } from './login';
+
 export const fi: Locale = {
   app: {
     title: 'Pelilauta 2 - Versio 16 - Alfajulkaisu',
@@ -12,4 +14,5 @@ export const fi: Locale = {
   },
   login,
   actions,
+  settings
 };

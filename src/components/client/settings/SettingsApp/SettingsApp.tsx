@@ -2,6 +2,7 @@ import { makePersisted } from '@solid-primitives/storage';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createSignal, onMount } from 'solid-js';
 import { ProfileSection } from './ProfileSection';
+import { t } from '@utils/i18n';
 
 export const SettingsApp: Component = (props) => {
   const [uid, setUid] = makePersisted(createSignal(''), {
@@ -20,7 +21,10 @@ export const SettingsApp: Component = (props) => {
     <div class="content-columns">
       <h1>Settings</h1>
       <p>Settings content</p>
+      <article>
+        <h2>{t('settings:personal.title')}</h2>
       <ProfileSection />
+      </article>
     </div>
   );
 };
