@@ -3,6 +3,7 @@ import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createSignal } from 'solid-js';
 import { auth } from 'src/firebase/client';
+import { handleLogin } from './handleLogin';
 
 export const ProfileButton: Component = (props) => {
   const [uid, setUid] = makePersisted(createSignal(''), {
@@ -13,6 +14,7 @@ export const ProfileButton: Component = (props) => {
     if (user) {
       setUid(user.uid);
       logDebug('User', user.uid, ' logged in');
+      handleLogin(user.uid);
     } else {
       logDebug('User state changed to anonymous');
       setUid('');

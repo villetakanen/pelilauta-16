@@ -19,7 +19,8 @@
     "astro": "^4.9.2",
     "firebase": "^10.12.2",
     "solid-js": "^1.8.17",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
