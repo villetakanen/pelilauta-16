@@ -20,7 +20,7 @@ export const ProfileSection: Component = (props) => {
   return (
     <section>
       <h3>{t('settings:profile.title')}</h3>
-      <p>{t('settings:profile.info')}</p>
+      <p class="text-low-emphasis">{t('settings:profile.info')}</p>
       <p>uid: {account.uid}</p>
       <p>lightMode: {account.lightMode}</p>
       <p>showAdminTools: {account.showAdminTools ? 'true' : 'false'}</p>
