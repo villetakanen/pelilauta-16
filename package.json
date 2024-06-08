@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest",
-    "check": "npx @biomejs/biome check --write ."
+    "check": "npx @biomejs/biome check --write src"
   },
   "dependencies": {
     "@11thdeg/cyan-next": "1.0.0-alpha.80",

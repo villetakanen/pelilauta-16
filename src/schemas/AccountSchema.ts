@@ -8,6 +8,7 @@ export const AccountSchema = z.object({
   uid: z.string(),
   updatedAt: z.date(), // Timestamp, converted to Date
   showAdminTools: z.string().optional(), // true or false, admin tools check admin privileges,
+  language: z.string().optional(),
   // and this is used only for the UX of the App
 });
 
@@ -30,5 +31,6 @@ export function parseAccount(
     uid: uid || data.uid,
     showadminTools: data.showAdminTools ? data.showAdminTools : 'false',
     eulaAccepted: data.eulaAccepted ? data.eulaAccepted : false,
+    language: data.language ? data.language : 'fi',
   });
 }
