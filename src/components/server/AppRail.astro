@@ -34,5 +34,11 @@ const rail: Array<RailItem> = [
     })
   }
   <div class="flex-grow"></div>
+  <a href="/docs/fi/index">
+    <cn-navigation-icon
+      noun="design"
+      label={t('navigation:docs')}
+      checked={currentPath.startsWith('/docs')}
+    />
   <ProfileButton client:only="solid-js" />
 </nav>
