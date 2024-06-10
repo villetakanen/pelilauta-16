@@ -12,6 +12,8 @@ export const fi: Locale = {
       title: 'Pelilauta 2 16α',
       description:
         'Pelilauta 2 - Versio 16α – SSR tuella varustettu versio Pelilaudasta. Hyvin varhainen julkaisu, suurin osa toiminnoista puuttuu',
+      version: 'Versio',
+      source: 'Koodi',
     },
   },
   login,

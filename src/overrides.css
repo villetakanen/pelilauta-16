@@ -19,3 +19,6 @@
 .debug > * {
   color: var(--color-notify) !important;
 }
+h1:first-child {
+  margin-top: 0;
+}
