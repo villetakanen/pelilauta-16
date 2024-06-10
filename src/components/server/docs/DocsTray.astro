@@ -1,0 +1,19 @@
+---
+import { t } from '@utils/i18n';
+import { getCollection } from 'astro:content';
+
+const allComponents = await getCollection('fi');
+---
+
+<h3>{t('app:docs.title')}</h3>
+<ul>
+  {
+    allComponents.map(p => (
+      <li>
+        <a href={'/docs/fi/' + p.slug}>
+          {p.data.noun && <cn-icon noun={p.data.noun} small></cn-icon>}
+          {p.data.name}</a>
+      </li>
+    ))
+  }
+</ul>

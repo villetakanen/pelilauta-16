@@ -1,0 +1,20 @@
+---
+import AppBar from 'src/components/server/AppBar.astro';
+import AppRail from 'src/components/server/AppRail.astro';
+import BaseHead from '../components/server/BaseHead.astro';
+import { t } from '../utils/i18n';
+---
+
+<html lang="en">
+  <body>
+	<BaseHead />
+	<AppRail />
+    <nav class="cn-tray">
+      <slot name="tray" />
+   </nav>
+    <AppBar title={t('app:title')} tray/>
+	<main>
+      <slot />
+    </main>
+  </body>
+</html>

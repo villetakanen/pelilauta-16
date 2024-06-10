@@ -2,7 +2,8 @@
 import { getCollection } from 'astro:content';
 import { t } from '@utils/i18n';
 import p from 'package.json';
-import Page from 'src/layouts/Page.astro';
+import PageWithTray from 'src/layouts/PageWithTray.astro';
+import DocsTray from 'src/components/server/docs/DocsTray.astro';
 
 export async function getStaticPaths() {
   const components = await getCollection('fi');
@@ -15,7 +16,8 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
-<Page>
+<PageWithTray>
+  <DocsTray slot="tray" />
   <div class="content-columns">
     <div class="column-l">
         <h1>{entry.data.name}</h1>
