@@ -15,6 +15,9 @@ export const fi: Locale = {
       version: 'Versio',
       source: 'Koodi',
     },
+    docs: {
+      title: 'Pelilauta',
+    },
   },
   login,
   actions,

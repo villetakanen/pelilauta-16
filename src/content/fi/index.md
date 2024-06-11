@@ -1,5 +1,6 @@
 ---
 name: "Tervetuloa Pelilaudalle"
+shortname: 'Etusivu'
 ---
 **Keskustelua roolipeleistä ja vähän muustakin.** 
 

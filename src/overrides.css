@@ -22,3 +22,12 @@
 h1:first-child {
   margin-top: 0;
 }
+nav.cn-tray .cn-tray-title {
+  margin-top: calc(-1 * var(--cn-grid));
+  border-bottom: var(--color-border) solid 1px;
+}
+@media (min-width: 621px) {
+  nav.cn-tray {
+    padding-left: var(--cn-rail-width);
+  }
+}

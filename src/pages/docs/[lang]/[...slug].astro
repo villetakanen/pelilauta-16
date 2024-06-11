@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import { t } from '@utils/i18n';
 import p from 'package.json';
-import PageWithTray from 'src/layouts/PageWithTray.astro';
 import DocsTray from 'src/components/server/docs/DocsTray.astro';
+import PageWithTray from 'src/layouts/PageWithTray.astro';
 
 export async function getStaticPaths() {
   const components = await getCollection('fi');
@@ -16,7 +16,13 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
-<PageWithTray>
+<PageWithTray title={entry.data.shortname || entry.data.name}>
+  <script is:inline>
+   // If screen widht is more than 1024, add aria-expanded=true to the tray button (cn-tray-button)
+    if (window.innerWidth > 1024) {
+      document.querySelector('cn-tray-button').setAttribute('aria-expanded', 'true');
+    }
+  </script>
   <DocsTray slot="tray" />
   <div class="content-columns">
     <div class="column-l">
