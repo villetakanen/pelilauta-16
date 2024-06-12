@@ -12,18 +12,18 @@
     "check": "npx @biomejs/biome check --write src"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-alpha.83",
+    "@11thdeg/cyan-next": "1.0.0-alpha.84",
     "@astrojs/check": "^0.7.0",
     "@astrojs/solid-js": "^4.3.0",
     "@solid-primitives/storage": "^3.5.0",
-    "astro": "^4.10.1",
+    "astro": "^4.10.2",
     "firebase": "^10.12.2",
     "solid-js": "^1.8.17",
     "typescript": "^5.4.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.0",
+    "@biomejs/biome": "1.8.1",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "lefthook": "^1.6.15",
