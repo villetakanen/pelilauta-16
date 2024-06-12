@@ -12,7 +12,7 @@ const allComponents = await getCollection('fi');
       <li>
         <a href={'/docs/fi/' + p.slug}>
           {p.data.noun && <cn-icon noun={p.data.noun} small></cn-icon>}
-          {p.data.name}</a>
+          {p.data.shortname || p.data.name}</a>
       </li>
     ))
   }

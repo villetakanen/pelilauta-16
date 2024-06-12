@@ -1,5 +1,7 @@
 ---
 name: 'Ohjeistus'
+shortname: 'Ohjeistus'
+noun: 'fox'
 ---
 *Eli Code of conduct?*
 
