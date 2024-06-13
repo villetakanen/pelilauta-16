@@ -8,15 +8,10 @@ import {
   getDoc,
   serverTimestamp,
 } from 'firebase/firestore';
-import {
-  type Component,
-  type JSX,
-  createSignal,
-  onMount,
-} from 'solid-js';
+import { type Component, type JSX, createSignal, onMount } from 'solid-js';
 import { auth, db } from 'src/firebase/client';
-import {  parseAccount } from 'src/schemas/AccountSchema';
-import { requiresEula, $account } from 'src/stores/sessionStore';
+import { parseAccount } from 'src/schemas/AccountSchema';
+import { $account, requiresEula } from 'src/stores/sessionStore';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 
@@ -25,7 +20,6 @@ type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
  * that has not accepted the EULA yet.
  */
 export const EulaDialog: Component = (props: DialogProps) => {
-
   const [nickname, setNickname] = createSignal('');
   const [avatarSrc, setAvatarSrc] = createSignal('');
 

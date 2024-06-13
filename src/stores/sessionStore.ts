@@ -1,8 +1,7 @@
-import { computed } from 'nanostores';
 import { persistentAtom } from '@nanostores/persistent';
+import { computed } from 'nanostores';
 import type { Account } from 'src/schemas/AccountSchema';
 import type { Profile } from 'src/schemas/ProfileSchema';
-
 
 export const $uid = persistentAtom<string>('uid', '');
 
@@ -19,7 +18,10 @@ export const $account = persistentAtom<Account>(
   },
 );
 
-export const requiresEula = computed($account, account => (!!$uid.get() && !account.eulaAccepted))
+export const requiresEula = computed(
+  $account,
+  (account) => !!$uid.get() && !account.eulaAccepted,
+);
 
 // Profile of the current user
 export const $profile = persistentAtom<Profile>(
