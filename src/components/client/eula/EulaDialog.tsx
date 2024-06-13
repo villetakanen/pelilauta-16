@@ -1,17 +1,25 @@
 import type { CnDialog } from '@11thdeg/cyan-next';
 import { handleLogout } from '@client/ProfileButton/handleLogout';
+import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import {
   addDoc,
   collection,
+  doc,
   getDoc,
   serverTimestamp,
+  setDoc,
 } from 'firebase/firestore';
 import { type Component, type JSX, createSignal, onMount } from 'solid-js';
 import { auth, db } from 'src/firebase/client';
 import { parseAccount } from 'src/schemas/AccountSchema';
-import { $account, requiresEula } from 'src/stores/sessionStore';
+import {
+  $account,
+  $profile,
+  $uid,
+  requiresEula,
+} from 'src/stores/sessionStore';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 
@@ -22,6 +30,8 @@ type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 export const EulaDialog: Component = (props: DialogProps) => {
   const [nickname, setNickname] = createSignal('');
   const [avatarSrc, setAvatarSrc] = createSignal('');
+  const oldProfile = useStore($profile);
+  const uid = useStore($uid);
 
   onMount(() => {
     // Listen to auth changes
@@ -37,6 +47,11 @@ export const EulaDialog: Component = (props: DialogProps) => {
         // Load the avatar
         const avatar = user.photoURL || '';
         setAvatarSrc(avatar);
+
+        if (oldProfile().nick) {
+          logWarn('User already has a profile, restoring nickname');
+          setNickname(oldProfile().nick);
+        }
       }
     });
   });
@@ -53,7 +68,8 @@ export const EulaDialog: Component = (props: DialogProps) => {
       'User accepted the EULA, storing to db, and refreshing local state',
     );
     // When the user accepts the EULA, store the acceptance to the db
-    const docRef = await addDoc(collection(db, 'account'), {
+    const accountRef = doc(db, 'account', uid());
+    await setDoc(accountRef, {
       ...$account.get(),
       lastLogin: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -64,11 +80,18 @@ export const EulaDialog: Component = (props: DialogProps) => {
         : 'dark',
       language: 'fi',
     });
-    const newAccount = await getDoc(docRef);
+    const newAccount = await getDoc(accountRef);
     if (newAccount.exists()) {
       const account = parseAccount(newAccount.data(), newAccount.id);
       $account.set(account);
       logDebug('User data stored to db', account, 'and stored to local state');
+
+      // Create a new profile to DB
+      const profile = {
+        nick: nickname(),
+        avatar: avatarSrc(),
+      };
+
       (document.getElementById('eulaDialog') as CnDialog).close();
     } else {
       throw new Error('Failed to store user data to db');

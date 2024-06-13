@@ -1,10 +1,14 @@
+import { ProfileCard } from '@client/ProfileCard/ProfileCard';
+import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
-import { type Component, createSignal, onMount } from 'solid-js';
-import { $uid } from 'src/stores/sessionStore';
+import { type Component, onMount } from 'solid-js';
+import { $profile, $uid } from 'src/stores/sessionStore';
 import { ProfileSection } from './ProfileSection';
 
 export const SettingsApp: Component = (props) => {
+  const profile = useStore($profile);
+
   onMount(() => {
     logDebug('SettingsApp mounted');
     if (!$uid.get()) {
@@ -16,6 +20,9 @@ export const SettingsApp: Component = (props) => {
 
   return (
     <div class="content-columns">
+      <article>
+        <ProfileCard {...profile()} />
+      </article>
       <h1>Settings</h1>
       <p>Settings content</p>
       <article>

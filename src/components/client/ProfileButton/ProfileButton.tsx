@@ -1,3 +1,4 @@
+import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, onMount } from 'solid-js';
@@ -6,6 +7,9 @@ import { $profile, $uid } from 'src/stores/sessionStore';
 import { handleLogin } from './handleLogin';
 
 export const ProfileButton: Component = () => {
+  const uid = useStore($uid);
+  const profile = useStore($profile);
+
   onMount(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -18,9 +22,9 @@ export const ProfileButton: Component = () => {
     });
   });
 
-  return $uid.get() ? (
+  return uid() ? (
     <a href="/settings">
-      <cn-navigation-icon noun="avatar" label={$profile.get().nick} />
+      <cn-navigation-icon noun="avatar" label={profile().nick} />
     </a>
   ) : (
     <a href="/login">
