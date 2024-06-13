@@ -1,18 +1,11 @@
-import { makePersisted } from '@solid-primitives/storage';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
-import { type Component, createSignal, onMount } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { type Component, onMount } from 'solid-js';
 import { auth } from 'src/firebase/client';
-import type { Profile } from 'src/schemas/ProfileSchema';
-import { $uid } from 'src/stores/sessionStore';
+import { $profile, $uid } from 'src/stores/sessionStore';
 import { handleLogin } from './handleLogin';
 
-export const ProfileButton: Component = (props) => {
-  const [profile, setProfile] = makePersisted(createStore({} as Profile), {
-    name: 'profile',
-  });
-
+export const ProfileButton: Component = () => {
   onMount(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -27,7 +20,7 @@ export const ProfileButton: Component = (props) => {
 
   return $uid.get() ? (
     <a href="/settings">
-      <cn-navigation-icon noun="avatar" label={profile.nick} />
+      <cn-navigation-icon noun="avatar" label={$profile.get().nick} />
     </a>
   ) : (
     <a href="/login">

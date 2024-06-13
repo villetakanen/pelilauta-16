@@ -1,16 +1,14 @@
 import { handleLogout } from '@client/ProfileButton/handleLogout';
-import { makePersisted } from '@solid-primitives/storage';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
 import { deleteDoc, doc } from 'firebase/firestore';
-import { log } from 'node_modules/astro/dist/core/logger/core';
 import { type Component, createSignal } from 'solid-js';
 import { db } from 'src/firebase/client';
+import { $uid } from 'src/stores/sessionStore';
 
 export const RemoveAccountSection: Component = () => {
   const [showVerify, setShowVerify] = createSignal(false);
   const [verify, setVerify] = createSignal('');
-  const [uid, setUid] = makePersisted(createSignal(''), { name: 'uid' });
 
   async function deRegister(e: Event) {
     e.preventDefault();
@@ -19,12 +17,12 @@ export const RemoveAccountSection: Component = () => {
     // if (!veryfy() === 'olen aivan varma') {
     //     return;
     //}
-    const key = uid();
+    const key = $uid.get();
 
-    await deleteDoc(doc(db, 'profiles', uid()));
+    await deleteDoc(doc(db, 'profiles', key));
     logWarn('Profile removed from the DB');
 
-    await deleteDoc(doc(db, 'account', uid()));
+    await deleteDoc(doc(db, 'account', key));
     logWarn('Account removed from the DB');
 
     await handleLogout();
