@@ -1,7 +1,7 @@
 import { makePersisted } from '@solid-primitives/storage';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
-import { type Component, createSignal } from 'solid-js';
+import { type Component, createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { auth } from 'src/firebase/client';
 import type { Profile } from 'src/schemas/ProfileSchema';
@@ -15,15 +15,17 @@ export const ProfileButton: Component = (props) => {
     name: 'profile',
   });
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      setUid(user.uid);
-      logDebug('User', user.uid, ' logged in');
-      handleLogin(user.uid);
-    } else {
-      logDebug('User state changed to anonymous');
-      setUid('');
-    }
+  onMount(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUid(user.uid);
+        logDebug('User', user.uid, ' logged in');
+        handleLogin(user.uid);
+      } else {
+        logDebug('User state changed to anonymous');
+        setUid('');
+      }
+    });
   });
 
   return uid() ? (

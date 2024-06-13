@@ -31,6 +31,9 @@ export const EulaDialog: Component = (props: DialogProps) => {
   const [account, setAccount] = makePersisted(createStore({} as Account), {
     name: 'account',
   });
+  const [uid, setUid] = makePersisted(createSignal(''), {
+    name: 'uid',
+  });
   const [nickname, setNickname] = createSignal('');
   const [avatarSrc, setAvatarSrc] = createSignal('');
 
@@ -80,6 +83,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
       const account = parseAccount(newAccount.data(), newAccount.id);
       setAccount(account);
       logDebug('User data stored to db', account, 'and stored to local state');
+      (document.getElementById('eulaDialog') as CnDialog).close();
     } else {
       throw new Error('Failed to store user data to db');
     }
@@ -90,7 +94,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
       <cn-dialog
         id="eulaDialog"
         title={t('login:eula.title')}
-        open={account.eulaAccepted === false && !!account.uid}
+        open={!account?.eulaAccepted && !!uid()}
       >
         {props.children}
         <section class="elevation-1 border-radius p-1 flex flex-row">
@@ -106,7 +110,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
           <button type="button" onclick={oncancel}>
             {t('login:eula.decline')}
           </button>
-          <button class="call-to-action" type="submit">
+          <button class="call-to-action" type="submit" onclick={onaccept}>
             {t('login:eula.accept')}
           </button>
         </div>

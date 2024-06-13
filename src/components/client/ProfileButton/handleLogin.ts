@@ -13,6 +13,8 @@ export async function handleLogin(uid: string) {
     );
   }
 
+  logDebug('handleLogin', 'Fetching user data', uid);
+
   const accountDoc = await getDoc(doc(db, 'account', uid));
   if (!accountDoc.exists()) {
     logError(
