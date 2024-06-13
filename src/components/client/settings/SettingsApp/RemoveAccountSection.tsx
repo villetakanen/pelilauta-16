@@ -37,7 +37,7 @@ export const RemoveAccountSection: Component = () => {
       <button type="submit" class="text" onclick={() => setShowVerify(true)}>
         {t('actions:deregister')}
       </button>
-      {!showVerify() && (
+      {showVerify() && (
         <form onsubmit={deRegister} class="elevation-2 p-2 mt-1 border-radius">
           <label>
             {t('settings:profile.dangerZone.confirm')}
@@ -49,7 +49,7 @@ export const RemoveAccountSection: Component = () => {
           </label>
           <div class="toolbar flex justify-end">
             <button
-              // disabled={verify() !== 'olen aivan varma'}
+              disabled={verify() !== 'olen aivan varma'}
               type="submit"
             >
               {t('actions:confirm')}

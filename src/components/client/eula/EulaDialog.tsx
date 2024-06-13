@@ -14,6 +14,7 @@ import {
 import { type Component, type JSX, createSignal, onMount } from 'solid-js';
 import { auth, db } from 'src/firebase/client';
 import { parseAccount } from 'src/schemas/AccountSchema';
+import { parseProfile } from 'src/schemas/ProfileSchema';
 import {
   $account,
   $profile,
@@ -64,13 +65,15 @@ export const EulaDialog: Component = (props: DialogProps) => {
   }
 
   async function onaccept() {
+    const key = uid();
     logDebug(
-      'User accepted the EULA, storing to db, and refreshing local state',
+      'User',  key, 'accepted the EULA, storing to db, and refreshing local state',
     );
     // When the user accepts the EULA, store the acceptance to the db
-    const accountRef = doc(db, 'account', uid());
+    const accountRef = doc(db, 'account', key);
     await setDoc(accountRef, {
       ...$account.get(),
+      uid: key,
       lastLogin: serverTimestamp(),
       updatedAt: serverTimestamp(),
       eulaAccepted: true,
@@ -88,9 +91,23 @@ export const EulaDialog: Component = (props: DialogProps) => {
 
       // Create a new profile to DB
       const profile = {
+        ...$profile.get(),
         nick: nickname(),
-        avatar: avatarSrc(),
+        avatarURL: avatarSrc(),
+        updatedAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
       };
+
+      const profileRef = doc(db, 'profiles', key);
+      await setDoc(profileRef, profile);
+
+      const newProfile = await getDoc(profileRef);
+      if (newProfile.exists()) {
+        $profile.set(parseProfile(newProfile.data(), newProfile.id));
+        logDebug('Profile data stored to db', profile, 'and stored to local state');
+      } else {
+        throw new Error('Failed to store profile data to db');
+      }
 
       (document.getElementById('eulaDialog') as CnDialog).close();
     } else {
