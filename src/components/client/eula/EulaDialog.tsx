@@ -1,9 +1,7 @@
 import type { CnDialog } from '@11thdeg/cyan-next';
 import { handleLogout } from '@client/ProfileButton/handleLogout';
-import { makePersisted } from '@solid-primitives/storage';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
-import { update } from 'firebase/database';
 import {
   addDoc,
   collection,
@@ -13,13 +11,12 @@ import {
 import {
   type Component,
   type JSX,
-  children,
   createSignal,
   onMount,
 } from 'solid-js';
-import { createStore } from 'solid-js/store';
 import { auth, db } from 'src/firebase/client';
-import { type Account, parseAccount } from 'src/schemas/AccountSchema';
+import {  parseAccount } from 'src/schemas/AccountSchema';
+import { requiresEula, $account } from 'src/stores/sessionStore';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 
@@ -28,12 +25,7 @@ type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
  * that has not accepted the EULA yet.
  */
 export const EulaDialog: Component = (props: DialogProps) => {
-  const [account, setAccount] = makePersisted(createStore({} as Account), {
-    name: 'account',
-  });
-  const [uid, setUid] = makePersisted(createSignal(''), {
-    name: 'uid',
-  });
+
   const [nickname, setNickname] = createSignal('');
   const [avatarSrc, setAvatarSrc] = createSignal('');
 
@@ -68,7 +60,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
     );
     // When the user accepts the EULA, store the acceptance to the db
     const docRef = await addDoc(collection(db, 'account'), {
-      ...account,
+      ...$account.get(),
       lastLogin: serverTimestamp(),
       updatedAt: serverTimestamp(),
       eulaAccepted: true,
@@ -81,7 +73,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
     const newAccount = await getDoc(docRef);
     if (newAccount.exists()) {
       const account = parseAccount(newAccount.data(), newAccount.id);
-      setAccount(account);
+      $account.set(account);
       logDebug('User data stored to db', account, 'and stored to local state');
       (document.getElementById('eulaDialog') as CnDialog).close();
     } else {
@@ -94,7 +86,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
       <cn-dialog
         id="eulaDialog"
         title={t('login:eula.title')}
-        open={!account?.eulaAccepted && !!uid()}
+        open={requiresEula.get()}
       >
         {props.children}
         <section class="elevation-1 border-radius p-1 flex flex-row">
