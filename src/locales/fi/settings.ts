@@ -7,5 +7,10 @@ export const settings: Locale = {
   profile: {
     title: 'Profiili',
     info: 'Pelilauta tallentaa seuraavat tiedot tietokantaansa. Tiedot näkyvät sovelluksen valvojille, ja ne voivat näkyä sovelluksen käyttäjlle.',
+    dangerZone: {
+      title: 'Vaaravyöhyke',
+      info: 'Seuraavat toiminnot poistavat tilisi ja profiilisi tiedot tietokannasta. Tämä toimintoa ei voi peruuttaa.',
+      confirm: 'Kirjoita alle "olen aivan varma" jatkaaksesi ',
+    },
   },
 };

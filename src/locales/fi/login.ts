@@ -16,4 +16,11 @@ export const login: Locale = {
   withGoogle: {
     action: 'Google-tilillä',
   },
+  eula: {
+    title: 'Rekisteröityminen',
+    profileInfo:
+      'Rekisteröityminen täyttää tässä annetut profiilisi tiedot automaattisesti. Voit muokata nimimerkkiä, ja muita profiilitietoja myöhemmin.',
+    decline: 'Keskeytä, ja kirjaudu ulos',
+    accept: 'Hyväksy ja jatka',
+  },
 };

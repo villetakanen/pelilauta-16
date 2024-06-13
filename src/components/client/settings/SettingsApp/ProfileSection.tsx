@@ -1,22 +1,13 @@
-import { makePersisted } from '@solid-primitives/storage';
+import { handleLogout } from '@client/ProfileButton/handleLogout';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { createStore } from 'solid-js/store';
-import { auth } from 'src/firebase/client';
-import type { Account } from 'src/schemas/AccountSchema';
-import type { Profile } from 'src/schemas/ProfileSchema';
+import { $account, $profile, $uid } from 'src/stores/sessionStore';
+import { RemoveAccountSection } from './RemoveAccountSection';
 
 export const ProfileSection: Component = (props) => {
-  const [account, setAccount] = makePersisted(createStore({} as Account), {
-    name: 'account',
-  });
-  const [profile, setProfile] = makePersisted(createStore({} as Profile), {
-    name: 'profile',
-  });
-
-  async function handleLogout() {
-    await auth.signOut();
+  async function logoutAction() {
+    handleLogout();
     // Logout user
     window.location.href = '/';
   }
@@ -28,31 +19,35 @@ export const ProfileSection: Component = (props) => {
 
       <div class="field-grid">
         <p>{t('entries:profile.key')}</p>
-        <p>{profile.key}</p>
+        <p>{$uid.get()}</p>
         <p>{t('entries:profile.nick')}</p>
-        <p>{profile.nick}</p>
+        <p>{$profile.get().nick}</p>
         <p>{t('entries:profile.avatar')}</p>
         <p>
-          <a href={profile.avatarURL}>{profile.avatarURL}</a>
+          <a href={$profile.get().avatarURL}>{$profile.get().avatarURL}</a>
         </p>
         <p>{t('entries:profile.bio')}</p>
-        <p>{profile.bio}</p>
+        <p>{$profile.get().bio}</p>
         <p>{t('entries:account.lastLogin')}</p>
-        <p>{toDisplayString(account.lastLogin)}</p>
+        <p>{toDisplayString($account.get().lastLogin)}</p>
         <p>{t('entries:account.lightMode')}</p>
-        <p>{account.lightMode ? 'true' : 'false'}</p>
+        <p>{$account.get().lightMode ? 'true' : 'false'}</p>
         <p>{t('entries:account.language')}</p>
-        <p>{account.language}</p>
+        <p>{$account.get().language}</p>
       </div>
 
-      <button type="submit" onclick={handleLogout}>
-        Logout
+      <div class="debug field-grid">
+        <p>showAdminTools:</p>
+        <p> {$account.get().showAdminTools ? 'true' : 'false'}</p>
+        <p>eulaAccepted:</p>
+        <p> {$account.get().eulaAccepted ? 'true' : 'false'}</p>
+      </div>
+
+      <button type="submit" onclick={logoutAction}>
+        {t('actions:logout')}
       </button>
 
-      <div class="debug">
-        <p>showAdminTools: {account.showAdminTools ? 'true' : 'false'}</p>
-        <p>eulaAccepted: {account.eulaAccepted ? 'true' : 'false'}</p>
-      </div>
+      <RemoveAccountSection />
     </section>
   );
 };

@@ -1,10 +1,9 @@
-import { makePersisted } from '@solid-primitives/storage';
 import { logDebug, logError } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
-import { createStore } from 'solid-js/store';
 import { db } from 'src/firebase/client';
 import { parseAccount } from 'src/schemas/AccountSchema';
 import { parseProfile } from 'src/schemas/ProfileSchema';
+import { $account, $profile } from 'src/stores/sessionStore';
 
 export async function handleLogin(uid: string) {
   if (!uid) {
@@ -12,6 +11,8 @@ export async function handleLogin(uid: string) {
       'handleLogin: Trying to fetch user data for anonymous user, aborting',
     );
   }
+
+  logDebug('handleLogin', 'Fetching user data', uid);
 
   const accountDoc = await getDoc(doc(db, 'account', uid));
   if (!accountDoc.exists()) {
@@ -26,10 +27,8 @@ export async function handleLogin(uid: string) {
 
   const account = parseAccount(accountDoc.data(), uid);
 
-  const [getStore, setStore] = makePersisted(createStore({ ...account }), {
-    name: 'account',
-  });
-  setStore(account);
+  $account.set(account);
+
   logDebug('handleLogin: User data fetched and stored', account);
 
   fetchProfile(uid);
@@ -47,9 +46,8 @@ async function fetchProfile(uid: string) {
   }
 
   const profile = parseProfile(profileDoc.data(), uid);
-  const [getStore, setStore] = makePersisted(createStore({ ...profile }), {
-    name: 'profile',
-  });
-  setStore(profile);
+
+  $profile.set(profile);
+
   logDebug('fetchProfile: Profile data fetched and stored', profile);
 }

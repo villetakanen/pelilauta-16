@@ -13,10 +13,10 @@ declare module 'solid-js' {
     interface IntrinsicElements {
       'cn-icon': HTMLAttributes & { noun: string };
       'cn-card': HTMLAttributes;
-      'cn-dialog': HTMLAttributes;
+      'cn-dialog': HTMLAttributes & { open: boolean; close: () => void };
       'cn-navigation-icon': HTMLAttributes & { noun: string; label: string };
       'cn-avatar-button': HTMLAttributes & { src: string };
-      'cn-avatar': CnAvatar;
+      'cn-avatar': HTMLAttributes & { nick: string };
       'cn-bubble': HTMLAttributes;
       'cn-reaction-button': CnReactionButton;
       'cn-loader': HTMLAttributes;

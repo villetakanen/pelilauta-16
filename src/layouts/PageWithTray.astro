@@ -1,6 +1,7 @@
 ---
 import AppBar from 'src/components/server/AppBar.astro';
 import AppRail from 'src/components/server/AppRail.astro';
+import BasePostscripts from 'src/components/server/BasePostscripts.astro';
 import BaseHead from '../components/server/BaseHead.astro';
 import { t } from '../utils/i18n';
 
@@ -19,5 +20,6 @@ const { title } = Astro.props;
 	<main>
       <slot />
     </main>
+  <BasePostscripts />
   </body>
 </html>

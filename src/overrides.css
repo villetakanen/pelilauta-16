@@ -1,20 +1,12 @@
 /* This content should be moved to the design system */
-.field-grid {
-  display: grid;
-  /* label 1fr, value 3fr */
-  grid-template-columns: 1fr 3fr;
-  grid-gap: var(--cn-grid);
-  margin-bottom: calc(var(--cn-gap)*2);
-}
-.field-grid > * {
-  word-break: break-all;
-  margin: 0;
-  padding: 0;
+.flex-row {
+  flex-wrap: nowrap;
 }
 .debug {
   color: var(--color-notify) !important;
   border: solid 1px var(--color-notify);
   padding: var(--cn-gap);
+  margin: var(--cn-gap) 0;
 }
 .debug > * {
   color: var(--color-notify) !important;
