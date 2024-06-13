@@ -6,6 +6,7 @@
   color: var(--color-notify) !important;
   border: solid 1px var(--color-notify);
   padding: var(--cn-gap);
+  margin: var(--cn-gap) 0;
 }
 .debug > * {
   color: var(--color-notify) !important;

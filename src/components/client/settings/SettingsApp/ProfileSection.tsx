@@ -5,9 +5,9 @@ import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
 import { type Component, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { auth } from 'src/firebase/client';
 import type { Account } from 'src/schemas/AccountSchema';
 import type { Profile } from 'src/schemas/ProfileSchema';
+import { RemoveAccountSection } from './RemoveAccountSection';
 
 export const ProfileSection: Component = (props) => {
   const [uid, setUid] = makePersisted(createSignal(''), { name: 'uid' });
@@ -17,17 +17,11 @@ export const ProfileSection: Component = (props) => {
   const [profile, setProfile] = makePersisted(createStore({} as Profile), {
     name: 'profile',
   });
-  const [openDeregister, setOpenDeregister] = createSignal(false);
 
   async function logoutAction() {
     handleLogout();
     // Logout user
     window.location.href = '/';
-  }
-
-  async function deRegister() {
-    logWarn('Removing user data from the platform, thisc cannot be undone');
-    setOpenDeregister(true);
   }
 
   return (
@@ -54,22 +48,18 @@ export const ProfileSection: Component = (props) => {
         <p>{account.language}</p>
       </div>
 
+      <div class="debug field-grid">
+        <p>showAdminTools:</p>
+        <p> {account.showAdminTools ? 'true' : 'false'}</p>
+        <p>eulaAccepted:</p>
+        <p> {account.eulaAccepted ? 'true' : 'false'}</p>
+      </div>
+
       <button type="submit" onclick={logoutAction}>
         {t('actions:logout')}
       </button>
 
-      <div class="elevation-1 p-2 my-1">
-        <h4>{t('settings:profile.dangerZone.title')}</h4>
-        <p>{t('settings:profile.dangerZone.info')}</p>
-        <button type="submit" class="text" onclick={deRegister}>
-          {t('actions:deregister')}
-        </button>
-      </div>
-
-      <div class="debug">
-        <p>showAdminTools: {account.showAdminTools ? 'true' : 'false'}</p>
-        <p>eulaAccepted: {account.eulaAccepted ? 'true' : 'false'}</p>
-      </div>
+      <RemoveAccountSection />
     </section>
   );
 };

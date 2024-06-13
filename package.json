@@ -12,7 +12,7 @@
     "check": "npx @biomejs/biome check --write src"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-alpha.84",
+    "@11thdeg/cyan-next": "1.0.0-alpha.85",
     "@astrojs/check": "^0.7.0",
     "@astrojs/solid-js": "^4.3.0",
     "@solid-primitives/storage": "^3.5.0",

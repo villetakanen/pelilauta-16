@@ -10,6 +10,7 @@ export const settings: Locale = {
     dangerZone: {
       title: 'Vaaravyöhyke',
       info: 'Seuraavat toiminnot poistavat tilisi ja profiilisi tiedot tietokannasta. Tämä toimintoa ei voi peruuttaa.',
+      confirm: 'Kirjoita alle "olen aivan varma" jatkaaksesi ',
     },
   },
 };
