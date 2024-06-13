@@ -67,7 +67,9 @@ export const EulaDialog: Component = (props: DialogProps) => {
   async function onaccept() {
     const key = uid();
     logDebug(
-      'User',  key, 'accepted the EULA, storing to db, and refreshing local state',
+      'User',
+      key,
+      'accepted the EULA, storing to db, and refreshing local state',
     );
     // When the user accepts the EULA, store the acceptance to the db
     const accountRef = doc(db, 'account', key);
@@ -104,7 +106,11 @@ export const EulaDialog: Component = (props: DialogProps) => {
       const newProfile = await getDoc(profileRef);
       if (newProfile.exists()) {
         $profile.set(parseProfile(newProfile.data(), newProfile.id));
-        logDebug('Profile data stored to db', profile, 'and stored to local state');
+        logDebug(
+          'Profile data stored to db',
+          profile,
+          'and stored to local state',
+        );
       } else {
         throw new Error('Failed to store profile data to db');
       }
