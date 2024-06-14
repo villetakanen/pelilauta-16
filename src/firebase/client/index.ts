@@ -5,15 +5,17 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+console.log(import.meta.env);
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyDgck5PNbLKHNircXyElPoZ14KqxrknUe8',
-  authDomain: 'skaldbase.firebaseapp.com',
-  databaseURL: 'https://skaldbase.firebaseio.com',
-  projectId: 'skaldbase',
-  storageBucket: 'skaldbase.appspot.com',
-  messagingSenderId: '161233573033',
-  appId: '1:161233573033:web:a0b3f20d4c8c4f4c22c5b8',
-  measurementId: 'G-T5E33DTZGW',
+  apiKey: import.meta.env.PUBLIC_apiKey,
+  authDomain: import.meta.env.PUBLIC_authDomain,
+  databaseURL: import.meta.env.PUBLIC_databaseURL,
+  projectId: import.meta.env.PUBLIC_projectId,
+  storageBucket: import.meta.env.PUBLIC_storageBucket,
+  messagingSenderId: import.meta.env.PUBLIC_messagingSenderId,
+  appId: import.meta.env.PUBLIC_appId,
+  measurementId: import.meta.env.PUBLIC_measurementId,
 };
 
 export const app = initializeApp(firebaseConfig);

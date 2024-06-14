@@ -1,4 +1,5 @@
 import { persistentAtom } from '@nanostores/persistent';
+import { logDebug } from '@utils/logHelpers';
 import { computed } from 'nanostores';
 import type { Account } from 'src/schemas/AccountSchema';
 import type { Profile } from 'src/schemas/ProfileSchema';
@@ -36,3 +37,7 @@ export const $profile = persistentAtom<Profile>(
     decode: JSON.parse,
   },
 );
+
+export function login(uid: string) {
+  logDebug('TODO: action login');
+}
