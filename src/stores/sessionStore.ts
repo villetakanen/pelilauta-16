@@ -1,7 +1,7 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logError } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
-import { atom, computed, onMount } from 'nanostores';
+import { computed, onMount } from 'nanostores';
 import { auth, db } from 'src/firebase/client';
 import {
   ACCOUNTS_COLLECTION_NAME,
@@ -17,7 +17,7 @@ import {
 export const $uid = persistentAtom<string>('uid', '');
 
 export type LoadingStateValue = 'empty' | 'loading' | 'loaded';
-export const $loadingState = atom<LoadingStateValue>('empty');
+export const $loadingState = persistentAtom<LoadingStateValue>('empty');
 
 // Account of the current user
 export const $account = persistentAtom<Account>(
@@ -32,10 +32,16 @@ export const $account = persistentAtom<Account>(
   },
 );
 
-export const requiresEula = computed(
-  $loadingState,
-  ($state) => $state === 'loaded' && !$account.get().eulaAccepted && $uid.get(),
-);
+export const requiresEula = computed($account, (account) => {
+  if ($loadingState.get() === 'empty' || $loadingState.get() === 'loading')
+    return false;
+  // If we do not have a user, we do not require EULA
+  if (!$uid.get()) return false;
+  // If we have a user and the EULA has been accepted, we do not require EULA
+  if (account.eulaAccepted) return false;
+  // If we have a user and the EULA has not been accepted, we require EULA
+  return true;
+});
 
 // Profile of the current user
 export const $profile = persistentAtom<Profile>(
@@ -59,6 +65,7 @@ onMount($uid, () => {
       login(user.uid);
     } else {
       logout();
+      $loadingState.set('loaded');
     }
   });
 });
@@ -67,7 +74,9 @@ async function login(uid: string) {
   logDebug('sessionStore', 'login', uid);
   $loadingState.set('loading');
   $uid.set(uid);
+  logDebug('sessionStore', 'login', 'fetching account and profile data');
   await fetchAccount(uid);
+  logDebug('sessionStore', 'login', 'fetching profile data');
   await fetchProfile(uid);
   $loadingState.set('loaded');
 }
@@ -86,8 +95,11 @@ async function fetchAccount(uid: string) {
   logDebug('sessionStore', 'fetchAccount', uid);
   const accountDoc = await getDoc(doc(db, ACCOUNTS_COLLECTION_NAME, uid));
 
-  if (!accountDoc.exists())
-    throw new Error(`Account not found for uid: ${uid}`);
+  if (!accountDoc.exists()) {
+    $loadingState.set('loaded');
+    logError(`Account not found for uid: ${uid}`);
+    return;
+  }
 
   $account.set(parseAccount(accountDoc.data(), uid));
   logDebug('sessionStore', 'fetchAccount', 'loaded account data to store');
@@ -98,8 +110,10 @@ async function fetchProfile(uid: string) {
   logDebug('sessionStore', 'fetchProfile', uid);
   const profileDoc = await getDoc(doc(db, PROFILES_COLLECTION_NAME, uid));
 
-  if (!profileDoc.exists())
-    throw new Error(`Profile not found for uid: ${uid}`);
+  if (!profileDoc.exists()) {
+    logError(`Profile not found for uid: ${uid}`);
+    return;
+  }
 
   $profile.set(parseProfile(profileDoc.data(), uid));
   logDebug('sessionStore', 'fetchProfile', 'loaded profile data to store');

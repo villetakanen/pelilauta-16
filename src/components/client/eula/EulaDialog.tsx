@@ -3,6 +3,7 @@ import { handleLogout } from '@client/ProfileButton/handleLogout';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { logDebug, logWarn } from '@utils/logHelpers';
+import { toFid } from '@utils/toFid';
 import {
   addDoc,
   collection,
@@ -13,6 +14,7 @@ import {
 } from 'firebase/firestore';
 import { type Component, type JSX, createSignal, onMount } from 'solid-js';
 import { auth, db } from 'src/firebase/client';
+import { generateUsername } from 'src/firebase/client/generateUsername';
 import { parseAccount } from 'src/schemas/AccountSchema';
 import { parseProfile } from 'src/schemas/ProfileSchema';
 import {
@@ -30,6 +32,7 @@ type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
  */
 export const EulaDialog: Component = (props: DialogProps) => {
   const [nickname, setNickname] = createSignal('');
+  const [username, setUsername] = createSignal('' as string);
   const [avatarSrc, setAvatarSrc] = createSignal('');
   const oldProfile = useStore($profile);
   const uid = useStore($uid);
@@ -38,12 +41,15 @@ export const EulaDialog: Component = (props: DialogProps) => {
     // Listen to auth changes
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        // Get the displayname, and change whitespace to underscore
-        const nickname = user.displayName?.replace(/\s/g, '_');
-        const defaultNick = nickname || user.email?.split('@')[0] || '-';
+        // Get an unique default nickname for the user
+        const nickname = await generateUsername(
+          user.displayName || '',
+          user.email || '',
+        );
 
         // Load the account data
-        setNickname(defaultNick);
+        setNickname(nickname);
+        setUsername(nickname);
 
         // Load the avatar
         const avatar = user.photoURL || '';
@@ -132,9 +138,13 @@ export const EulaDialog: Component = (props: DialogProps) => {
         <section class="elevation-1 border-radius p-1 flex flex-row">
           <cn-avatar nick={nickname()} src={avatarSrc()} />
           <div>
-            <p class="mt-0">
-              <strong>{t('entries:profile.nick')}:</strong> {nickname()}
-            </p>
+            <div class="field-grid">
+              <strong>{t('entries:profile.nick')}:</strong>
+              <span>{nickname()}</span>
+
+              <strong>{t('entries:profile.username')}:</strong>
+              <span>{toFid(username())} </span>
+            </div>
             <p class="text-caption">{t('login:eula.profileInfo')}</p>
           </div>
         </section>
