@@ -1,6 +1,8 @@
 import { toDate } from '@utils/schemaHelpers';
 import * as z from 'zod';
 
+export const ACCOUNTS_COLLECTION_NAME = 'account';
+
 export const AccountSchema = z.object({
   eulaAccepted: z.boolean(),
   lastLogin: z.date().optional(), // Timestamp, converted to Date

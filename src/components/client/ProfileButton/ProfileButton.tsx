@@ -10,7 +10,7 @@ export const ProfileButton: Component = () => {
   const uid = useStore($uid);
   const profile = useStore($profile);
 
-  onMount(() => {
+  /*onMount(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         logDebug('User', user.uid, ' logged in');
@@ -20,7 +20,7 @@ export const ProfileButton: Component = () => {
         logDebug('User state changed to anonymous');
       }
     });
-  });
+  });*/
 
   return uid() ? (
     <a href="/settings">
