@@ -7,9 +7,9 @@ import {
 } from 'firebase/auth';
 import type { Component } from 'solid-js';
 import { createSignal, onMount } from 'solid-js';
-import { app, auth } from 'src/firebase/client';
+import { auth } from 'src/firebase/client';
 
-export const EmailLoginSection: Component = (props) => {
+export const EmailLoginSection: Component = () => {
   const [email, setEmail] = createSignal('');
   const [suspend, setSuspend] = createSignal(false);
   const [sent, setSent] = createSignal(false);

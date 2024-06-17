@@ -2,7 +2,6 @@ import { persistentAtom } from '@nanostores/persistent';
 import { logDebug, logError } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { computed, onMount } from 'nanostores';
-import { log } from 'node_modules/astro/dist/core/logger/core';
 import { auth, db } from 'src/firebase/client';
 import {
   ACCOUNTS_COLLECTION_NAME,
@@ -14,8 +13,6 @@ import {
   type Profile,
   parseProfile,
 } from 'src/schemas/ProfileSchema';
-
-export const $uid = persistentAtom<string>('uid', '');
 
 export type LoadingStateValue = 'empty' | 'loading' | 'loaded';
 export const $loadingState = persistentAtom<LoadingStateValue>('empty');
@@ -33,11 +30,15 @@ export const $account = persistentAtom<Account>(
   },
 );
 
+export const uid = computed($account, (account) => {
+  return account.uid;
+});
+
 export const requiresEula = computed($account, (account) => {
   if ($loadingState.get() === 'empty' || $loadingState.get() === 'loading')
     return false;
   // If we do not have a user, we do not require EULA
-  if (!$uid.get()) return false;
+  if (account.uid) return false;
   // If we have a user and the EULA has been accepted, we do not require EULA
   if (account.eulaAccepted) return false;
   // If we have a user and the EULA has not been accepted, we require EULA
@@ -45,10 +46,8 @@ export const requiresEula = computed($account, (account) => {
 });
 
 export const isAnonymous = computed($loadingState, (state) => {
-  logDebug('loading state changed', state, $account.get().uid);
   // return false while loading
   if (state === 'empty' || state === 'loading') return false;
-
   return !$account.get().uid;
 });
 
@@ -66,11 +65,12 @@ export const $profile = persistentAtom<Profile>(
   },
 );
 
-onMount($uid, () => {
-  logDebug('sessionStore', 'onMount', $uid.get());
+onMount($account, () => {
+  logDebug('sessionStore', 'onMount');
   auth.onAuthStateChanged((user) => {
     logDebug('sessionStore', 'onAuthStateChanged', user);
     if (user) {
+      logDebug('sessionStore', 'onAuthStateChanged', 'logged in', user.uid);
       login(user.uid);
     } else {
       logout();
@@ -79,27 +79,26 @@ onMount($uid, () => {
   });
 });
 
-async function login(uid: string) {
-  logDebug('sessionStore', 'login', uid, $uid.get());
+async function login(userKey: string) {
+  logDebug('sessionStore', 'login', userKey, uid.get());
 
-  if ($uid.get() === uid) {
+  if ($account.get().uid === userKey) {
     logDebug('sessionStore', 'login', 'already logged in');
+    $loadingState.set('loaded');
     return;
   }
 
   $loadingState.set('loading');
-  $uid.set(uid);
   logDebug('sessionStore', 'login', 'fetching account and profile data');
-  await fetchAccount(uid);
+  await fetchAccount(userKey);
   logDebug('sessionStore', 'login', 'fetching profile data');
-  await fetchProfile(uid);
+  await fetchProfile(userKey);
   $loadingState.set('loaded');
 }
 
 export async function logout() {
-  if (!$uid.get()) return;
+  if ($account.get().uid) return;
   logDebug('sessionStore', 'logout');
-  $uid.set('');
   $account.set({ uid: '', eulaAccepted: false });
   $profile.set({ nick: '', avatarURL: '', bio: '' });
   window?.localStorage.clear();

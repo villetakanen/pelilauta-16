@@ -3,7 +3,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import type { Component } from 'solid-js';
 import { auth } from 'src/firebase/client';
 
-export const SyndicatedLoginSection: Component = (props) => {
+export const SyndicatedLoginSection: Component = () => {
   async function loginWithGoogle(e: Event) {
     e.preventDefault();
     const provider = new GoogleAuthProvider();

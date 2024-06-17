@@ -1,11 +1,14 @@
 import { handleLogout } from '@client/ProfileButton/handleLogout';
+import { useStore } from '@nanostores/solid';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { $account, $profile, $uid } from 'src/stores/sessionStore';
+import { $account, $profile } from 'src/stores/sessionStore';
 import { RemoveAccountSection } from './RemoveAccountSection';
 
-export const ProfileSection: Component = (props) => {
+export const ProfileSection: Component = () => {
+  const account = useStore($account);
+
   async function logoutAction() {
     handleLogout();
     // Logout user
@@ -19,7 +22,7 @@ export const ProfileSection: Component = (props) => {
 
       <div class="field-grid">
         <p>{t('entries:profile.key')}</p>
-        <p>{$uid.get()}</p>
+        <p>{account().uid}</p>
         <p>{t('entries:profile.nick')}</p>
         <p>{$profile.get().nick}</p>
         <p>{t('entries:profile.avatar')}</p>

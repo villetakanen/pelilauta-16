@@ -10,12 +10,7 @@ import { auth, db } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';
 import { parseAccount } from 'src/schemas/AccountSchema';
 import { parseProfile } from 'src/schemas/ProfileSchema';
-import {
-  $account,
-  $profile,
-  $uid,
-  requiresEula,
-} from 'src/stores/sessionStore';
+import { $account, $profile, requiresEula, uid } from 'src/stores/sessionStore';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 
@@ -28,7 +23,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
   const [username, setUsername] = createSignal('' as string);
   const [avatarSrc, setAvatarSrc] = createSignal('');
   const oldProfile = useStore($profile);
-  const uid = useStore($uid);
+  const userKey = useStore(uid);
 
   onMount(() => {
     // Listen to auth changes
@@ -64,7 +59,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
   }
 
   async function onaccept() {
-    const key = uid();
+    const key = userKey();
     logDebug(
       'User',
       key,

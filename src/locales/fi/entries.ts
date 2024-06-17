@@ -14,5 +14,6 @@ export const entries: Locale = {
     nick: 'Nick',
     avatar: 'Avatar',
     bio: 'Kuvaus',
+    username: 'Käyttäjätunnus',
   },
 };
