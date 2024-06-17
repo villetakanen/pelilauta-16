@@ -2,10 +2,21 @@ import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 import { $profile } from 'src/stores/sessionStore';
+import { updateProfile } from 'src/stores/sessionStore/profile';
 
 export const PublicProfileTool: Component = () => {
   const profile = useStore($profile);
   // const account = useStore($account);
+
+  function updateNick(e: Event) {
+    e.preventDefault();
+    const nick = (e.target as HTMLInputElement).value;
+    if (nick.length < 3) {
+      console.log('Nickname must be at least 3 characters long');
+      return;
+    }
+    updateProfile({ nick });
+  }
 
   return (
     <>
@@ -18,7 +29,11 @@ export const PublicProfileTool: Component = () => {
         </div>
         <label>
           {t('entries:profile.nick')}
-          <input type="text" onChange={(e) => console.log(e.target.value)} />
+          <input
+            type="text"
+            onChange={updateNick}
+            value={$profile.get().nick}
+          />
         </label>
       </fieldset>
     </>
