@@ -4,14 +4,7 @@ import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { logDebug, logWarn } from '@utils/logHelpers';
 import { toFid } from '@utils/toFid';
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-} from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { type Component, type JSX, createSignal, onMount } from 'solid-js';
 import { auth, db } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';

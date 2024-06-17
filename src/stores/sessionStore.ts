@@ -2,6 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import { logDebug, logError } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { computed, onMount } from 'nanostores';
+import { log } from 'node_modules/astro/dist/core/logger/core';
 import { auth, db } from 'src/firebase/client';
 import {
   ACCOUNTS_COLLECTION_NAME,
@@ -43,6 +44,14 @@ export const requiresEula = computed($account, (account) => {
   return true;
 });
 
+export const isAnonymous = computed($loadingState, (state) => {
+  logDebug('loading state changed', state, $account.get().uid);
+  // return false while loading
+  if (state === 'empty' || state === 'loading') return false;
+
+  return !$account.get().uid;
+});
+
 // Profile of the current user
 export const $profile = persistentAtom<Profile>(
   'profile',
@@ -71,7 +80,13 @@ onMount($uid, () => {
 });
 
 async function login(uid: string) {
-  logDebug('sessionStore', 'login', uid);
+  logDebug('sessionStore', 'login', uid, $uid.get());
+
+  if ($uid.get() === uid) {
+    logDebug('sessionStore', 'login', 'already logged in');
+    return;
+  }
+
   $loadingState.set('loading');
   $uid.set(uid);
   logDebug('sessionStore', 'login', 'fetching account and profile data');

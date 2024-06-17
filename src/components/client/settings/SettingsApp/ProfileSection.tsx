@@ -36,13 +36,6 @@ export const ProfileSection: Component = (props) => {
         <p>{$account.get().language}</p>
       </div>
 
-      <div class="debug field-grid">
-        <p>showAdminTools:</p>
-        <p> {$account.get().showAdminTools ? 'true' : 'false'}</p>
-        <p>eulaAccepted:</p>
-        <p> {$account.get().eulaAccepted ? 'true' : 'false'}</p>
-      </div>
-
       <button type="submit" onclick={logoutAction}>
         {t('actions:logout')}
       </button>
