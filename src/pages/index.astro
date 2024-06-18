@@ -1,10 +1,14 @@
 ---
 import { DebugSection } from '@client/debug';
+import { ThreadStream } from '@client/threads/ThreadStream';
 import Page from 'src/layouts/Page.astro';
 ---
 <Page>
   <main>
     <div class="content-columns">
+      <div>
+        <ThreadStream client:only="solid-js"/>
+      </div>
       <article>
         <h1>Placeholder</h1>
         <cn-icon large noun="fox" />

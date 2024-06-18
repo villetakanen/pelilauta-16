@@ -5,7 +5,8 @@
     "baseUrl": ".",
     "paths": {
       "@utils/*": ["src/utils/*"],
-      "@client/*": ["src/components/client/*"]
+      "@client/*": ["src/components/client/*"],
+      "@schemas/*": ["src/schemas/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"
