@@ -9,7 +9,13 @@ import { auth, db } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';
 import { parseAccount } from 'src/schemas/AccountSchema';
 import { parseProfile } from 'src/schemas/ProfileSchema';
-import { $account, $profile, $requiresEula, $uid, logout } from 'src/stores/sessionStore';
+import {
+  $account,
+  $profile,
+  $requiresEula,
+  $uid,
+  logout,
+} from 'src/stores/sessionStore';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 

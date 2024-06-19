@@ -1,7 +1,7 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { logDebug, logError, logWarn } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
-import { computed, onMount,atom } from 'nanostores';
+import { atom, computed, onMount } from 'nanostores';
 import { auth, db } from 'src/firebase/client';
 import {
   ACCOUNTS_COLLECTION_NAME,
@@ -24,16 +24,14 @@ const defaultProfile: Profile = {
   bio: '',
 };
 
-
 // *** Session loading state *************************************************
-type LoadingStateValue = 'loading' | 'active'
+type LoadingStateValue = 'loading' | 'active';
 const $loadingState = persistentAtom<LoadingStateValue>('loading');
 
 /**
  * Returns false if the session is initializing, true if it is loaded.
  */
 export const $active = computed($loadingState, (state) => state === 'active');
-
 
 // *** Session user Account state ********************************************
 
@@ -67,16 +65,19 @@ export const $isAnonymous = computed([$active, $account], (active, account) => {
 /**
  * Returns true, if the user requires to accept the EULA.
  */
-export const $requiresEula = computed([$active, $account], (active, account) => {
-  // We do not know if the user requires EULA while loading, assuming no
-  if (!active) return false;
+export const $requiresEula = computed(
+  [$active, $account],
+  (active, account) => {
+    // We do not know if the user requires EULA while loading, assuming no
+    if (!active) return false;
 
-  // An anonymous user does not require EULA
-  if (!account.uid) return false;
+    // An anonymous user does not require EULA
+    if (!account.uid) return false;
 
-  // If the EULA has been accepted, we do not require EULA
-  return !account.eulaAccepted;
-});
+    // If the EULA has been accepted, we do not require EULA
+    return !account.eulaAccepted;
+  },
+);
 
 // *** Session user Profile state ********************************************
 export const $profile = persistentAtom<Profile>(
@@ -96,19 +97,27 @@ onMount($account, () => {
   logDebug('sessionStore', 'onMount');
   auth.onAuthStateChanged(async (user) => {
     logDebug('sessionStore', 'onAuthStateChanged', user);
-    
+
     // If we have a user:
     if (user) {
       // If the session is active, we already have some user data, check if it is the same user
       if ($loadingState.get() === 'active') {
         if (user.uid === $account.get().uid) {
-          logDebug('sessionStore', 'onAuthStateChanged', 'Session data found, assuming it is the same user');
+          logDebug(
+            'sessionStore',
+            'onAuthStateChanged',
+            'Session data found, assuming it is the same user',
+          );
           return;
         }
-        logWarn('sessionStore', 'onAuthStateChanged', 'Session data found, but different user');
+        logWarn(
+          'sessionStore',
+          'onAuthStateChanged',
+          'Session data found, but different user',
+        );
         await logout();
       }
-      await login (user.uid);
+      await login(user.uid);
     } else {
       logDebug('sessionStore', 'onAuthStateChanged', 'no user');
       await logout();
@@ -123,10 +132,10 @@ async function login(uid: string) {
 
   // Fetch account and profile data
   const account = await fetchAccount(uid);
-  $account.set(account || {...defaultAccount, uid});
-  
+  $account.set(account || { ...defaultAccount, uid });
+
   const profile = await fetchProfile(uid);
-  $profile.set(profile || {...defaultProfile});
+  $profile.set(profile || { ...defaultProfile });
 }
 
 export async function logout() {
@@ -139,7 +148,6 @@ export async function logout() {
   // Reset the stores to default values
   $account.set({ ...defaultAccount });
   $profile.set({ ...defaultProfile });
-  
 }
 
 async function fetchAccount(uid: string) {
@@ -150,7 +158,7 @@ async function fetchAccount(uid: string) {
     logWarn(`Account not found for uid: ${uid}`);
     return;
   }
-  
+
   return parseAccount(accountDoc.data(), uid);
 }
 

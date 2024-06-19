@@ -1,6 +1,11 @@
 import { useStore } from '@nanostores/solid';
 import type { Component } from 'solid-js';
-import { $account, $active, $isAnonymous, $requiresEula } from 'src/stores/sessionStore';
+import {
+  $account,
+  $active,
+  $isAnonymous,
+  $requiresEula,
+} from 'src/stores/sessionStore';
 
 export const DebugSection: Component = () => {
   const active = useStore($active);
@@ -10,11 +15,8 @@ export const DebugSection: Component = () => {
 
   return (
     <div class="debug">
-      <section>
-        {account().uid}
-      </section>
+      <section>{account().uid}</section>
       <section class="field-grid">
-
         <div>Session:</div>
         <div>{active() ? 'active' : 'loading'}</div>
 
