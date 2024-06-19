@@ -1,27 +1,25 @@
 import { useStore } from '@nanostores/solid';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, type JSX, createEffect } from 'solid-js';
-import { $loadingState, isAnonymous } from 'src/stores/sessionStore';
+import { $active, $isAnonymous } from 'src/stores/sessionStore';
 
 type WithLoginProps<P = Record<string, unknown>> = P & {
   children?: JSX.Element;
 };
 
 export const WithLogin: Component<WithLoginProps> = (props) => {
-  const loading = useStore($loadingState);
-  const anon = useStore(isAnonymous);
+  const active = useStore($active);
+  const anonymous = useStore($isAnonymous);
 
   createEffect(() => {
-    logDebug('WithLogin effect', { loading: loading(), anon: anon() });
-    if (anon()) {
-      window.location.href = `/login/?from=${window.location.pathname}`;
+    logDebug('WithLogin effect', { loading: active(), anon: anonymous() });
+    if (active()) {
+      if (anonymous()) {
+        // Anonymous user with an active session, redirect to login
+        window.location.href = `/login/?from=${window.location.pathname}`;
+      }
     }
   });
 
-  return (
-    <>
-      {loading() !== 'loaded' && <cn-loader />}
-      {loading() === 'loaded' && props.children}
-    </>
-  );
+  return active() ? props.children : <cn-loader />;
 };

@@ -1,17 +1,25 @@
 import { useStore } from '@nanostores/solid';
 import type { Component } from 'solid-js';
-import { $account, $loadingState, requiresEula } from 'src/stores/sessionStore';
+import { $account, $active, $isAnonymous, $requiresEula } from 'src/stores/sessionStore';
 
 export const DebugSection: Component = () => {
-  const loadingState = useStore($loadingState);
-  const eulaAccepted = useStore(requiresEula);
+  const active = useStore($active);
+  const eulaAccepted = useStore($requiresEula);
   const account = useStore($account);
+  const anonymous = useStore($isAnonymous);
 
   return (
     <div class="debug">
+      <section>
+        {account().uid}
+      </section>
       <section class="field-grid">
-        <div>loadingState:</div>
-        <div>{loadingState()}</div>
+
+        <div>Session:</div>
+        <div>{active() ? 'active' : 'loading'}</div>
+
+        <div>isAnonymous:</div>
+        <div>{`${anonymous()}`}</div>
         <div>requiresEula:</div>
         <div>{`${eulaAccepted()}`}</div>
         <div>showAdminTools:</div>

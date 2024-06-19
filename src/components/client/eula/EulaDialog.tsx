@@ -1,5 +1,4 @@
 import type { CnDialog } from '@11thdeg/cyan-next';
-import { handleLogout } from '@client/ProfileButton/handleLogout';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { logDebug, logWarn } from '@utils/logHelpers';
@@ -10,7 +9,7 @@ import { auth, db } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';
 import { parseAccount } from 'src/schemas/AccountSchema';
 import { parseProfile } from 'src/schemas/ProfileSchema';
-import { $account, $profile, requiresEula, uid } from 'src/stores/sessionStore';
+import { $account, $profile, $requiresEula, $uid, logout } from 'src/stores/sessionStore';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 
@@ -23,7 +22,8 @@ export const EulaDialog: Component = (props: DialogProps) => {
   const [username, setUsername] = createSignal('' as string);
   const [avatarSrc, setAvatarSrc] = createSignal('');
   const oldProfile = useStore($profile);
-  const userKey = useStore(uid);
+  const userKey = useStore($uid);
+  const openDialog = useStore($requiresEula);
 
   onMount(() => {
     // Listen to auth changes
@@ -54,7 +54,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
   async function oncancel() {
     console.log('User declined the EULA, logging out');
     // When the user cancels the dialog, sign out
-    handleLogout();
+    await logout();
     (document.getElementById('eulaDialog') as CnDialog).close();
   }
 
@@ -120,7 +120,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
       <cn-dialog
         id="eulaDialog"
         title={t('login:eula.title')}
-        open={requiresEula.get()}
+        open={openDialog()}
       >
         {props.children}
         <section class="elevation-1 border-radius p-1 flex flex-row">
