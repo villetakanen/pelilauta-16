@@ -113,14 +113,18 @@ onMount($account, () => {
         logWarn(
           'sessionStore',
           'onAuthStateChanged',
-          'Session data found, but different user',
+          'Session data found, but different user, clearing session',
         );
-        await logout();
+        await clear();
       }
       await login(user.uid);
     } else {
       logDebug('sessionStore', 'onAuthStateChanged', 'no user');
+      const emailForSignIn = window.localStorage.getItem('emailForSignIn');
       await logout();
+      if (emailForSignIn) {
+        window.localStorage.setItem('emailForSignIn', emailForSignIn);
+      }
     }
     $loadingState.set('active');
   });
@@ -138,16 +142,21 @@ async function login(uid: string) {
   $profile.set(profile || { ...defaultProfile });
 }
 
+async function clear() {
+  window?.localStorage.clear();
+  $account.set({ ...defaultAccount });
+  $profile.set({ ...defaultProfile });
+}
+
 export async function logout() {
   // As we are logging out, we need to set the loading state
   $loadingState.set('loading');
 
-  // Erase the local data
-  window?.localStorage.clear();
+  // Clear the session
+  await clear();
 
-  // Reset the stores to default values
-  $account.set({ ...defaultAccount });
-  $profile.set({ ...defaultProfile });
+  // Sign out from Firebase
+  auth.signOut();
 }
 
 async function fetchAccount(uid: string) {
