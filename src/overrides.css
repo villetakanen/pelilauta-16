@@ -23,3 +23,6 @@ nav.cn-tray .cn-tray-title {
     padding-left: var(--cn-rail-width);
   }
 }
+.profile_button {
+  min-height: 56px;
+}

@@ -1,11 +1,10 @@
-import { handleLogout } from '@client/ProfileButton/handleLogout';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';
 import { db } from 'src/firebase/client';
-import { $account } from 'src/stores/sessionStore';
+import { $account, logout } from 'src/stores/sessionStore';
 
 export const RemoveAccountSection: Component = () => {
   const [showVerify, setShowVerify] = createSignal(false);
@@ -28,7 +27,7 @@ export const RemoveAccountSection: Component = () => {
     await deleteDoc(doc(db, 'account', key));
     logWarn('Account removed from the DB');
 
-    await handleLogout();
+    await logout();
 
     window.location.href = '/';
   }

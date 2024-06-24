@@ -1,7 +1,7 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { logDebug, logError, logWarn } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
-import { atom, computed, onMount } from 'nanostores';
+import { computed, onMount } from 'nanostores';
 import { auth, db } from 'src/firebase/client';
 import {
   ACCOUNTS_COLLECTION_NAME,
@@ -118,13 +118,6 @@ onMount($account, () => {
         await clear();
       }
       await login(user.uid);
-    } else {
-      logDebug('sessionStore', 'onAuthStateChanged', 'no user');
-      const emailForSignIn = window.localStorage.getItem('emailForSignIn');
-      await logout();
-      if (emailForSignIn) {
-        window.localStorage.setItem('emailForSignIn', emailForSignIn);
-      }
     }
     $loadingState.set('active');
   });

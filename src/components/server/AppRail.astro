@@ -40,5 +40,7 @@ const rail: Array<RailItem> = [
       label={t('navigation:docs')}
       checked={currentPath.startsWith('/docs')}
     />
-  <ProfileButton client:only="solid-js" />
+  <div class="profile_button">
+    <ProfileButton client:only="solid-js" />
+   </div>
 </nav>
