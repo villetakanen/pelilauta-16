@@ -5,6 +5,7 @@ import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 import { $profile } from 'src/stores/sessionStore';
+import { AuthzSection } from './AuthzSection';
 import { ProfileSection } from './ProfileSection';
 import { PublicProfileTool } from './PublicProfileTool';
 
@@ -24,6 +25,9 @@ export const SettingsApp: Component = () => {
         </article>
         <article>
           <DebugSection />
+        </article>
+        <article>
+          <AuthzSection />
         </article>
       </div>
     </WithLogin>

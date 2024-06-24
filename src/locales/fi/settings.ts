@@ -1,4 +1,5 @@
 import type { Locale } from '@utils/i18n';
+import { auth } from 'src/firebase/client';
 
 export const settings: Locale = {
   personal: {
@@ -16,5 +17,16 @@ export const settings: Locale = {
   publicprofile: {
     title: 'Yleiset',
     legend: 'Profiilin julkiset tiedot',
+  },
+  authz: {
+    title: 'Kirjautumistiedot',
+    info: 'Kirjautumisessa käyttämäsi palvelun (Google, Facebook tai sähköposti) pelilaudalle luovuttamat yksityistiedot. Nämä tiedot on tallennettu Pelilaudan Firebese-tunnestetietoihin. Tietoja ei tallenneta sovelluksen tietokantaan, eivätkä ne näy sovelluksen käyttäjille',
+    fields: {
+      uid: 'uid',
+      displayName: 'Näyttönimi (displayName)',
+      email: 'Sähköposti (email)',
+      avatarURL: 'Avatar-URL (photoURL)',
+    },
+    updateAvatar: 'Päivitä avatar',
   },
 };

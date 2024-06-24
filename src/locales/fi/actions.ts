@@ -5,4 +5,5 @@ export const actions: Locale = {
   logout: 'Kirjaudu ulos',
   deregister: 'Poista tili pysyvästi',
   confirm: 'Jatka',
+  learnMore: 'Lue lisää',
 };

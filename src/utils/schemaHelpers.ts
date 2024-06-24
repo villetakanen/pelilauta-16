@@ -1,5 +1,10 @@
-import type { Timestamp } from 'firebase/firestore';
+//import type { Timestamp } from 'firebase/firestore';
 import { logWarn } from './logHelpers';
+
+type Timestamp = {
+  seconds: number;
+  nanoseconds: number;
+};
 
 export function toDate(variable: unknown): Date {
   if (!variable) return new Date();

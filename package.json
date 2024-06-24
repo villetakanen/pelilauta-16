@@ -12,24 +12,23 @@
     "check": "npx @biomejs/biome check --write ."
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-alpha.86",
+    "@11thdeg/cyan-next": "1.0.0-alpha.87",
     "@astrojs/check": "^0.7.0",
-    "@astrojs/solid-js": "^4.3.0",
+    "@astrojs/solid-js": "^4.4.0",
     "@nanostores/persistent": "^0.10.1",
     "@nanostores/solid": "^0.4.2",
-    "@solid-primitives/storage": "^3.5.0",
-    "astro": "^4.10.2",
+    "astro": "^4.11.0",
     "firebase": "^10.12.2",
     "nanostores": "^0.10.3",
     "solid-js": "^1.8.17",
-    "typescript": "^5.4.5",
+    "typescript": "^5.5.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.1",
+    "@biomejs/biome": "1.8.2",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "lefthook": "^1.6.15",
+    "lefthook": "^1.6.18",
     "vitest": "^1.6.0"
   }
 }
