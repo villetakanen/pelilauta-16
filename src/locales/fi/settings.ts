@@ -1,5 +1,4 @@
 import type { Locale } from '@utils/i18n';
-import { auth } from 'src/firebase/client';
 
 export const settings: Locale = {
   personal: {
