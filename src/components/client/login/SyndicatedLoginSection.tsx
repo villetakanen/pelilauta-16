@@ -7,6 +7,7 @@ export const SyndicatedLoginSection: Component = () => {
   async function loginWithGoogle(e: Event) {
     e.preventDefault();
     const provider = new GoogleAuthProvider();
+    provider.addScope('email');
     await signInWithPopup(auth, provider);
     window.location.assign('/');
   }
