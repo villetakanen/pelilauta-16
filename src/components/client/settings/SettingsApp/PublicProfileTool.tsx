@@ -1,15 +1,12 @@
-import { MediaSelectDialog } from '@client/media/MediaSelectDialog';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { type Component, createSignal } from 'solid-js';
 import { $profile } from 'src/stores/sessionStore';
 import { updateProfile } from 'src/stores/sessionStore/profile';
+import { AvatarButton } from './AvatarButton';
 
 export const PublicProfileTool: Component = () => {
   const profile = useStore($profile);
-  // const account = useStore($account);
-
-  const [mediaDialogOpen, setMediaDialogOpen] = createSignal(false);
 
   function updateNick(e: Event) {
     e.preventDefault();
@@ -40,13 +37,9 @@ export const PublicProfileTool: Component = () => {
         </label>
         <label>
           {t('entries:profile.avatar')}
-          <cn-avatar-button
-            src={$profile.get().avatarURL}
-            onclick={() => setMediaDialogOpen(true)}
-          />
+          <AvatarButton />
         </label>
       </fieldset>
-      <MediaSelectDialog open={mediaDialogOpen()} />
     </>
   );
 };
