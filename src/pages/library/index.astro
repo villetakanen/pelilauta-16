@@ -1,0 +1,11 @@
+---
+import { SitesList } from '@client/library/SitesList';
+import { t } from '@utils/i18n';
+import PageWithTray from 'src/layouts/PageWithTray.astro';
+---
+
+<PageWithTray title={t('library:title')}>
+    <main>
+      <SitesList client:only="solid-js" />
+    </main>
+</PageWithTray>

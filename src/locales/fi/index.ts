@@ -1,6 +1,7 @@
 import type { Locale } from '../../utils/i18n';
 import { actions } from './actions';
 import { entries } from './entries';
+import { library } from './library';
 import { login } from './login';
 import { navigation } from './navigation';
 import { settings } from './settings';
@@ -24,4 +25,5 @@ export const fi: Locale = {
   settings,
   entries,
   navigation,
+  library,
 };

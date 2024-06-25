@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const EntrySchema = z.object({
   key: z.string(),
   flowTime: z.number(),
+  owners: z.array(z.string()),
 });
 
 export const ContentEntrySchema = EntrySchema.extend({
