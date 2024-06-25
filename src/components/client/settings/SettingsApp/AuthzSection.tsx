@@ -47,6 +47,13 @@ export const AuthzSection: Component = () => {
         <p>
           {avatarURL()}
           <br />
+          {!!avatarURL() && avatarURL() !== profile().avatarURL && (
+            <div class="flex flex-row" style="align-items: center;">
+              <cn-avatar src={profile().avatarURL} />
+              <cn-icon noun="add" />
+              <cn-avatar src={avatarURL()} />
+            </div>
+          )}
           <button
             type="button"
             disabled={!avatarURL() || avatarURL() === profile().avatarURL}
@@ -59,7 +66,7 @@ export const AuthzSection: Component = () => {
       </div>
 
       <p class="text-low-emphasis downscaled">
-        <a href="/docs/authz">{t('actions:learnMore')}</a>
+        <a href="/docs/fi/04-authz">{t('actions:learnMore')}</a>
       </p>
     </section>
   );
