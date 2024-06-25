@@ -13,6 +13,7 @@ import {
   type Profile,
   parseProfile,
 } from 'src/schemas/ProfileSchema';
+import { loadUserAssets } from '../assetStore';
 
 const defaultAccount: Account = {
   uid: '',
@@ -133,6 +134,9 @@ async function login(uid: string) {
 
   const profile = await fetchProfile(uid);
   $profile.set(profile || { ...defaultProfile });
+
+  // Prefetch user assets
+  loadUserAssets(uid);
 }
 
 async function clear() {
