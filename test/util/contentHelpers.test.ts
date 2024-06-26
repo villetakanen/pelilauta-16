@@ -7,5 +7,5 @@ test('toDisplayString returns N/A if date is undefined', () => {
 
 test('toDisplayString returns date as string', () => {
   const date = new Date('2021-12-24');
-  expect(toDisplayString(date)).toBe(date.toLocaleString());
+  expect(toDisplayString(date)).toBe('2021-12-24');
 });
