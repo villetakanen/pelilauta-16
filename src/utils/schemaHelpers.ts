@@ -1,4 +1,5 @@
-import { logWarn } from './logHelpers';
+import { systemToNounMapping } from '@schemas/nouns';
+import { logDebug, logWarn } from './logHelpers';
 
 type Timestamp = {
   seconds: number;
@@ -32,4 +33,12 @@ export function topicToNoun(topic: string | undefined): string {
     default:
       return 'fox';
   }
+}
+
+export function systemToNoun(system: string | undefined): string {
+  if (Object.keys(systemToNounMapping).includes(system || '')) {
+    return systemToNounMapping[system || ''];
+  }
+  logWarn('missing systemToNoun mapping, using homebrew as default', system);
+  return 'homebrew';
 }

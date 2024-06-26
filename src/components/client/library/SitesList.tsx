@@ -1,3 +1,4 @@
+import { SiteCard } from '@client/sites/SiteCard';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { toDate } from '@utils/schemaHelpers';
@@ -15,12 +16,7 @@ export const SitesList: Component = () => {
       </p>
       <div class="content-cards">
         <For each={sites()}>
-          {(site) => (
-            <cn-card title={site.name} cover={site.posterURL}>
-              <p>{site.description}</p>
-              {toDate(site.flowTime).toLocaleDateString()}
-            </cn-card>
-          )}
+          {(site) => <SiteCard {...site} key={site.key} />}
         </For>
       </div>
     </article>
