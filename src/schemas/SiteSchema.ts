@@ -13,6 +13,7 @@ export const SiteSchema = EntrySchema.extend({
   avatarURL: z.string().optional(),
   homepage: z.string().optional(),
   description: z.string().optional(),
+  players: z.array(z.string()).optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;
