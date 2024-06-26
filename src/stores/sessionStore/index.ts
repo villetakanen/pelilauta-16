@@ -26,8 +26,11 @@ const defaultProfile: Profile = {
 };
 
 // *** Session loading state *************************************************
-type LoadingStateValue = 'loading' | 'active';
-const $loadingState = persistentAtom<LoadingStateValue>('loading');
+type LoadingStateValue = 'initial' | 'loading' | 'active';
+const $loadingState = persistentAtom<LoadingStateValue>(
+  'session-store',
+  'initial',
+);
 
 /**
  * Returns false if the session is initializing, true if it is loaded.

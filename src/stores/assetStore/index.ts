@@ -9,8 +9,11 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
 
 // *** Store loading state *************************************************
-type LoadingStateValue = 'loading' | 'active';
-const $loadingState = persistentAtom<LoadingStateValue>('active');
+type LoadingStateValue = 'initial' | 'loading' | 'active';
+const $loadingState = persistentAtom<LoadingStateValue>(
+  'assets-store',
+  'initial',
+);
 
 export const $assets = persistentAtom<Asset[]>(
   `${ASSETS_COLLECTION_NAME}`,

@@ -19,9 +19,10 @@ export const SiteCard: Component<Site> = (props) => {
       cover={props.posterURL}
     >
       <p>{props.description}</p>
-      <div slot="actions" class="toolbar">
+      <div slot="actions" class="flex toolbar">
         {owns() && <cn-icon noun="avatar" />}
         {plays() && <cn-icon noun="adventurer" />}
+        <div style="flex-grow:1" />
         <p>{toDisplayString(props.flowTime)}</p>
       </div>
     </cn-card>
