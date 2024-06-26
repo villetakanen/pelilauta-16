@@ -1,5 +1,5 @@
 import { systemToNounMapping } from '../schemas/nouns';
-import {  logWarn } from './logHelpers';
+import { logWarn } from './logHelpers';
 
 type Timestamp = {
   seconds: number;
