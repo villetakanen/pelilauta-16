@@ -26,3 +26,6 @@ nav.cn-tray .cn-tray-title {
 .profile_button {
   min-height: 56px;
 }
+.mb-2 {
+  margin-bottom: var(--cn-gap);
+}

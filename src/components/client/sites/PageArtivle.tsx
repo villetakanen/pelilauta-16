@@ -14,6 +14,7 @@ import {
   createSignal,
 } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
+import { WikiPageHeader } from 'src/components/shared/WikiPageHeader';
 import { db } from 'src/firebase/client';
 import { $sites } from 'src/stores/sitesStore';
 
@@ -29,7 +30,7 @@ export const PageArticle: Component<PageArticleProps> = (props) => {
     props.page ? props.page : site()?.homepage || props.site,
   );
 
-  const [page, setPage] = createSignal<Page | null>(null);
+  const [page, setPage] = createSignal<Page | undefined>(undefined);
 
   createEffect(async () => {
     logDebug(`Fetching page: ${pageKey()}`);
@@ -48,6 +49,7 @@ export const PageArticle: Component<PageArticleProps> = (props) => {
 
   return (
     <div>
+      <WikiPageHeader page={page()} site={site()} />
       <h1>{page()?.name}</h1>
       {page()?.markdownContent ? (
         <MarkdownSection content={`${page()?.markdownContent}`} />

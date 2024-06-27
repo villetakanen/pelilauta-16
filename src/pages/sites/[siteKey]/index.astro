@@ -1,15 +1,17 @@
 ---
 import { PageArticle } from '@client/sites/PageArtivle';
+import { SitePoster } from '@client/sites/SitePoster';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
 const { siteKey } = Astro.params;
 ---
 <PageWithTray>
-    <main>
       <div class="content-columns">
+        <div class="full-width">
+          <SitePoster site={siteKey + ''} client:only="solid-js"/>
+        </div>
         <div class="column-l">
           <PageArticle client:only="solid-js" site={siteKey + ''} />
         </div>
-      </div>  
-    </main>
+      </div>
 </PageWithTray>
