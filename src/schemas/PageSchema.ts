@@ -24,6 +24,12 @@ export const parsePage = (
         data.siteKey && typeof data.siteKey === 'string'
           ? data.siteKey
           : siteKey,
+      owners:
+        typeof data.owners === 'string'
+          ? [data.owners]
+          : data.owners
+            ? data.owners
+            : [],
       flowTime: toDate(data.flowTime).getTime(),
       key,
     });

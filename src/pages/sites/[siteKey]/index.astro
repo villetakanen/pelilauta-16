@@ -7,7 +7,9 @@ const { siteKey } = Astro.params;
 <PageWithTray>
     <main>
       <div class="content-columns">
-        <PageArticle client:only="solid-js" site={siteKey + ''} />
+        <div class="column-l">
+          <PageArticle client:only="solid-js" site={siteKey + ''} />
+        </div>
       </div>  
     </main>
 </PageWithTray>

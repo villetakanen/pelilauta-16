@@ -28,6 +28,7 @@ export function parseSite(data: Record<string, unknown>, key: string): Site {
 
     const site = SiteSchema.parse({
       ...data,
+      owners: typeof data.owners === 'string' ? [data.owners] : data.owners,
       system: data.system ? data.system : 'homebrew',
       flowTime,
       hidden: !!data.hidden,
