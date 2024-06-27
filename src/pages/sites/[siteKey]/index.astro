@@ -1,0 +1,13 @@
+---
+import { PageArticle } from '@client/sites/PageArtivle';
+import PageWithTray from 'src/layouts/PageWithTray.astro';
+
+const { siteKey } = Astro.params;
+---
+<PageWithTray>
+    <main>
+      <div class="content-columns">
+        <PageArticle client:only="solid-js" site={siteKey + ''} />
+      </div>  
+    </main>
+</PageWithTray>
