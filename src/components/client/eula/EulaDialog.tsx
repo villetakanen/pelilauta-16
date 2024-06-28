@@ -1,10 +1,10 @@
 import type { CnDialog } from '@11thdeg/cyan-next';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logDebug, logError, logWarn } from '@utils/logHelpers';
 import { toFid } from '@utils/toFid';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { type Component, type JSX, createSignal, onMount } from 'solid-js';
+import { type Component, type JSX, createEffect, createSignal } from 'solid-js';
 import { auth, db } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';
 import { parseAccount } from 'src/schemas/AccountSchema';
@@ -31,7 +31,42 @@ export const EulaDialog: Component = (props: DialogProps) => {
   const userKey = useStore($uid);
   const openDialog = useStore($requiresEula);
 
-  onMount(() => {
+  createEffect(() => {
+    if (openDialog()) {
+      // Initialize the state, only if the eula is required
+      initValues();
+    }
+  });
+
+  async function initValues() {
+    const user = auth.currentUser;
+
+    if (!user) {
+      logError('User is not authenticated, cannot initialize account data');
+      oncancel();
+    }
+
+    // Get an unique default nickname for the user
+    const nickname = await generateUsername(
+      user?.displayName || '',
+      user?.email || '',
+    );
+
+    // Load the account data
+    setNickname(nickname);
+    setUsername(nickname);
+
+    // Load the avatar
+    const avatar = user?.photoURL || '';
+    setAvatarSrc(avatar);
+
+    if (oldProfile().nick) {
+      logWarn('User already has a profile, restoring nickname');
+      setNickname(oldProfile().nick);
+    }
+  }
+
+  /*onMount(() => {
     // Listen to auth changes
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -55,7 +90,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
         }
       }
     });
-  });
+  });*/
 
   async function oncancel() {
     console.log('User declined the EULA, logging out');
