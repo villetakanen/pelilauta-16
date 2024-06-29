@@ -39,6 +39,15 @@ export const PublicProfileTool: Component = () => {
           {t('entries:profile.avatar')}
           <AvatarButton />
         </label>
+        <label>
+          {t('entries:profile.bio')}
+          <textarea
+            value={$profile.get().bio}
+            onBlur={(e) =>
+              updateProfile({ bio: (e.target as HTMLTextAreaElement).value })
+            }
+          />
+        </label>
       </fieldset>
     </>
   );
