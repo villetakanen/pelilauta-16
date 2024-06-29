@@ -5,13 +5,14 @@ import { t } from '@utils/i18n';
 
 const { title, description } = Astro.props;
 const metaDescription = description || t('app:meta.description');
-const metaTitle = title || t('app:meta.title');
+const metaTitle =
+  import.meta.env.PUBLIC_APP_NAME + (title || t('app:meta.title'));
 ---
 <head>
-  <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta charset="UTF-8">
 
     <!-- Site info -->
     <title>{metaTitle}</title>

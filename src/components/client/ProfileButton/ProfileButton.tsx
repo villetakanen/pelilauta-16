@@ -17,7 +17,11 @@ export const ProfileButton: Component = () => {
 
   return (
     <>
-      {!active() && <cn-loader type="navigation-icon" />}
+      {!active() && (
+        <div>
+          <cn-loader for="navigation" />
+        </div>
+      )}
       {active() && !isAnonymous() && (
         <a href="/settings">
           <cn-navigation-icon noun="avatar" label={profile().nick || '...'} />

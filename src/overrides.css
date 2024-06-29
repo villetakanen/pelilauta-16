@@ -29,3 +29,7 @@ nav.cn-tray .cn-tray-title {
 .mb-2 {
   margin-bottom: var(--cn-gap);
 }
+cn-loader[for="navigation"] {
+  height: 72px;
+  width: 56px;
+}
