@@ -3,8 +3,10 @@ import { actions } from './actions';
 import { entries } from './entries';
 import { library } from './library';
 import { login } from './login';
+import { meta } from './meta';
 import { navigation } from './navigation';
 import { settings } from './settings';
+import { site } from './site';
 
 export const fi: Locale = {
   app: {
@@ -24,6 +26,8 @@ export const fi: Locale = {
   actions,
   settings,
   entries,
+  meta,
   navigation,
   library,
+  site,
 };

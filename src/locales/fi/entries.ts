@@ -16,4 +16,9 @@ export const entries: Locale = {
     bio: 'Kuvaus',
     username: 'Käyttäjätunnus',
   },
+  site: {
+    name: 'Nimi',
+    description: 'Kuvaus',
+    system: 'Peli, järjestelmä tai luokittelu',
+  },
 };

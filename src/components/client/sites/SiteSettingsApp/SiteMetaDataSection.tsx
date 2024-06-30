@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/solid';
+import { systemToNounMapping } from '@schemas/nouns';
 import { t } from '@utils/i18n';
-import type { Component } from 'solid-js';
+import { type Component, For } from 'solid-js';
 import { $site, updateSite } from 'src/stores/activeSiteStore';
 
 export const SiteMetaDataSection: Component = () => {
@@ -13,6 +14,7 @@ export const SiteMetaDataSection: Component = () => {
 
   return (
     <section>
+      <h2>{t('site:settings.meta.title')}</h2>
       <fieldset>
         <label>
           {t('entries:site.name')}
@@ -35,14 +37,18 @@ export const SiteMetaDataSection: Component = () => {
           {t('entries:site.system')}
           <select
             value={site().system}
-            onblur={(event) => onBlur('system', event.target.value)}
+            onchange={(event) => onBlur('system', event.target.value)}
           >
-            <option value="homebrew">Homebrew</option>
-            <option value="dnd5e">D&D 5e</option>
-            <option value="pf2e">Pathfinder 2e</option>
+            <For each={Object.keys(systemToNounMapping)}>
+              {(system) => (
+                <option value={system}>{t(`meta:systems.${system}`)}</option>
+              )}
+            </For>
           </select>
         </label>
       </fieldset>
+
+      <h3>{t('site:settings.meta.configuration')}</h3>
     </section>
   );
 };

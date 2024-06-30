@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { type Component, createEffect } from 'solid-js';
-import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import { $site, load } from 'src/stores/activeSiteStore';
+import { SiteCard } from '../SiteCard';
 import { SiteMetaDataSection } from './SiteMetaDataSection';
 
 export const SiteSettingsApp: Component<{ site: string }> = (props) => {
@@ -13,11 +13,13 @@ export const SiteSettingsApp: Component<{ site: string }> = (props) => {
 
   return (
     <div class="content-columns">
-      <cn-card title={site().name} class="column-s">
-        <MarkdownSection content={`${site().description}`} />
-      </cn-card>
+      <SiteCard {...site()} />
       <SiteMetaDataSection />
-      <div class="debug">key: {props.site}</div>
+      <div class="debug">
+        <p>key: {props.site}</p>
+        <br />
+        <p>{JSON.stringify(site())}</p>
+      </div>
     </div>
   );
 };
