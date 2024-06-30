@@ -33,3 +33,6 @@ cn-loader[for="navigation"] {
   height: 72px;
   width: 56px;
 }
+.page-poster-section img {
+  max-height: 42vh;
+}

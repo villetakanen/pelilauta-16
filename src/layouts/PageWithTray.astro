@@ -15,10 +15,18 @@ const { title } = Astro.props;
     <nav class="cn-tray">
       <slot name="tray" />
    </nav>
-    <AppBar title={title}/>
-	<main>
+    <AppBar title={title}>
+      <slot name="app-bar" />
+    </AppBar>
+	  <main>
       <slot />
     </main>
-  <BasePostscripts />
+    <BasePostscripts />
+    <script is:inline>
+      // If the viewport is larger than 1280px, the tray should be open by default
+      if (window.innerWidth > 1280) {
+        document.querySelector('cn-tray-button').setAttribute('aria-expanded', 'true');
+      }
+    </script>
   </body>
 </html>

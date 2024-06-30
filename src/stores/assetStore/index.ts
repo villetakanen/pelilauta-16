@@ -21,7 +21,7 @@ export const $assets = persistentAtom<Asset[]>(
   {
     encode: JSON.stringify,
     decode: (data) => {
-      return JSON.parse(data).map((entry: Record<string, unknown>) => {
+      return JSON.parse(data)?.map((entry: Record<string, unknown>) => {
         return ParseAsset(entry, entry.key as string);
       });
     },
