@@ -1,0 +1,10 @@
+---
+import { SiteSettingsApp } from '@client/sites/SiteSettingsApp/SiteSettingsApp';
+import Page from 'src/layouts/Page.astro';
+
+const { siteKey } = Astro.params;
+---
+
+<Page>
+  { siteKey && <SiteSettingsApp site={siteKey} client:only="solid-js"/> }
+</Page>

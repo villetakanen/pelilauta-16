@@ -5,7 +5,7 @@ import PageWithTray from 'src/layouts/PageWithTray.astro';
 ---
 
 <PageWithTray title={t('library:title')}>
-    <main>
-      <SitesList client:only="solid-js" />
-    </main>
+  <div class="content-columns">
+    <SitesList client:only="solid-js" />
+  </div>
 </PageWithTray>

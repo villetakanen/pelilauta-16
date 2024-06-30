@@ -18,6 +18,14 @@ export const SiteSchema = EntrySchema.extend({
 
 export type Site = z.infer<typeof SiteSchema>;
 
+export const emptySite: Site = {
+  key: '',
+  flowTime: 0,
+  name: '',
+  owners: [],
+  hidden: true,
+};
+
 export function parseSite(data: Record<string, unknown>, key: string): Site {
   try {
     const flowTime = data.flowTime

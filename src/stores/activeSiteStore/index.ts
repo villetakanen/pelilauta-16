@@ -2,56 +2,65 @@ import { persistentAtom } from '@nanostores/persistent';
 import {
   SITES_COLLECTION_NAME,
   type Site,
+  emptySite,
   parseSite,
 } from '@schemas/SiteSchema';
-import { logDebug } from '@utils/logHelpers';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { atom } from 'nanostores';
+import { logDebug, logWarn } from '@utils/logHelpers';
+import {
+  doc,
+  onSnapshot,
+  serverTimestamp,
+  updateDoc,
+} from 'firebase/firestore';
+import { parse } from 'marked';
 import { db } from 'src/firebase/client';
 
 export const $key = persistentAtom<string>('activeSiteKey', '');
-
-export const loadingState = atom<'initial' | 'loading' | 'active'>('initial');
-
+export const loadingState = persistentAtom<'initial' | 'loading' | 'active'>(
+  'initial',
+);
 export const $site = persistentAtom<Site>(
   'activeSite',
   {
-    key: '',
-    flowTime: 0,
-    name: '',
-    owners: [],
-    hidden: true,
+    ...emptySite,
   },
   {
     encode: JSON.stringify,
     decode: (data) => {
       const object = JSON.parse(data);
-      logDebug('activeSiteStore', 'decode', object);
       return parseSite(object, object.key);
     },
   },
 );
 
-let unsubscribe: () => void;
+let unsubscribe: CallableFunction | null = null;
 
 export async function load(key: string) {
   // Check if we are already subscribed to the site
-  if (!key) return;
-  if (loadingState.get() === 'loading') return;
-  if ($key.get() === key) return;
+  if (!key) {
+    logWarn('activeSiteStore', 'load', 'no key');
+  }
+
+  if (unsubscribe && $key.get() === key) {
+    logDebug('activeSiteStore', 'load', key, 'already subscribed');
+    return;
+  }
 
   // Load the site from the server
-  logDebug('activeSiteStore', 'load', key);
-
-  // Unsubscribe from the current site
-  if (unsubscribe) unsubscribe();
-
-  $key.set(key);
+  logDebug('activeSiteStore', { state: 'loading ', key: $key.get() });
 
   // Set the loading state
   loadingState.set('loading');
 
-  // Subscribe to the site
+  // Unsubscribe from the previous site, this should always fire, so
+  // we don't have multiple subscriptions running at the same time
+  unsubscribe?.();
+
+  // Initialize the store
+  $key.set(key);
+  $site.set(parseSite(emptySite, key));
+
+  // Subscribe to the site, updates happen automatically through the subscription
   unsubscribe = await subscribeToSite(key);
 
   // Set the loading state
@@ -68,4 +77,12 @@ async function subscribeToSite(key: string) {
       $site.set(parseSite(snapshot.data(), snapshot.id));
     }
   });
+}
+
+export async function updateSite(site: Partial<Site>) {
+  const update = {
+    ...site,
+    updatedAt: serverTimestamp(),
+  };
+  await updateDoc(doc(db, SITES_COLLECTION_NAME, $key.get()), update);
 }
