@@ -3,6 +3,7 @@ import { systemToNounMapping } from '@schemas/nouns';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
 import { $site, updateSite } from 'src/stores/activeSiteStore';
+import { SiteHomePageSelect } from './SiteHomePageSelect';
 
 export const SiteMetaDataSection: Component = () => {
   const site = useStore($site);
@@ -49,6 +50,9 @@ export const SiteMetaDataSection: Component = () => {
       </fieldset>
 
       <h3>{t('site:settings.meta.configuration')}</h3>
+      <fieldset>
+        <SiteHomePageSelect />
+      </fieldset>
     </section>
   );
 };
