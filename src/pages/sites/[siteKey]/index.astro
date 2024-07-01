@@ -1,5 +1,6 @@
 ---
 import { PageArticle } from '@client/sites/PageArtivle';
+import { SiteTray } from '@client/sites/SiteApp/SiiteTray';
 import { SitePoster } from '@client/sites/SitePoster';
 import { SiteSettingsButton } from '@client/sites/SiteSettingsButton';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
@@ -10,6 +11,7 @@ const { siteKey } = Astro.params;
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>
+  <SiteTray slot="app-tray" sitekey={siteKey + ''} client:only="solid-js"/>
       <div class="content-columns">
         <div class="full-width">
           <SitePoster site={siteKey + ''} client:only="solid-js"/>

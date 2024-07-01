@@ -7,4 +7,10 @@ export const site: Locale = {
       configuration: 'Asetukset',
     },
   },
+  tray: {
+    actions: {
+      homepage: 'Etusivu',
+      toc: 'Hakemisto',
+    },
+  },
 };
