@@ -1,0 +1,16 @@
+---
+import { SiteTray } from '@client/sites/SiteApp/SiiteTray';
+import { SiteTocPage } from '@client/sites/SiteApp/SiteTocPage';
+import { SiteSettingsButton } from '@client/sites/SiteSettingsButton';
+import { t } from '@utils/i18n';
+import PageWithTray from 'src/layouts/PageWithTray.astro';
+
+const { siteKey } = Astro.params;
+---
+<PageWithTray title={t('sites:toc.title')}>
+  <div slot="app-bar">
+    <SiteSettingsButton client:only="solid-js"/>
+  </div>
+  <SiteTray slot="app-tray" sitekey={siteKey + ''} client:only="solid-js"/>
+  <SiteTocPage client:only="solid-js"/>
+</PageWithTray>
