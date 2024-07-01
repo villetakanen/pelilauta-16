@@ -20,5 +20,14 @@ export const entries: Locale = {
     name: 'Nimi',
     description: 'Kuvaus',
     system: 'Peli, järjestelmä tai luokittelu',
+    homePage: 'Etusivu',
+    sortOrder: 'Sivujen järjestys',
+    sortOrders: {
+      name: 'Aakkosjärjestyksessä',
+      createdAt: 'Luomisajan mukaan',
+      flowTime: 'Muokkausajan mukaan',
+      manual: 'Kategorian mukaan',
+    },
   },
+  default: 'Oletus',
 };

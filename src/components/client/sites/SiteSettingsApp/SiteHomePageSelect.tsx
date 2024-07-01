@@ -22,6 +22,7 @@ export const SiteHomePageSelect: Component = () => {
           updateSite({ homepage: event.target.value });
         }}
       >
+        <option value="">{t('entries:default')}</option>
         <For each={homePageOptions()}>
           {(option) => <option value={option.value}>{option.title}</option>}
         </For>

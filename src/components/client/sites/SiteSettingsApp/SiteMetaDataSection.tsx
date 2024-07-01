@@ -4,6 +4,7 @@ import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
 import { $site, updateSite } from 'src/stores/activeSiteStore';
 import { SiteHomePageSelect } from './SiteHomePageSelect';
+import { SiteSortOrderSelect } from './SiteSortOrderSelect';
 
 export const SiteMetaDataSection: Component = () => {
   const site = useStore($site);
@@ -52,6 +53,7 @@ export const SiteMetaDataSection: Component = () => {
       <h3>{t('site:settings.meta.configuration')}</h3>
       <fieldset>
         <SiteHomePageSelect />
+        <SiteSortOrderSelect />
       </fieldset>
     </section>
   );
