@@ -1,3 +1,4 @@
+import { PageBackgroundPoster } from '@client/PageBackgroundPoster';
 import { useStore } from '@nanostores/solid';
 import { type Component, createEffect } from 'solid-js';
 import { $site, load } from 'src/stores/activeSiteStore';
@@ -13,6 +14,9 @@ export const SiteSettingsApp: Component<{ site: string }> = (props) => {
 
   return (
     <div class="content-columns">
+      {site().backgroundURL && (
+        <PageBackgroundPoster url={`${site().backgroundURL}`} />
+      )}
       <SiteCard {...site()} />
       <SiteMetaDataSection />
       <div class="debug">

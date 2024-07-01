@@ -21,6 +21,7 @@ export const SiteSchema = EntrySchema.extend({
   description: z.string().optional(),
   players: z.array(z.string()).optional(),
   sortOrder: z.enum(['name', 'createdAt', 'flowTime', 'manual']).optional(),
+  backgroundURL: z.string().optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;
