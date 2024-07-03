@@ -28,6 +28,9 @@ export const entries: Locale = {
       flowTime: 'Muokkausajan mukaan',
       manual: 'Kategorian mukaan',
     },
+    avatarURL: 'Kuvake',
+    posterURL: 'Kansikuva',
+    backgroundURL: 'Taustakuva',
   },
   default: 'Oletus',
 };

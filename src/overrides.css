@@ -74,4 +74,9 @@ main:has(.pageBackgroundPoster) .content-columns > * {
   background: color-mix(in hsl, var(--color-primary), transparent 10%);
   padding: var(--cn-gap);
 }
-  
+img.preview-icon {
+  width: var(--cn-icon-size-large);
+  aspect-ratio: 1/1;
+  border-radius: var(--cn-grid);
+  object-fit: cover;
+}

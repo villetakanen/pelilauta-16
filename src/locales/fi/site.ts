@@ -6,6 +6,9 @@ export const site: Locale = {
       title: 'Sivuston tiedot',
       configuration: 'Asetukset',
     },
+    theming: {
+      title: 'Ulkoasu',
+    },
   },
   tray: {
     actions: {
