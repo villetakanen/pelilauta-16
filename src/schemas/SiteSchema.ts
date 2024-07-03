@@ -22,6 +22,7 @@ export const SiteSchema = EntrySchema.extend({
   players: z.array(z.string()).optional(),
   sortOrder: z.enum(['name', 'createdAt', 'flowTime', 'manual']).optional(),
   backgroundURL: z.string().optional(),
+  customPageKeys: z.boolean().optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;
@@ -51,6 +52,7 @@ export function parseSite(data: Record<string, unknown>, key: string): Site {
       homepage: data.homepage ? data.homepage : key,
       // We default to sorting by flowTime if no sortOrder is provided
       sortOrder: data.sortOrder ? data.sortOrder : 'flowTime',
+      customPageKeys: data.customPageKeys ? data.customPageKeys : false,
       key,
     });
     return site;

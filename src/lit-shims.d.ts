@@ -8,6 +8,7 @@ import {
   CnNavigationIcon,
   type CnReactionButton,
 } from '@11thdeg/cyan-next';
+import type { b } from 'vitest/dist/suite-IbNSsUWN.js';
 declare module 'solid-js' {
   namespace JSX {
     interface IntrinsicElements {
@@ -25,6 +26,11 @@ declare module 'solid-js' {
         noun: string;
         checked: boolean;
         value: string;
+      };
+      'cn-toggle-button': HTMLAttributes & {
+        label: string;
+        checked: boolean;
+        onChange: (event: Event) => void;
       };
     }
   }

@@ -1,3 +1,4 @@
+import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import { useStore } from '@nanostores/solid';
 import { systemToNounMapping } from '@schemas/nouns';
 import { t } from '@utils/i18n';
@@ -52,6 +53,22 @@ export const SiteMetaDataSection: Component = () => {
 
       <h3>{t('site:settings.meta.configuration')}</h3>
       <fieldset>
+        <cn-toggle-button
+          label={t('entries:site.hidden')}
+          pressed={site().hidden}
+          onChange={(event: Event) =>
+            updateSite({ hidden: (event.target as CyanToggleButton).pressed })
+          }
+        />
+        <cn-toggle-button
+          label={t('entries:site.customPageKeys')}
+          pressed={site().customPageKeys}
+          onChange={(event: Event) =>
+            updateSite({
+              customPageKeys: (event.target as CyanToggleButton).pressed,
+            })
+          }
+        />
         <SiteHomePageSelect />
         <SiteSortOrderSelect />
       </fieldset>
