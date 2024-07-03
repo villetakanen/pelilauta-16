@@ -31,6 +31,8 @@ export const entries: Locale = {
     avatarURL: 'Kuvake',
     posterURL: 'Kansikuva',
     backgroundURL: 'Taustakuva',
+    hidden: 'Piilotettu sivusto',
+    customPageKeys: 'Luettavat osoitteet',
   },
   default: 'Oletus',
 };

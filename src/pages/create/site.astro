@@ -1,0 +1,11 @@
+---
+import { CreateSiteApp } from '@client/sites/CreateSiteApp';
+import { t } from '@utils/i18n';
+import Page from 'src/layouts/Page.astro';
+---
+
+<Page title={t('site:create.title')}>
+  <div>
+    <CreateSiteApp client:only="solid-js" />
+  </div>
+</Page>

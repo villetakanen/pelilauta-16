@@ -16,4 +16,7 @@ export const site: Locale = {
       toc: 'Hakemisto',
     },
   },
+  create: {
+    title: 'Luo sivusto',
+  },
 };
