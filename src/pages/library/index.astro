@@ -1,4 +1,5 @@
 ---
+import { SiteFabs } from '@client/library/SiteFabs';
 import { SitesList } from '@client/library/SitesList';
 import { t } from '@utils/i18n';
 import LibraryTray from 'src/components/server/library/LibraryTray.astro';
@@ -10,4 +11,5 @@ import PageWithTray from 'src/layouts/PageWithTray.astro';
   <div class="content-columns">
     <SitesList client:only="solid-js" />
   </div>
+  <SiteFabs slot="app-fabs" client:only="solid-js"/>
 </PageWithTray>

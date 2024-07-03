@@ -2,6 +2,7 @@
 import AppBar from 'src/components/server/AppBar.astro';
 import AppRail from 'src/components/server/AppRail.astro';
 import BasePostscripts from 'src/components/server/BasePostscripts.astro';
+import FabTray from 'src/components/server/FabTray.astro';
 import BaseHead from '../components/server/BaseHead.astro';
 
 const { title } = Astro.props;
@@ -21,6 +22,9 @@ const { title } = Astro.props;
 	  <main>
       <slot />
     </main>
+    <FabTray>
+      <slot name="app-fabs" />
+    </FabTray>
     <BasePostscripts />
     <script is:inline>
       // If the viewport is larger than 1280px, the tray should be open by default
