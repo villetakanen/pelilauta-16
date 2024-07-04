@@ -5,7 +5,6 @@ import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
-import { update } from 'firebase/database';
 import {
   addDoc,
   collection,
