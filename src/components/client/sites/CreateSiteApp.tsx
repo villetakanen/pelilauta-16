@@ -1,10 +1,13 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import { WithLogin } from '@client/WithLogin/WithLogin';
 import { useStore } from '@nanostores/solid';
+import { PAGES_COLLECTION_NAME } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
+import { toFirestoreEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
+import { generateFrontPage } from '@utils/siteUtils';
 import {
   addDoc,
   collection,
@@ -80,36 +83,51 @@ export const CreateSiteApp: Component = () => {
           description: formData.get('description') as string,
           hidden: hidden(),
           customPageKeys: usePlainTextURL(),
+          homepage: key,
           owners: [account().uid],
           key,
         },
         key,
       );
 
-      const siteData = {
-        ...site,
-        createdAt: serverTimestamp,
-        flowTime: serverTimestamp,
-        updatedAt: serverTimestamp,
-      };
-
       // Save the site to the database
       if (key) {
         logDebug(
           'CreateSiteApp.handleSubmit',
           'Creating site with custom key',
-          siteData,
+          toFirestoreEntry(site),
         );
-        setDoc(doc(db, SITES_COLLECTION_NAME, key), siteData);
+        await setDoc(
+          doc(db, SITES_COLLECTION_NAME, key),
+          toFirestoreEntry(site),
+        );
       } else {
         logDebug(
           'CreateSiteApp.handleSubmit',
           'Creating site with auto key',
-          siteData,
+          toFirestoreEntry(site),
         );
-        key = (await addDoc(collection(db, SITES_COLLECTION_NAME), siteData))
-          .id;
+        key = (
+          await addDoc(
+            collection(db, SITES_COLLECTION_NAME),
+            toFirestoreEntry(site),
+          )
+        ).id;
       }
+
+      const frontPage = generateFrontPage(site);
+
+      // Save the front page to the database
+      setDoc(
+        doc(
+          db,
+          SITES_COLLECTION_NAME,
+          key,
+          PAGES_COLLECTION_NAME,
+          frontPage.key,
+        ),
+        toFirestoreEntry(frontPage),
+      );
 
       logDebug('CreateSiteApp.handleSubmit', 'site');
       // Redirect to the new site

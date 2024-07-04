@@ -1,3 +1,4 @@
+import { toClientEntry } from '@utils/client/entryUtils';
 import { logError } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { z } from 'zod';
@@ -44,7 +45,7 @@ export function parseSite(data: Record<string, unknown>, key: string): Site {
         : 0;
 
     const site = SiteSchema.parse({
-      ...data,
+      ...toClientEntry(data),
       owners: typeof data.owners === 'string' ? [data.owners] : data.owners,
       system: data.system ? data.system : 'homebrew',
       flowTime,

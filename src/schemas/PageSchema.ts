@@ -40,3 +40,17 @@ export const parsePage = (
     throw err;
   }
 };
+
+export function createPage(key: string, siteKey: string) {
+  return parsePage(
+    {
+      key,
+      siteKey,
+      name: '',
+      flowTime: new Date().getTime(),
+      owners: [],
+    },
+    key,
+    siteKey,
+  );
+}

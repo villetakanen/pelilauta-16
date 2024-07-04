@@ -4,6 +4,8 @@ export const EntrySchema = z.object({
   key: z.string(),
   flowTime: z.number(),
   owners: z.array(z.string()),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
 });
 
 export const ContentEntrySchema = EntrySchema.extend({
