@@ -1,56 +1,123 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import { WithLogin } from '@client/WithLogin/WithLogin';
+import { useStore } from '@nanostores/solid';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
-import { toMekanismiURI } from '@utils/toMekanismiURI';
-import { doc, getDoc } from 'firebase/firestore';
-import { type Component, createSignal } from 'solid-js';
+import { toMekanismiURI } from '@utils/mekanismiUtils';
+import { update } from 'firebase/database';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
+import {
+  type Component,
+  createEffect,
+  createMemo,
+  createSignal,
+} from 'solid-js';
 import { db } from 'src/firebase/client';
+import { $account } from 'src/stores/sessionStore';
 
 export const CreateSiteApp: Component = () => {
+  const account = useStore($account);
+  const [siteName, setSiteName] = createSignal('');
   const [usePlainTextURL, setUsePlainTextURL] = createSignal(true);
-  const [nameTaken, setNameTaken] = createSignal(false);
-  const [proposedName, setProposedName] = createSignal('');
+  const [keyTaken, setKeyTaken] = createSignal(false);
   const [hidden, setHidden] = createSignal(false);
+  const [takenKeys, setTakenKeys] = createSignal<string[]>([]);
+  const proposedKey = createMemo(() =>
+    usePlainTextURL() ? toMekanismiURI(siteName()) : '',
+  );
+
+  /**
+   * Every time the proposed name changes, check if it is taken
+   */
+  createEffect(() => {
+    if (takenKeys().includes(proposedKey())) {
+      setKeyTaken(true);
+    }
+  });
+
+  async function checkNameTaken() {
+    // If the name is empty, firebase will auto-generate an unique key
+    if (!proposedKey()) return;
+
+    // If we are not using plain text urls, we don't need to check for duplicates
+    if (!usePlainTextURL()) return;
+
+    const key = proposedKey();
+
+    const siteRef = await getDoc(doc(db, SITES_COLLECTION_NAME, key));
+    if (siteRef.exists()) {
+      setTakenKeys([...takenKeys(), key]);
+      setKeyTaken(true);
+      return true;
+    }
+    return false;
+  }
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
 
+    // Check if the key is taken
+    if (await checkNameTaken()) return;
+
+    // Let's generate a key for the site
+    let key = proposedKey();
+
+    // Get the form data
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    logError(
-      'CreateSiteApp.handleSubmit not implemented yet',
-      'formData',
-      formData,
-    );
-
-    if (usePlainTextURL()) {
-      // Verify that the name is not taken
-      const siteRef = await getDoc(
-        doc(db, SITES_COLLECTION_NAME, toMekanismiURI(proposedName())),
-      );
-      if (siteRef.exists()) {
-        setNameTaken(true);
-        return;
-      }
-    }
-
-    const key = usePlainTextURL() ? toMekanismiURI(proposedName()) : '';
-
-    const site = parseSite(
-      {
-        name: formData.get('name') as string,
-        description: formData.get('description') as string,
-        hidden: hidden(),
-        customPageKeys: usePlainTextURL(),
+    try {
+      const site = parseSite(
+        {
+          name: siteName(),
+          description: formData.get('description') as string,
+          hidden: hidden(),
+          customPageKeys: usePlainTextURL(),
+          owners: [account().uid],
+          key,
+        },
         key,
-      },
-      key,
-    );
+      );
 
-    logDebug('CreateSiteApp.handleSubmit', 'site', site);
+      const siteData = {
+        ...site,
+        createdAt: serverTimestamp,
+        flowTime: serverTimestamp,
+        updatedAt: serverTimestamp,
+      };
+
+      // Save the site to the database
+      if (key) {
+        logDebug(
+          'CreateSiteApp.handleSubmit',
+          'Creating site with custom key',
+          siteData,
+        );
+        setDoc(doc(db, SITES_COLLECTION_NAME, key), siteData);
+      } else {
+        logDebug(
+          'CreateSiteApp.handleSubmit',
+          'Creating site with auto key',
+          siteData,
+        );
+        key = (await addDoc(collection(db, SITES_COLLECTION_NAME), siteData))
+          .id;
+      }
+
+      logDebug('CreateSiteApp.handleSubmit', 'site');
+      // Redirect to the new site
+      window.location.href = `/sites/${key}`;
+    } catch (e) {
+      logError(e);
+    }
   }
 
   return (
@@ -67,10 +134,18 @@ export const CreateSiteApp: Component = () => {
                   name="name"
                   required
                   oninput={(e: Event) =>
-                    setProposedName((e.target as HTMLInputElement).value)
+                    setSiteName((e.target as HTMLInputElement).value)
                   }
                 />
               </label>
+              <p>
+                <code class="p-1">{`pelilauta.web.app/sites/${usePlainTextURL() ? proposedKey() : '[auto]'}`}</code>
+              </p>
+              {usePlainTextURL() && keyTaken() && (
+                <p class="error text-caption" style="padding: var(--cn-grid)">
+                  {t('site:create.nameTaken')}
+                </p>
+              )}
 
               <label>
                 {t('entries:site.description')}
@@ -95,24 +170,6 @@ export const CreateSiteApp: Component = () => {
                   setUsePlainTextURL((e.target as CyanToggleButton).pressed)
                 }
               />
-
-              {usePlainTextURL() && (
-                <>
-                  <label class={`${nameTaken() ? 'error' : ''}`}>
-                    {t('entries:site.key')}
-                    <input
-                      type="text"
-                      name="url"
-                      placeholder={toMekanismiURI(proposedName())}
-                    />
-                  </label>
-                  {!nameTaken() && (
-                    <p class="notify text-caption">
-                      {t('site:create.nameTaken')}
-                    </p>
-                  )}
-                </>
-              )}
             </fieldset>
             <div class="toolbar justify-end">
               <button type="submit" class="call-to-action">

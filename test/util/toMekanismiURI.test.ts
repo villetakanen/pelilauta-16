@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { toMekanismiURI } from '../../src/utils/toMekanismiURI';
+import { toMekanismiURI } from '../../src/utils/mekanismiUtils';
 
 test('toMekanismiURI converts string with whitespaces to mekanismi uri', () => {
   expect(toMekanismiURI('  12 3  ')).toBe('12-3');
