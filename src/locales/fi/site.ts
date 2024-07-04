@@ -19,4 +19,10 @@ export const site: Locale = {
   create: {
     title: 'Luo sivusto',
   },
+  dangerZone: {
+    title: 'Poista sivusto',
+    description:
+      'Tämä toiminto poistaa sivuston lopullisesti. Toimintoa ei voi peruuttaa. Vahvistaaksesi toiminnon, kirjoita alla olevaan kenttään "Olen Aivan Varma" ja paina "Poista sivusto" -painiketta.',
+    deleteSiteAction: 'Poista sivusto',
+  },
 };

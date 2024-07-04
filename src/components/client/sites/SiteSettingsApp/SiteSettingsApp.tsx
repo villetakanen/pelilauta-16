@@ -3,6 +3,7 @@ import { useStore } from '@nanostores/solid';
 import { type Component, createEffect } from 'solid-js';
 import { $site, load } from 'src/stores/activeSiteStore';
 import { SiteCard } from '../SiteCard';
+import { DangerZoneSection } from './DangerZoneSection';
 import { SiteMetaDataSection } from './SiteMetaDataSection';
 import { ThemingSection } from './ThemingSection';
 
@@ -19,6 +20,7 @@ export const SiteSettingsApp: Component<{ site: string }> = (props) => {
         <PageBackgroundPoster url={`${site().backgroundURL}`} />
       )}
       <SiteCard {...site()} />
+      <DangerZoneSection />
       <SiteMetaDataSection />
       <ThemingSection />
       <div class="debug">
