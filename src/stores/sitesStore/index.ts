@@ -4,8 +4,15 @@ import {
   type Site,
   parseSite,
 } from '@schemas/SiteSchema';
-import { logDebug } from '@utils/logHelpers';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { logDebug, logError } from '@utils/logHelpers';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { $uid } from '../sessionStore';
@@ -79,4 +86,23 @@ function patch(site: Site) {
   }
   sites.push(site);
   $sites.set(sites);
+}
+
+export async function deleteSite(key: string) {
+  const site = $sites.get().find((s) => s.key === key);
+  if (!site) {
+    logError(`Site with key ${key} not found`);
+    return;
+  }
+  if (site.owners.includes($uid.get())) {
+    logDebug(`Deleting site with key ${key}`);
+    await deleteDoc(doc(db, SITES_COLLECTION_NAME, key));
+    // remove the site from the store
+    const sites = [...$sites.get()];
+    const index = sites.findIndex((s) => s.key === key);
+    if (index !== -1) {
+      sites.splice(index, 1);
+    }
+    $sites.set(sites);
+  }
 }
