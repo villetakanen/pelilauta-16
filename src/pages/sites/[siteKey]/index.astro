@@ -17,7 +17,7 @@ const { siteKey } = Astro.params;
           <SitePoster site={siteKey + ''} client:only="solid-js"/>
         </div>
         <div class="column-l">
-          <PageArticle client:only="solid-js" site={siteKey + ''} />
+          <PageArticle client:only="solid-js" page={siteKey + ''} />
         </div>
       </div>
 </PageWithTray>

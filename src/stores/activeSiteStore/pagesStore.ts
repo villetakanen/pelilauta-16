@@ -5,6 +5,7 @@ import {
   parsePage,
 } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug, logWarn } from '@utils/logHelpers';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { atom, onSet } from 'nanostores';
@@ -53,7 +54,11 @@ async function subscibeToPages(siteKey: string) {
     for (const change of snapshot.docChanges()) {
       if (change.type === 'removed') removePage(change.doc.id);
       else {
-        const page = parsePage(change.doc.data(), change.doc.id, siteKey);
+        const page = parsePage(
+          toClientEntry(change.doc.data()),
+          change.doc.id,
+          siteKey,
+        );
         patchToPages(page);
       }
     }

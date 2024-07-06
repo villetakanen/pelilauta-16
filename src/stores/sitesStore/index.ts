@@ -4,13 +4,17 @@ import {
   type Site,
   parseSite,
 } from '@schemas/SiteSchema';
+import { toFirestoreEntry } from '@utils/client/entryUtils';
 import { logDebug, logError } from '@utils/logHelpers';
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   query,
+  setDoc,
   where,
 } from 'firebase/firestore';
 import { onMount } from 'nanostores';
@@ -105,4 +109,40 @@ export async function deleteSite(key: string) {
     }
     $sites.set(sites);
   }
+}
+
+export async function createSite(site: Partial<Site>): Promise<string> {
+  const uid = $uid.get();
+  if (!uid) {
+    logError('createSite: uid is not set');
+    throw new Error('Site creation aborted, user not logged in');
+  }
+  const fullSite = parseSite(site, site.key || '');
+  logDebug('createSite', fullSite);
+
+  const siteData = toFirestoreEntry(fullSite);
+
+  let key = site.key || '';
+
+  if (site.key) {
+    logDebug('createSite', 'Creating site with custom key', siteData);
+    await setDoc(doc(db, SITES_COLLECTION_NAME, site.key), siteData);
+  } else {
+    logDebug('createSite', 'Creating site with auto key', siteData);
+    const { id } = await addDoc(
+      collection(db, SITES_COLLECTION_NAME),
+      siteData,
+    );
+    key = id;
+  }
+
+  const updatedSiteDoc = await getDoc(doc(db, SITES_COLLECTION_NAME, key));
+  const updatedSite = parseSite(
+    updatedSiteDoc.data() as Record<string, unknown>,
+    updatedSiteDoc.id,
+  );
+
+  patch(updatedSite);
+
+  return key;
 }

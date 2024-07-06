@@ -24,6 +24,7 @@ import {
 } from 'solid-js';
 import { db } from 'src/firebase/client';
 import { $account } from 'src/stores/sessionStore';
+import { createSite } from 'src/stores/sitesStore';
 
 export const CreateSiteApp: Component = () => {
   const account = useStore($account);
@@ -70,7 +71,7 @@ export const CreateSiteApp: Component = () => {
     if (await checkNameTaken()) return;
 
     // Let's generate a key for the site
-    let key = proposedKey();
+    const key = proposedKey();
 
     // Get the form data
     const form = event.target as HTMLFormElement;
@@ -90,30 +91,7 @@ export const CreateSiteApp: Component = () => {
         key,
       );
 
-      // Save the site to the database
-      if (key) {
-        logDebug(
-          'CreateSiteApp.handleSubmit',
-          'Creating site with custom key',
-          toFirestoreEntry(site),
-        );
-        await setDoc(
-          doc(db, SITES_COLLECTION_NAME, key),
-          toFirestoreEntry(site),
-        );
-      } else {
-        logDebug(
-          'CreateSiteApp.handleSubmit',
-          'Creating site with auto key',
-          toFirestoreEntry(site),
-        );
-        key = (
-          await addDoc(
-            collection(db, SITES_COLLECTION_NAME),
-            toFirestoreEntry(site),
-          )
-        ).id;
-      }
+      const siteKey = await createSite(site);
 
       const frontPage = generateFrontPage(site);
 
@@ -122,7 +100,7 @@ export const CreateSiteApp: Component = () => {
         doc(
           db,
           SITES_COLLECTION_NAME,
-          key,
+          siteKey,
           PAGES_COLLECTION_NAME,
           frontPage.key,
         ),
@@ -131,7 +109,7 @@ export const CreateSiteApp: Component = () => {
 
       logDebug('CreateSiteApp.handleSubmit', 'site');
       // Redirect to the new site
-      window.location.href = `/sites/${key}`;
+      // window.location.href = `/sites/${siteKey}`;
     } catch (e) {
       logError(e);
     }
