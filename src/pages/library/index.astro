@@ -8,8 +8,6 @@ import PageWithTray from 'src/layouts/PageWithTray.astro';
 
 <PageWithTray title={t('library:title')}>
   <LibraryTray slot="app-tray" />
-  <div class="content-columns">
-    <SitesList client:only="solid-js" />
-  </div>
+  <SitesList client:only="solid-js" />
   <SiteFabs slot="app-fabs" client:only="solid-js"/>
 </PageWithTray>

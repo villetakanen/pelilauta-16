@@ -8,16 +8,20 @@ export const SitesList: Component = () => {
   const sites = useStore($sites);
 
   return (
-    <article>
-      <h4>{t('library:sites.title')}</h4>
-      <p>
-        {t('library:sites.description')} {sites().length}
-      </p>
+    <>
+      <div class="content-columns">
+        <article class="column-l">
+          <h4>{t('library:sites.title')}</h4>
+          <p>
+            {t('library:sites.description')} {sites().length}
+          </p>
+        </article>
+      </div>
       <div class="content-cards">
         <For each={sites()}>
           {(site) => <SiteCard {...site} key={site.key} />}
         </For>
       </div>
-    </article>
+    </>
   );
 };
