@@ -18,7 +18,11 @@ export const $pages = persistentAtom<Page[]>('pages', [], {
   encode: (value) => JSON.stringify(value),
   decode: (data) => {
     return JSON.parse(data).map((entry: Record<string, unknown>) => {
-      return parsePage(entry, entry.key as string, entry.siteKey as string);
+      return parsePage(
+        toClientEntry(entry),
+        entry.key as string,
+        entry.siteKey as string,
+      );
     });
   },
 });
