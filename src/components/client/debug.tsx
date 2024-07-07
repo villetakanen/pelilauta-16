@@ -5,6 +5,7 @@ import {
   $active,
   $isAnonymous,
   $requiresEula,
+  $subscriber,
 } from 'src/stores/sessionStore';
 
 export const DebugSection: Component = () => {
@@ -12,6 +13,8 @@ export const DebugSection: Component = () => {
   const eulaAccepted = useStore($requiresEula);
   const account = useStore($account);
   const anonymous = useStore($isAnonymous);
+
+  const subsciption = useStore($subscriber);
 
   return (
     <div class="debug">
@@ -26,6 +29,10 @@ export const DebugSection: Component = () => {
         <div>{`${eulaAccepted()}`}</div>
         <div>showAdminTools:</div>
         <div>{`${account().showAdminTools}`}</div>
+      </section>
+      <hr />
+      <section>
+        <pre>{JSON.stringify(subsciption(), null, 2)}</pre>
       </section>
     </div>
   );

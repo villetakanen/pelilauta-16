@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const SUBSCRIPTIONS_FIRESTORE_PATH = 'subscriptions';
+
 /**
  * Subscriber schema
  *
@@ -12,7 +14,7 @@ import { z } from 'zod';
  * - notifyOnLikes: boolean, whether the subscriber should receive notifications on mentions
  * - messagingTokens: string[], an array of messaging tokens
  */
-export const SubscriberSchema = z.object({
+export const SubscriptionSchema = z.object({
   key: z.string(),
   allSeenAt: z.number(),
   seenEntities: z.record(z.string(), z.number()),
@@ -22,9 +24,9 @@ export const SubscriberSchema = z.object({
   messagingTokens: z.array(z.string()),
 });
 
-export type Subscriber = z.infer<typeof SubscriberSchema>;
+export type Subscription = z.infer<typeof SubscriptionSchema>;
 
-export function createSubscriber(key: string): Subscriber {
+export function createSubscription(key: string): Subscription {
   return {
     key,
     allSeenAt: Date.now(),
@@ -36,10 +38,10 @@ export function createSubscriber(key: string): Subscriber {
   };
 }
 
-export function parseSubscriber(
-  data: Partial<Subscriber>,
+export function parseSubscription(
+  data: Partial<Subscription>,
   key: string,
-): Subscriber {
+): Subscription {
   return {
     key,
     allSeenAt: data.allSeenAt || Date.now(),

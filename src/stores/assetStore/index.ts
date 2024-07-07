@@ -4,6 +4,7 @@ import {
   type Asset,
   ParseAsset,
 } from '@schemas/AssetSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
@@ -22,7 +23,7 @@ export const $assets = persistentAtom<Asset[]>(
     encode: JSON.stringify,
     decode: (data) => {
       return JSON.parse(data)?.map((entry: Record<string, unknown>) => {
-        return ParseAsset(entry, entry.key as string);
+        return ParseAsset(toClientEntry(entry), entry.key as string);
       });
     },
   },
@@ -41,7 +42,7 @@ export async function loadUserAssets(uid: string) {
   const docs = await getDocs(q);
 
   for (const doc of docs.docs) {
-    mergeAssetToStore(ParseAsset(doc.data(), doc.id));
+    mergeAssetToStore(ParseAsset(toClientEntry(doc.data()), doc.id));
   }
 
   logDebug('loadUserAssets', 'assets loaded');

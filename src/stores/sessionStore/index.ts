@@ -14,6 +14,7 @@ import {
   parseProfile,
 } from 'src/schemas/ProfileSchema';
 import { loadUserAssets } from '../assetStore';
+import { initSubscriberStore } from './subscriber';
 
 const defaultAccount: Account = {
   uid: '',
@@ -112,6 +113,10 @@ onMount($account, () => {
             'onAuthStateChanged',
             'Session data found, assuming it is the same user',
           );
+
+          // subscribe to user subscriptions data
+          initSubscriberStore(user.uid);
+
           return;
         }
         logWarn(
@@ -128,6 +133,11 @@ onMount($account, () => {
 });
 
 async function login(uid: string) {
+  if (!uid) {
+    logWarn('sessionStore', 'login', 'No uid provided');
+    return;
+  }
+
   // As we are logging in, we need to set the loading state
   $loadingState.set('loading');
 
@@ -140,6 +150,9 @@ async function login(uid: string) {
 
   // Prefetch user assets
   loadUserAssets(uid);
+
+  // subscribe to user subscriptions data
+  initSubscriberStore(uid);
 }
 
 async function clear() {
@@ -181,3 +194,5 @@ async function fetchProfile(uid: string) {
 
   return parseProfile(profileDoc.data(), uid);
 }
+
+export * from './subscriber';

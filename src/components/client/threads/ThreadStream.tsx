@@ -1,3 +1,4 @@
+import { useStore } from '@nanostores/solid';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { type Component, createSignal, onMount } from 'solid-js';
 import { db } from 'src/firebase/client';
@@ -6,6 +7,7 @@ import {
   THREADS_COLLECTION_NAME,
   type Thread,
 } from 'src/schemas/ThreadSchema';
+import { hasSeenEntry } from 'src/stores/sessionStore';
 import { ThreadCard } from './ThreadCard';
 
 export const ThreadStream: Component = () => {
@@ -26,7 +28,11 @@ export const ThreadStream: Component = () => {
   return (
     <div class="flex flex-column">
       {threads().map((thread) => (
-        <ThreadCard {...thread} key={thread.key} />
+        <ThreadCard
+          thread={thread}
+          key={thread.key}
+          notify={!hasSeenEntry(thread.key, thread.flowTime)}
+        />
       ))}
     </div>
   );

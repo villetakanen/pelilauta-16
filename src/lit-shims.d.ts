@@ -13,7 +13,12 @@ declare module 'solid-js' {
   namespace JSX {
     interface IntrinsicElements {
       'cn-icon': HTMLAttributes & { noun: string };
-      'cn-card': HTMLAttributes;
+      'cn-card': HTMLAttributes & {
+        notify: boolean;
+        href: string;
+        noun: string;
+        title: string;
+      };
       'cn-dialog': HTMLAttributes & { open: boolean; close: () => void };
       'cn-navigation-icon': HTMLAttributes & { noun: string; label: string };
       'cn-avatar-button': HTMLAttributes & { src: string };
