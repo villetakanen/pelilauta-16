@@ -6,6 +6,7 @@ import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import { MarkdownSnippetSection } from 'src/components/shared/MarkdownSnippetSection';
 import type { Thread } from 'src/schemas/ThreadSchema';
+import { ThreadLikeButton } from './ThreadLikeButton';
 
 export const ThreadCard: Component<{
   thread: Thread;
@@ -40,10 +41,7 @@ export const ThreadCard: Component<{
             <p>{toDisplayString(props.thread.flowTime)}</p>
           </div>
           <div class="toolbar justify-space-between ">
-            <cn-reaction-button
-              noun="love"
-              count={props.thread.lovedCount || 0}
-            />
+            <ThreadLikeButton thread={props.thread} />
             <cn-reaction-button
               noun="design"
               count={props.thread.replyCount || 0}

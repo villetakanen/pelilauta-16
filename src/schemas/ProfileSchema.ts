@@ -11,6 +11,7 @@ export const ProfileSchema = z.object({
   avatarURL: z.string().optional(),
   bio: z.string().optional(),
   tags: z.array(z.string()).optional(),
+  lovedThreads: z.array(z.string()).optional(),
 });
 
 export type Profile = z.infer<typeof ProfileSchema>;
