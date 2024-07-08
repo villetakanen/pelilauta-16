@@ -1,3 +1,4 @@
+import { ProfileLink } from '@client/shared/ProfileLink';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { topicToNoun } from '@utils/schemaHelpers';
@@ -31,7 +32,9 @@ export const ThreadCard: Component<{
 
         <div slot="actions">
           <div class="toolbar justify-space-between downscaled border-top">
-            <p>[nick]</p>
+            <p>
+              <ProfileLink uid={props.thread.owners[0]} />
+            </p>
             <p>{toDisplayString(props.thread.flowTime)}</p>
           </div>
           <div class="toolbar justify-space-between ">

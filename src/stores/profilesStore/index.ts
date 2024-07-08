@@ -44,13 +44,18 @@ export function getProfile(key: string): PublicProfile | undefined {
 }
 
 async function fetchProfile(key: string) {
+  logDebug('profilesStore', 'fetchProfile', key);
   if ($loading.get().includes(key)) {
     return;
   }
   $loading.set([...$loading.get(), key]);
   const publicProfileDoc = await getDoc(doc(db, 'profiles', key));
+  logDebug('profilesStore', 'fetchProfile', key, publicProfileDoc.exists());
   if (publicProfileDoc.exists()) {
-    const publicProfile = PublicProfileSchema.parse(publicProfileDoc.data());
+    const publicProfile = PublicProfileSchema.parse({
+      ...publicProfileDoc.data(),
+      key: publicProfileDoc.id,
+    });
     $profiles.set({
       ...$profiles.get(),
       [key]: publicProfile,
