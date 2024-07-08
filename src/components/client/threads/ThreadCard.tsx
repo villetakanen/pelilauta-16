@@ -11,6 +11,7 @@ export const ThreadCard: Component<{
   thread: Thread;
   notify?: boolean;
   key: string;
+  elevation?: number;
 }> = (props) => {
   const notify = createMemo(() => props.notify);
 
@@ -22,6 +23,7 @@ export const ThreadCard: Component<{
         noun={topicToNoun(props.thread.topic)}
         title={props.thread.title}
         cover={props.thread.poster}
+        elevation={props.elevation}
       >
         <div class="downscaled">
           <MarkdownSnippetSection content={`${props.thread.markdownContent}`} />

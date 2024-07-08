@@ -29,6 +29,7 @@ export const ThreadStream: Component = () => {
     <div class="flex flex-column">
       {threads().map((thread) => (
         <ThreadCard
+          elevation={!hasSeenEntry(thread.key, thread.flowTime) ? 2 : 1}
           thread={thread}
           key={thread.key}
           notify={!hasSeenEntry(thread.key, thread.flowTime)}
