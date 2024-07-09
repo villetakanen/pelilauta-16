@@ -86,3 +86,6 @@ p.align-right {
 .border-top {
   border-top: var(--color-border) solid 1px;
 }
+.justify-center  {
+  justify-content: center;
+}

@@ -1,0 +1,13 @@
+---
+import { ThreadApp } from '@client/threads/ThreadApp/ThreadApp';
+import Page from 'src/layouts/Page.astro';
+
+const { threadKey } = Astro.params;
+
+if (!threadKey) {
+  throw new Error('threadKey is required');
+}
+---
+<Page>
+  <ThreadApp thread={threadKey} client:only="solid-js"/>
+</Page>

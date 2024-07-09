@@ -32,3 +32,22 @@ export function ParseThread(
     key,
   });
 }
+
+export function createThread(): Thread {
+  return {
+    key: '',
+    title: '',
+    topic: '',
+    siteKey: '',
+    youtubeId: '',
+    topicKey: '',
+    poster: '',
+    images: [],
+    owners: [],
+    replyCount: 0,
+    lovedCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    flowTime: new Date().getTime(),
+  };
+}
