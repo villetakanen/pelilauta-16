@@ -1,4 +1,3 @@
-import { useStore } from '@nanostores/solid';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { type Component, createSignal, onMount } from 'solid-js';
 import { db } from 'src/firebase/client';

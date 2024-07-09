@@ -1,5 +1,5 @@
 import { marked } from 'marked';
-import { type Component, createEffect, createSignal, onMount } from 'solid-js';
+import { type Component, createEffect, createSignal } from 'solid-js';
 
 export const MarkdownSection: Component<{ content: string }> = (props) => {
   const [content, setContent] = createSignal(props.content);

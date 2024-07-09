@@ -1,11 +1,8 @@
 import { useStore } from '@nanostores/solid';
-import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
-import { deleteDoc, doc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';
-import { db } from 'src/firebase/client';
 import { $site } from 'src/stores/activeSiteStore';
 import { deleteSite } from 'src/stores/sitesStore';
 

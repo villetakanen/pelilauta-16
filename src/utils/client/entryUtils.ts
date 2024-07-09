@@ -1,7 +1,10 @@
 import type { Entry } from '@schemas/ContentEntry';
 import { toDate } from '@utils/schemaHelpers';
 import { Timestamp, serverTimestamp } from 'firebase/firestore';
-import { object } from 'zod';
+
+export interface Params {
+  silent?: boolean;
+}
 
 /**
  * Firestore handles dates as Timestamps, so we need to convert them from Date/number to Timestamp
@@ -15,7 +18,7 @@ import { object } from 'zod';
  */
 export function toFirestoreEntry(
   entry: Partial<Entry>,
-  params = { silent: false },
+  params: Params = { silent: false },
 ) {
   if (!params.silent)
     return {

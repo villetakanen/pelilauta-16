@@ -6,7 +6,7 @@ import {
 } from '@schemas/AssetSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
 
 // *** Store loading state *************************************************

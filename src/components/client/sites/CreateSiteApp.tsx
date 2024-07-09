@@ -8,14 +8,7 @@ import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { generateFrontPage } from '@utils/siteUtils';
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-} from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import {
   type Component,
   createEffect,

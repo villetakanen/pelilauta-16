@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
-import { type Component, createSignal } from 'solid-js';
+import type { Component } from 'solid-js';
 import { $profile } from 'src/stores/sessionStore';
 import { updateProfile } from 'src/stores/sessionStore/profile';
 import { AvatarButton } from './AvatarButton';

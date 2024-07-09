@@ -3,7 +3,6 @@ import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { topicToNoun } from '@utils/schemaHelpers';
 import { type Component, createMemo } from 'solid-js';
-import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import { MarkdownSnippetSection } from 'src/components/shared/MarkdownSnippetSection';
 import type { Thread } from 'src/schemas/ThreadSchema';
 import { ThreadLikeButton } from './ThreadLikeButton';
@@ -42,10 +41,12 @@ export const ThreadCard: Component<{
           </div>
           <div class="toolbar justify-space-between ">
             <ThreadLikeButton thread={props.thread} />
-            <cn-reaction-button
-              noun="design"
-              count={props.thread.replyCount || 0}
-            />
+            <a href={`/threads/${props.thread.key}#discussion`}>
+              <cn-reaction-button
+                noun="discussion"
+                count={props.thread.replyCount || 0}
+              />
+            </a>
           </div>
         </div>
       </cn-card>

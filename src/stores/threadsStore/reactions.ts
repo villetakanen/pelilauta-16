@@ -23,30 +23,27 @@ export async function loveThread(uid: string, threadid: string): Promise<void> {
   const threadRef = doc(db, 'stream', threadid);
   const profileRef = doc(db, 'profiles', uid);
 
-  return runTransaction(db, (transaction: Transaction) => {
-    return transaction.get(profileRef).then((profile) => {
-      if (!profile.exists) {
-        throw new Error(
-          `threadStore/loveThread, trying to love by a non existing user (${uid})`,
-        );
+  return runTransaction(db, async (transaction: Transaction) => {
+    const profile = await transaction.get(profileRef);
+    if (!profile.exists) {
+      throw new Error(
+        `threadStore/loveThread, trying to love by a non existing user (${uid})`,
+      );
+    }
+    const lovesArr = new Array<string>();
+    const dataArr = profile.data()?.lovedThreads;
+    if (dataArr) {
+      if ((dataArr as Array<string>).includes(threadid)) {
+        throw new Error('Can not love a tread one already loves');
       }
-
-      const lovesArr = new Array<string>();
-      const dataArr = profile.data()?.lovedThreads;
-      if (dataArr) {
-        if ((dataArr as Array<string>).includes(threadid)) {
-          throw new Error('Can not love a tread one already loves');
-        }
-        for (const loved of dataArr as Array<string>) {
-          lovesArr.push(loved);
-        }
+      for (const loved of dataArr as Array<string>) {
+        lovesArr.push(loved);
       }
-      lovesArr.push(threadid);
-      transaction.update(profileRef, { lovedThreads: lovesArr });
-
-      transaction.update(threadRef, {
-        lovedCount: increment(1),
-      });
+    }
+    lovesArr.push(threadid);
+    transaction.update(profileRef, { lovedThreads: lovesArr });
+    transaction.update(threadRef, {
+      lovedCount: increment(1),
     });
   });
 }
@@ -64,31 +61,28 @@ export async function unloveThread(
   const threadRef = doc(db, 'stream', threadid);
   const profileRef = doc(db, 'profiles', uid);
 
-  return runTransaction(db, (transaction: Transaction) => {
-    return transaction.get(profileRef).then((profile) => {
-      if (!profile.exists) {
-        throw new Error(
-          `threadStore/loveThread, trying to unlove by a non existing user (${uid})`,
-        );
+  return runTransaction(db, async (transaction: Transaction) => {
+    const profile = await transaction.get(profileRef);
+    if (!profile.exists) {
+      throw new Error(
+        `threadStore/loveThread, trying to unlove by a non existing user (${uid})`,
+      );
+    }
+    const lovesArr = new Array<string>();
+    const dataArr = profile.data()?.lovedThreads;
+    if (dataArr) {
+      if (!(dataArr as Array<string>).includes(threadid)) {
+        throw new Error('Can not de-love a tread one not-loves');
       }
-
-      const lovesArr = new Array<string>();
-      const dataArr = profile.data()?.lovedThreads;
-      if (dataArr) {
-        if (!(dataArr as Array<string>).includes(threadid)) {
-          throw new Error('Can not de-love a tread one not-loves');
-        }
-        for (const loved of dataArr as Array<string>) {
-          if (loved !== threadid) {
-            lovesArr.push(loved);
-          }
+      for (const loved of dataArr as Array<string>) {
+        if (loved !== threadid) {
+          lovesArr.push(loved);
         }
       }
-      transaction.update(profileRef, { lovedThreads: lovesArr });
-
-      transaction.update(threadRef, {
-        lovedCount: increment(-1),
-      });
+    }
+    transaction.update(profileRef, { lovedThreads: lovesArr });
+    transaction.update(threadRef, {
+      lovedCount: increment(-1),
     });
   });
 }

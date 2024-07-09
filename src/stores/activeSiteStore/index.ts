@@ -12,7 +12,6 @@ import {
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
-import { parse } from 'marked';
 import { db } from 'src/firebase/client';
 
 export const $key = persistentAtom<string>('activeSiteKey', '');
