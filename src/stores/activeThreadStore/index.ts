@@ -9,6 +9,7 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
+import { init } from './replies';
 
 export const $key = persistentAtom<string>('active-thread-key', '');
 export const loadingState = persistentAtom<'initial' | 'loading' | 'active'>(
@@ -59,4 +60,7 @@ export async function load(key: string) {
       loadingState.set('active');
     }
   });
+
+  // Load the discussion
+  init(key);
 }
