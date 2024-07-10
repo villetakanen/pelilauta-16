@@ -7,6 +7,7 @@ import { meta } from './meta';
 import { navigation } from './navigation';
 import { settings } from './settings';
 import { site } from './site';
+import { threads } from './threads';
 
 export const fi: Locale = {
   app: {
@@ -31,4 +32,5 @@ export const fi: Locale = {
   navigation,
   library,
   site,
+  threads,
 };

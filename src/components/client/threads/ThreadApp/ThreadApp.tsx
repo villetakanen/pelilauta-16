@@ -5,9 +5,10 @@
  */
 import { WithLoader } from '@client/shared/WithLoader';
 import { useStore } from '@nanostores/solid';
-import { type Component, type JSX, createEffect, onMount } from 'solid-js';
+import { type Component, onMount } from 'solid-js';
 import { $thread, load, loadingState } from 'src/stores/activeThreadStore';
 import { ThreadArticle } from './ThreadArticle';
+import { ThreadInfoCard } from './ThreadInfoCard';
 
 export const ThreadApp: Component<{ thread: string }> = (props) => {
   const thread = useStore($thread);
@@ -22,9 +23,7 @@ export const ThreadApp: Component<{ thread: string }> = (props) => {
       <WithLoader loading={loading() !== 'active'}>
         <ThreadArticle thread={thread()} />
       </WithLoader>
-      {loading()}
-      <div class="debug">ThreadApp: {props.thread}</div>
-      ...
+      <ThreadInfoCard thread={thread()} author={thread().owners[0]} />
     </div>
   );
 };
