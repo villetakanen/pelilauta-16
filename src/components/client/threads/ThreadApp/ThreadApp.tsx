@@ -27,7 +27,7 @@ export const ThreadApp: Component<{ thread: string }> = (props) => {
         </WithLoader>
         <ThreadInfoCard thread={thread()} author={thread().owners[0]} />
       </div>
-      <div class="content-colums">
+      <div class="content-columns">
         <ThreadDiscussion />
       </div>
     </>

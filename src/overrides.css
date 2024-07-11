@@ -89,3 +89,9 @@ p.align-right {
 .justify-center  {
   justify-content: center;
 }
+cn-bubble *:first-child {
+  margin-top: 0;
+}
+cn-bubble {
+  min-height: calc(var(--cn-gap) * 4);
+}
