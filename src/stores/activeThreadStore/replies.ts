@@ -16,7 +16,11 @@ const _replies = persistentAtom<Reply[]>('active-thread-replies', [], {
   encode: JSON.stringify,
   decode: (data) => {
     return JSON.parse(data).map((entry: Record<string, unknown>) => {
-      return parseReply(entry, entry.key as string, entry.threadKey as string);
+      return parseReply(
+        toClientEntry(entry),
+        entry.key as string,
+        entry.threadKey as string,
+      );
     });
   },
 });
@@ -46,8 +50,7 @@ export function init(key: string) {
   unsubscribe = onSnapshot(collection(db, path), (snapshot) => {
     for (const reply of snapshot.docChanges()) {
       if (reply.type === 'removed') {
-        const replies = _replies.get().filter((r) => r.key !== reply.doc.id);
-        _replies.set([...replies]);
+        removeReply(reply.doc.id);
       } else {
         patchReply(
           parseReply(toClientEntry(reply.doc.data()), reply.doc.id, key),
@@ -60,10 +63,13 @@ export function init(key: string) {
 }
 
 function patchReply(reply: Reply) {
-  const replies = [..._replies.get()];
-  const index = replies.findIndex((r) => r.key === reply.key);
-  if (index === -1) replies.push(reply);
-  else replies[index] = reply;
-  replies.sort((a, b) => a.flowTime - b.flowTime);
-  _replies.set(replies);
+  const r = _replies.get().filter((r) => r.key !== reply.key);
+  r.push(reply);
+  r.sort((a, b) => a.flowTime - b.flowTime);
+  _replies.set(r);
+}
+
+function removeReply(key: string) {
+  const r = _replies.get().filter((r) => r.key !== key);
+  _replies.set(r);
 }

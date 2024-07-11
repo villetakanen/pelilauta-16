@@ -1,3 +1,4 @@
+import { logError } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { z } from 'zod';
 import { ContentEntrySchema } from './ContentEntry';
@@ -24,13 +25,18 @@ export function ParseThread(
   data: Record<string, unknown>,
   key?: string,
 ): Thread {
-  return ThreadSchema.parse({
-    ...data,
-    createdAt: toDate(data.createdAt),
-    updatedAt: toDate(data.updatedAt),
-    flowTime: toDate(data.flowTime).getTime(),
-    key,
-  });
+  try {
+    return ThreadSchema.parse({
+      ...data,
+      createdAt: toDate(data.createdAt),
+      updatedAt: toDate(data.updatedAt),
+      flowTime: toDate(data.flowTime).getTime(),
+      key,
+    });
+  } catch (e) {
+    logError('ParseThread', e);
+    throw e;
+  }
 }
 
 export function createThread(): Thread {
