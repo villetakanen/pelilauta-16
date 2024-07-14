@@ -43,10 +43,7 @@ export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
             <cn-icon noun="add" small />
             <span>{t('actions:create.page')}</span>
           </a>
-          <a
-            href={`/sites/${props.siteKey}/${props.pageKey}/edit`}
-            class="fab"
-          >
+          <a href={`/sites/${props.siteKey}/${props.pageKey}/edit`} class="fab">
             <cn-icon noun="edit" small />
             <span>{t('actions:edit')}</span>
           </a>
