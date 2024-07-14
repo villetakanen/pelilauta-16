@@ -95,3 +95,9 @@ cn-bubble *:first-child {
 cn-bubble {
   min-height: calc(var(--cn-gap) * 4);
 }
+#fab-tray > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cn-grid);
+  align-items: flex-end;
+}

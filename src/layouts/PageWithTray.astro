@@ -22,9 +22,9 @@ const { title } = Astro.props;
 	  <main>
       <slot />
     </main>
-    <FabTray>
-      <slot name="app-fabs" />
-    </FabTray>
+    <nav id="fab-tray">
+      <slot name="fab-tray"></slot>
+    </nav>
     <BasePostscripts />
     <script is:inline>
       // If the viewport is larger than 1280px, the tray should be open by default

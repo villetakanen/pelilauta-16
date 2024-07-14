@@ -35,17 +35,17 @@ export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
         <h1>{page().name}</h1>
       </div>
       {editor() && (
-        <Portal mount={document.querySelector('#FabTray') || document.body}>
+        <Portal mount={document.querySelector('#fab-tray') || document.body}>
           <a
             href={`/sites/${props.siteKey}/create/page`}
-            class="fab button secondary small"
+            class="fab secondary small"
           >
             <cn-icon noun="add" small />
             <span>{t('actions:create.page')}</span>
           </a>
           <a
             href={`/sites/${props.siteKey}/${props.pageKey}/edit`}
-            class="fab button"
+            class="fab"
           >
             <cn-icon noun="edit" small />
             <span>{t('actions:edit')}</span>
