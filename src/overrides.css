@@ -89,6 +89,9 @@ p.align-right {
 .justify-center  {
   justify-content: center;
 }
+.justify-space-between {
+  justify-content: space-between;
+}
 cn-bubble *:first-child {
   margin-top: 0;
 }
@@ -100,4 +103,10 @@ cn-bubble {
   flex-direction: column;
   gap: var(--cn-grid);
   align-items: flex-end;
+}
+main article ol li {
+  list-style: decimal;
+}
+main article h1:first-of-type {
+  margin-top: var(--cn-gap);
 }

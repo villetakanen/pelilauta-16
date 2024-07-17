@@ -4,6 +4,8 @@ import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
+import { PageArticleFooter } from './PageArticleFooter';
+import { PageArticleHeader } from './PageArticleHeader';
 
 export const PageArticle: Component<{ page: Page; site: Site }> = (props) => {
   const page = createMemo(() => props.page);
@@ -12,13 +14,7 @@ export const PageArticle: Component<{ page: Page; site: Site }> = (props) => {
 
   return (
     <article class="column-l elevation-1">
-      <div class="toolbar small downscaled px-0 py-0 border-b">
-        <p>
-          <a href={`/sites/${site().key}`}>{site().name}</a> /
-          <a href={`/sites/${site().key}/${page().key}`}>{page().name}</a>
-        </p>
-        <p>{toDisplayString(page().flowTime)}</p>
-      </div>
+      <PageArticleHeader site={site()} page={page()} />
       <h1 class="downscaled small">{page().name}</h1>
       {markdownContent() ? (
         <MarkdownSection content={markdownContent()} />
@@ -33,6 +29,7 @@ export const PageArticle: Component<{ page: Page; site: Site }> = (props) => {
           <div innerHTML={page().htmlContent} />
         </>
       )}
+      <PageArticleFooter site={site()} page={page()} />
     </article>
   );
 };

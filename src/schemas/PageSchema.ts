@@ -8,6 +8,15 @@ export const PAGES_COLLECTION_NAME = 'pages';
 export const PageSchema = ContentEntrySchema.extend({
   name: z.string(),
   siteKey: z.string(),
+  revisionHistory: z
+    .array(
+      z.object({
+        author: z.string(),
+        createdAt: z.date(),
+        markdownContent: z.string(),
+      }),
+    )
+    .optional(),
 });
 
 export type Page = z.infer<typeof PageSchema>;
@@ -17,6 +26,18 @@ export const parsePage = (
   key: string,
   siteKey: string,
 ): Page => {
+  const revisionHistory = [];
+  if (data.revisionHistory && Array.isArray(data.revisionHistory)) {
+    for (const revision of data.revisionHistory) {
+      const { author, createdAt, markdownContent } = revision;
+      revisionHistory.push({
+        author,
+        markdownContent,
+        createdAt: toDate(createdAt),
+      });
+    }
+  }
+
   try {
     return PageSchema.parse({
       ...data,
@@ -32,6 +53,7 @@ export const parsePage = (
             : [],
       flowTime: toDate(data.flowTime).getTime(),
       key,
+      revisionHistory,
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
