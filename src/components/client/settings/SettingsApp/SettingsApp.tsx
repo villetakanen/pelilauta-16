@@ -1,6 +1,6 @@
 import { ProfileCard } from '@client/ProfileCard/ProfileCard';
-import { WithLogin } from '@client/WithLogin/WithLogin';
 import { DebugSection } from '@client/debug';
+import { WithLogin } from '@client/shared/WithLogin';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';

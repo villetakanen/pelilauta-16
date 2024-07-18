@@ -35,4 +35,7 @@ export const entries: Locale = {
     customPageKeys: 'Luettavat osoitteet',
   },
   default: 'Oletus',
+  page: {
+    name: 'Sivun nimi',
+  },
 };

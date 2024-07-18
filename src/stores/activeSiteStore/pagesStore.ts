@@ -85,3 +85,12 @@ function patchToPages(page: Page) {
     $pages.set(pages);
   }
 }
+
+export async function updatePage(
+  siteKey: string,
+  pageKey: string,
+  updates: Partial<Page>,
+  options = { silent: false },
+) {
+  logWarn('updatePage', 'not implemented', `silent: ${options.silent}`);
+}

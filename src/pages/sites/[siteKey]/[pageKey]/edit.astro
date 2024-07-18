@@ -1,0 +1,15 @@
+---
+import { PageEditor } from '@client/sites/PageApp/PageEditor';
+import Page from 'src/layouts/Page.astro';
+
+const { siteKey: siteKeyParam, pageKey } = Astro.params;
+
+const siteKey = siteKeyParam || '';
+const page = pageKey || siteKey || '';
+---
+<Page>
+  <div slot="app-bar">
+    ...
+  </div>
+  <PageEditor siteKey={siteKey} pageKey={page} client:only="solid-js"/>
+</Page>

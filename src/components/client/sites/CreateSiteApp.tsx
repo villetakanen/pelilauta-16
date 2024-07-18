@@ -1,5 +1,5 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
-import { WithLogin } from '@client/WithLogin/WithLogin';
+import { WithLogin } from '@client/shared/WithLogin';
 import { useStore } from '@nanostores/solid';
 import { PAGES_COLLECTION_NAME } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
