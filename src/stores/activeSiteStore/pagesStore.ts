@@ -5,9 +5,9 @@ import {
   parsePage,
 } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
-import { toClientEntry } from '@utils/client/entryUtils';
+import { toClientEntry, toFirestoreEntry } from '@utils/client/entryUtils';
 import { logDebug, logWarn } from '@utils/logHelpers';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { atom, onSet } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { $site } from '.';
@@ -92,5 +92,23 @@ export async function updatePage(
   updates: Partial<Page>,
   options = { silent: false },
 ) {
-  logWarn('updatePage', 'not implemented', `silent: ${options.silent}`);
+  logWarn('updatePage: experimental', `silent: ${options.silent}`);
+
+  const fsUpdate = toFirestoreEntry(updates, { silent: options.silent });
+
+  // Update the local store for immediate update on local store
+  const page = $pages.get().find((page) => page.key === pageKey);
+  if (page) {
+    page.updatedAt = new Date();
+    page.flowTime = new Date().getTime();
+    page.markdownContent = updates.markdownContent || page.markdownContent;
+    page.name = updates.name || page.name;
+    patchToPages(page);
+  }
+
+  // Update the Firestore, this will trigger the onSnapshot listener
+  await updateDoc(
+    doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, pageKey),
+    fsUpdate,
+  );
 }

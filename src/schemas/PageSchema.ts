@@ -54,6 +54,7 @@ export const parsePage = (
       flowTime: toDate(data.flowTime).getTime(),
       key,
       revisionHistory,
+      markdownContent: data.markdownContent || '',
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
