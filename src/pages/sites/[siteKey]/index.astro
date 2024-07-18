@@ -1,7 +1,6 @@
 ---
-import { PageArticle } from '@client/sites/PageArtivle';
 import { SiteTray } from '@client/sites/SiteApp/SiiteTray';
-import { SitePoster } from '@client/sites/SitePoster';
+import { SiteApp } from '@client/sites/SiteApp/SiteApp';
 import { SiteSettingsButton } from '@client/sites/SiteSettingsButton';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
@@ -14,13 +13,6 @@ const siteKey = siteKeyParam || 'mekanismi'; // This should not happen, but just
   </div>
   <SiteTray slot="app-tray" siteKey={siteKey} client:only="solid-js"/>
 
-  
-      <div class="content-columns">
-        <div class="full-width">
-          <SitePoster site={siteKey + ''} client:only="solid-js"/>
-        </div>
-        <div class="column-l">
-          <PageArticle client:only="solid-js" page={siteKey + ''} />
-        </div>
-      </div>
+  <SiteApp siteKey={siteKey} client:only="solid-js"/>
+
 </PageWithTray>

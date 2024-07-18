@@ -12,6 +12,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
+import { computed } from 'nanostores';
 import { db } from 'src/firebase/client';
 
 export const $key = persistentAtom<string>('activeSiteKey', '');
@@ -31,6 +32,8 @@ export const $site = persistentAtom<Site>(
     },
   },
 );
+
+export const $active = computed(loadingState, (state) => state === 'active');
 
 let unsubscribe: CallableFunction | null = null;
 

@@ -20,7 +20,7 @@ export const PageSidebar: Component<{ site: Site }> = (props) => {
           <For each={pages()}>
             {(page) => (
               <li>
-                <a href={`#/${site().key}/${page.key}`}>{page.name}</a>
+                <a href={`/sites/${site().key}/${page.key}`}>{page.name}</a>
               </li>
             )}
           </For>

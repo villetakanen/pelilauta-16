@@ -12,7 +12,7 @@ export const PageArticle: Component<{ page: Page; site: Site }> = (props) => {
   const markdownContent = createMemo(() => props.page?.markdownContent || '');
 
   return (
-    <article class="column-l elevation-1">
+    <article class="column-l elevation-1 p-1">
       <PageArticleHeader site={site()} page={page()} />
       <h1 class="downscaled small">{page().name}</h1>
       {markdownContent() ? (
