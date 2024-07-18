@@ -1,5 +1,4 @@
 import { logError } from '@utils/logHelpers';
-import { log } from 'node_modules/astro/dist/core/logger/core';
 import { z } from 'zod';
 import { ContentEntrySchema } from './ContentEntry';
 

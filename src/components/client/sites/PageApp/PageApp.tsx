@@ -10,6 +10,7 @@ import { $site, load } from 'src/stores/activeSiteStore';
 import { $pages } from 'src/stores/activeSiteStore/pagesStore';
 import { PageArticle } from './PageArticle';
 import { PageFabs } from './PageFabs';
+import { PageSidebar } from './PageSidebar';
 
 export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
   props,
@@ -33,6 +34,7 @@ export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
       {page()?.name && (
         <div class="content-columns">
           <PageArticle page={page()} site={site()} />
+          <PageSidebar site={site()} />
         </div>
       )}
       <PageFabs pageKey={props.pageKey} />

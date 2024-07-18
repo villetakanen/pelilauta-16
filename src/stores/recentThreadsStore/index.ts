@@ -43,7 +43,7 @@ export const $recentThreads = persistentAtom<Thread[]>('recent-threads', [], {
   },
 });
 
-onMount($recentThreads, (threads) => {
+onMount($recentThreads, () => {
   subscribeToThreads();
 });
 

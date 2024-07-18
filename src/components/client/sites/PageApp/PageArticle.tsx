@@ -1,6 +1,5 @@
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';

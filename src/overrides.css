@@ -110,3 +110,10 @@ main article ol li {
 main article h1:first-of-type {
   margin-top: var(--cn-gap);
 }
+article {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+article + article {
+  margin-top: 0;
+}

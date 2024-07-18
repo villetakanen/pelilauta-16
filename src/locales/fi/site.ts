@@ -10,6 +10,9 @@ export const site: Locale = {
       title: 'Ulkoasu',
     },
   },
+  contents: {
+    title: 'Sivut',
+  },
   tray: {
     actions: {
       homepage: 'Etusivu',

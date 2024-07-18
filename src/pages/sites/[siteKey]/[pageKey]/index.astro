@@ -12,6 +12,5 @@ const page = pageKey || siteKey || '';
     <SiteSettingsButton client:only="solid-js"/>
   </div>
   <SiteTray slot="app-tray" sitekey={siteKey + ''} client:only="solid-js"/>
-  <div>...{siteKey} / {pageKey}</div>
   <PageApp siteKey={siteKey} pageKey={page} client:only="solid-js"/>
 </PageWithTray>
