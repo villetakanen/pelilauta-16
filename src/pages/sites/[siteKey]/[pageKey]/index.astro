@@ -4,13 +4,15 @@ import { SiteTray } from '@client/sites/SiteApp/SiiteTray';
 import { SiteSettingsButton } from '@client/sites/SiteSettingsButton';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
-const { siteKey, pageKey } = Astro.params;
+const { siteKey: siteKeyParam, pageKey } = Astro.params;
+
+const siteKey = siteKeyParam || '';
 const page = pageKey || siteKey || '';
 ---
 <PageWithTray>
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>
-  <SiteTray slot="app-tray" sitekey={siteKey + ''} client:only="solid-js"/>
+  <SiteTray slot="app-tray" siteKey={siteKey} client:only="solid-js"/>
   <PageApp siteKey={siteKey} pageKey={page} client:only="solid-js"/>
 </PageWithTray>

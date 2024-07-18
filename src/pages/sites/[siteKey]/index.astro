@@ -5,13 +5,16 @@ import { SitePoster } from '@client/sites/SitePoster';
 import { SiteSettingsButton } from '@client/sites/SiteSettingsButton';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
-const { siteKey } = Astro.params;
+const { siteKey: siteKeyParam } = Astro.params;
+const siteKey = siteKeyParam || 'mekanismi'; // This should not happen, but just in case
 ---
 <PageWithTray>
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>
-  <SiteTray slot="app-tray" sitekey={siteKey + ''} client:only="solid-js"/>
+  <SiteTray slot="app-tray" siteKey={siteKey} client:only="solid-js"/>
+
+  
       <div class="content-columns">
         <div class="full-width">
           <SitePoster site={siteKey + ''} client:only="solid-js"/>

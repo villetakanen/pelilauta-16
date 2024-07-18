@@ -18,22 +18,22 @@ type SiteTrayAction = {
   noun: string;
 };
 
-export const SiteTray: Component<{ sitekey: string }> = (props) => {
+export const SiteTray: Component<{ siteKey: string }> = (props) => {
   const site = useStore($site);
 
   createEffect(() => {
-    load(props.sitekey);
+    load(props.siteKey);
   });
 
   const siteTrayActions: SiteTrayAction[] = [
     {
       label: t('site:tray.actions.homepage'),
-      href: `/sites/${props.sitekey}`,
+      href: `/sites/${props.siteKey}`,
       noun: systemToNoun(site()?.system),
     },
     {
       label: t('site:tray.actions.toc'),
-      href: `/sites/${props.sitekey}/toc`,
+      href: `/sites/${props.siteKey}/toc`,
       noun: 'books',
     },
   ];

@@ -11,6 +11,6 @@ const { siteKey } = Astro.params;
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>
-  <SiteTray slot="app-tray" sitekey={siteKey + ''} client:only="solid-js"/>
+  <SiteTray slot="app-tray" siteKey={siteKey + ''} client:only="solid-js"/>
   <SiteTocPage client:only="solid-js"/>
 </PageWithTray>
