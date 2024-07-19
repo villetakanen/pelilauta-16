@@ -12,9 +12,6 @@ export const SitesList: Component = () => {
       <div class="content-columns">
         <article class="column-l">
           <h4>{t('library:sites.title')}</h4>
-          <p>
-            {t('library:sites.description')} {sites().length}
-          </p>
         </article>
       </div>
       <div class="content-cards">

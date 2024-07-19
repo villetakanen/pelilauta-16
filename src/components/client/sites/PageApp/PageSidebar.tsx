@@ -2,6 +2,7 @@ import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 import { type Component, For, createMemo } from 'solid-js';
+import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import { $pages } from 'src/stores/activeSiteStore/pagesStore';
 
 export const PageSidebar: Component<{ site: Site }> = (props) => {
@@ -14,6 +15,11 @@ export const PageSidebar: Component<{ site: Site }> = (props) => {
       {site().posterURL && (
         <img src={site().posterURL} alt={site().name} class="poster" />
       )}
+
+      {site().description && (
+        <MarkdownSection content={`${site().description}`} />
+      )}
+
       <nav class="mt-1">
         <h3 class="downscaled">{t('site:contents.title')}</h3>
         <ul>
