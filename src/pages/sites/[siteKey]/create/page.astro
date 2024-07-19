@@ -6,5 +6,5 @@ const { siteKey } = Astro.params;
 const site = `${siteKey}`;
 ---
 <PageLayout>
-  <CreatePageForm siteKey={site}/>
+  <CreatePageForm siteKey={site} client:only="solid-js"/>
 </PageLayout>

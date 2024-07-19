@@ -5,6 +5,7 @@
 import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
 import { t } from '@utils/i18n';
+import { logDebug } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { type Component, onMount } from 'solid-js';
 import { $site, load } from 'src/stores/activeSiteStore';
@@ -18,16 +19,19 @@ export const CreatePageForm: Component<{ siteKey: string }> = (props) => {
   });
 
   function cancel() {
+    logDebug('CreatePageForm', 'cancel');
     history.back();
   }
 
-  async function handleSubmit(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const name = formData.get('name') as string;
 
     const newPage = createPage(toMekanismiURI(name), site().key);
+    newPage.name = name;
+    newPage.markdownContent = '\n';
     // If customPageKeys is enabled, we need to check if the slug is already in use
     // Otherwise, we can just generate a slug at creation time
     const proposedSlug = site().customPageKeys
@@ -36,11 +40,11 @@ export const CreatePageForm: Component<{ siteKey: string }> = (props) => {
     const slug = await addPage(site().key, newPage, proposedSlug);
 
     window.location.href = `/sites/${site().key}/${slug}`;
-  }
+  };
 
   return (
     <div class="content-columns">
-      <form onsubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>
           {t('entries:page.name')}
           <input type="text" name="name" />
