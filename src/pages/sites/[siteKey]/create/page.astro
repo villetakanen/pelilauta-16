@@ -1,0 +1,10 @@
+---
+import { CreatePageForm } from '@client/sites/PageApp/CreatePageForm';
+import PageLayout from '@layouts/Page.astro';
+
+const { siteKey } = Astro.params;
+const site = `${siteKey}`;
+---
+<PageLayout>
+  <CreatePageForm siteKey={site}/>
+</PageLayout>

@@ -6,8 +6,15 @@ import {
 } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry, toFirestoreEntry } from '@utils/client/entryUtils';
-import { logDebug, logWarn } from '@utils/logHelpers';
-import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { logDebug, logError, logWarn } from '@utils/logHelpers';
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { atom, onSet } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { $site } from '.';
@@ -111,4 +118,39 @@ export async function updatePage(
     doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, pageKey),
     fsUpdate,
   );
+}
+
+export async function addPage(
+  siteKey: string,
+  page: Partial<Page>,
+  slug?: string,
+) {
+  const fsPage = toFirestoreEntry(page, { silent: true });
+
+  let key = slug || '';
+  if (slug) {
+    const existingPage = $pages.get().find((p) => p.key === slug);
+
+    if (existingPage) {
+      logError('createPage', 'slug already exists');
+      throw new Error(`Page slug ${slug} already exists`);
+    }
+
+    await setDoc(
+      doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, slug),
+      fsPage,
+    );
+  } else {
+    const newPageRef = await addDoc(
+      collection(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME),
+      fsPage,
+    );
+    key = newPageRef.id;
+  }
+
+  fsPage.key = key;
+  const newPage = parsePage(fsPage, key, siteKey);
+  patchToPages(newPage);
+
+  return key;
 }

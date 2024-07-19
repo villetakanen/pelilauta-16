@@ -6,7 +6,8 @@
     "paths": {
       "@utils/*": ["src/utils/*"],
       "@client/*": ["src/components/client/*"],
-      "@schemas/*": ["src/schemas/*"]
+      "@schemas/*": ["src/schemas/*"],
+      "@layouts/*": ["src/layouts/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"
