@@ -20,9 +20,9 @@ export const SiteSettingsApp: Component<{ site: string }> = (props) => {
         <PageBackgroundPoster url={`${site().backgroundURL}`} />
       )}
       <SiteCard {...site()} />
-      <DangerZoneSection />
       <SiteMetaDataSection />
       <ThemingSection />
+      <DangerZoneSection />
       <div class="debug">
         <p>key: {props.site}</p>
         <br />

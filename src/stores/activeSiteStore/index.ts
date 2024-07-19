@@ -12,13 +12,12 @@ import {
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
-import { computed } from 'nanostores';
+import { atom, computed } from 'nanostores';
 import { db } from 'src/firebase/client';
 
 export const $key = persistentAtom<string>('activeSiteKey', '');
-export const loadingState = persistentAtom<'initial' | 'loading' | 'active'>(
-  'initial',
-);
+export const loadingState = atom<'initial' | 'loading' | 'active'>('initial');
+
 export const $site = persistentAtom<Site>(
   'activeSite',
   {
@@ -58,9 +57,11 @@ export async function load(key: string) {
   // we don't have multiple subscriptions running at the same time
   unsubscribe?.();
 
-  // Initialize the store
-  $key.set(key);
-  $site.set(parseSite(emptySite, key));
+  // Check if the key has changed, if it has, we need to reinitialize the store
+  if ($key.get() !== key) {
+    $key.set(key);
+    $site.set(parseSite(emptySite, key));
+  }
 
   // Subscribe to the site, updates happen automatically through the subscription
   unsubscribe = await subscribeToSite(key);
