@@ -1,3 +1,4 @@
+import { WithLoader } from '@client/shared/WithLoader';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
@@ -13,22 +14,24 @@ export const PageArticle: Component<{ page: Page; site: Site }> = (props) => {
 
   return (
     <article class="column-l elevation-1 p-1">
-      <PageArticleHeader site={site()} page={page()} />
-      <h1 class="downscaled small">{page().name}</h1>
-      {markdownContent() ? (
-        <MarkdownSection content={markdownContent()} />
-      ) : (
-        <>
-          <div class="elevation-2 debug toolbar">
-            <p>{t('sites:page.legacyContent.warning')}</p>
-            <button class="text" type="button">
-              {t('actions:migrate.toMarkdown')}
-            </button>
-          </div>
-          <div innerHTML={page().htmlContent} />
-        </>
-      )}
-      <PageArticleFooter site={site()} page={page()} />
+      <WithLoader loading={!page().name}>
+        <PageArticleHeader site={site()} page={page()} />
+        <h1 class="downscaled small">{page().name}</h1>
+        {markdownContent() ? (
+          <MarkdownSection content={markdownContent()} />
+        ) : (
+          <>
+            <div class="elevation-2 debug toolbar">
+              <p>{t('sites:page.legacyContent.warning')}</p>
+              <button class="text" type="button">
+                {t('actions:migrate.toMarkdown')}
+              </button>
+            </div>
+            <div innerHTML={page().htmlContent} />
+          </>
+        )}
+        <PageArticleFooter site={site()} page={page()} />
+      </WithLoader>
     </article>
   );
 };

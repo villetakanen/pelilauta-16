@@ -117,3 +117,6 @@ article {
 article + article {
   margin-top: 0;
 }
+main {
+  padding-bottom: calc(8 * var(--cn-grid))
+}

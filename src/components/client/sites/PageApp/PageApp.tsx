@@ -3,6 +3,7 @@
  */
 
 import { PageBackgroundPoster } from '@client/PageBackgroundPoster';
+import { WithLoader } from '@client/shared/WithLoader';
 import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
 import { type Component, createMemo, onMount } from 'solid-js';
@@ -34,6 +35,7 @@ export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
       {page()?.name && (
         <div class="content-columns">
           <PageArticle page={page()} site={site()} />
+
           <PageSidebar site={site()} />
         </div>
       )}
