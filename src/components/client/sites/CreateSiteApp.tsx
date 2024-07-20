@@ -3,7 +3,7 @@ import { WithLogin } from '@client/shared/WithLogin';
 import { useStore } from '@nanostores/solid';
 import { PAGES_COLLECTION_NAME } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
-import { toFirestoreEntry } from '@utils/client/entryUtils';
+import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';

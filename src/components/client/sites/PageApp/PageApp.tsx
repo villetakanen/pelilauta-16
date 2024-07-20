@@ -3,7 +3,6 @@
  */
 
 import { PageBackgroundPoster } from '@client/PageBackgroundPoster';
-import { WithLoader } from '@client/shared/WithLoader';
 import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
 import { type Component, createMemo, onMount } from 'solid-js';

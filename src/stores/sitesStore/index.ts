@@ -4,7 +4,7 @@ import {
   type Site,
   parseSite,
 } from '@schemas/SiteSchema';
-import { toFirestoreEntry } from '@utils/client/entryUtils';
+import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { logDebug, logError } from '@utils/logHelpers';
 import {
   addDoc,
