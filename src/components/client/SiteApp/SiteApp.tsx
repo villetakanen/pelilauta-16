@@ -1,8 +1,8 @@
 import { WithLoader } from '@client/shared/WithLoader';
+import { PageApp } from '@client/sites/PageApp/PageApp';
 import { useStore } from '@nanostores/solid';
 import { type Component, createMemo, onMount } from 'solid-js';
 import { $active, $site, load } from 'src/stores/SiteApp';
-import { PageApp } from '../PageApp/PageApp';
 
 export const SiteApp: Component<{ siteKey: string }> = (props) => {
   const site = useStore($site);
