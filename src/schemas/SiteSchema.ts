@@ -62,20 +62,32 @@ export const emptySite: Site = {
 };
 
 export function parseSite(data: Partial<Site>, key: string): Site {
+  // Legacy support for system field
+  const system = data.system ? data.system : 'homebrew';
+
+  // Legacy support for hidden field
+  const hidden = data.hidden ? data.hidden : false;
+
+  // Legacy support for homepage field
+  const homepage = data.homepage ? data.homepage : key;
+
+  // Legacy support for sortOrder field
+  const sortOrder = data.sortOrder ? data.sortOrder : 'flowTime';
+
+  // Legacy support for customPageKeys field
+  const customPageKeys = data.customPageKeys ? data.customPageKeys : false;
+
   try {
-    const site = SiteSchema.parse({
+    return SiteSchema.parse({
       ...toClientEntry(data),
-      owners: typeof data.owners === 'string' ? [data.owners] : data.owners,
-      system: data.system ? data.system : 'homebrew',
+      system,
       flowTime: parseFlowTime(data),
-      hidden: !!data.hidden,
-      homepage: data.homepage ? data.homepage : key,
-      // We default to sorting by flowTime if no sortOrder is provided
-      sortOrder: data.sortOrder ? data.sortOrder : 'flowTime',
-      customPageKeys: data.customPageKeys ? data.customPageKeys : false,
+      hidden,
+      homepage,
+      sortOrder,
+      customPageKeys,
       key,
     });
-    return site;
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
       logError(err.issues);
@@ -84,12 +96,24 @@ export function parseSite(data: Partial<Site>, key: string): Site {
   }
 }
 
+/**
+ * Utility for creating a new site entry. Sets default values for new sites for every field.
+ *
+ * @param template
+ * @returns a Site object (extends Entry)
+ */
 export function createSite(template?: Partial<Site>): Site {
   return {
     key: template?.key || '',
     flowTime: template?.flowTime || 0,
+    createdAt: template?.createdAt || new Date(),
+    updatedAt: template?.updatedAt || new Date(),
     name: template?.name || '',
     owners: template?.owners || [],
     hidden: template?.hidden || true,
+    // Default values for new sites
+    system: template?.system || 'homebrew',
+    sortOrder: template?.sortOrder || 'flowTime',
+    customPageKeys: template?.customPageKeys || false,
   };
 }
