@@ -7,7 +7,7 @@ import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
 import { type Component, createMemo, onMount } from 'solid-js';
 import { $site, load } from 'src/stores/SiteApp';
-import { $pages } from 'src/stores/SiteApp/pagesStore';
+import { $pages, subscribePage } from 'src/stores/SiteApp/pagesStore';
 import { PageArticle } from './PageArticle';
 import { PageFabs } from './PageFabs';
 import { PageSidebar } from './PageSidebar';
@@ -16,11 +16,11 @@ export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
   props,
 ) => {
   const site = useStore($site);
-  const pages = useStore($pages);
+  const page = useStore(subscribePage(props.pageKey));
 
-  const page = createMemo(
+  /*const page = createMemo(
     () => pages().find((p) => p.key === props.pageKey) || createPage('', ''),
-  );
+  );*/
 
   onMount(() => {
     load(props.siteKey || '');
@@ -33,7 +33,12 @@ export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
       )}
       {page()?.name && (
         <div class="content-columns">
-          <PageArticle page={page()} site={site()} />
+          {page() && (
+            <PageArticle
+              page={page() || createPage(props.pageKey, props.siteKey || '')}
+              site={site()}
+            />
+          )}
 
           <PageSidebar site={site()} />
         </div>
