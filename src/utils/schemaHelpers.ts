@@ -1,3 +1,4 @@
+import type { Entry } from '@schemas/ContentEntry';
 import { systemToNounMapping } from '../schemas/nouns';
 import { logWarn } from './logHelpers';
 
@@ -41,4 +42,26 @@ export function systemToNoun(system: string | undefined): string {
   }
   logWarn('missing systemToNoun mapping, using homebrew as default', system);
   return 'homebrew';
+}
+
+/**
+ * This function normalizes the flowTime to a number.
+ *
+ * Sometimes an entry might be missing th flowTime, or it might be in a legacy
+ * format.
+ *
+ * Assuming the flowTime is not found, we try using updatedAt, and if that is
+ * not found, we try using createdAt. If none of these are found, we default to 0.
+ *
+ * @param entry
+ * @returns
+ */
+export function parseFlowTime(entry: Partial<Entry>): number {
+  return entry.flowTime
+    ? toDate(entry.flowTime).getTime()
+    : entry.updatedAt
+      ? toDate(entry.updatedAt).getTime()
+      : entry.createdAt
+        ? toDate(entry.createdAt).getTime()
+        : 0;
 }

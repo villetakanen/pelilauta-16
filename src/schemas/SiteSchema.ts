@@ -1,6 +1,6 @@
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logError } from '@utils/logHelpers';
-import { toDate } from '@utils/schemaHelpers';
+import { parseFlowTime } from '@utils/schemaHelpers';
 import { z } from 'zod';
 import { EntrySchema } from './ContentEntry';
 
@@ -31,8 +31,8 @@ export const PageRefSchema = z.object({
  * as "Categories" array in the site document
  */
 export const CategoryRefSchema = z.object({
+  slug: z.string(),
   name: z.string(),
-  key: z.string(),
 });
 
 export const SiteSchema = EntrySchema.extend({
@@ -48,7 +48,7 @@ export const SiteSchema = EntrySchema.extend({
   backgroundURL: z.string().optional(),
   customPageKeys: z.boolean().optional(),
   pageRefs: z.array(PageRefSchema).optional(),
-  categoryRefs: z.array(CategoryRefSchema).optional(),
+  pageCategories: z.array(CategoryRefSchema).optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;
@@ -61,19 +61,13 @@ export const emptySite: Site = {
   hidden: true,
 };
 
-export function parseSite(data: Record<string, unknown>, key: string): Site {
+export function parseSite(data: Partial<Site>, key: string): Site {
   try {
-    const flowTime = data.flowTime
-      ? toDate(data.flowTime).getTime()
-      : data.createdAt
-        ? toDate(data.createdAt).getTime()
-        : 0;
-
     const site = SiteSchema.parse({
       ...toClientEntry(data),
       owners: typeof data.owners === 'string' ? [data.owners] : data.owners,
       system: data.system ? data.system : 'homebrew',
-      flowTime,
+      flowTime: parseFlowTime(data),
       hidden: !!data.hidden,
       homepage: data.homepage ? data.homepage : key,
       // We default to sorting by flowTime if no sortOrder is provided
