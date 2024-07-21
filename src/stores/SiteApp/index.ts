@@ -2,6 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import {
   SITES_COLLECTION_NAME,
   type Site,
+  createSite as createSiteRecord,
   emptySite,
   parseSite,
 } from '@schemas/SiteSchema';
@@ -21,7 +22,7 @@ export const loadingState = atom<'initial' | 'loading' | 'active'>('initial');
 export const $site = persistentAtom<Site>(
   'activeSite',
   {
-    ...emptySite,
+    ...createSiteRecord(),
   },
   {
     encode: JSON.stringify,

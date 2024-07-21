@@ -16,11 +16,13 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { atom, onSet } from 'nanostores';
+import { type Atom, atom } from 'nanostores';
+// import { atom, onSet } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { $site } from '.';
+// import { $site } from '.';
 
-export const $loadingState = atom<'initial' | 'loading' | 'active'>('initial');
+// export const $loadingState = atom<'initial' | 'loading' | 'active'>('initial');
 
 export const $pages = persistentAtom<Page[]>('pages', [], {
   encode: (value) => JSON.stringify(value),
@@ -35,7 +37,48 @@ export const $pages = persistentAtom<Page[]>('pages', [], {
   },
 });
 
-onSet($site, (site) => {
+let unsubscribePage: () => void;
+const pageStore = atom<Page | null>(null);
+
+/**
+ * Subscribe to a page, this will load the page from the local store to a nanostore
+ *
+ * After loading the page, it will subscribe to the page in the Firestore
+ */
+export function subscribePage(key: string): Atom<Page | null> {
+  if (pageStore.get()?.key === key) {
+    return pageStore;
+  }
+
+  unsubscribePage?.();
+
+  // add the page from the local store
+  const page = $pages.get().find((page) => page.key === key);
+  page ? pageStore.set({ ...page }) : pageStore.set(null);
+
+  // subscribe to the page in Firestore, the updates are async!
+  unsubscribePage = onSnapshot(
+    doc(db, SITES_COLLECTION_NAME, $site.get().key, PAGES_COLLECTION_NAME, key),
+    (snapshot) => {
+      if (snapshot.exists()) {
+        const page = parsePage(
+          toClientEntry(snapshot.data()),
+          snapshot.id,
+          $site.get().key,
+        );
+        patchToPages(page);
+        pageStore.set(page);
+      } else {
+        removePage(key);
+        pageStore.set(null);
+      }
+    },
+  );
+
+  return pageStore;
+}
+
+/*onSet($site, (site) => {
   subscibeToPages(site.newValue.key);
 });
 
@@ -76,7 +119,7 @@ async function subscibeToPages(siteKey: string) {
     }
   });
   $loadingState.set('active');
-}
+} */
 
 function removePage(key: string) {
   const pages = $pages.get().filter((page) => page.key !== key);
