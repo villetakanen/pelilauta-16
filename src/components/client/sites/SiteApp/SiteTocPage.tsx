@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { type Component, For, createMemo } from 'solid-js';
-import { $site } from 'src/stores/activeSiteStore';
-import { $pages } from 'src/stores/activeSiteStore/pagesStore';
+import { $site } from 'src/stores/SiteApp';
+import { $pages } from 'src/stores/SiteApp/pagesStore';
 
 export const SiteTocPage: Component = () => {
   const pages = useStore($pages);

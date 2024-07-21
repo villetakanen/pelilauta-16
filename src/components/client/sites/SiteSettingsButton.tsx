@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
-import { $site } from 'src/stores/activeSiteStore';
+import { $site } from 'src/stores/SiteApp';
 import { $account } from 'src/stores/sessionStore';
 
 export const SiteSettingsButton: Component = () => {

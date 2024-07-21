@@ -7,7 +7,8 @@
       "@utils/*": ["src/utils/*"],
       "@client/*": ["src/components/client/*"],
       "@schemas/*": ["src/schemas/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@stores/*": ["src/stores/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"

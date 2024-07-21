@@ -3,7 +3,7 @@ import { useStore } from '@nanostores/solid';
 import { systemToNounMapping } from '@schemas/nouns';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
-import { $site, updateSite } from 'src/stores/activeSiteStore';
+import { $site, updateSite } from 'src/stores/SiteApp';
 import { SiteHomePageSelect } from './SiteHomePageSelect';
 import { SiteSortOrderSelect } from './SiteSortOrderSelect';
 
