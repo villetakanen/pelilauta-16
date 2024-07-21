@@ -7,7 +7,7 @@ import PageWithTray from 'src/layouts/PageWithTray.astro';
 
 const { siteKey } = Astro.params;
 ---
-<PageWithTray title={t('sites:toc.title')}>
+<PageWithTray title={t('site:toc.title')}>
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>

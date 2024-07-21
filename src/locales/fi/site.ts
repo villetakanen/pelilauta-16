@@ -1,6 +1,12 @@
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {
+  toc: {
+    title: 'Hakemisto',
+    missing:
+      'Sivusto on luotu ennen Pelilaudan versiota 16, joten sivuston hakemisto on luotava uudestaan',
+    repair: 'Luo hakemisto',
+  },
   settings: {
     title: 'Asetukset',
     meta: {

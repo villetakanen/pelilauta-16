@@ -26,6 +26,8 @@ export const PageRefSchema = z.object({
   flowTime: z.number(),
 });
 
+export type PageRef = z.infer<typeof PageRefSchema>;
+
 /**
  * Breaking change: This replaces earlier (< 16.x.y) category metadata that was stored in firestore db
  * as "Categories" array in the site document

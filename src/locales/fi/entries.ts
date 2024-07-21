@@ -37,5 +37,8 @@ export const entries: Locale = {
   default: 'Oletus',
   page: {
     name: 'Sivun nimi',
+    defaults: {
+      name: '[Sivun nimi]',
+    },
   },
 };
