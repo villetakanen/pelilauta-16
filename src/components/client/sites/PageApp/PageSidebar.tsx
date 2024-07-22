@@ -1,13 +1,11 @@
-import { useStore } from '@nanostores/solid';
+import { SiteTocSection } from '@client/SiteApp/SiteTocSection';
 import type { Site } from '@schemas/SiteSchema';
-import { $pages } from '@stores/SiteApp/pagesStore';
 import { t } from '@utils/i18n';
-import { type Component, For, createMemo } from 'solid-js';
+import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
 export const PageSidebar: Component<{ site: Site }> = (props) => {
   const site = createMemo(() => props.site);
-  const pages = useStore($pages);
 
   return (
     <article class="elevation-1 column-s p-2">
@@ -22,15 +20,7 @@ export const PageSidebar: Component<{ site: Site }> = (props) => {
 
       <nav class="mt-1">
         <h3 class="downscaled">{t('site:contents.title')}</h3>
-        <ul>
-          <For each={pages()}>
-            {(page) => (
-              <li>
-                <a href={`/sites/${site().key}/${page.key}`}>{page.name}</a>
-              </li>
-            )}
-          </For>
-        </ul>
+        <SiteTocSection />
       </nav>
     </article>
   );
