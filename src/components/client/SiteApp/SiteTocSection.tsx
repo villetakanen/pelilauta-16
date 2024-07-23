@@ -14,7 +14,7 @@ export const SiteTocSection: Component = () => {
     if (site().sortOrder === 'manual') {
       return arr;
     }
-    return arr.sort((a, b) => a.flowTime - b.flowTime);
+    return arr.sort((a, b) => b.flowTime - a.flowTime);
   });
 
   return (

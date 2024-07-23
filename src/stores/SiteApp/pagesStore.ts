@@ -4,7 +4,7 @@ import {
   type Page,
   parsePage,
 } from '@schemas/PageSchema';
-import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
+import { PageRefSchema, SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { logDebug, logError, logWarn } from '@utils/logHelpers';
@@ -12,6 +12,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   onSnapshot,
   setDoc,
   updateDoc,
@@ -19,7 +20,7 @@ import {
 import { type Atom, atom } from 'nanostores';
 // import { atom, onSet } from 'nanostores';
 import { db } from 'src/firebase/client';
-import { $site } from '.';
+import { $site, updateSite } from '.';
 // import { $site } from '.';
 
 // export const $loadingState = atom<'initial' | 'loading' | 'active'>('initial');
@@ -143,7 +144,7 @@ export async function updatePage(
   updates: Partial<Page>,
   options = { silent: false },
 ) {
-  logWarn('updatePage: experimental', `silent: ${options.silent}`);
+  logWarn('updatePage', `silent: ${options.silent}`);
 
   const fsUpdate = toFirestoreEntry(updates, { silent: options.silent });
 
@@ -162,6 +163,17 @@ export async function updatePage(
     doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, pageKey),
     fsUpdate,
   );
+
+  if (!options.silent) {
+    const pageDoc = await getDoc(
+      doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, pageKey),
+    );
+    if (pageDoc.exists()) {
+      await updatePageRefs(
+        parsePage(toClientEntry(pageDoc.data()), pageKey, siteKey),
+      );
+    }
+  }
 }
 
 export async function addPage(
@@ -195,6 +207,28 @@ export async function addPage(
   fsPage.key = key;
   const newPage = parsePage(fsPage, key, siteKey);
   patchToPages(newPage);
+  await updatePageRefs(newPage);
 
   return key;
+}
+
+async function updatePageRefs(page: Page) {
+  const site = $site.get();
+  if (!site) {
+    logWarn('updatePageRefs', 'site is not loaded');
+    return;
+  }
+
+  const refs = site.pageRefs || [];
+  // remove the page from the refs, if it exists
+  const filteredRefs = refs.filter((ref) => ref.key !== page.key);
+  // add the page to the refs
+  filteredRefs.push(
+    PageRefSchema.parse({
+      ...page,
+      author: page.owners[0] || site.owners[0] || '-',
+    }),
+  ); // pageref is a subset of page, so we can just parse it
+
+  await updateSite({ pageRefs: filteredRefs });
 }
