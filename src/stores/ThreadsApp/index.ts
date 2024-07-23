@@ -32,7 +32,7 @@ const LOCAL_CACHE_SIZE = 42;
  * @param thread
  */
 export function cacheThread(thread: Thread) {
-  const threads = $threads.get();
+  const threads = [...$threads.get()];
 
   // Check if the thread is already in the cache
   const index = threads.findIndex((t) => t.key === thread.key);
