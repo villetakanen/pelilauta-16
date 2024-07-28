@@ -1,4 +1,4 @@
-import type { Locale } from '@utils/i18n';
+import { type Locale, t } from '@utils/i18n';
 
 export const threads: Locale = {
   info: {
@@ -6,5 +6,11 @@ export const threads: Locale = {
     author: 'Kirjoittanut',
     inTopic: 'aiheessa',
     replies: 'vastausta',
+  },
+  tray: {
+    title: 'Aiheet',
+  },
+  forum: {
+    title: 'Foorumi',
   },
 };
