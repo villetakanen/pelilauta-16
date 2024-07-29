@@ -24,8 +24,8 @@ export const ForumPage: Component = () => {
       <div class="column-l">
         <For each={categories()}>
           {(category) => (
-            <section class="elevation-1 border-radius p-2">
-              <h3>{category}</h3>
+            <section class="elevation-1 border-radius p-2 mb-2">
+              <h4>{category}</h4>
               <For
                 each={topics().filter((topic) => topic.category === category)}
               >
