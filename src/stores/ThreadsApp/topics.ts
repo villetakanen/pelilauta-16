@@ -18,7 +18,7 @@ export const $topics = persistentAtom<Topic[]>('thread-topics', [], {
         description: entry.description || '',
         icon: entry.icon || 'pelilauta',
         slug: entry.slug || 'anon',
-        category: entry.category || '',
+        category: entry.category || 'Pelilauta',
         threadCount: entry.threadCount || 0,
         flowTime: entry.flowTime || new Date().getTime(),
       });
@@ -39,6 +39,12 @@ async function fetchTopicsFromDB() {
     if (data) {
       const topics = MetaTopicsSchema.parse(data.topics);
       logDebug('fetchTopicsFromDB', 'Fetched topics from db', topics);
+      // force category 'pelilauta' if empty
+      for (const topic of topics) {
+        if (!topic.category) {
+          topic.category = 'Pelilauta';
+        }
+      }
       $topics.set(topics);
     } else {
       logDebug('fetchTopicsFromDB', 'No topics found in db');
