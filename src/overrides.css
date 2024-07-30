@@ -120,3 +120,7 @@ article + article {
 main {
   padding-bottom: calc(8 * var(--cn-grid))
 }
+div.forum-topics {
+  display: grid;
+  grid-template-columns: var(--cn-icon-medium, 64px) 1fr calc(var(--cn-icon-medium, 64px) * 2); 
+}

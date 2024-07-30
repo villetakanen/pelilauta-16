@@ -30,7 +30,7 @@ export const ForumPage: Component = () => {
                 each={topics().filter((topic) => topic.category === category)}
               >
                 {(topic) => (
-                  <div class="flex flex-row">
+                  <div class="forum-topics">
                     <cn-icon noun={topic.icon} />
                     <div class="flex-grow">
                       <h4 class="downscaled mb-1">{topic.name}</h4>
