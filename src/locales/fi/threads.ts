@@ -13,4 +13,8 @@ export const threads: Locale = {
   forum: {
     title: 'Foorumi',
   },
+  channel: {
+    page: 'Sivu',
+    pageCount: 'sivua',
+  },
 };
