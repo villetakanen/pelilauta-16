@@ -28,6 +28,7 @@ export function ParseThread(
   try {
     return ThreadSchema.parse({
       ...data,
+      images: data.images || [],
       createdAt: toDate(data.createdAt),
       updatedAt: toDate(data.updatedAt),
       flowTime: toDate(data.flowTime).getTime(),

@@ -8,7 +8,6 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import { logWarn } from '@utils/logHelpers';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { type Atom, atom } from 'nanostores';
-import { log } from 'node_modules/astro/dist/core/logger/core';
 import { db } from 'src/firebase/client';
 
 /**

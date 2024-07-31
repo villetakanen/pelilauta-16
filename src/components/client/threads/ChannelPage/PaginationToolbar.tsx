@@ -15,12 +15,12 @@ import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 
 export const PaginationToolbar: Component<{
-  channelKey: string;
-  offSet?: number;
+  channel: string;
+  page?: number;
   pageCount?: number;
 }> = (props) => {
   const currentPage = createMemo(() => {
-    return props.offSet || 0;
+    return props.page || 1;
   });
 
   const pageCount = createMemo(() => {
@@ -32,29 +32,27 @@ export const PaginationToolbar: Component<{
    */
   const showFirstPage = currentPage() > 2 && (
     <>
-      <a href={`/channels/${props.channelKey}?offSet=0`}>1</a>, ...
+      <a href={`/channels/${props.channel}/1`}>1</a>, ...
     </>
   );
 
   /**
    * If the current page is more than 3 away from the last page, we show "... [n]" at the end of the list.
    */
-  const showLastPage = currentPage() < pageCount() - 3 && (
+  const showLastPage = currentPage() < pageCount() - 2 && (
     <>
       , ...{' '}
-      <a href={`/channels/${props.channelKey}?offSet=${pageCount() - 1}`}>
-        {pageCount()}
-      </a>
+      <a href={`/channels/${props.channel}/${pageCount()}`}>{pageCount()}</a>
     </>
   );
 
   /**
    * if we are not the first page, we show the link to the previous page.
    */
-  const showPreviousPage = currentPage() > 0 && (
+  const showPreviousPage = currentPage() > 1 && (
     <>
-      <a href={`/channels/${props.channelKey}?offSet=${currentPage() - 1}`}>
-        {currentPage()}
+      <a href={`/channels/${props.channel}/${currentPage() - 1}`}>
+        {currentPage() - 1}
       </a>
       ,{' '}
     </>
@@ -66,8 +64,8 @@ export const PaginationToolbar: Component<{
   const showNextPage = currentPage() < pageCount() - 1 && (
     <>
       ,{' '}
-      <a href={`/channels/${props.channelKey}?offSet=${currentPage() + 1}`}>
-        {currentPage() + 2}
+      <a href={`/channels/${props.channel}/${currentPage() + 1}`}>
+        {currentPage() + 1}
       </a>
     </>
   );
@@ -77,7 +75,7 @@ export const PaginationToolbar: Component<{
       <p>
         {t('threads:channel.page')}:{showFirstPage}&nbsp;
         {showPreviousPage}
-        <span>{currentPage() + 1}</span>
+        <span>{currentPage()}</span>
         {showNextPage}
         {showLastPage}
       </p>
