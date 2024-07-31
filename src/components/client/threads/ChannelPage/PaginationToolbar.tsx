@@ -75,7 +75,7 @@ export const PaginationToolbar: Component<{
   return (
     <nav class="toolbar">
       <p>
-        {t('threads:channel.page')}:{showFirstPage}
+        {t('threads:channel.page')}:{showFirstPage}&nbsp;
         {showPreviousPage}
         <span>{currentPage() + 1}</span>
         {showNextPage}

@@ -23,7 +23,7 @@ export const ThreadList: Component<{ channelKey: string; offSet?: number }> = (
       ...
       <PaginationToolbar
         channelKey={props.channelKey}
-        offSet={props.offSet}
+        offSet={2}
         pageCount={pageCount()}
       />
     </article>
