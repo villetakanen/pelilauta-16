@@ -6,7 +6,7 @@ import {
 } from '@schemas/ThreadSchema';
 import { $topics } from '@stores/ThreadsApp/topics';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import {
   collection,
   doc,
@@ -50,13 +50,20 @@ export async function fetchPage(key: string, page = 1) {
         'fetching more data from Firestore, cache size:',
         $channel.get().length,
       );
-      $channel.set([
-        ...$channel.get(),
-        ...(await fetchPageFromFirestore(
-          key,
-          $channel.get().slice(-1)[0].key || undefined,
-        )),
-      ]);
+      const page = await fetchPageFromFirestore(
+        key,
+        $channel.get().slice(-1)[0].key || undefined,
+      );
+
+      if (page.length === 0) {
+        logWarn(
+          'fetchPage',
+          'no more data to fetch from Firestore, this is likely a network issue',
+        );
+        break;
+      }
+
+      $channel.set([...$channel.get(), ...page]);
     }
 
     return $channel
@@ -95,7 +102,7 @@ async function fetchPageFromFirestore(
     const q = query(
       collection(db, THREADS_COLLECTION_NAME),
       orderBy('flowTime', 'desc'),
-      where('topic', '==', channelKey),
+      where('channel', '==', channelKey),
       limit(CHANNEL_PAGE_SIZE),
     );
     const pageResults = await getDocs(q);
@@ -119,7 +126,7 @@ async function fetchPageFromFirestore(
   const q = query(
     collection(db, THREADS_COLLECTION_NAME),
     orderBy('flowTime', 'desc'),
-    where('topic', '==', channelKey),
+    where('channel', '==', channelKey),
     startAfter(fromThreadKey),
     limit(CHANNEL_PAGE_SIZE),
   );
@@ -128,7 +135,7 @@ async function fetchPageFromFirestore(
 
   const newThreads: Thread[] = [];
   for (const doc of pageResults.docs) {
-    newThreads.push(ParseThread(doc.data(), doc.id));
+    newThreads.push(ParseThread(toClientEntry(doc.data()), doc.id));
   }
 
   return newThreads;

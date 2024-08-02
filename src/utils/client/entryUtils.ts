@@ -20,7 +20,9 @@ export function toClientEntry(entry: Record<string, unknown>) {
     ? typeof entry.owners === 'string'
       ? [entry.owners]
       : entry.owners
-    : [];
+    : entry.author
+      ? [entry.author]
+      : [];
 
   return {
     ...entry,
