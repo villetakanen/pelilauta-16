@@ -55,6 +55,7 @@ export async function fetchPage(key: string, page = 1) {
       .get()
       .slice(CHANNEL_PAGE_SIZE * (page - 1), CHANNEL_PAGE_SIZE * page);
   }
+  return [];
 }
 async function fetchPageFromFirestore(
   channelKey: string,

@@ -37,7 +37,7 @@ export const ForumPage: Component = () => {
                       </div>
                       <div class="flex-grow">
                         <h4 class="downscaled mb-1">
-                          <a href={`/channels/${topic.slug}`}>{topic.name}</a>
+                          <a href={`/channels/${topic.slug}/1`}>{topic.name}</a>
                         </h4>
                         <p class="mt-0">{topic.description}</p>
                       </div>
