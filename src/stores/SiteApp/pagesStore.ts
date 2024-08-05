@@ -7,7 +7,7 @@ import {
 import { PageRefSchema, SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
-import { logDebug, logError, logWarn } from '@utils/logHelpers';
+import { logError, logWarn } from '@utils/logHelpers';
 import {
   addDoc,
   collection,

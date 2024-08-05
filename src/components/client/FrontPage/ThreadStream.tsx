@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/solid';
-import { ParseThread, THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
+import { THREADS_COLLECTION_NAME, parseThread } from '@schemas/ThreadSchema';
 import { $threads, cacheThread } from '@stores/ThreadsApp';
 import { hasSeenEntry } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -8,11 +8,10 @@ import {
   collection,
   limit,
   onSnapshot,
-  or,
   orderBy,
   query,
 } from 'firebase/firestore';
-import { type Component, createMemo, onMount } from 'solid-js';
+import { type Component, createMemo, onCleanup, onMount } from 'solid-js';
 import { db } from 'src/firebase/client';
 import { ThreadCard } from '../threads/ThreadCard';
 
@@ -45,7 +44,7 @@ export const ThreadStream: Component = () => {
               threadChange.doc.data(),
             );
             cacheThread(
-              ParseThread(
+              parseThread(
                 toClientEntry(threadChange.doc.data()),
                 threadChange.doc.id,
               ),
@@ -54,6 +53,10 @@ export const ThreadStream: Component = () => {
         }
       },
     );
+  });
+
+  onCleanup(() => {
+    unsubscribe();
   });
 
   return (

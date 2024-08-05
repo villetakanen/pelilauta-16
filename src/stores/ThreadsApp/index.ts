@@ -1,8 +1,8 @@
 import { persistentAtom } from '@nanostores/persistent';
 import {
-  ParseThread,
   THREADS_COLLECTION_NAME,
   type Thread,
+  parseThread,
 } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logWarn } from '@utils/logHelpers';
@@ -17,7 +17,7 @@ export const $threads = persistentAtom<Thread[]>('threads-cache', [], {
   encode: JSON.stringify,
   decode: (data) => {
     return JSON.parse(data).map((entry: Record<string, unknown>) => {
-      return ParseThread(toClientEntry(entry), entry.key as string);
+      return parseThread(toClientEntry(entry), entry.key as string);
     });
   },
 });
@@ -73,7 +73,7 @@ export function subscribeThread(key: string): Atom<Thread | null> {
     doc(db, THREADS_COLLECTION_NAME, key),
     (snapshot) => {
       if (snapshot.exists()) {
-        const thread = ParseThread(toClientEntry(snapshot.data()), snapshot.id);
+        const thread = parseThread(toClientEntry(snapshot.data()), snapshot.id);
         cacheThread(thread);
         threadStore.set(thread);
       } else {

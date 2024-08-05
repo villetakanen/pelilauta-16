@@ -1,8 +1,8 @@
 import { persistentAtom } from '@nanostores/persistent';
 import {
-  ParseThread,
   THREADS_COLLECTION_NAME,
   type Thread,
+  parseThread,
 } from '@schemas/ThreadSchema';
 import { $topics } from '@stores/ThreadsApp/topics';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -27,7 +27,7 @@ export const $channel = persistentAtom<Thread[]>('active-channel', [], {
   encode: JSON.stringify,
   decode: (data) => {
     return JSON.parse(data).map((entry: Record<string, unknown>) => {
-      return ParseThread(toClientEntry(entry), entry.key as string);
+      return parseThread(toClientEntry(entry), entry.key as string);
     });
   },
 });
@@ -109,7 +109,7 @@ async function fetchPageFromFirestore(
 
     const newThreads: Thread[] = [];
     for (const doc of pageResults.docs) {
-      newThreads.push(ParseThread(toClientEntry(doc.data()), doc.id));
+      newThreads.push(parseThread(toClientEntry(doc.data()), doc.id));
     }
 
     return newThreads;
@@ -135,7 +135,7 @@ async function fetchPageFromFirestore(
 
   const newThreads: Thread[] = [];
   for (const doc of pageResults.docs) {
-    newThreads.push(ParseThread(toClientEntry(doc.data()), doc.id));
+    newThreads.push(parseThread(toClientEntry(doc.data()), doc.id));
   }
 
   return newThreads;

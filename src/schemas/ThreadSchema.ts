@@ -21,21 +21,31 @@ export const ThreadSchema = ContentEntrySchema.extend({
 
 export type Thread = z.infer<typeof ThreadSchema>;
 
-export function ParseThread(
+export function parseThread(
   data: Record<string, unknown>,
   key?: string,
 ): Thread {
+  let images = data.images || [];
+  // Handle legacy image-data, these are of form { url: 'https://example.com/image.jpg' }
+  if (
+    data.images &&
+    Array.isArray(data.images) &&
+    typeof data.images[0] === 'object'
+  ) {
+    images = data.images.map((image: Record<string, unknown>) => image.url);
+  }
+
   try {
     return ThreadSchema.parse({
       ...data,
-      images: data.images || [],
+      images,
       createdAt: toDate(data.createdAt),
       updatedAt: toDate(data.updatedAt),
       flowTime: toDate(data.flowTime).getTime(),
       key,
     });
   } catch (e) {
-    logError('ParseThread', e);
+    logError('parseThread', e);
     throw e;
   }
 }

@@ -4,9 +4,9 @@
 
 import { persistentAtom } from '@nanostores/persistent';
 import {
-  ParseThread,
   THREADS_COLLECTION_NAME,
   type Thread,
+  parseThread,
 } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
@@ -37,7 +37,7 @@ export const $recentThreads = persistentAtom<Thread[]>('recent-threads', [], {
   encode: JSON.stringify,
   decode: (data) => {
     const threads = JSON.parse(data).map((entry: Record<string, unknown>) => {
-      return ParseThread(toClientEntry(entry), entry.key as string);
+      return parseThread(toClientEntry(entry), entry.key as string);
     });
     return threads.slice(0, LOCAL_CACHE_SIZE);
   },
@@ -60,7 +60,7 @@ async function subscribeToThreads() {
         removeThread(thread.doc.id);
       } else {
         patchThread(
-          ParseThread(toClientEntry(thread.doc.data()), thread.doc.id),
+          parseThread(toClientEntry(thread.doc.data()), thread.doc.id),
         );
       }
     }

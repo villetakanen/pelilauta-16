@@ -13,7 +13,7 @@ export const ForumTray: Component = () => {
         <For each={topics()}>
           {(topic) => (
             <li>
-              <a href={`/topics/${topic.slug}`} class="tray-button">
+              <a href={`/channels/${topic.slug}/1`} class="tray-button">
                 <cn-icon noun={topic.icon} xsmall />
                 <span>
                   {topic.name} ({topic.threadCount})
