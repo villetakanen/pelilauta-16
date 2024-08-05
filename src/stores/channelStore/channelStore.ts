@@ -19,6 +19,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { type Atom, atom } from 'nanostores';
+import { log } from 'node_modules/astro/dist/core/logger/core';
 import { db } from 'src/firebase/client';
 
 export const CHANNEL_PAGE_SIZE = 10;
@@ -32,7 +33,7 @@ export const $channel = persistentAtom<Thread[]>('active-channel', [], {
   },
 });
 
-export const $channelKey = atom<string | null>(null);
+export const $channelKey = persistentAtom<string>('active-channel-key', '');
 
 /**
  * Fetches a page of threads from Firestore. By default, it fetches the first page of the channel.
@@ -58,6 +59,8 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
     logDebug('fetchPage', 'channel key has changed, resetting cache');
     $channelKey.set(channelKey);
     $channel.set([]);
+  } else {
+    $channelKey.set(channelKey);
   }
 
   const threads = atom<Thread[]>([]);
@@ -65,27 +68,24 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
   // We'll start backgroung fetching the data from Firestore
   if (page === 1) {
     fetchPageFromFirestore(channelKey).then((newThreads) => {
-      $channel.set([...$channel.get(), ...newThreads]);
-      threads.set($channel.get().slice(0, CHANNEL_PAGE_SIZE));
+      $channel.set(mergeThreads($channel.get(), newThreads, 1));
+      threads.set(newThreads);
     });
+    logDebug(
+      'fetchPage',
+      'fetching the first page of the channel from Firestore, cache size is:',
+      $channel.get().length,
+    );
   }
   // Else we'll need to fetch the requested page by fetching from firestore, untill we have the requested page
   else {
-    for (let i = 0; i < page; i++) {
-      fetchPageFromFirestore(
-        channelKey,
-        $channel.get().slice(-1)[0].key || undefined,
-      ).then((newThreads) => {
-        if (newThreads.length === 0) {
-          logWarn(
-            'fetchPage',
-            'no more data to fetch from Firestore, this is likely a network issue',
-          );
-          return;
-        }
-        $channel.set([...$channel.get(), ...newThreads]);
-      });
-    }
+    cacheUpToPage(page, channelKey).then(() => {
+      threads.set(
+        $channel
+          .get()
+          .slice(CHANNEL_PAGE_SIZE * (page - 1), CHANNEL_PAGE_SIZE * page),
+      );
+    });
   }
 
   // We'll return the requested page from the cache
@@ -96,6 +96,54 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
   );
 
   return threads;
+}
+
+async function cacheUpToPage(page: number, channelKey: string) {
+  for (let i = 0; i < page; i++) {
+    logDebug(
+      'fetchPage',
+      'fetching more data from Firestore, cache size:',
+      $channel.get().length,
+    );
+    const page = await fetchPageFromFirestore(
+      channelKey,
+      $channel.get().slice(-1)[0].key || undefined,
+    );
+
+    if (page.length === 0) {
+      logWarn(
+        'fetchPage',
+        'no more data to fetch from Firestore, this is likely a network issue',
+      );
+      break;
+    }
+
+    $channel.set(mergeThreads($channel.get(), page, i + 1));
+  }
+}
+
+function mergeThreads(
+  oldThreads: Thread[],
+  newThreads: Thread[],
+  page: number,
+) {
+  const mergedThreads = [...oldThreads];
+  const startIndex = (page - 1) * CHANNEL_PAGE_SIZE;
+  const endIndex = page * CHANNEL_PAGE_SIZE;
+
+  for (let i = startIndex; i < endIndex; i++) {
+    if (newThreads[i - startIndex]) {
+      mergedThreads[i] = newThreads[i - startIndex];
+    }
+  }
+  logDebug(
+    'mergeThreads',
+    'merged threads to page',
+    page,
+    'cache size:',
+    mergedThreads.length,
+  );
+  return mergedThreads;
 }
 
 /*
@@ -187,12 +235,14 @@ async function fetchPageFromFirestore(
   if (!startRef.exists())
     throw new Error('Can not start from a non-existing thread, aborting');
 
+  logDebug('fetching threads from the db, starting from:', fromThreadKey);
+
   // We'll fetch the data from Firestore
   const q = query(
     collection(db, THREADS_COLLECTION_NAME),
     orderBy('flowTime', 'desc'),
     where('channel', '==', channelKey),
-    startAfter(fromThreadKey),
+    startAfter(startRef),
     limit(CHANNEL_PAGE_SIZE),
   );
 

@@ -4,7 +4,7 @@ import {
   type Topic,
   topicSchema,
 } from '@schemas/MetaTopicsSchema';
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
@@ -38,7 +38,7 @@ async function fetchTopicsFromDB() {
     const data = docSnap.data();
     if (data) {
       const topics = MetaTopicsSchema.parse(data.topics);
-      logDebug('fetchTopicsFromDB', 'Fetched topics from db', topics);
+      // logDebug('fetchTopicsFromDB', 'Fetched topics from db', topics);
       // force category 'pelilauta' if empty
       for (const topic of topics) {
         if (!topic.category) {
@@ -47,7 +47,7 @@ async function fetchTopicsFromDB() {
       }
       $topics.set(topics);
     } else {
-      logDebug('fetchTopicsFromDB', 'No topics found in db');
+      logWarn('fetchTopicsFromDB', 'No topics found in db');
       $topics.set([]);
     }
   }
