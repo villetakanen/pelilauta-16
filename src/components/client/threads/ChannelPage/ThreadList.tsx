@@ -1,18 +1,14 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
-import type { Thread } from '@schemas/ThreadSchema';
 import { toDisplayString } from '@utils/contentHelpers';
 import { type Component, For, createSignal, onMount } from 'solid-js';
 
+import { useStore } from '@nanostores/solid';
 import { fetchPage } from '@stores/channelStore/channelStore';
 
 export const ThreadList: Component<{ channel: string; page: number }> = (
   props,
 ) => {
-  const [threads, setThreads] = createSignal<Thread[]>([]);
-
-  onMount(async () => {
-    setThreads(await fetchPage(props.channel, props.page));
-  });
+  const threads = useStore(fetchPage(props.channel, props.page));
 
   return (
     <For each={threads()}>
