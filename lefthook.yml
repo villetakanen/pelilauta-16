@@ -9,6 +9,6 @@ pre-push:
         npx vitest --run
 
 commit-msg:
-  commands:
-    lint:commit:
-      run: npx commitlint --edit
+  scripts:
+    "commitlint.sh":
+      runner: bash
