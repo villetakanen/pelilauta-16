@@ -1,6 +1,6 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { toDisplayString } from '@utils/contentHelpers';
-import { type Component, For, createSignal, onMount } from 'solid-js';
+import { type Component, For } from 'solid-js';
 
 import { useStore } from '@nanostores/solid';
 import { fetchPage } from '@stores/channelStore/channelStore';
