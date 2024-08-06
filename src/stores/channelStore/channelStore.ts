@@ -19,7 +19,6 @@ import {
   where,
 } from 'firebase/firestore';
 import { type Atom, atom } from 'nanostores';
-import { log } from 'node_modules/astro/dist/core/logger/core';
 import { db } from 'src/firebase/client';
 
 export const CHANNEL_PAGE_SIZE = 10;
@@ -49,8 +48,21 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
   logDebug('fetchPage', channelKey, page);
 
   // if there is no channel key, we'll return an empty array
-  if (!channelKey) {
-    logWarn('fetchPage', 'no channel key provided, returning empty array');
+  if (!channelKey || page < 1) {
+    logWarn(
+      'fetchPage',
+      'Invalid channel or page provided, returning empty array',
+    );
+    return atom([]);
+  }
+
+  const topic = $topics.get().find((t) => t.slug === channelKey);
+  if (!topic) {
+    logWarn('fetchPage', 'Invalid channel key provided, returning empty array');
+    return atom([]);
+  }
+  if (page > topic.threadCount / CHANNEL_PAGE_SIZE) {
+    logWarn('fetchPage', 'Invalid page number provided, returning empty array');
     return atom([]);
   }
 
@@ -68,7 +80,9 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
   // We'll start backgroung fetching the data from Firestore
   if (page === 1) {
     fetchPageFromFirestore(channelKey).then((newThreads) => {
-      $channel.set(mergeThreads($channel.get(), newThreads, 1));
+      // We'll merge the new threads with the current cache, and set
+      // the reactive atom with the new data
+      $channel.set(mergeThreads($channel.get(), newThreads));
       threads.set(newThreads);
     });
     logDebug(
@@ -79,125 +93,61 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
   }
   // Else we'll need to fetch the requested page by fetching from firestore, untill we have the requested page
   else {
-    cacheUpToPage(page, channelKey).then(() => {
-      threads.set(
-        $channel
-          .get()
-          .slice(CHANNEL_PAGE_SIZE * (page - 1), CHANNEL_PAGE_SIZE * page),
-      );
+    getChannelPage(channelKey, page).then((newThreads) => {
+      threads.set(newThreads);
     });
   }
 
-  // We'll return the requested page from the cache
-  threads.set(
-    $channel
-      .get()
-      .slice(CHANNEL_PAGE_SIZE * (page - 1), CHANNEL_PAGE_SIZE * page),
-  );
+  const cachedPage =
+    $channel.get().length > (page - 1) * CHANNEL_PAGE_SIZE
+      ? $channel
+          .get()
+          .slice(CHANNEL_PAGE_SIZE * (page - 1), CHANNEL_PAGE_SIZE * page)
+      : [];
+  threads.set(cachedPage);
 
   return threads;
 }
 
-async function cacheUpToPage(page: number, channelKey: string) {
-  for (let i = 0; i < page; i++) {
+async function getChannelPage(channelKey: string, page: number) {
+  // Lets see if we have the last thread of previous page
+  // in the cache, if so, we'll start from there
+  // If not, we'll fetch the previous page (assuming, its not the first page)
+  const lastThread = $channel.get()[(page - 1) * CHANNEL_PAGE_SIZE - 1];
+  const fromThreadKey = lastThread ? lastThread.key : undefined;
+
+  if (!fromThreadKey) {
     logDebug(
-      'fetchPage',
-      'fetching more data from Firestore, cache size:',
-      $channel.get().length,
+      'getChannelPage',
+      'we do not have the previous thread, fetching the previous page',
     );
-    const page = await fetchPageFromFirestore(
-      channelKey,
-      $channel.get().slice(-1)[0].key || undefined,
-    );
-
-    if (page.length === 0) {
-      logWarn(
-        'fetchPage',
-        'no more data to fetch from Firestore, this is likely a network issue',
+    if (page > 1) await getChannelPage(channelKey, page - 1);
+    else
+      throw new Error(
+        'Can not fetch the a page without the previous page, please fetch the first page before calling this function',
       );
-      break;
-    }
-
-    $channel.set(mergeThreads($channel.get(), page, i + 1));
   }
-}
 
-function mergeThreads(
-  oldThreads: Thread[],
-  newThreads: Thread[],
-  page: number,
-) {
-  const mergedThreads = [...oldThreads];
-  const startIndex = (page - 1) * CHANNEL_PAGE_SIZE;
-  const endIndex = page * CHANNEL_PAGE_SIZE;
-
-  for (let i = startIndex; i < endIndex; i++) {
-    if (newThreads[i - startIndex]) {
-      mergedThreads[i] = newThreads[i - startIndex];
-    }
-  }
-  logDebug(
-    'mergeThreads',
-    'merged threads to page',
-    page,
-    'cache size:',
-    mergedThreads.length,
-  );
-  return mergedThreads;
-}
-
-/*
-export async function fetchPage(key: string, page = 1) {
-  logDebug('fetchPage', key, page);
-  if ($channelKey.get() === key) {
-    logDebug('fetchPage', 'current channel key matches the requested key');
-    // We'll check if we have the data in the cache, and if we do, we'll return it
-    const requrestedCacheSize = CHANNEL_PAGE_SIZE * page;
-    const maximumCacheSize =
-      $topics.get().find((topic) => topic.slug === key)?.threadCount || 0;
-    const expectedCacheSize = Math.min(requrestedCacheSize, maximumCacheSize);
-    
-    for (let i = 0; i < expectedCacheSize / 10; i++) {
-      logDebug(
-      'fetchPage',
-      'fetching more data from Firestore, cache size:',
-      $channel.get().length,
-      );
-      const page = await fetchPageFromFirestore(
-      key,
-      $channel.get().slice(-1)[0].key || undefined,
-      );
-
-      if (page.length === 0) {
-      logWarn(
-        'fetchPage',
-        'no more data to fetch from Firestore, this is likely a network issue',
-      );
-      break;
-      }
-
-      $channel.set([...$channel.get(), ...page]);
-    }
-
-    return $channel
-      .get()
-      .slice(CHANNEL_PAGE_SIZE * (page - 1), CHANNEL_PAGE_SIZE * page);
-  }
-  if (!key) return [];
-
-  logDebug('fetchPage', 'fetching new channel data from Firestore to cache');
-  $channelKey.set(key);
-
-  const newThreads = await fetchPageFromFirestore(key);
-  $channel.set(newThreads);
-
-  logDebug(
-    'fetchPage',
-    'returning the first page of the new channel data, cache size:',
-    newThreads.length,
-  );
+  // Fetch the page from Firestore
+  const newThreads = await fetchPageFromFirestore(channelKey, fromThreadKey);
+  $channel.set(mergeThreads($channel.get(), newThreads));
   return newThreads;
-}*/
+}
+
+function mergeThreads(currentThreads: Thread[], newThreads: Thread[]) {
+  logDebug('mergeThreads', currentThreads.length, newThreads.length);
+
+  const threadsMap = new Map<string, Thread>();
+  for (const thread of currentThreads) {
+    threadsMap.set(thread.key, thread);
+  }
+  for (const thread of newThreads) {
+    threadsMap.set(thread.key, thread);
+  }
+  const merged = Array.from(threadsMap.values());
+  merged.sort((a, b) => b.flowTime - a.flowTime);
+  return merged;
+}
 
 async function fetchPageFromFirestore(
   channelKey: string,

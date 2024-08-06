@@ -42,7 +42,9 @@ export const PaginationToolbar: Component<{
   const showLastPage = currentPage() < pageCount() - 2 && (
     <>
       , ...{' '}
-      <a href={`/channels/${props.channel}/${pageCount()}`}>{pageCount()}</a>
+      <a href={`/channels/${props.channel}/${pageCount() - 1}`}>
+        {pageCount() - 1}
+      </a>
     </>
   );
 
@@ -79,7 +81,7 @@ export const PaginationToolbar: Component<{
         {showNextPage}
         {showLastPage}
       </p>
-      <p>{`${pageCount()} ${t('threads:channel.pageCount')}`}</p>
+      <p>{`${pageCount() - 1} ${t('threads:channel.pageCount')}`}</p>
     </nav>
   );
 };
