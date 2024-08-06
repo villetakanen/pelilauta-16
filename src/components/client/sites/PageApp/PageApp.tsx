@@ -5,9 +5,9 @@
 import { PageBackgroundPoster } from '@client/PageBackgroundPoster';
 import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
-import { type Component, createMemo, onMount } from 'solid-js';
+import { type Component, onMount } from 'solid-js';
 import { $site, load } from 'src/stores/SiteApp';
-import { $pages, subscribePage } from 'src/stores/SiteApp/pagesStore';
+import { subscribePage } from 'src/stores/SiteApp/pagesStore';
 import { PageArticle } from './PageArticle';
 import { PageFabs } from './PageFabs';
 import { PageSidebar } from './PageSidebar';

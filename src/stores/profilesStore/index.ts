@@ -36,6 +36,10 @@ export const $profiles = persistentAtom<Record<string, PublicProfile>>(
 const $loading = atom<string[]>([]);
 
 export function getProfile(key: string): PublicProfile | undefined {
+  if (!key) {
+    logDebug('profilesStore', 'getProfile', 'key is undefined');
+    return undefined;
+  }
   if ($profiles.get()[key]) {
     return $profiles.get()[key];
   }

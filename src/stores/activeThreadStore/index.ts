@@ -1,9 +1,9 @@
 import { persistentAtom } from '@nanostores/persistent';
 import {
-  ParseThread,
   THREADS_COLLECTION_NAME,
   type Thread,
   createThread,
+  parseThread,
 } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
@@ -19,7 +19,7 @@ export const $thread = persistentAtom<Thread>('active-thread', createThread(), {
   encode: JSON.stringify,
   decode: (data) => {
     const entry = JSON.parse(data);
-    return ParseThread(entry, entry.key);
+    return parseThread(entry, entry.key);
   },
 });
 
@@ -53,7 +53,7 @@ export async function load(key: string) {
   const docRef = doc(db, THREADS_COLLECTION_NAME, key);
   unsubscribe = onSnapshot(docRef, (doc) => {
     if (doc.exists()) {
-      $thread.set(ParseThread(toClientEntry(doc.data()), doc.id));
+      $thread.set(parseThread(toClientEntry(doc.data()), doc.id));
       loadingState.set('active');
     } else {
       $thread.set(createThread());

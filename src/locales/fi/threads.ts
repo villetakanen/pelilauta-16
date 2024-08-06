@@ -7,4 +7,14 @@ export const threads: Locale = {
     inTopic: 'aiheessa',
     replies: 'vastausta',
   },
+  tray: {
+    title: 'Aiheet',
+  },
+  forum: {
+    title: 'Foorumi',
+  },
+  channel: {
+    page: 'Sivu',
+    pageCount: 'sivua',
+  },
 };

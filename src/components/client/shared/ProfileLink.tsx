@@ -1,5 +1,4 @@
 import { useStore } from '@nanostores/solid';
-import { logDebug } from '@utils/logHelpers';
 import { type Component, createEffect, createSignal } from 'solid-js';
 import { $profiles, getProfile } from 'src/stores/profilesStore';
 
@@ -12,7 +11,6 @@ export const ProfileLink: Component<{ uid: string }> = (props) => {
   const profiles = useStore($profiles);
 
   createEffect(() => {
-    logDebug('ProfileLink', 'createEffect', props.uid);
     if (profiles()[props.uid]) {
       setNick(profiles()[props.uid].nick);
     } else {

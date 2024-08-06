@@ -1,17 +1,17 @@
-import { useStore } from '@nanostores/solid';
+// import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
 import { recreatePageRefs } from '@stores/SiteApp/recreatePageRefs';
-import { $account } from '@stores/sessionStore';
+// import { $account } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 
 export const SiteTocMigrateButton: Component<{ site: Site }> = (props) => {
   const site = createMemo(() => props.site);
-  const account = useStore($account);
+  /*const account = useStore($account);
 
-  const hasAdminAccess = createMemo(() => {
+    const hasAdminAccess = createMemo(() => {
     return site().owners.includes(account().uid);
-  });
+  });*/
 
   const showRepairButton = createMemo(() => {
     return true;

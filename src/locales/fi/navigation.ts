@@ -4,4 +4,6 @@ export const navigation: Locale = {
   settings: 'Asetukset',
   login: 'Kirjaudu',
   docs: 'Info',
+  threads: 'Foorumi',
+  library: 'Kirjasto',
 };

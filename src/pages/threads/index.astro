@@ -1,0 +1,10 @@
+---
+import { ForumPage } from '@client/threads/ForumPage';
+import { ForumTray } from '@client/threads/ForumTray';
+import PageWithTray from '@layouts/PageWithTray.astro';
+import { t } from '@utils/i18n';
+---
+<PageWithTray title={t('threads:forum.title')}>
+  <ForumPage client:only="solid-js"/>
+  <ForumTray slot="app-tray" client:only="solid-js"/>
+</PageWithTray>
