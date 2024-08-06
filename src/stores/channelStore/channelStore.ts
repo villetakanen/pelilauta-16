@@ -116,6 +116,14 @@ async function getChannelPage(channelKey: string, page: number) {
   const lastThread = $channel.get()[(page - 1) * CHANNEL_PAGE_SIZE - 1];
   const fromThreadKey = lastThread ? lastThread.key : undefined;
 
+  if (page < 2) {
+    logWarn(
+      'getChannelPage',
+      'Can not fetch the first page, please use fetchPage instead',
+    );
+    return [];
+  }
+
   if (!fromThreadKey) {
     logDebug(
       'getChannelPage',
