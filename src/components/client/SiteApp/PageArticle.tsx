@@ -4,8 +4,9 @@ import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
-import { PageArticleFooter } from './PageArticleFooter';
-import { PageArticleHeader } from './PageArticleHeader';
+import { PageArticleFooter } from '../sites/PageApp/PageArticleFooter';
+import { PageArticleHeader } from '../sites/PageApp/PageArticleHeader';
+import { MigrateContentPanel } from './MigrateContentPanel';
 
 export const PageArticle: Component<{ page: Page; site: Site }> = (props) => {
   const page = createMemo(() => props.page);
@@ -20,15 +21,11 @@ export const PageArticle: Component<{ page: Page; site: Site }> = (props) => {
         {markdownContent() ? (
           <MarkdownSection content={markdownContent()} />
         ) : (
-          <>
-            <div class="elevation-2 debug toolbar">
-              <p>{t('sites:page.legacyContent.warning')}</p>
-              <button class="text" type="button">
-                {t('actions:migrate.toMarkdown')}
-              </button>
-            </div>
-            <div innerHTML={page().htmlContent} />
-          </>
+          <MigrateContentPanel
+            siteKey={site().key}
+            pageKey={page().key}
+            htmlContent={`${page().htmlContent || page().content}`}
+          />
         )}
         <PageArticleFooter site={site()} page={page()} />
       </WithLoader>

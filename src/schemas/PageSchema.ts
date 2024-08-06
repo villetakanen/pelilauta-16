@@ -8,6 +8,7 @@ export const PAGES_COLLECTION_NAME = 'pages';
 export const PageSchema = ContentEntrySchema.extend({
   name: z.string(),
   siteKey: z.string(),
+  content: z.string().optional(),
   revisionHistory: z
     .array(
       z.object({

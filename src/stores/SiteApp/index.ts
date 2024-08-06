@@ -33,6 +33,8 @@ export const $site = persistentAtom<Site>(
   },
 );
 
+export const $owners = computed($site, (site) => site.owners || []);
+
 export const $active = computed(loadingState, (state) => state === 'active');
 
 let unsubscribe: CallableFunction | null = null;
