@@ -2,6 +2,12 @@
 .flex-row {
   flex-wrap: nowrap;
 }
+.flex-column {
+  align-items: flex-start;
+}
+.flex-column > * {
+  width: 100%;
+}
 .debug {
   color: var(--color-notify) !important;
   border: solid 1px var(--color-notify);
@@ -133,9 +139,10 @@ img.w-16-9 {
   object-fit: cover;
   margin-bottom: var(--cn-gap);
 }
+h2 cn-icon,
 h3 cn-icon {
   vertical-align: middle;
-  height: 2em;
+  height: var(--cn-line-height-heading-3);
   padding: 0;
 }
 h3 img.icon {

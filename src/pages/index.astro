@@ -1,4 +1,5 @@
 ---
+import { TopSitesSection } from '@client/FrontPage/SitesStream';
 import { ThreadStream } from '@client/FrontPage/ThreadStream';
 import { DebugSection } from '@client/debug';
 import SyndicateStream from '@server/FrontPage/SyndicateStream.astro';
@@ -10,9 +11,11 @@ import Page from 'src/layouts/Page.astro';
         <ThreadStream client:only="solid-js"/>
       </div>
       <SyndicateStream />
+      <div class="column-s">
+        <TopSitesSection client:only="solid-js"/>
+      </div>
       <article>
-        <h1>Placeholder</h1>
-        <cn-icon large noun="fox" />
+        <h2><cn-icon large noun="fox" />DEBUG</h2>
         <DebugSection client:only="solid-js"/>
       </article>
     </div>

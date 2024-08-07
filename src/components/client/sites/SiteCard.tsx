@@ -16,7 +16,7 @@ export const SiteCard: Component<Site> = (props) => {
       href={`/sites/${props.key}`}
       noun={systemToNoun(props.system)}
       title={props.name}
-      cover={props.posterURL}
+      cover={props.posterURL || undefined}
     >
       <p>{props.description}</p>
       <div slot="actions" class="flex toolbar">
