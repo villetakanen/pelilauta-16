@@ -9,12 +9,15 @@ const posts = feed.items.slice(0, 3);
 console.log(posts);
 ---
 <div class="column-s">
-    <h3 class="downscaled">Myrrys.com</h3>
+    <h3 class="downscaled mb-1">
+      <cn-icon noun="myrrys-scarlet"></cn-icon>
+      Myrrys.com</h3>
   <img src="https://www.myrrys.com/branding/LetL_gm_screen_splash.webp" alt="Myrrys logo" class="w-16-9 poster" />
     
   {posts.map((post) => (
     <section class=" border-t pt-1" >
-      <h4 class="downscaled">{post.title}</h4>
+      <h4 class="downscaled">
+        {post.title}</h4>
       <p class="downscaled">{post.contentSnippet}</p>
     </section>)
   )}

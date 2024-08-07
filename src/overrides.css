@@ -133,3 +133,8 @@ img.w-16-9 {
   object-fit: cover;
   margin-bottom: var(--cn-gap);
 }
+h3 cn-icon {
+  vertical-align: middle;
+  height: 2em;
+  padding: 0;
+}
