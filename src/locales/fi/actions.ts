@@ -5,6 +5,7 @@ export const actions: Locale = {
   cancel: 'Peruuta',
   create: {
     page: 'Luo sivu',
+    thread: 'Uusi keskustelu',
   },
   delete: 'Poista',
   edit: 'Muokkaa',
