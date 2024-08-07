@@ -4,11 +4,15 @@ import Parser from 'rss-parser';
 // We want to grab the myrrys.com RSS feed and post the latest 3 posts in this stream.
 const parser = new Parser();
 const feed = await parser.parseURL('https://myrrys.com/rss.xml');
-
 const posts = feed.items.slice(0, 3);
-console.log(posts);
+
+// We want to grab the https://roolipelitiedotus.fi/feed/ RSS feed and post the latest 3 posts in this stream.
+const parser2 = new Parser();
+const feed2 = await parser2.parseURL('https://roolipelitiedotus.fi/feed/');
+const posts2 = feed2.items.slice(0, 3);
 ---
-<div class="column-s">
+<div class="column-s flex flex-column">
+  <div>
     <h3 class="downscaled mb-1">
       <cn-icon noun="myrrys-scarlet"></cn-icon>
       Myrrys.com</h3>
@@ -21,4 +25,22 @@ console.log(posts);
       <p class="downscaled">{post.contentSnippet}</p>
     </section>)
   )}
+  </div>
+
+  <div class="text-center py-1">
+    <cn-icon noun="d20" large></cn-icon><br/>
+  </div>
+
+  <div>
+  <h3 class="downscaled mt-1 mb-1">
+    <img src="https://roolipelitiedotus.fi/wp-content/uploads/2018/07/logonayte-150x150.png" class="icon">
+    Roolipelitiedotus.fi</h3>
+    {posts2.map((post) => (
+    <section class=" border-t pt-1" >
+      <h4 class="downscaled">
+        {post.title}</h4>
+      <p class="downscaled">{post.contentSnippet}</p>
+    </section>)
+    )}
+  </div>
 </div>
