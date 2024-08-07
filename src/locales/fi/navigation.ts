@@ -5,5 +5,5 @@ export const navigation: Locale = {
   login: 'Kirjaudu',
   docs: 'Info',
   threads: 'Foorumi',
-  library: 'Kirjasto',
+  library: 'Pelit',
 };
