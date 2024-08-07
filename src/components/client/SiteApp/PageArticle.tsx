@@ -1,7 +1,6 @@
 import { WithLoader } from '@client/shared/WithLoader';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import { PageArticleFooter } from '../sites/PageApp/PageArticleFooter';
