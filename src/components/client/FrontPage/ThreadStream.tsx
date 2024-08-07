@@ -33,7 +33,7 @@ export const ThreadStream: Component = () => {
       query(
         collection(db, THREADS_COLLECTION_NAME),
         orderBy('flowTime', 'desc'),
-        limit(3),
+        limit(4),
       ),
       (snapshot) => {
         for (const threadChange of snapshot.docChanges()) {

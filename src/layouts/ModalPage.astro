@@ -3,7 +3,6 @@ import AppBar from 'src/components/server/AppBar.astro';
 import AppRail from 'src/components/server/AppRail.astro';
 import BasePostscripts from 'src/components/server/BasePostscripts.astro';
 import BaseHead from '../components/server/BaseHead.astro';
-import BaseTail from '../components/server/BaseTail.astro';
 
 const { title } = Astro.props;
 ---
@@ -11,7 +10,7 @@ const { title } = Astro.props;
 <html lang="fi">
   <BaseHead />
   <body>
-    <AppBar title={title}>
+    <AppBar title={title} modal>
       <slot name="app-bar" />
     </AppBar>
     <AppRail />
@@ -22,6 +21,5 @@ const { title } = Astro.props;
       <slot name="fab-tray"></slot>
     </nav>
     <BasePostscripts />
-    <BaseTail />
   </body>
 </html>

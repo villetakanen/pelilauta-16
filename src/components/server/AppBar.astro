@@ -1,15 +1,17 @@
 ---
+import { t } from '@utils/i18n';
+
 interface Props {
   title?: string;
-  tray?: boolean;
-  menu?: boolean;
+  modal?: boolean;
 }
 
-const { title } = Astro.props;
-const barTitle = title || 'Pelilauta 2';
+const { title, modal } = Astro.props;
+const barTitle = title || t('app:meta.title');
 ---
 
-<header class="cn-app-bar">
+<header class={`${modal && 'on-modal'} cn-app-bar`}>
+  <cn-back-button></cn-back-button>
   <h3>{barTitle}</h3>
   <div style="flex: 1"></div>
   <slot />
