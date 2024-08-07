@@ -4,7 +4,6 @@ import { DebugSection } from '@client/debug';
 import Page from 'src/layouts/Page.astro';
 ---
 <Page>
-  <main>
     <div class="content-columns">
       <div>
         <ThreadStream client:only="solid-js"/>
@@ -15,5 +14,4 @@ import Page from 'src/layouts/Page.astro';
         <DebugSection client:only="solid-js"/>
       </article>
     </div>
-  </main>
 </Page>
