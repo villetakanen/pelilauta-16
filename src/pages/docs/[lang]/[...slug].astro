@@ -4,6 +4,7 @@ import { t } from '@utils/i18n';
 import p from 'package.json';
 import DocsTray from 'src/components/server/docs/DocsTray.astro';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
+export const prerender = true;
 
 export async function getStaticPaths() {
   const components = await getCollection('fi');
@@ -14,6 +15,7 @@ export async function getStaticPaths() {
   }));
 }
 const { entry } = Astro.props;
+console.log(entry);
 const { Content } = await entry.render();
 ---
 <PageWithTray title={entry.data.shortname || entry.data.name}>
@@ -23,7 +25,7 @@ const { Content } = await entry.render();
       document.querySelector('cn-tray-button').setAttribute('aria-expanded', 'true');
     }
   </script>
-  <DocsTray slot="tray" />
+  <DocsTray slot="app-tray" />
   <div class="content-columns">
     <div class="column-l">
         <h1>{entry.data.name}</h1>
