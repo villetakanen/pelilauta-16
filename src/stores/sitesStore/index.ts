@@ -23,7 +23,7 @@ import { $uid } from '../sessionStore';
 
 // *** Store loading state *************************************************
 type LoadingStateValue = 'initial' | 'loading' | 'active';
-const $loadingState = persistentAtom<LoadingStateValue>(
+export const $loadingState = persistentAtom<LoadingStateValue>(
   'sites-store',
   'initial',
 );

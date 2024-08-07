@@ -2,12 +2,12 @@
 import { SiteFabs } from '@client/library/SiteFabs';
 import { SitesList } from '@client/library/SitesList';
 import { t } from '@utils/i18n';
-import LibraryTray from 'src/components/server/library/LibraryTray.astro';
-import PageWithTray from 'src/layouts/PageWithTray.astro';
+// import LibraryTray from 'src/components/server/library/LibraryTray.astro';
+import Page from 'src/layouts/Page.astro';
 ---
 
-<PageWithTray title={t('library:title')}>
-  <LibraryTray slot="app-tray" />
+<Page title={t('library:title')}>
+  <!--LibraryTray slot="app-tray" -->
   <SitesList client:only="solid-js" />
   <SiteFabs slot="app-fabs" client:only="solid-js"/>
-</PageWithTray>
+</Page>
