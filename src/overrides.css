@@ -128,3 +128,8 @@ div.forum-topics {
 div.forum-topics > * {
   border-top: var(--color-border) solid 1px;
 }
+img.w-16-9 {
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  margin-bottom: var(--cn-gap);
+}

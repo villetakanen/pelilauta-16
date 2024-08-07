@@ -1,6 +1,7 @@
 ---
 import { ThreadStream } from '@client/FrontPage/ThreadStream';
 import { DebugSection } from '@client/debug';
+import SyndicateStream from '@server/FrontPage/SyndicateStream.astro';
 import Page from 'src/layouts/Page.astro';
 ---
 <Page>
@@ -8,6 +9,7 @@ import Page from 'src/layouts/Page.astro';
       <div>
         <ThreadStream client:only="solid-js"/>
       </div>
+      <SyndicateStream />
       <article>
         <h1>Placeholder</h1>
         <cn-icon large noun="fox" />
