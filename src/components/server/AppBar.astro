@@ -10,8 +10,10 @@ const { title, modal } = Astro.props;
 const barTitle = title || t('app:meta.title');
 ---
 
-<header class={`${modal && 'on-modal'} cn-app-bar`}>
-  <cn-back-button></cn-back-button>
+<header class={`${modal && 'modal'} cn-app-bar`}>
+  { modal && <button class="text" type="button" onclick="history.back()">
+    <cn-icon noun="arrow-left" />
+  </button> }
   <h3>{barTitle}</h3>
   <div style="flex: 1"></div>
   <slot />
