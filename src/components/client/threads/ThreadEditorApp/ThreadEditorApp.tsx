@@ -39,8 +39,7 @@ export const ThreadEditorApp: Component<{ threadKey?: string }> = () => {
         <textarea />
       </label>
 
-      <div class="debug">
-        topic: ({topic()})</div>
+      <div class="debug">topic: ({topic()})</div>
 
       <div class="toolbar">
         <button type="reset">{t('actions:cancel')}</button>
