@@ -34,6 +34,13 @@ export const entries: Locale = {
     hidden: 'Piilotettu sivusto',
     customPageKeys: 'Luettavat osoitteet',
   },
+  thread: {
+    title: 'Otsikko',
+    channel: 'Aihe',
+    placeholders: {
+      title: 'Otsikko',
+    },
+  },
   default: 'Oletus',
   page: {
     name: 'Sivun nimi',

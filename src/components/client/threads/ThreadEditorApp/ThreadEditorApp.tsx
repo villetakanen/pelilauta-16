@@ -19,7 +19,7 @@ export const ThreadEditorApp: Component<{ threadKey?: string }> = () => {
           />
         </label>
         <label>
-          {t('entries:thread.title')}
+          {t('entries:thread.channel')}
           <select
             value={topic()}
             onChange={(e) => setTopic(e.currentTarget.value)}
@@ -34,15 +34,14 @@ export const ThreadEditorApp: Component<{ threadKey?: string }> = () => {
         </button>
       </div>
 
-      <label>
-        {t('entries:thread.content')}
-        <textarea />
-      </label>
+      <textarea />
 
       <div class="debug">topic: ({topic()})</div>
 
       <div class="toolbar">
-        <button type="reset">{t('actions:cancel')}</button>
+        <button type="reset" class="text">
+          {t('actions:cancel')}
+        </button>
         <button type="submit">
           <cn-icon noun="send" />
           <span>{t('actions:send')}</span>

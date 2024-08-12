@@ -169,3 +169,12 @@ select {
 astro-island {
   display: contents !important;
 }
+main:has(.content-editor) {
+  margin-top: calc(var(--cn-gap) * 3);
+}
+.toolbar label:first-child {
+  margin-left: calc(var(--cn-grid) * -1);
+}
+.toolbar label {
+  margin-bottom: 0;
+}

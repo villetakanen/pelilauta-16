@@ -9,6 +9,7 @@ export const actions: Locale = {
   },
   delete: 'Poista',
   edit: 'Muokkaa',
+  send: 'Lähetä',
   save: 'Tallenna',
   readMore: 'Lue lisää',
   submit: 'Lähetä',
