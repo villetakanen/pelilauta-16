@@ -1,24 +1,9 @@
 ---
+import { ThreadEditorApp } from '@client/threads/ThreadEditorApp/ThreadEditorApp';
 import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
 ---
 
 <ModalPage title={t('actions:create.thread')}>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
- <h1>...</h1>
-
- <h1>...</h1>
-
+ <ThreadEditorApp client:only="solid-js"/>
 </ModalPage>

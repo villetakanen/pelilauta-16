@@ -161,3 +161,7 @@ h3 img.icon {
   background-color: var(--cn-elevation-1);
   border-radius: 0 0 0 var(--cn-border-radius);
 }
+select {
+  container: inline-size;
+  position: relative;
+}
