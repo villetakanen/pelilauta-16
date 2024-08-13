@@ -7,7 +7,7 @@ export const THREADS_COLLECTION_NAME = 'stream';
 
 export const ThreadSchema = ContentEntrySchema.extend({
   title: z.string(),
-  topic: z.string().optional(),
+  channel: z.string().optional(),
   siteKey: z.string().optional(),
   youtubeId: z.string().optional(),
   topicKey: z.string().optional(), // key of the topic this thread belongs to, defaults to 'Yleinen'
@@ -39,6 +39,7 @@ export function parseThread(
     return ThreadSchema.parse({
       ...data,
       images,
+      channel: data.channel || data.topic || '',
       createdAt: toDate(data.createdAt),
       updatedAt: toDate(data.updatedAt),
       flowTime: toDate(data.flowTime).getTime(),
@@ -50,11 +51,11 @@ export function parseThread(
   }
 }
 
-export function createThread(): Thread {
+export function createThread(source?: Partial<Thread>): Thread {
   return {
-    key: '',
-    title: '',
-    topic: '',
+    key: source?.key || '',
+    title: source?.title || '',
+    channel: source?.channel || '',
     siteKey: '',
     youtubeId: '',
     topicKey: '',

@@ -178,3 +178,9 @@ main:has(.content-editor) {
 .toolbar label {
   margin-bottom: 0;
 }
+span.pill {
+  margin-right: var(--cn-grid);
+  background: var(--background-button);
+  padding: 0 var(--cn-grid);
+  border-radius: 0.5rem;
+}
