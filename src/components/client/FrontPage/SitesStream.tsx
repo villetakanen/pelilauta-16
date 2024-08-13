@@ -7,7 +7,7 @@ export const TopSitesSection: Component = () => {
   const sites = useStore($topSites);
 
   return (
-    <div class="flex flex-column">
+    <div class="flex flex-col">
       <For each={sites()}>
         {(site) => <>{site && <SiteCard {...site} />}</>}
       </For>

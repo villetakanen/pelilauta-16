@@ -60,7 +60,7 @@ export const ThreadStream: Component = () => {
   });
 
   return (
-    <div class="flex flex-column">
+    <div class="flex flex-col">
       {topThreads().map((thread) => (
         <ThreadCard
           elevation={!hasSeenEntry(thread.key, thread.flowTime) ? 2 : 1}
