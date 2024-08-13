@@ -11,12 +11,12 @@ export const PosterSection: Component<{ title: string; poster?: string }> = (
       style="position: relative;"
       class="elevation-1 flex p-1 page-poster-section"
     >
-      <div style="flex-grow: 1" />
+      <div class="grow" />
       {!poster() && (
         <h2 style="position: absolute; bottom: 8px; right: 8px">{title()}</h2>
       )}
       {poster() && <img src={poster()} alt={title()} class="poster" />}
-      <div style="flex-grow: 1" />
+      <div class="grow" />
     </section>
   );
 };

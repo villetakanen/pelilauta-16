@@ -41,7 +41,7 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
   return (
     <form class="content-editor" onSubmit={handleSubmit}>
       <section class="toolbar">
-        <label class="flex-grow">
+        <label class="grow">
           {t('entries:page.name')}
           <input
             type="text"

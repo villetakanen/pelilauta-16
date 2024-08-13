@@ -20,7 +20,7 @@ export const ThreadInfoCard: Component<{ thread: Thread; author: string }> = (
         <span>{t('threads:info.author')} </span>
         <ProfileLink uid={props.author} />
         <span> {t('threads:info.inTopic')} </span>
-        {thread().topic}
+        {thread().channel}
       </p>
       <p>
         {thread().replyCount || 0} {t('threads:info.replies')}

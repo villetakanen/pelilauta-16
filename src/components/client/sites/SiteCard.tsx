@@ -22,7 +22,7 @@ export const SiteCard: Component<Site> = (props) => {
       <div slot="actions" class="flex toolbar">
         {owns() && <cn-icon noun="avatar" />}
         {plays() && <cn-icon noun="adventurer" />}
-        <div style="flex-grow:1" />
+        <div class="grow" />
         <p>{toDisplayString(props.flowTime)}</p>
       </div>
     </cn-card>

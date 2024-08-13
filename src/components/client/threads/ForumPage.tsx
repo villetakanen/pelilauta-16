@@ -35,7 +35,7 @@ export const ForumPage: Component = () => {
                       <div>
                         <cn-icon noun={topic.icon} />
                       </div>
-                      <div class="flex-grow">
+                      <div class="grow">
                         <h4 class="downscaled mb-1">
                           <a href={`/channels/${topic.slug}/1`}>{topic.name}</a>
                         </h4>

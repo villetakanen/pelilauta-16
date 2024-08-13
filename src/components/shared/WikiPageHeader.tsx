@@ -12,7 +12,7 @@ export const WikiPageHeader: Component<{ page?: Page; site?: Site }> = (
         <a href={`/sites/${props.site?.key}`}>{props.site?.name}</a> /{' '}
         {props.page?.name}
       </p>
-      <div style="flex-grow: 1" />
+      <div class="grow" />
       <p class="downscaled p-0 m-0">{toDisplayString(props.page?.flowTime)}</p>
     </nav>
   );

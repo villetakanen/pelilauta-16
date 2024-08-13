@@ -55,7 +55,7 @@ export const ThreadEditorApp: Component<{
   return (
     <form class="content-editor" onsubmit={send}>
       <div class="toolbar">
-        <label class="flex-grow">
+        <label class="grow">
           {t('entries:thread.title')}
           <input
             type="text"

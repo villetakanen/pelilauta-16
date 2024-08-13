@@ -16,11 +16,11 @@ export const ThreadCard: Component<{
   const notify = createMemo(() => props.notify);
 
   return (
-    <div style="flex-grow: 0; flex-basis: auto; align-self: flex-start; width: 100%">
+    <div style="flex-basis: auto;">
       <cn-card
         notify={notify()}
         href={`/threads/${props.thread.key}`}
-        noun={topicToNoun(props.thread.topic)}
+        noun={topicToNoun(props.thread.channel)}
         title={props.thread.title}
         cover={props.thread.poster}
         elevation={props.elevation}
