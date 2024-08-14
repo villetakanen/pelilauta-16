@@ -175,3 +175,11 @@ span.pill {
   padding: 0 var(--cn-grid);
   border-radius: 0.5rem;
 }
+span.notification-pill {
+  position: absolute;
+  bottom: var(--cn-grid);
+  right: calc(-1 * var(--cn-grid));
+  color: var(--color-on-notify);
+  background: var(--color-notify);
+  box-shadow: var(--shadow-elevation-1);
+}
