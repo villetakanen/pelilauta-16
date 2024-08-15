@@ -183,3 +183,10 @@ span.notification-pill {
   background: var(--color-notify);
   box-shadow: var(--shadow-elevation-1);
 }
+.line-between + .line-between {
+  border-top: solid 1px var(--color-border);
+  padding-top: var(--cn-grid);
+}
+.no-shrink {
+  flex-shrink: 0;
+}

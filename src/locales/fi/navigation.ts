@@ -6,4 +6,5 @@ export const navigation: Locale = {
   docs: 'Info',
   threads: 'Foorumi',
   library: 'Pelit',
+  inbox: 'Inbox',
 };
