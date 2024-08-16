@@ -5,30 +5,31 @@
  */
 import { WithLoader } from '@client/shared/WithLoader';
 import { useStore } from '@nanostores/solid';
-import { type Component, onMount } from 'solid-js';
-import { $thread, load, loadingState } from 'src/stores/activeThreadStore';
+import { subscribeThread } from '@stores/ThreadsApp';
+import { type Component, createMemo } from 'solid-js';
 import { ThreadArticle } from './ThreadArticle';
 import { ThreadDiscussion } from './ThreadDiscussion';
 import { ThreadInfoCard } from './ThreadInfoCard';
 
 export const ThreadApp: Component<{ thread: string }> = (props) => {
-  const thread = useStore($thread);
-  const loading = useStore(loadingState);
-
-  onMount(() => {
-    load(props.thread);
-  });
+  const thread = useStore(subscribeThread(props.thread));
+  const loading = createMemo(() => !!thread()?.key);
 
   return (
     <>
       <div class="content-columns">
-        <WithLoader loading={loading() !== 'active'}>
-          <ThreadArticle thread={thread()} />
+        <WithLoader loading={loading()}>
+          {thread() && <ThreadArticle thread={thread() || undefined} />}
         </WithLoader>
-        <ThreadInfoCard thread={thread()} author={thread().owners[0]} />
+        {thread() && (
+          <ThreadInfoCard
+            thread={thread() || undefined}
+            author={thread()?.owners[0] || ''}
+          />
+        )}
       </div>
       <div class="content-columns">
-        <ThreadDiscussion />
+        <ThreadDiscussion threadKey={props.thread} />
       </div>
     </>
   );

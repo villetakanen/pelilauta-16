@@ -1,14 +1,14 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
+import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { type Component, For, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
-import { $replies } from 'src/stores/activeThreadStore/replies';
 import { $account } from 'src/stores/sessionStore';
 
-export const ThreadDiscussion: Component = () => {
-  const replies = useStore($replies);
+export const ThreadDiscussion: Component<{ threadKey: string }> = (props) => {
+  const discussion = useStore(subscribeToDiscussion(props.threadKey));
   const account = useStore($account);
   const uid = createMemo(() => account()?.uid);
 
@@ -20,7 +20,7 @@ export const ThreadDiscussion: Component = () => {
     <div class="column-l">
       <h3>{t('threads:discussion.title')}</h3>
       <div class="flex flex-col downscaled">
-        <For each={replies()} fallback={<p>No replies yet.</p>}>
+        <For each={discussion()} fallback={<p>No replies yet.</p>}>
           {(reply) => (
             <cn-bubble reply={fromCurrentUser(reply)}>
               <MarkdownSection content={`${reply.markdownContent}`} />

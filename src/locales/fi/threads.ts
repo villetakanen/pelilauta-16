@@ -17,4 +17,7 @@ export const threads: Locale = {
     page: 'Sivu',
     pageCount: 'sivua',
   },
+  discussion: {
+    title: 'Keskustelu',
+  },
 };
