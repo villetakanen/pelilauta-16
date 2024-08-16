@@ -9,7 +9,7 @@ export const ThreadArticle: Component<{ thread?: Thread }> = (props) => {
   return (
     <article class="column-l">
       <h1 class="downscaled">{thread()?.title}</h1>
-      {thread()?.images && <ImagesSection thread={thread()} />}
+      <ImagesSection thread={thread()} />
       <MarkdownSection content={`${thread()?.markdownContent}`} />
     </article>
   );

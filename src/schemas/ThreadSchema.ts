@@ -32,7 +32,7 @@ export function parseThread(
   data: Record<string, unknown>,
   key?: string,
 ): Thread {
-  let images = data.images || [];
+  let images = data.images || undefined;
   // Handle legacy image-data, these are of form { url: 'https://example.com/image.jpg' }
   if (
     data.images &&
