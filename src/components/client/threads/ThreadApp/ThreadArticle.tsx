@@ -1,6 +1,7 @@
 import type { Thread } from '@schemas/ThreadSchema';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
+import { ImagesSection } from './ImagesSection';
 
 export const ThreadArticle: Component<{ thread?: Thread }> = (props) => {
   const thread = createMemo(() => props.thread);
@@ -8,6 +9,7 @@ export const ThreadArticle: Component<{ thread?: Thread }> = (props) => {
   return (
     <article class="column-l">
       <h1 class="downscaled">{thread()?.title}</h1>
+      {thread()?.images && <ImagesSection thread={thread()} />}
       <MarkdownSection content={`${thread()?.markdownContent}`} />
     </article>
   );

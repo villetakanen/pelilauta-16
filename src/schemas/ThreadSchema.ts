@@ -12,7 +12,14 @@ export const ThreadSchema = ContentEntrySchema.extend({
   youtubeId: z.string().optional(),
   topicKey: z.string().optional(), // key of the topic this thread belongs to, defaults to 'Yleinen'
   poster: z.string().optional(), // URL for the poster image
-  images: z.array(z.string()).optional(), // URLs for the images shared as attachments
+  images: z
+    .array(
+      z.object({
+        url: z.string(),
+        alt: z.string(),
+      }),
+    )
+    .optional(), // URLs for the images shared as attachments
   replyCount: z.number().optional(),
   lovedCount: z.number().optional(),
   createdAt: z.any().optional(),
@@ -30,9 +37,9 @@ export function parseThread(
   if (
     data.images &&
     Array.isArray(data.images) &&
-    typeof data.images[0] === 'object'
+    typeof data.images[0] === 'string'
   ) {
-    images = data.images.map((image: Record<string, unknown>) => image.url);
+    images = data.images.map((url: string) => ({ url, alt: `Image [${url}]` }));
   }
 
   try {

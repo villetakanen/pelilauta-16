@@ -13,7 +13,7 @@ import { ThreadInfoCard } from './ThreadInfoCard';
 
 export const ThreadApp: Component<{ thread: string }> = (props) => {
   const thread = useStore(subscribeThread(props.thread));
-  const loading = createMemo(() => !!thread()?.key);
+  const loading = createMemo(() => !thread()?.key);
 
   return (
     <>
