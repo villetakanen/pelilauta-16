@@ -13,12 +13,16 @@ export const InboxRailButton: Component = () => {
       .length;
   });
 
+  const showPill = createMemo(() => unreadNotifications() > 0);
+
   return (
     <>
       {account()?.uid && (
         <a href="/inbox" style="display:block; position:relative">
           <cn-navigation-icon noun="send" label={t('navigation:inbox')} />
-          <span class="pill notification-pill">{unreadNotifications()}</span>
+          {showPill() && (
+            <span class="pill notification-pill">{unreadNotifications()}</span>
+          )}
         </a>
       )}
     </>

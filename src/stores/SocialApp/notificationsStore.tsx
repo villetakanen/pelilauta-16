@@ -6,8 +6,15 @@ import {
 } from '@schemas/NotificationSchema';
 import { $account } from '@stores/sessionStore';
 import { logDebug, logWarn } from '@utils/logHelpers';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { computed, onMount } from 'nanostores';
+import {
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
+import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 
 export const $notifications = persistentAtom<Notification[]>(
@@ -53,6 +60,7 @@ async function subscribeToNotifications(accountUid: string) {
         $notifications.set(
           $notifications.get().filter((n) => n.key !== change.doc.id),
         );
+        logDebug('Notification removed', change.doc.id);
       } else {
         pathcNotification(change.doc.id, change.doc.data());
       }
@@ -61,7 +69,7 @@ async function subscribeToNotifications(accountUid: string) {
 }
 
 function pathcNotification(key: string, data: Record<string, unknown>) {
-  const notifications = $notifications.get();
+  const notifications = [...$notifications.get()];
   const index = notifications.findIndex((n) => n.key === key);
   if (index > -1) {
     notifications[index] = ParseNotification(data, key);
@@ -69,4 +77,16 @@ function pathcNotification(key: string, data: Record<string, unknown>) {
     notifications.push(ParseNotification(data, key));
   }
   $notifications.set(notifications);
+}
+
+export async function updateNotification(
+  data: Partial<Notification>,
+  key?: string,
+) {
+  const entryKey = key || data.key || '';
+  if (!entryKey) {
+    logWarn('No key provided for notification update, aborting');
+    return;
+  }
+  updateDoc(doc(db, NOTIFICATION_FIRESTORE_COLLECTION, entryKey), data);
 }
