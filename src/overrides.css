@@ -190,3 +190,13 @@ span.notification-pill {
 .no-shrink {
   flex-shrink: 0;
 }
+.no-grow {
+  flex-grow: 0;
+}
+.toolbar p {
+  margin: 0;
+  align-self: center;
+}
+cn-bubble {
+  padding: var(--cn-gap);
+}

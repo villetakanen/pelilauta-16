@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/solid';
 import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
-import { type Component, For, createMemo } from 'solid-js';
-import { ReplyBubble } from './ReplyBublle';
+import { type Component, For } from 'solid-js';
+import { ReplyBubble } from './ReplyBubble';
 
 export const ThreadDiscussion: Component<{ threadKey: string }> = (props) => {
   const discussion = useStore(subscribeToDiscussion(props.threadKey));
