@@ -1,4 +1,5 @@
 import { logError } from '@utils/logHelpers';
+import type { R } from 'vitest/dist/reporters-yx5ZTtEV.js';
 import { z } from 'zod';
 import { ContentEntrySchema } from './ContentEntry';
 
@@ -23,12 +24,13 @@ export const ReplySchema = ContentEntrySchema.extend({
   quoteref: z.string().optional(), // The key of the reply that this reply is quoting.
   threadKey: z.string(), // The key of the thread that this reply is in.
   lovesCount: z.number().default(0), // The number of loves this reply has received.
+  lovers: z.array(z.string()).default([]), // The UIDs of the users who have loved this reply.
 });
 
 export type Reply = z.infer<typeof ReplySchema>;
 
 export function parseReply(
-  data: Record<string, unknown>,
+  data: Partial<Reply>,
   key: string,
   threadKey: string,
 ): Reply {

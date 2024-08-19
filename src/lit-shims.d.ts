@@ -22,7 +22,7 @@ declare module 'solid-js' {
       'cn-dialog': HTMLAttributes & { open: boolean; close: () => void };
       'cn-navigation-icon': HTMLAttributes & { noun: string; label: string };
       'cn-avatar-button': HTMLAttributes & { src: string };
-      'cn-avatar': HTMLAttributes & { nick: string };
+      'cn-avatar': HTMLAttributes & { nick: string; src: string };
       'cn-bubble': HTMLAttributes;
       'cn-reaction-button': CnReactionButton;
       'cn-loader': HTMLAttributes;

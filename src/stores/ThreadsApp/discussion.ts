@@ -6,7 +6,15 @@ import {
 } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc,
+} from 'firebase/firestore';
 import { type WritableAtom, atom } from 'nanostores';
 import { db } from 'src/firebase/client';
 
@@ -128,4 +136,20 @@ export function subscribeToDiscussionFirestore(
       cacheDiscussion(threadKey, [...currentDiscussion]);
     }
   });
+}
+
+export async function updateReply(
+  data: Partial<Reply>,
+  key: string,
+  threadKey: string,
+) {
+  const replyRef = doc(
+    db,
+    THREADS_COLLECTION_NAME,
+    threadKey,
+    REPLIES_COLLECTION,
+    key,
+  );
+  const payload = toFirestoreEntry(data, { silent: true });
+  await updateDoc(replyRef, payload);
 }

@@ -3,6 +3,7 @@ import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
 import { $account } from '@stores/sessionStore';
+import { loveReply, unloveReply } from '@stores/ThreadsApp/reactions';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
@@ -11,6 +12,23 @@ export const ReplyBubble: Component<{ reply: Reply }> = (props) => {
   const fromCurrentUser = createMemo(() =>
     props.reply.owners.includes(account()?.uid),
   );
+
+  const loves = createMemo(
+    () => props.reply.lovers?.includes(account()?.uid) || false,
+  );
+
+  function handleLoveToggle(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    const loves = props.reply.lovers || [];
+    const index = loves.indexOf(account()?.uid);
+    if (index > -1) {
+      unloveReply(account().uid, props.reply.key, props.reply.threadKey);
+    } else {
+      loveReply(account().uid, props.reply.key, props.reply.threadKey);
+    }
+  }
+
 
   return (
     <section class="flex-no-wrap" style="display:flex">
@@ -21,6 +39,9 @@ export const ReplyBubble: Component<{ reply: Reply }> = (props) => {
             <ProfileLink uid={props.reply.owners[0]} />
           </p>
           <cn-reaction-button
+            onClick={handleLoveToggle}
+            onKeyUp={(e:KeyboardEvent) => e.key === 'Enter' && handleLoveToggle(e)}
+            checked={loves()}
             noun="love"
             small
             count={props.reply.lovesCount}
