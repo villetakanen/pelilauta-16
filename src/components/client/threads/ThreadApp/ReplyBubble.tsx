@@ -2,8 +2,8 @@ import { ProfileAvatar } from '@client/shared/ProfileAvatar';
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
-import { $account } from '@stores/sessionStore';
 import { loveReply, unloveReply } from '@stores/ThreadsApp/reactions';
+import { $account } from '@stores/sessionStore';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
@@ -29,7 +29,6 @@ export const ReplyBubble: Component<{ reply: Reply }> = (props) => {
     }
   }
 
-
   return (
     <section class="flex-no-wrap" style="display:flex">
       {!fromCurrentUser() && <ProfileAvatar uid={props.reply.owners[0]} />}
@@ -40,7 +39,9 @@ export const ReplyBubble: Component<{ reply: Reply }> = (props) => {
           </p>
           <cn-reaction-button
             onClick={handleLoveToggle}
-            onKeyUp={(e:KeyboardEvent) => e.key === 'Enter' && handleLoveToggle(e)}
+            onKeyUp={(e: KeyboardEvent) =>
+              e.key === 'Enter' && handleLoveToggle(e)
+            }
             checked={loves()}
             noun="love"
             small
