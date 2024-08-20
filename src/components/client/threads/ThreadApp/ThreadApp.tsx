@@ -29,7 +29,7 @@ export const ThreadApp: Component<{ thread: string }> = (props) => {
         )}
       </div>
       <div class="content-columns">
-        <ThreadDiscussion threadKey={props.thread} />
+        <ThreadDiscussion thread={thread() || undefined} />
       </div>
     </>
   );

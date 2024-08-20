@@ -1,9 +1,11 @@
 import { useStore } from '@nanostores/solid';
+import type { Thread } from '@schemas/ThreadSchema';
 import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, For, createSignal } from 'solid-js';
 import { ReplyBubble } from './ReplyBubble';
+import { ReplyForm } from './ReplyForm';
 
 declare module 'solid-js' {
   namespace JSX {
@@ -16,10 +18,11 @@ declare module 'solid-js' {
   }
 }
 
-export const ThreadDiscussion: Component<{ threadKey: string }> = (props) => {
-  const discussion = useStore(subscribeToDiscussion(props.threadKey));
+export const ThreadDiscussion: Component<{ thread?: Thread }> = (props) => {
+  const discussionRef = subscribeToDiscussion(props.thread?.key || '');
+  const discussion = useStore(discussionRef);
 
-  const [quoteRef, setQuoteRef] = createSignal<string | null>(null);
+  const [quoteRef, setQuoteRef] = createSignal<string | undefined>(undefined);
 
   function handleQuote(e: Event) {
     logDebug('Quote', 'handleQuote 2', e);
@@ -39,8 +42,12 @@ export const ThreadDiscussion: Component<{ threadKey: string }> = (props) => {
           {(reply) => <ReplyBubble reply={reply} onQuote={handleQuote} />}
         </For>
       </div>
-      <p>{quoteRef()}</p>
-      <textarea class="textarea" placeholder="Reply to this thread" />
+      <ReplyForm
+        quoteRef={quoteRef()}
+        thread={props.thread}
+        discussion={discussionRef}
+        onQuote={handleQuote}
+      />
     </div>
   );
 };
