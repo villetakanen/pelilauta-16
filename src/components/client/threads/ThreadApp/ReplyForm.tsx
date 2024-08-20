@@ -1,13 +1,13 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
-import type { Reply } from '@schemas/ReplySchema';
+import { type Reply, createReply } from '@schemas/ReplySchema';
 import type { Thread } from '@schemas/ThreadSchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
-import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
+import { addReply } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Atom, atom } from 'nanostores';
-import { type Component, createMemo, createSignal } from 'solid-js';
+import { type Component, createSignal } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
 interface Props {
@@ -30,6 +30,17 @@ export const ReplyForm: Component<Props> = (props) => {
     e.stopPropagation();
 
     logDebug('ReplyForm', 'send', e);
+
+    const reply = createReply({
+      markdownContent: message() || '',
+      owners: [props.thread?.owners[0] || ''],
+      threadKey: props.thread?.key || '',
+    });
+
+    logDebug(await addReply(reply));
+
+    setMessage('');
+    dispatch('quote', '');
   }
 
   function resetQuote(e: Event) {

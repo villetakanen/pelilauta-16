@@ -46,20 +46,27 @@ export function parseReply(
   }
 }
 
-export function createReply() {
-  return {
-    key: '',
-    flowTime: 0,
-    owners: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    public: true,
-    sticky: false,
-    tags: [],
-    markdownContent: '',
-    htmlContent: '',
-    quoteref: '',
-    threadKey: '',
-    lovesCount: 0,
-  };
+export function createReply(r?: Partial<Reply>): Reply {
+  return parseReply(
+    {
+      key: r?.key || '',
+      flowTime: r?.flowTime || 0,
+      owners: r?.owners || [],
+      createdAt: r?.createdAt || new Date(),
+      updatedAt: r?.updatedAt || new Date(),
+      // True, unless explicitly set to false.
+      public: r?.public !== false,
+      // False, unless explicitly set to true.
+      sticky: r?.sticky === true,
+      tags: r?.tags || [],
+      markdownContent: r?.markdownContent || '',
+      // htmlContent is a legacy field that is no longer used.
+      htmlContent: '',
+      quoteref: r?.quoteref || '',
+      threadKey: r?.threadKey || '',
+      lovesCount: r?.lovesCount || 0,
+    },
+    r?.key || '',
+    r?.threadKey || '',
+  );
 }

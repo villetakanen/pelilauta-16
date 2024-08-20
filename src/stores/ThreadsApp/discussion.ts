@@ -8,6 +8,7 @@ import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import {
+  addDoc,
   collection,
   doc,
   onSnapshot,
@@ -152,4 +153,20 @@ export async function updateReply(
   );
   const payload = toFirestoreEntry(data, { silent: true });
   await updateDoc(replyRef, payload);
+}
+
+export async function addReply(reply: Reply) {
+  const payload = toFirestoreEntry(reply, { silent: true });
+  const replyDoc = await addDoc(
+    collection(
+      db,
+      THREADS_COLLECTION_NAME,
+      reply.threadKey,
+      REPLIES_COLLECTION,
+    ),
+    payload,
+  );
+
+  // The discussion store will be updated by the firestore listener
+  return replyDoc;
 }
