@@ -2,12 +2,21 @@ import { ProfileAvatar } from '@client/shared/ProfileAvatar';
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
+import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { loveReply, unloveReply } from '@stores/ThreadsApp/reactions';
 import { $account } from '@stores/sessionStore';
+import { logDebug } from '@utils/logHelpers';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
-export const ReplyBubble: Component<{ reply: Reply }> = (props) => {
+interface Props {
+  onQuote: (evt: CustomEvent<string>) => void;
+  reply: Reply;
+}
+
+export const ReplyBubble: Component<Props> = (props) => {
+  const dispatch = createEventDispatcher(props);
+
   const account = useStore($account);
   const fromCurrentUser = createMemo(() =>
     props.reply.owners.includes(account()?.uid),
@@ -23,10 +32,15 @@ export const ReplyBubble: Component<{ reply: Reply }> = (props) => {
     const loves = props.reply.lovers || [];
     const index = loves.indexOf(account()?.uid);
     if (index > -1) {
-      unloveReply(account().uid, props.reply.key, props.reply.threadKey);
+      unloveReply(account().uid, props.reply.threadKey, props.reply.key);
     } else {
-      loveReply(account().uid, props.reply.key, props.reply.threadKey);
+      loveReply(account().uid, props.reply.threadKey, props.reply.key);
     }
+  }
+
+  function handleQuote(e: Event) {
+    logDebug('ReplyBubble', 'handleQuote', e);
+    dispatch('quote', props.reply.key);
   }
 
   return (
@@ -45,9 +59,14 @@ export const ReplyBubble: Component<{ reply: Reply }> = (props) => {
             checked={loves()}
             noun="love"
             small
+            disabled={!account()?.uid || fromCurrentUser()}
             count={props.reply.lovesCount}
           />
-          <button type="button">
+          <button
+            type="button"
+            onClick={handleQuote}
+            onKeyUp={(e: KeyboardEvent) => e.key === 'Enter' && handleQuote(e)}
+          >
             <cn-icon xsmall noun="send" />
           </button>
         </div>

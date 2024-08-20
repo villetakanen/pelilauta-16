@@ -1,6 +1,7 @@
 import type { Notification } from '@schemas/NotificationSchema';
 import { parseReply } from '@schemas/ReplySchema';
 import { addReaction } from '@stores/SocialApp/reactionStore';
+import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
@@ -35,7 +36,11 @@ export async function loveReply(
     );
   }
 
-  const reply = parseReply(replyDoc.data() || {}, replyKey, threadKey);
+  const reply = parseReply(
+    toClientEntry(replyDoc.data() || {}),
+    threadKey,
+    replyKey,
+  );
 
   const lovesArray: Array<string> = reply.lovers || [];
 
@@ -97,7 +102,11 @@ export async function unloveReply(
     );
   }
 
-  const reply = parseReply(replyDoc.data() || {}, replyid, threadid);
+  const reply = parseReply(
+    toClientEntry(replyDoc.data() || {}),
+    replyid,
+    threadid,
+  );
 
   const lovesArray: Array<string> = reply.lovers || [];
 
