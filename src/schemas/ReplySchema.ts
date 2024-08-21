@@ -1,5 +1,4 @@
 import { logError } from '@utils/logHelpers';
-import type { R } from 'vitest/dist/reporters-yx5ZTtEV.js';
 import { z } from 'zod';
 import { ContentEntrySchema } from './ContentEntry';
 
