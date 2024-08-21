@@ -19,5 +19,6 @@ export const threads: Locale = {
   },
   discussion: {
     title: 'Keskustelu',
+    reply: 'Vastaa',
   },
 };

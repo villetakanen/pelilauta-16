@@ -67,7 +67,7 @@ export const ReplyBubble: Component<Props> = (props) => {
             onClick={handleQuote}
             onKeyUp={(e: KeyboardEvent) => e.key === 'Enter' && handleQuote(e)}
           >
-            <cn-icon xsmall noun="send" />
+            <cn-icon xsmall noun="quote" />
           </button>
         </div>
         <MarkdownSection content={`${props.reply.markdownContent}`} />

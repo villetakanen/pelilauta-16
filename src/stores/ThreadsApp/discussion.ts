@@ -156,7 +156,7 @@ export async function updateReply(
 }
 
 export async function addReply(reply: Reply) {
-  const payload = toFirestoreEntry(reply, { silent: true });
+  const payload = toFirestoreEntry(reply, { silent: false });
   const replyDoc = await addDoc(
     collection(
       db,
