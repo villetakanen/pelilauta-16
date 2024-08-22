@@ -13,6 +13,7 @@ export const actions: Locale = {
   save: 'Tallenna',
   readMore: 'Lue lisää',
   submit: 'Lähetä',
+  title: 'Toiminnot',
   logout: 'Kirjaudu ulos',
   deregister: 'Poista tili pysyvästi',
   confirm: 'Jatka',

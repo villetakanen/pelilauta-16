@@ -28,16 +28,18 @@ export const ThreadInfoCard: Component<{ thread?: Thread; author: string }> = (
         <span> {t('threads:info.inTopic')} </span>
         {thread()?.channel}
       </p>
-      <p>
-        {thread()?.replyCount || 0} {t('threads:info.replies')}
-      </p>
 
       {showEditTools() && (
-        <section>
+        <section class="flex flex-col">
+          <h4>{t('actions:title')}</h4>
           <button type="button">{t('actions:edit')}</button>
           <button type="button">{t('actions:delete')}</button>
         </section>
       )}
+
+      <p>
+        {thread()?.replyCount || 0} {t('threads:info.replies')}
+      </p>
 
       <div class="toolbar justify-space-between" slot="actions">
         <p>{toDisplayString(thread()?.flowTime)}</p>

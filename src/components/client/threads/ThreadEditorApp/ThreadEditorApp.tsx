@@ -33,6 +33,8 @@ export const ThreadEditorApp: Component<{
     const data = {
       ...Object.fromEntries(formData.entries()),
       tags: tags(),
+      topic: topic(),
+      markdownContent: markdownContent(),
       owners: [account().uid],
     };
 
@@ -45,11 +47,11 @@ export const ThreadEditorApp: Component<{
       key = (await addDoc(collection(db, 'stream'), thread)).id;
     } else {
       console.log('Updating thread', props.threadKey, data);
-      updateThread(props.threadKey, data);
+      await updateThread(props.threadKey, data);
     }
 
     // Redirect to the thread
-    window.location.href = `/thread/${key}`;
+    window.location.href = `/threads/${key}`;
   }
 
   return (
@@ -58,6 +60,7 @@ export const ThreadEditorApp: Component<{
         <label class="grow">
           {t('entries:thread.title')}
           <input
+            name="title"
             type="text"
             value={title()}
             onInput={(e) => setTitle(e.currentTarget.value)}
@@ -67,6 +70,7 @@ export const ThreadEditorApp: Component<{
         <label>
           {t('entries:thread.channel')}
           <select
+            name="channel"
             value={topic()}
             onChange={(e) => setTopic(e.currentTarget.value)}
           >
@@ -81,9 +85,11 @@ export const ThreadEditorApp: Component<{
       </div>
 
       <textarea
-        value={markdownContent()}
+        name="markdownContent"
+        //value={markdownContent()}
         onInput={(e) => setMarkdownContent(e.currentTarget.value)}
         placeholder={t('entries:thread.placeholders.content')}
+        value={account().uid}
       />
 
       <p>

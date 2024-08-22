@@ -4,10 +4,13 @@ import {
   type Topic,
   topicSchema,
 } from '@schemas/MetaTopicsSchema';
-import { logWarn } from '@utils/logHelpers';
+import { logError, logWarn } from '@utils/logHelpers';
+import { toDate } from '@utils/schemaHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
+import type { en } from 'src/locales/en';
+import { ZodError } from 'zod';
 
 export const $topics = persistentAtom<Topic[]>('thread-topics', [], {
   encode: JSON.stringify,
@@ -37,15 +40,26 @@ async function fetchTopicsFromDB() {
   if (docSnap.exists()) {
     const data = docSnap.data();
     if (data) {
-      const topics = MetaTopicsSchema.parse(data.topics);
-      // logDebug('fetchTopicsFromDB', 'Fetched topics from db', topics);
-      // force category 'pelilauta' if empty
-      for (const topic of topics) {
-        if (!topic.category) {
-          topic.category = 'Pelilauta';
+      try {
+        const topics = MetaTopicsSchema.parse(
+          data.topics.map((entry: Partial<Topic>) => ({
+            ...entry,
+            flowTime: toDate(entry.flowTime).getTime(),
+          })),
+        );
+        // logDebug('fetchTopicsFromDB', 'Fetched topics from db', topics);
+        // force category 'pelilauta' if empty
+        for (const topic of topics) {
+          if (!topic.category) {
+            topic.category = 'Pelilauta';
+          }
+        }
+        $topics.set(topics);
+      } catch (err) {
+        if (err instanceof ZodError) {
+          logError('fetchTopicsFromDB', 'ZodError', err.errors);
         }
       }
-      $topics.set(topics);
     } else {
       logWarn('fetchTopicsFromDB', 'No topics found in db');
       $topics.set([]);
