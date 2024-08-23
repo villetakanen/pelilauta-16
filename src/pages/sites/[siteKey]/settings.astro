@@ -1,10 +1,10 @@
 ---
-import { SiteSettingsApp } from '@client/sites/SiteSettingsApp/SiteSettingsApp';
-import Page from 'src/layouts/Page.astro';
+import { SiteSettingsApp } from '@client/SitesApp/SiteSettingsApp';
+import ModalPage from '@layouts/ModalPage.astro';
 
 const { siteKey } = Astro.params;
 ---
 
-<Page>
+<ModalPage>
   { siteKey && <SiteSettingsApp site={siteKey} client:only="solid-js"/> }
-</Page>
+</ModalPage>

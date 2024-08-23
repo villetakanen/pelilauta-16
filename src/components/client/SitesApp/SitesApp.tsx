@@ -4,7 +4,7 @@ import { useStore } from '@nanostores/solid';
 import { $active, $site, load } from '@stores/SitesApp';
 import { type Component, createMemo, onMount } from 'solid-js';
 
-export const SiteApp: Component<{ siteKey: string }> = (props) => {
+export const SitesApp: Component<{ siteKey: string }> = (props) => {
   const site = useStore($site);
   const active = useStore($active);
 
