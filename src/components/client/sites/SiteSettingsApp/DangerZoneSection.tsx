@@ -1,9 +1,9 @@
 import { useStore } from '@nanostores/solid';
+import { $site } from '@stores/SitesApp';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createSignal } from 'solid-js';
-import { $site } from '@stores/SitesApp';
 import { deleteSite } from 'src/stores/sitesStore';
 
 export const DangerZoneSection: Component = () => {

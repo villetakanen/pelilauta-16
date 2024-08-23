@@ -1,7 +1,7 @@
 import { PageBackgroundPoster } from '@client/PageBackgroundPoster';
 import { useStore } from '@nanostores/solid';
-import { type Component, createEffect } from 'solid-js';
 import { $site, load } from '@stores/SitesApp';
+import { type Component, createEffect } from 'solid-js';
 import { SiteCard } from '../SiteCard';
 import { DangerZoneSection } from './DangerZoneSection';
 import { SiteMetaDataSection } from './SiteMetaDataSection';

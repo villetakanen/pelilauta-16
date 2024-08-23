@@ -1,9 +1,9 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import { useStore } from '@nanostores/solid';
 import { systemToNounMapping } from '@schemas/nouns';
+import { $site, updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
-import { $site, updateSite } from '@stores/SitesApp';
 import { SiteHomePageSelect } from './SiteHomePageSelect';
 import { SiteSortOrderSelect } from './SiteSortOrderSelect';
 

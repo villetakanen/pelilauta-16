@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/solid';
 import { SITE_SORT_ORDER_VALUES } from '@schemas/SiteSchema';
+import { $site, updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
-import { $site, updateSite } from '@stores/SitesApp';
 
 export const SiteSortOrderSelect: Component = () => {
   const site = useStore($site);

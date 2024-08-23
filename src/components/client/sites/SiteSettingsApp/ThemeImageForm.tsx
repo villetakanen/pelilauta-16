@@ -1,10 +1,10 @@
 import { useStore } from '@nanostores/solid';
+import { $site, updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { type Component, createMemo, createSignal } from 'solid-js';
 import { storage } from 'src/firebase/client';
-import { $site, updateSite } from '@stores/SitesApp';
 
 export const ThemeImageForm: Component<{ imageFieldName: string }> = (
   props,

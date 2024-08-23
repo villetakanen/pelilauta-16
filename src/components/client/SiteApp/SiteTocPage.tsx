@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
+import { $site } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { $site } from '@stores/SitesApp';
 import { SiteTocMigrateButton } from './SiteTocMigrateSection';
 import { SiteTocSection } from './SiteTocSection';
 

@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/solid';
 import type { Page } from '@schemas/PageSchema';
+import { $pages, updatePage } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
 import { type Component, createMemo, createSignal } from 'solid-js';
-import { $pages, updatePage } from '@stores/SitesApp/pagesStore';
 
 export type PageEditorProps = {
   siteKey: string;
