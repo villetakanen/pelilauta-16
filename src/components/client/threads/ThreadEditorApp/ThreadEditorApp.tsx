@@ -129,13 +129,6 @@ export const ThreadEditorApp: Component<{
           <For each={tags()}>{(tag) => <span class="pill">{tag}</span>}</For>
         </p>
 
-        <div class="debug">
-          title: ({title()}) <br />
-          topic: ({topic()})<br />
-          markdownContent: ({markdownContent()})<br />
-          tags: ({tags()})<br />
-        </div>
-
         <div class="toolbar">
           <button type="reset" class="text">
             {t('actions:cancel')}
