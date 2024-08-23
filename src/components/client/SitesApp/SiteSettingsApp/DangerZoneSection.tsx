@@ -23,7 +23,7 @@ export const DangerZoneSection: Component = () => {
 
     pushSessionSnack('snacks:siteDeleted');
 
-    // window.location.href = '/';
+    window.location.href = '/library';
   }
 
   return (
