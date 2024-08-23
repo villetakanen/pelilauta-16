@@ -3,7 +3,7 @@ import { useStore } from '@nanostores/solid';
 import { type Component, createEffect, createMemo } from 'solid-js';
 import { PosterSection } from 'src/components/shared/PosterSection';
 
-import { $site, load } from 'src/stores/SiteApp';
+import { $site, load } from '@stores/SitesApp';
 
 export const SitePoster: Component<{ site: string }> = (props) => {
   const site = useStore($site);

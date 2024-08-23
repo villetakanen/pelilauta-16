@@ -4,12 +4,12 @@
 
 import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
-import { addPage } from '@stores/SiteApp/pagesStore';
+import { addPage } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { type Component, onMount } from 'solid-js';
-import { $site, load } from 'src/stores/SiteApp';
+import { $site, load } from '@stores/SitesApp';
 
 export const CreatePageForm: Component<{ siteKey: string }> = (props) => {
   const site = useStore($site);

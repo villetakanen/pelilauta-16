@@ -10,7 +10,7 @@ import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { systemToNoun } from '@utils/schemaHelpers';
 import { type Component, For, createEffect } from 'solid-js';
-import { $site, load } from 'src/stores/SiteApp';
+import { $site, load } from '@stores/SitesApp';
 
 type SiteTrayAction = {
   label: string;

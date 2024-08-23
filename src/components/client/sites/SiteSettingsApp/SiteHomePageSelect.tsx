@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { type Component, For, createMemo } from 'solid-js';
-import { updateSite } from 'src/stores/SiteApp';
-import { $pages } from 'src/stores/SiteApp/pagesStore';
+import { updateSite } from '@stores/SitesApp';
+import { $pages } from '@stores/SitesApp/pagesStore';
 
 export const SiteHomePageSelect: Component = () => {
   const pages = useStore($pages);

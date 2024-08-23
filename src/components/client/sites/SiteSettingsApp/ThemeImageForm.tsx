@@ -4,7 +4,7 @@ import { logError } from '@utils/logHelpers';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { type Component, createMemo, createSignal } from 'solid-js';
 import { storage } from 'src/firebase/client';
-import { $site, updateSite } from 'src/stores/SiteApp';
+import { $site, updateSite } from '@stores/SitesApp';
 
 export const ThemeImageForm: Component<{ imageFieldName: string }> = (
   props,

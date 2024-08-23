@@ -1,6 +1,6 @@
 // import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
-import { recreatePageRefs } from '@stores/SiteApp/recreatePageRefs';
+import { recreatePageRefs } from '@stores/SitesApp/recreatePageRefs';
 // import { $account } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';

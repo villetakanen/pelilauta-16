@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import { type Component, For, createMemo } from 'solid-js';
-import { $site } from 'src/stores/SiteApp';
+import { $site } from '@stores/SitesApp';
 
 export const SiteTocSection: Component = () => {
   const site = useStore($site);

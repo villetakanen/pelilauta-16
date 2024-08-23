@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/solid';
-import { $owners } from '@stores/SiteApp';
-import { updatePage } from '@stores/SiteApp/pagesStore';
+import { $owners } from '@stores/SitesApp';
+import { updatePage } from '@stores/SitesApp/pagesStore';
 import { $account } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
