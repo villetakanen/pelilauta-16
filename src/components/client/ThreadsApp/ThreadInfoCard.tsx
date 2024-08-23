@@ -33,7 +33,12 @@ export const ThreadInfoCard: Component<{ thread?: Thread; author: string }> = (
         <section class="flex flex-col">
           <h4>{t('actions:title')}</h4>
           <button type="button">{t('actions:edit')}</button>
-          <button type="button">{t('actions:delete')}</button>
+          <a
+            href={`/threads/${thread()?.key}/confirmDelete`}
+            class="button text-center"
+          >
+            {t('actions:delete')}
+          </a>
         </section>
       )}
 

@@ -21,4 +21,9 @@ export const threads: Locale = {
     title: 'Keskustelu',
     reply: 'Vastaa',
   },
+  confirmDelete: {
+    title: 'Vahvista poisto',
+    message:
+      'Oletko varma, että haluat poistaa tämän keskustelun pysyvästi. Keskustelua ei voi palauttaa.',
+  },
 };

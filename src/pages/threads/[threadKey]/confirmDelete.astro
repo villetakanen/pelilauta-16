@@ -1,0 +1,13 @@
+---
+import { ConfirmThreadDeleteApp } from '@client/ThreadsApp/ConfirmThreadDeleteApp';
+import ModalPage from '@layouts/ModalPage.astro';
+
+const { threadKey } = Astro.params;
+
+if (!threadKey) {
+  throw new Error('threadKey is required');
+}
+---
+<ModalPage>
+  <ConfirmThreadDeleteApp threadKey={threadKey} client:only="solid-js"/>
+</ModalPage>

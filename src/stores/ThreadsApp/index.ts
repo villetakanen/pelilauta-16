@@ -88,3 +88,7 @@ export function subscribeThread(key: string): Atom<Thread | null> {
   );
   return threadStore;
 }
+
+export function removeThreadFromCache(key: string) {
+  $threads.set($threads.get().filter((t) => t.key !== key));
+}

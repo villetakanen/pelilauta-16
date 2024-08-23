@@ -7,6 +7,9 @@ export const actions: Locale = {
     page: 'Luo sivu',
     thread: 'Uusi keskustelu',
   },
+  confirm: {
+    delete: 'Vahvista poisto',
+  },
   delete: 'Poista',
   edit: 'Muokkaa',
   send: 'Lähetä',
@@ -16,7 +19,6 @@ export const actions: Locale = {
   title: 'Toiminnot',
   logout: 'Kirjaudu ulos',
   deregister: 'Poista tili pysyvästi',
-  confirm: 'Jatka',
   learnMore: 'Lue lisää',
   reset: 'Palauta',
   upload: 'Lataa',
