@@ -6,6 +6,7 @@ export const actions: Locale = {
   create: {
     page: 'Luo sivu',
     thread: 'Uusi keskustelu',
+    site: 'Uusi sivusto',
   },
   confirm: {
     delete: 'Vahvista poisto',

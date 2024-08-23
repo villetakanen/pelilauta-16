@@ -9,5 +9,5 @@ import Page from 'src/layouts/Page.astro';
 <Page title={t('library:title')}>
   <!--LibraryTray slot="app-tray" -->
   <SitesList client:only="solid-js" />
-  <SiteFabs slot="app-fabs" client:only="solid-js"/>
+  <SiteFabs slot="fab-tray" client:only="solid-js"/>
 </Page>
