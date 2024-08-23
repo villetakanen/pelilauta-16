@@ -9,7 +9,6 @@ import { toDate } from '@utils/schemaHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
-import type { en } from 'src/locales/en';
 import { ZodError } from 'zod';
 
 export const $topics = persistentAtom<Topic[]>('thread-topics', [], {

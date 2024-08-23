@@ -6,7 +6,7 @@ import {
 } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logWarn } from '@utils/logHelpers';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { type Atom, atom } from 'nanostores';
 import { db } from 'src/firebase/client';
 
@@ -91,4 +91,17 @@ export function subscribeThread(key: string): Atom<Thread | null> {
 
 export function removeThreadFromCache(key: string) {
   $threads.set($threads.get().filter((t) => t.key !== key));
+}
+
+export async function fetchThread(key: string) {
+  const docRef = doc(db, THREADS_COLLECTION_NAME, key);
+  const snapshot = await getDoc(docRef);
+  if (snapshot.exists()) {
+    const thread = parseThread(toClientEntry(snapshot.data()), snapshot.id);
+    cacheThread(thread);
+    return thread;
+  }
+  // This is reduntant, but acts as a reminder we
+  // are returning undefined if the thread is not found
+  return undefined;
 }
