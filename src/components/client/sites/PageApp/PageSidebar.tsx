@@ -1,4 +1,4 @@
-import { SiteTocSection } from '@client/SiteApp/SiteTocSection';
+import { SiteTocSection } from '@client/SitesApp/SiteTocSection';
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';

@@ -18,10 +18,12 @@ import {
 import { db } from 'src/firebase/client';
 import { $account } from 'src/stores/sessionStore';
 import { createSite } from 'src/stores/sitesStore';
+import { GameSystemSelect } from './GameSystemSelect';
 
 export const CreateSiteApp: Component = () => {
   const account = useStore($account);
   const [siteName, setSiteName] = createSignal('');
+  const [system, setSystem] = createSignal('homebrew');
   const [usePlainTextURL, setUsePlainTextURL] = createSignal(true);
   const [keyTaken, setKeyTaken] = createSignal(false);
   const [hidden, setHidden] = createSignal(false);
@@ -135,6 +137,8 @@ export const CreateSiteApp: Component = () => {
                 </p>
               )}
 
+              <GameSystemSelect value={system()} onChange={setSystem} />
+
               <label>
                 {t('entries:site.description')}
                 <textarea
@@ -160,8 +164,11 @@ export const CreateSiteApp: Component = () => {
               />
             </fieldset>
             <div class="toolbar justify-end">
+              <a href="/library" class="button text">
+                {t('actions:cancel')}
+              </a>
               <button type="submit" class="call-to-action">
-                {t('actions:create')}
+                {t('actions:create.site')}
               </button>
             </div>
           </form>

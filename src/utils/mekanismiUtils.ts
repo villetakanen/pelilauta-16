@@ -13,5 +13,5 @@ export function toMekanismiURI(s: string) {
   if (r.startsWith('-')) r = r.slice(1);
   if (r.endsWith('-')) r = r.slice(0, -1);
 
-  return r;
+  return r.toLowerCase();
 }

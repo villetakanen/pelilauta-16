@@ -200,3 +200,4 @@ span.notification-pill {
 cn-bubble {
   padding: var(--cn-gap);
 }
+.items-center	{align-items: center;}

@@ -8,7 +8,7 @@ import { createPage } from '@schemas/PageSchema';
 import { $site, load } from '@stores/SitesApp';
 import { subscribePage } from '@stores/SitesApp/pagesStore';
 import { type Component, onMount } from 'solid-js';
-import { PageArticle } from '../../SiteApp/PageArticle';
+import { PageArticle } from '../../SitesApp/PageArticle';
 import { PageFabs } from './PageFabs';
 import { PageSidebar } from './PageSidebar';
 
