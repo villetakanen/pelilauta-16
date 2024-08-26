@@ -6,7 +6,7 @@ import { DebugSection } from '@client/debug';
 import SyndicateStream from '@server/FrontPage/SyndicateStream.astro';
 import Page from 'src/layouts/Page.astro';
 ---
-<Page>
+<Page title={import.meta.env.PUBLIC_APP_NAME}>
     <div class="content-columns">
       <div>
         <ThreadStream client:only="solid-js"/>
