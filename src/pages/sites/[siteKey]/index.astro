@@ -1,5 +1,4 @@
 ---
-import { SiteSettingsButton } from '@client/SitesApp/SiteSettingsButton';
 import { SiteTray } from '@client/SitesApp/SiteTray';
 import { SitesApp } from '@client/SitesApp/SitesApp';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
@@ -8,11 +7,6 @@ const { siteKey: siteKeyParam } = Astro.params;
 const siteKey = siteKeyParam || 'mekanismi'; // This should not happen, but just in case
 ---
 <PageWithTray>
-  <div slot="app-bar">
-    <SiteSettingsButton client:only="solid-js"/>
-  </div>
   <SiteTray slot="app-tray" siteKey={siteKey} client:only="solid-js"/>
-
   <SitesApp siteKey={siteKey} client:only="solid-js"/>
-
 </PageWithTray>
