@@ -1,6 +1,7 @@
 ---
 import { EmailLoginSection } from '@client/login/EmailLoginSection';
 import { SyndicatedLoginSection } from '@client/login/SyndicatedLoginSection';
+import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
 import Page from 'src/layouts/Page.astro';
 
@@ -8,7 +9,7 @@ import Page from 'src/layouts/Page.astro';
  * reactive/interactive elements are handled by the client side solid apps.
  */
 ---
-<Page title={t('app:login.title')}>
+<ModalPage title={t('login:title')}>
   <main>
     <div class="content-columns">
       <div class="column-l">
@@ -25,4 +26,4 @@ import Page from 'src/layouts/Page.astro';
       </div>
     </div>
   </main>
-</Page>
+</ModalPage>

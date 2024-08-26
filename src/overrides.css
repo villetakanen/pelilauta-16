@@ -201,3 +201,12 @@ cn-bubble {
   padding: var(--cn-gap);
 }
 .items-center	{align-items: center;}
+
+@media (min-width: 621px) {
+  cn-tray-button {
+      left: calc(var(--cn-rail-width) + var(--cn-grid));
+  }
+  header.cn-app-bar.modal {
+    margin-left: calc(var(--cn-rail-width) + var(--cn-grid));
+  }
+}
