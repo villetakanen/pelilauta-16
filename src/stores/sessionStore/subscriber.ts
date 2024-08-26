@@ -2,6 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import { logDebug } from '@utils/logHelpers';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
+import { $account } from '.';
 import {
   SUBSCRIPTIONS_FIRESTORE_PATH,
   type Subscription,
@@ -41,6 +42,11 @@ export async function initSubscriberStore(uid: string) {
 }
 
 export function hasSeenEntry(entryKey: string, timestamp: number) {
+  const account = $account.get();
+  if (!account || !account.uid) {
+    return true;
+  }
+
   const subscriber = $subscriber.get();
   return subscriber.seenEntities[entryKey] >= timestamp;
 }
