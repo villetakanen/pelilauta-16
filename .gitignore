@@ -27,3 +27,7 @@ src/layouts/PageWithTray.astro
 
 # Playwright
 auth.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
