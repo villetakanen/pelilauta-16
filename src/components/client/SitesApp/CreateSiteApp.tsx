@@ -5,7 +5,7 @@ import { PAGES_COLLECTION_NAME } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { t } from '@utils/i18n';
-import { logDebug, logError } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { generateFrontPage } from '@utils/siteUtils';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
