@@ -81,6 +81,14 @@ export const CreateSiteApp: Component = () => {
           customPageKeys: usePlainTextURL(),
           homepage: key,
           owners: [account().uid],
+          pageRefs: [
+            {
+              key: key,
+              name: t('site:frontPage'),
+              author: account().uid,
+              flowTime: Date.now(),
+            },
+          ],
           key,
         },
         key,
@@ -91,7 +99,7 @@ export const CreateSiteApp: Component = () => {
       const frontPage = generateFrontPage(site);
 
       // Save the front page to the database
-      setDoc(
+      await setDoc(
         doc(
           db,
           SITES_COLLECTION_NAME,
@@ -102,9 +110,8 @@ export const CreateSiteApp: Component = () => {
         toFirestoreEntry(frontPage),
       );
 
-      logDebug('CreateSiteApp.handleSubmit', 'site');
       // Redirect to the new site
-      // window.location.href = `/sites/${siteKey}`;
+      window.location.href = `/sites/${siteKey}`;
     } catch (e) {
       logError(e);
     }
