@@ -25,8 +25,8 @@ export const fi: Locale = {
       title: 'Pelilauta',
     },
     settings: {
-      title: 'Asetukset'
-    }
+      title: 'Asetukset',
+    },
   },
   login,
   actions,
