@@ -210,3 +210,9 @@ cn-bubble {
     margin-left: calc(var(--cn-rail-width) + var(--cn-grid));
   }
 }
+.border-t {
+  border-color: var(--color-border);
+}
+.debug {
+  overflow-x: scroll;
+}

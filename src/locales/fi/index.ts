@@ -24,6 +24,9 @@ export const fi: Locale = {
     docs: {
       title: 'Pelilauta',
     },
+    settings: {
+      title: 'Asetukset',
+    },
   },
   login,
   actions,

@@ -41,4 +41,7 @@ export const site: Locale = {
     migrateContent: 'Konvertoi',
   },
   frontPage: 'Etusivu',
+  members: {
+    title: 'Omistajat',
+  },
 };

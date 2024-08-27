@@ -1,0 +1,10 @@
+---
+import { SiteMembersApp } from '@client/SitesApp/SiteMembersApp/SiteMembersApp';
+import ModalPage from '@layouts/ModalPage.astro';
+import { t } from '@utils/i18n';
+
+const { siteKey } = Astro.params;
+---
+<ModalPage title={t('site:members.title')}>
+    <SiteMembersApp siteKey={`${siteKey}`} client:only="solid-js"/>
+</ModalPage>

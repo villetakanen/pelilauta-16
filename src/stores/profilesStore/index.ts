@@ -1,7 +1,15 @@
 import { persistentAtom } from '@nanostores/persistent';
+import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
-import { doc, getDoc } from 'firebase/firestore';
+import { logDebug, logWarn } from '@utils/logHelpers';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { atom } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { z } from 'zod';
@@ -79,4 +87,26 @@ async function fetchProfile(key: string) {
     });
   }
   $loading.set($loading.get().filter((k) => k !== key));
+}
+
+export async function fetchAllProfiles() {
+  logWarn('Fetching all active profiles');
+
+  const q = query(
+    collection(db, PROFILES_COLLECTION_NAME),
+    // where('frozen', '==', false)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  for (const doc of querySnapshot.docs) {
+    const profile = PublicProfileSchema.parse({
+      ...doc.data(),
+      key: doc.id,
+    });
+    $profiles.set({
+      ...$profiles.get(),
+      [doc.id]: profile,
+    });
+  }
 }
