@@ -18,7 +18,7 @@ export const FrontPageFabs: Component = () => {
         <Portal mount={document.querySelector('#fab-tray') || document.body}>
           <a href="/create/thread" class="fab">
             <cn-icon noun="send" small />
-            <span>{t('actions:create.thread')}</span>
+            <span class="sm-hidden">{t('actions:create.thread')}</span>
           </a>
         </Portal>
       )}

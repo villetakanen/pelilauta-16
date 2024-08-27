@@ -11,7 +11,7 @@ export const SiteFabs: Component = () => {
       {!anon() && (
         <a class="fab" href="/create/site">
           <cn-icon noun="add" small />
-          <span>{t('actions:create.site')}</span>
+          <span class="sm-hidden">{t('actions:create.site')}</span>
         </a>
       )}
     </>

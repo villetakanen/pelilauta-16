@@ -216,3 +216,19 @@ cn-bubble {
 .debug {
   overflow-x: scroll;
 }
+@media (max-width: 620px) {
+  .sm-hidden {
+    display: none;
+  }
+  a.fab cn-icon {
+    margin-right: var(--cn-gap);
+  }
+  #fab-tray {
+    right: var(--cn-grid);
+    bottom: calc(8.5 * var(--cn-grid));
+  }
+  #nav-bar {
+    background: var(--background-elevation-4);
+    box-shadow: var(--shadow-elevation-4);
+  }
+}
