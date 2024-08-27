@@ -14,7 +14,7 @@ export const ThreadCard: Component<{
   elevation?: number;
 }> = (props) => {
   const notify = createMemo(() => props.notify);
- 
+
   return (
     <div style="flex-basis: auto;">
       <cn-card
