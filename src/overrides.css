@@ -213,3 +213,6 @@ cn-bubble {
 .border-t {
   border-color: var(--color-border);
 }
+.debug {
+  overflow-x: scroll;
+}
