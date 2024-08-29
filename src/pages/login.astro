@@ -1,13 +1,15 @@
 ---
 import { EmailLoginSection } from '@client/login/EmailLoginSection';
+import { PasswordLoginSection } from '@client/login/PasswordLoginSection';
 import { SyndicatedLoginSection } from '@client/login/SyndicatedLoginSection';
 import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
-import Page from 'src/layouts/Page.astro';
 
 /* A server side rendered login page: we only provide client side session, as all
  * reactive/interactive elements are handled by the client side solid apps.
  */
+const showPasswordLoginFlag =
+  import.meta.env.SECRET_FEATURE_FLAG_PASSWORD_LOGIN === 'true';
 ---
 <ModalPage title={t('login:title')}>
   <main>
@@ -18,6 +20,11 @@ import Page from 'src/layouts/Page.astro';
       </div>
     </div>
     <div class="content-columns">
+      { showPasswordLoginFlag &&
+        <div>
+          <PasswordLoginSection client:only="solid-js"/>
+        </div>
+      }
       <div>
         <EmailLoginSection client:only="solid-js"/>
       </div>
