@@ -2,14 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
 import { t } from '@utils/i18n';
 import { logDebug, logWarn } from '@utils/logHelpers';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { atom } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { z } from 'zod';

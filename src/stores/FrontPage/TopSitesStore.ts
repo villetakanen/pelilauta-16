@@ -5,6 +5,7 @@ import {
   parseSite,
 } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { logDebug } from '@utils/logHelpers';
 import {
   collection,
   getDocs,
@@ -16,11 +17,14 @@ import {
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 
-export const $topSites = persistentAtom<Site[]>('topSites', [], {
+export const $topSites = persistentAtom<Site[]>('frontpage-top-sites', [], {
   encode: JSON.stringify,
   decode: (data) => {
-    return JSON.parse(data).map((entry: Record<string, unknown>) => {
-      return parseSite(entry, entry.key as string);
+    return JSON.parse(data).map((entry: Partial<Site>) => {
+      const site = parseSite(entry, entry.key as string);
+      logDebug('Decoding top site', entry, site);
+
+      return site;
     });
   },
 });
@@ -41,8 +45,10 @@ async function fetchTopSites() {
 
   const sites: Site[] = [];
 
-  for (const site of siteEntries.docs) {
-    sites.push(parseSite(toClientEntry(site.data()), site.id));
+  for (const siteDoc of siteEntries.docs) {
+    const siteData = siteDoc.data();
+    const site = parseSite(toClientEntry(siteData), siteDoc.id);
+    sites.push(site);
   }
 
   $topSites.set(sites);
