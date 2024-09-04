@@ -1,6 +1,6 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { logDebug } from '@utils/logHelpers';
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
 import { $account } from '.';
 import {
@@ -36,9 +36,30 @@ export async function initSubscriberStore(uid: string) {
       if (doc.exists()) {
         logDebug('initSubscriberStore', 'subscriber loaded', doc.data());
         $subscriber.set(parseSubscription(doc.data(), doc.id));
+      } else {
+        logDebug(
+          'initSubscriberStore',
+          'user has no subscription, creating it',
+        );
+        createSubscriptionEntry(uid);
       }
     },
   );
+}
+
+async function createSubscriptionEntry(uid: string) {
+  if (!uid) {
+    throw new Error('an uid is required to create a subscription');
+  }
+  const subscription = createSubscription(uid);
+  const subscriberRef = doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`);
+
+  const subscriberDoc = await getDoc(subscriberRef);
+  if (subscriberDoc.exists()) {
+    throw new Error('subscriber doc already exists, aborting');
+  }
+
+  await setDoc(subscriberRef, subscription);
 }
 
 export function hasSeenEntry(entryKey: string, timestamp: number) {

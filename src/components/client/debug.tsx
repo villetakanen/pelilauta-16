@@ -17,9 +17,19 @@ export const DebugSection: Component = () => {
   const subsciption = useStore($subscriber);
 
   return (
-    <div class="debug">
-      <section>{account().uid}</section>
-      <section class="field-grid">
+    <div>
+      <h3>DEBUG</h3>
+      <section class="debug border-radius">
+        <h4>Account</h4>
+        <p>uid: {account().uid}</p>
+      </section>
+
+      <section class="debug border-radius">
+        <h4>Subscription</h4>
+        <pre>{JSON.stringify(subsciption(), null, 2)}</pre>
+      </section>
+
+      <section class="field-grid debug border-radius">
         <div>Session:</div>
         <div>{active() ? 'active' : 'loading'}</div>
 
@@ -31,9 +41,7 @@ export const DebugSection: Component = () => {
         <div>{`${account().showAdminTools}`}</div>
       </section>
       <hr />
-      <section>
-        <pre>{JSON.stringify(subsciption(), null, 2)}</pre>
-      </section>
+      <section></section>
     </div>
   );
 };
