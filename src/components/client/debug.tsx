@@ -40,8 +40,6 @@ export const DebugSection: Component = () => {
         <div>showAdminTools:</div>
         <div>{`${account().showAdminTools}`}</div>
       </section>
-      <hr />
-      <section></section>
     </div>
   );
 };
