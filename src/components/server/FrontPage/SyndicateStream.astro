@@ -1,15 +1,23 @@
 ---
+import { logError } from '@utils/logHelpers';
 import Parser from 'rss-parser';
 
-// We want to grab the myrrys.com RSS feed and post the latest 3 posts in this stream.
-const parser = new Parser();
-const feed = await parser.parseURL('https://myrrys.com/rss.xml');
-const posts = feed.items.slice(0, 3);
+let posts: Record<string, unknown>[] = [];
+let posts2: Record<string, unknown>[] = [];
 
-// We want to grab the https://roolipelitiedotus.fi/feed/ RSS feed and post the latest 3 posts in this stream.
-const parser2 = new Parser();
-const feed2 = await parser2.parseURL('https://roolipelitiedotus.fi/feed/');
-const posts2 = feed2.items.slice(0, 3);
+try {
+  // We want to grab the myrrys.com RSS feed and post the latest 3 posts in this stream.
+  const parser = new Parser();
+  const feed = await parser.parseURL('https://myrrys.com/rss.xml');
+  posts = feed.items.slice(0, 3);
+
+  // We want to grab the https://roolipelitiedotus.fi/feed/ RSS feed and post the latest 3 posts in this stream.
+  const parser2 = new Parser();
+  const feed2 = await parser2.parseURL('https://roolipelitiedotus.fi/feed/');
+  posts2 = feed2.items.slice(0, 3);
+} catch (e) {
+  logError(e);
+}
 ---
 <div class="column-s flex flex-col">
   <div>

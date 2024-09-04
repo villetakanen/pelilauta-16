@@ -82,6 +82,7 @@ export function parseSite(data: Partial<Site>, key: string): Site {
   try {
     return SiteSchema.parse({
       ...toClientEntry(data),
+      name: data.name || '[...]',
       system,
       flowTime: parseFlowTime(data),
       hidden,
@@ -92,7 +93,7 @@ export function parseSite(data: Partial<Site>, key: string): Site {
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
-      logError(err.issues);
+      logError('SiteSchema', err.issues);
     }
     throw err;
   }

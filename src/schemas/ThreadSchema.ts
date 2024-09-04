@@ -46,6 +46,7 @@ export function parseThread(
     return ThreadSchema.parse({
       ...data,
       images,
+      title: data.title || '',
       channel: data.channel || data.topic || '',
       createdAt: toDate(data.createdAt),
       updatedAt: toDate(data.updatedAt),

@@ -22,7 +22,7 @@ export const ThreadCard: Component<{
         href={`/threads/${props.thread.key}`}
         noun={topicToNoun(props.thread.channel)}
         title={props.thread.title}
-        cover={props.thread.poster}
+        cover={props.thread.poster || undefined}
         elevation={props.elevation}
       >
         <div class="downscaled">
