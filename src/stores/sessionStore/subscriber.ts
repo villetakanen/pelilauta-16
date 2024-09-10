@@ -1,5 +1,5 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logError } from '@utils/logHelpers';
 import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
 import { $account } from '.';
@@ -75,12 +75,16 @@ export function hasSeenEntry(entryKey: string, timestamp: number) {
 export async function markEntrySeen(entryKey: string, timestamp: number) {
   const subscriber = $subscriber.get();
   subscriber.seenEntities[entryKey] = timestamp;
-  await updateDoc(
-    doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${subscriber.key}`),
-    {
-      seenEntities: {
-        ...subscriber.seenEntities,
+  try {
+    await updateDoc(
+      doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${subscriber.uid}`),
+      {
+        seenEntities: {
+          ...subscriber.seenEntities,
+        },
       },
-    },
-  );
+    );
+  } catch (e: unknown) {
+    logError(e);
+  }
 }

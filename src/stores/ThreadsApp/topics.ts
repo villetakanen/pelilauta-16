@@ -4,7 +4,7 @@ import {
   type Topic,
   topicSchema,
 } from '@schemas/MetaTopicsSchema';
-import { logError, logWarn } from '@utils/logHelpers';
+import { logDebug, logError, logWarn } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { onMount } from 'nanostores';
@@ -64,4 +64,14 @@ async function fetchTopicsFromDB() {
       $topics.set([]);
     }
   }
+}
+
+export function topicToNoun(topic?: string) {
+  if (!topic) {
+    return 'close';
+  }
+  const topics = $topics.get();
+  logDebug('topicToNoun', 'topics', topics, 'topic', topic);
+  const topicObj = topics.find((t) => t.slug === topic);
+  return topicObj?.icon || 'fox';
 }

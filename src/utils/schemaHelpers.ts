@@ -19,7 +19,7 @@ export function toDate(variable: unknown): Date {
   return new Date();
 }
 
-export function topicToNoun(topic: string | undefined): string {
+/*export function topicToNoun(topic: string | undefined): string {
   logWarn(
     'topicToNoun is a development time helper, it should be replaced with a meta-store mapping in production',
   );
@@ -34,7 +34,7 @@ export function topicToNoun(topic: string | undefined): string {
     default:
       return 'fox';
   }
-}
+}*/
 
 export function systemToNoun(system: string | undefined): string {
   if (Object.keys(systemToNounMapping).includes(system || '')) {

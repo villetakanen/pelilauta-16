@@ -1,7 +1,7 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
+import { topicToNoun } from '@stores/ThreadsApp/topics';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
-import { topicToNoun } from '@utils/schemaHelpers';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSnippetSection } from 'src/components/shared/MarkdownSnippetSection';
 import type { Thread } from 'src/schemas/ThreadSchema';
@@ -20,10 +20,10 @@ export const ThreadCard: Component<{
       <cn-card
         notify={notify()}
         href={`/threads/${props.thread.key}`}
-        noun={topicToNoun(props.thread.channel)}
         title={props.thread.title}
         cover={props.thread.poster || undefined}
         elevation={props.elevation}
+        noun={topicToNoun(props.thread.channel)}
       >
         <div class="downscaled">
           <MarkdownSnippetSection content={`${props.thread.markdownContent}`} />
