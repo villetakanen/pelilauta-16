@@ -1,5 +1,6 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { logDebug, logWarn } from '@utils/logHelpers';
+import type { User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { computed, onMount } from 'nanostores';
 import { auth, db } from 'src/firebase/client';
@@ -16,27 +17,38 @@ import {
 import { loadUserAssets } from '../assetStore';
 import { initSubscriberStore } from './subscriber';
 
+// The active user's UID - stored in localStorage for session persistence
+export const $uid = persistentAtom<string>('session-uid', '');
+
+// Session loading state - used to determine if the session is active
+type LoadingStateValue = 'initial' | 'loading' | 'active';
+const $loadingState = persistentAtom<LoadingStateValue>(
+  'session_loadingState',
+  'initial',
+);
+
+// Computed helper for the loading state
+export const $active = computed($loadingState, (state) => state === 'active');
+
+// Computed helper for the anonymous session state
+export const $isAnonymous = computed([$active, $uid], (active, uid) => {
+  // We do not know if the user is anonymous while loading, assuming no
+  if (!active) return false;
+
+  // An anonymous user has no uid
+  return !uid;
+});
+
 const defaultAccount: Account = {
   uid: '',
   eulaAccepted: false,
 };
+
 const defaultProfile: Profile = {
   nick: '',
   avatarURL: '',
   bio: '',
 };
-
-// *** Session loading state *************************************************
-type LoadingStateValue = 'initial' | 'loading' | 'active';
-const $loadingState = persistentAtom<LoadingStateValue>(
-  'session-store',
-  'initial',
-);
-
-/**
- * Returns false if the session is initializing, true if it is loaded.
- */
-export const $active = computed($loadingState, (state) => state === 'active');
 
 // *** Session user Account state ********************************************
 
@@ -50,22 +62,6 @@ export const $account = persistentAtom<Account>(
     decode: JSON.parse,
   },
 );
-
-export const $uid = computed($account, (account) => {
-  return account.uid;
-});
-
-/**
- * Returns true if the user is anonymous, false otherwise.
- */
-
-export const $isAnonymous = computed([$active, $account], (active, account) => {
-  // We do not know if the user is anonymous while loading, assuming no
-  if (!active) return false;
-
-  // An anonymous user has no uid
-  return !account.uid;
-});
 
 /**
  * Returns true, if the user requires to accept the EULA.
@@ -99,45 +95,40 @@ export const $profile = persistentAtom<Profile>(
 // *** State management ******************************************************
 
 onMount($account, () => {
-  logDebug('sessionStore', 'onMount');
-  auth.onAuthStateChanged(async (user) => {
-    logDebug('sessionStore', 'onAuthStateChanged', user);
+  auth.onAuthStateChanged(handleFirebaseAuthChange);
+  logDebug('sessionStore mounted, subscribing to Firebase auth state changes');
+});
 
-    // If we have a user:
-    if (user) {
-      // If the session is active, we already have some user data, check if it is the same user
-      if ($loadingState.get() === 'active') {
-        if (user.uid === $account.get().uid) {
-          logDebug(
-            'sessionStore',
-            'onAuthStateChanged',
-            'Session data found, assuming it is the same user',
-          );
-
-          // subscribe to user subscriptions data
-          initSubscriberStore(user.uid);
-
-          return;
-        }
-        logWarn(
-          'sessionStore',
-          'onAuthStateChanged',
-          'Session data found, but different user, clearing session',
-        );
-        await clear();
-      }
+/**
+ * This function is called whenever the firebase auth state changes.
+ *
+ * @param user
+ */
+async function handleFirebaseAuthChange(user: User | null) {
+  // Lets see if Firebase has a user for us
+  if (user) {
+    // Lets see if we have an active session, with same UID, if so, we are done
+    if ($loadingState.get() === 'active' && user.uid === $account.get().uid) {
+      logDebug(
+        'sessionStore',
+        'handleFirebaseAuthChange',
+        'Session data found for the firebase uid, skipping state change',
+      );
+    } else {
+      // We have a new user, lets login
       await login(user.uid);
     }
-    $loadingState.set('active');
-  });
-});
+  } else {
+    await logout();
+  }
+}
 
 async function login(uid: string) {
   if (!uid) {
     logWarn('sessionStore', 'login', 'No uid provided');
     return;
   }
-
+  $uid.set(uid);
   // As we are logging in, we need to set the loading state
   $loadingState.set('loading');
 
@@ -159,6 +150,7 @@ async function clear() {
   window?.localStorage.clear();
   $account.set({ ...defaultAccount });
   $profile.set({ ...defaultProfile });
+  $uid.set('');
 }
 
 export async function logout() {
