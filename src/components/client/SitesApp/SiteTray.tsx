@@ -8,7 +8,7 @@
 
 import { useStore } from '@nanostores/solid';
 import { $site, load } from '@stores/SitesApp';
-import { $account } from '@stores/sessionStore';
+import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { systemToNoun } from '@utils/schemaHelpers';
 import { type Component, For, createEffect } from 'solid-js';
@@ -22,7 +22,7 @@ type SiteTrayAction = {
 
 export const SiteTray: Component<{ siteKey: string }> = (props) => {
   const site = useStore($site);
-  const account = useStore($account);
+  const uid = useStore($uid);
 
   createEffect(() => {
     load(props.siteKey);
@@ -42,7 +42,7 @@ export const SiteTray: Component<{ siteKey: string }> = (props) => {
       },
     ];
 
-    if (site()?.owners.includes(account()?.uid)) {
+    if (site()?.owners.includes(uid())) {
       base.push({
         label: t('site:members.title'),
         href: `/sites/${props.siteKey}/members`,

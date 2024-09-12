@@ -4,7 +4,7 @@ import { type Reply, createReply } from '@schemas/ReplySchema';
 import type { Thread } from '@schemas/ThreadSchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { addReply } from '@stores/ThreadsApp/discussion';
-import { $account } from '@stores/sessionStore';
+import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Atom, atom } from 'nanostores';
@@ -20,7 +20,7 @@ interface Props {
 
 export const ReplyForm: Component<Props> = (props) => {
   const dispatch = createEventDispatcher(props);
-  const account = useStore($account);
+  const uid = useStore($uid);
 
   const [message, setMessage] = createSignal<string | null>(null);
   const discussion = useStore(props.discussion || atom([]));
@@ -35,7 +35,7 @@ export const ReplyForm: Component<Props> = (props) => {
 
     const reply = createReply({
       markdownContent: message() || '',
-      owners: [account().uid || ''],
+      owners: [uid()],
       threadKey: props.thread?.key || '',
     });
 

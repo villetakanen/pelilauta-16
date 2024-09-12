@@ -2,13 +2,13 @@ import { useStore } from '@nanostores/solid';
 import { $site } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
-import { $account } from 'src/stores/sessionStore';
+import { $uid } from 'src/stores/sessionStore';
 
 export const SiteSettingsButton: Component = () => {
   const site = useStore($site);
-  const account = useStore($account);
+  const uid = useStore($uid);
 
-  const visible = createMemo(() => site().owners.includes(account().uid));
+  const visible = createMemo(() => site().owners.includes(uid()));
 
   return (
     <>

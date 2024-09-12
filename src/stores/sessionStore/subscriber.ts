@@ -2,7 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import { logDebug, logError } from '@utils/logHelpers';
 import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
-import { $account } from '.';
+import { $uid } from '.';
 import {
   SUBSCRIPTIONS_FIRESTORE_PATH,
   type Subscription,
@@ -63,8 +63,8 @@ async function createSubscriptionEntry(uid: string) {
 }
 
 export function hasSeenEntry(entryKey: string, timestamp: number) {
-  const account = $account.get();
-  if (!account || !account.uid) {
+  const uid = $uid.get();
+  if (!uid) {
     return true;
   }
 

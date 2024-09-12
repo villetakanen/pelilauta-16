@@ -4,7 +4,7 @@ import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { loveReply, unloveReply } from '@stores/ThreadsApp/reactions';
-import { $account } from '@stores/sessionStore';
+import { $uid } from '@stores/sessionStore';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
@@ -17,24 +17,21 @@ interface Props {
 export const ReplyBubble: Component<Props> = (props) => {
   const dispatch = createEventDispatcher(props);
 
-  const account = useStore($account);
-  const fromCurrentUser = createMemo(() =>
-    props.reply.owners.includes(account()?.uid),
-  );
+  const uid = useStore($uid);
 
-  const loves = createMemo(
-    () => props.reply.lovers?.includes(account()?.uid) || false,
-  );
+  const fromCurrentUser = createMemo(() => props.reply.owners.includes(uid()));
+
+  const loves = createMemo(() => props.reply.lovers?.includes(uid()) || false);
 
   function handleLoveToggle(e: Event) {
     e.preventDefault();
     e.stopPropagation();
     const loves = props.reply.lovers || [];
-    const index = loves.indexOf(account()?.uid);
+    const index = loves.indexOf(uid());
     if (index > -1) {
-      unloveReply(account().uid, props.reply.threadKey, props.reply.key);
+      unloveReply(uid(), props.reply.threadKey, props.reply.key);
     } else {
-      loveReply(account().uid, props.reply.threadKey, props.reply.key);
+      loveReply(uid(), props.reply.threadKey, props.reply.key);
     }
   }
 
@@ -59,7 +56,7 @@ export const ReplyBubble: Component<Props> = (props) => {
             checked={loves()}
             noun="love"
             small
-            disabled={!account()?.uid || fromCurrentUser()}
+            disabled={!uid() || fromCurrentUser()}
             count={props.reply.lovesCount}
           />
           <button
