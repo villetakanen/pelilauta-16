@@ -7,15 +7,8 @@ import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { type Component, type JSX, createEffect, createSignal } from 'solid-js';
 import { auth, db } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';
-import { parseAccount } from 'src/schemas/AccountSchema';
 import { parseProfile } from 'src/schemas/ProfileSchema';
-import {
-  $account,
-  $profile,
-  $requiresEula,
-  $uid,
-  logout,
-} from 'src/stores/sessionStore';
+import { $profile, $requiresEula, $uid, logout } from 'src/stores/sessionStore';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 
@@ -66,32 +59,6 @@ export const EulaDialog: Component = (props: DialogProps) => {
     }
   }
 
-  /*onMount(() => {
-    // Listen to auth changes
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        // Get an unique default nickname for the user
-        const nickname = await generateUsername(
-          user.displayName || '',
-          user.email || '',
-        );
-
-        // Load the account data
-        setNickname(nickname);
-        setUsername(nickname);
-
-        // Load the avatar
-        const avatar = user.photoURL || '';
-        setAvatarSrc(avatar);
-
-        if (oldProfile().nick) {
-          logWarn('User already has a profile, restoring nickname');
-          setNickname(oldProfile().nick);
-        }
-      }
-    });
-  });*/
-
   async function oncancel() {
     console.log('User declined the EULA, logging out');
     // When the user cancels the dialog, sign out
@@ -109,7 +76,6 @@ export const EulaDialog: Component = (props: DialogProps) => {
     // When the user accepts the EULA, store the acceptance to the db
     const accountRef = doc(db, 'account', key);
     await setDoc(accountRef, {
-      ...$account.get(),
       uid: key,
       lastLogin: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -122,10 +88,6 @@ export const EulaDialog: Component = (props: DialogProps) => {
     });
     const newAccount = await getDoc(accountRef);
     if (newAccount.exists()) {
-      const account = parseAccount(newAccount.data(), newAccount.id);
-      $account.set(account);
-      logDebug('User data stored to db', account, 'and stored to local state');
-
       // Create a new profile to DB
       const profile = {
         ...$profile.get(),

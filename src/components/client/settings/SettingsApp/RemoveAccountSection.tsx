@@ -4,13 +4,13 @@ import { logWarn } from '@utils/logHelpers';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';
 import { db } from 'src/firebase/client';
-import { $account, logout } from 'src/stores/sessionStore';
+import { $uid, logout } from 'src/stores/sessionStore';
 
 export const RemoveAccountSection: Component = () => {
   const [showVerify, setShowVerify] = createSignal(false);
   const [verify, setVerify] = createSignal('');
 
-  const account = useStore($account);
+  const uid = useStore($uid);
 
   async function deRegister(e: Event) {
     e.preventDefault();
@@ -19,7 +19,7 @@ export const RemoveAccountSection: Component = () => {
     // if (!veryfy() === 'olen aivan varma') {
     //     return;
     //}
-    const key = account().uid;
+    const key = uid();
 
     await deleteDoc(doc(db, 'profiles', key));
     logWarn('Profile removed from the DB');

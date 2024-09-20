@@ -7,15 +7,15 @@
 import { useStore } from '@nanostores/solid';
 import type { Thread } from '@schemas/ThreadSchema';
 import { type Component, createMemo } from 'solid-js';
-import { $account, $profile } from 'src/stores/sessionStore';
+import { $profile, $uid } from 'src/stores/sessionStore';
 import { loveThread, unloveThread } from 'src/stores/threadsStore/reactions';
 
 export const ThreadLikeButton: Component<{ thread?: Thread }> = (props) => {
-  const account = useStore($account);
+  const uid = useStore($uid);
   const profile = useStore($profile);
 
   const disabled = createMemo(
-    () => !account().uid || props.thread?.owners.includes(account().uid),
+    () => !uid() || props.thread?.owners.includes(uid()),
   );
 
   const loves = createMemo(() =>
@@ -25,9 +25,9 @@ export const ThreadLikeButton: Component<{ thread?: Thread }> = (props) => {
   function toggleLove() {
     if (!props.thread) return;
     if (!loves()) {
-      loveThread(account().uid, props.thread.key);
+      loveThread(uid(), props.thread.key);
     } else {
-      unloveThread(account().uid, props.thread.key);
+      unloveThread(uid(), props.thread.key);
     }
   }
 

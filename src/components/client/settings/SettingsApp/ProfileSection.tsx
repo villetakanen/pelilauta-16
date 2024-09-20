@@ -2,11 +2,19 @@ import { useStore } from '@nanostores/solid';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { $account, $profile, logout } from 'src/stores/sessionStore';
+import {
+  $locale,
+  $profile,
+  $theme,
+  $uid,
+  logout,
+} from 'src/stores/sessionStore';
 import { RemoveAccountSection } from './RemoveAccountSection';
 
 export const ProfileSection: Component = () => {
-  const account = useStore($account);
+  const uid = useStore($uid);
+  const theme = useStore($theme);
+  const locale = useStore($locale);
 
   async function logoutAction() {
     await logout();
@@ -20,7 +28,7 @@ export const ProfileSection: Component = () => {
 
       <div class="field-grid">
         <p>{t('entries:profile.key')}</p>
-        <p>{account().uid}</p>
+        <p>{uid()}</p>
         <p>{t('entries:profile.nick')}</p>
         <p>{$profile.get().nick}</p>
         <p>{t('entries:profile.avatar')}</p>
@@ -29,12 +37,10 @@ export const ProfileSection: Component = () => {
         </p>
         <p>{t('entries:profile.bio')}</p>
         <p>{$profile.get().bio}</p>
-        <p>{t('entries:account.lastLogin')}</p>
-        <p>{toDisplayString($account.get().lastLogin)}</p>
         <p>{t('entries:account.lightMode')}</p>
-        <p>{$account.get().lightMode ? 'true' : 'false'}</p>
+        <p>{theme()}</p>
         <p>{t('entries:account.language')}</p>
-        <p>{$account.get().language}</p>
+        <p>{locale()}</p>
       </div>
 
       <button type="submit" onclick={logoutAction}>

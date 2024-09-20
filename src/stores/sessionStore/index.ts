@@ -4,11 +4,7 @@ import type { User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { computed, onMount } from 'nanostores';
 import { auth, db } from 'src/firebase/client';
-import {
-  ACCOUNTS_COLLECTION_NAME,
-  type Account,
-  parseAccount,
-} from 'src/schemas/AccountSchema';
+import { ACCOUNTS_COLLECTION_NAME } from 'src/schemas/AccountSchema';
 import {
   PROFILES_COLLECTION_NAME,
   type Profile,
@@ -19,6 +15,8 @@ import { initSubscriberStore } from './subscriber';
 
 // The active user's UID - stored in localStorage for session persistence
 export const $uid = persistentAtom<string>('session-uid', '');
+export const $locale = persistentAtom<string>('session-locale', 'fi');
+export const $theme = persistentAtom<string>('session-theme', 'dark');
 
 // Session loading state - used to determine if the session is active
 type LoadingStateValue = 'initial' | 'loading' | 'active';
@@ -39,46 +37,20 @@ export const $isAnonymous = computed([$active, $uid], (active, uid) => {
   return !uid;
 });
 
-const defaultAccount: Account = {
-  uid: '',
-  eulaAccepted: false,
-};
-
-const defaultProfile: Profile = {
-  nick: '',
-  avatarURL: '',
-  bio: '',
-};
-
-// *** Session user Account state ********************************************
-
-export const $account = persistentAtom<Account>(
-  'account',
-  {
-    ...defaultAccount,
-  },
+export const $requiresEula = persistentAtom<boolean>(
+  'session_requiresEula',
+  false,
   {
     encode: JSON.stringify,
     decode: JSON.parse,
   },
 );
 
-/**
- * Returns true, if the user requires to accept the EULA.
- */
-export const $requiresEula = computed(
-  [$active, $account],
-  (active, account) => {
-    // We do not know if the user requires EULA while loading, assuming no
-    if (!active) return false;
-
-    // An anonymous user does not require EULA
-    if (!account.uid) return false;
-
-    // If the EULA has been accepted, we do not require EULA
-    return !account.eulaAccepted;
-  },
-);
+const defaultProfile: Profile = {
+  nick: '',
+  avatarURL: '',
+  bio: '',
+};
 
 // *** Session user Profile state ********************************************
 export const $profile = persistentAtom<Profile>(
@@ -92,9 +64,9 @@ export const $profile = persistentAtom<Profile>(
   },
 );
 
-// *** State management ******************************************************
-
-onMount($account, () => {
+// We need to listen to Firebase auth state changes if any of the components
+// are interested in the session state
+onMount($uid, () => {
   auth.onAuthStateChanged(handleFirebaseAuthChange);
   logDebug('sessionStore mounted, subscribing to Firebase auth state changes');
 });
@@ -108,7 +80,7 @@ async function handleFirebaseAuthChange(user: User | null) {
   // Lets see if Firebase has a user for us
   if (user) {
     // Lets see if we have an active session, with same UID, if so, we are done
-    if ($loadingState.get() === 'active' && user.uid === $account.get().uid) {
+    if ($loadingState.get() === 'active' && user.uid === $uid.get()) {
       logDebug(
         'sessionStore',
         'handleFirebaseAuthChange',
@@ -132,12 +104,15 @@ async function login(uid: string) {
   // As we are logging in, we need to set the loading state
   $loadingState.set('loading');
 
-  // Fetch account and profile data
-  const account = await fetchAccount(uid);
-  $account.set(account || { ...defaultAccount, uid });
+  // Fetch account data in parallel
+  fetchAccount(uid);
 
+  // Fetch profile data (if available)
   const profile = await fetchProfile(uid);
   $profile.set(profile || { ...defaultProfile });
+
+  // Set the loading state to active
+  $loadingState.set('active');
 
   // Prefetch user assets
   loadUserAssets(uid);
@@ -148,9 +123,9 @@ async function login(uid: string) {
 
 async function clear() {
   window?.localStorage.clear();
-  $account.set({ ...defaultAccount });
   $profile.set({ ...defaultProfile });
   $uid.set('');
+  $requiresEula.set(false);
 }
 
 export async function logout() {
@@ -168,12 +143,12 @@ async function fetchAccount(uid: string) {
   // Fetch account data from Firestore
   const accountDoc = await getDoc(doc(db, ACCOUNTS_COLLECTION_NAME, uid));
 
-  if (!accountDoc.exists()) {
-    logWarn(`Account not found for uid: ${uid}`);
-    return;
-  }
-
-  return parseAccount(accountDoc.data(), uid);
+  // Note: we do not persist the account data to localStorage for security reasons
+  // The only field we need from the account is the eulaAccepted flag
+  const data = accountDoc.data();
+  $theme.set(data?.theme || 'dark');
+  $locale.set(data?.locale || 'fi');
+  $requiresEula.set(!data?.eulaAccepted);
 }
 
 async function fetchProfile(uid: string) {
