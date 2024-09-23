@@ -214,7 +214,7 @@ cn-bubble {
   border-color: var(--color-border);
 }
 .debug {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 @media (max-width: 620px) {
   .sm-hidden {
