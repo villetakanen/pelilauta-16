@@ -4,7 +4,7 @@ import { createThread } from '@schemas/ThreadSchema';
 import { fetchThread } from '@stores/ThreadsApp';
 import { $topics } from '@stores/ThreadsApp/topics';
 import { updateThread } from '@stores/ThreadsApp/updateThread';
-import { $account, markEntrySeen } from '@stores/sessionStore';
+import { $uid, markEntrySeen } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { extractTags } from '@utils/contentHelpers';
@@ -24,7 +24,7 @@ export const ThreadEditorApp: Component<{
   topic?: string;
 }> = (props) => {
   const topics = useStore($topics);
-  const account = useStore($account);
+  const uid = useStore($uid);
 
   const [topic, setTopic] = createSignal<string>(props.topic || 'yleinen');
   const [tags, setTags] = createSignal<string[]>([]);
@@ -67,7 +67,7 @@ export const ThreadEditorApp: Component<{
       tags: tags(),
       topic: topic(),
       markdownContent: markdownContent(),
-      owners: [account().uid],
+      owners: [uid()],
     };
 
     let key = props.threadKey;

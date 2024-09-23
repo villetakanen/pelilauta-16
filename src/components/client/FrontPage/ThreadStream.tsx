@@ -2,7 +2,7 @@ import { useStore } from '@nanostores/solid';
 import { $topThreads } from '@stores/FrontPage/topThreadsStrore';
 import { hasSeenEntry } from '@stores/sessionStore';
 import type { Component } from 'solid-js';
-import { ThreadCard } from '../threads/ThreadCard';
+import { ThreadCard } from '../ThreadsApp/ThreadCard';
 
 export const ThreadStream: Component = () => {
   const topThreads = useStore($topThreads);

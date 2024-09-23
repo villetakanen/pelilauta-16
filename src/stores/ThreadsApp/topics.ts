@@ -4,7 +4,7 @@ import {
   type Topic,
   topicSchema,
 } from '@schemas/MetaTopicsSchema';
-import { logDebug, logError, logWarn } from '@utils/logHelpers';
+import { logError, logWarn } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { onMount } from 'nanostores';
