@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { $site, updateSite } from '@stores/SitesApp';
 import { $profiles, fetchAllProfiles } from '@stores/profilesStore';
+import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
 import {
   type Component,
@@ -46,7 +47,7 @@ export const AddSiteMemberForm: Component = () => {
         class="grow"
         onchange={(e) => setSelected((e.target as HTMLSelectElement).value)}
       >
-        <option value="">Select a member</option>
+        <option value="">{t('actions:choose')}</option>
         <For each={nonMembers()}>
           {(key) => <option value={key}>{profiles()[key].nick}</option>}
         </For>

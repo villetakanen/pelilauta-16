@@ -10,7 +10,7 @@ export const PageArticleFooter: Component<{ page: Page; site: Site }> = (
   const site = createMemo(() => props.site);
 
   return (
-    <footer class="downscaled flex justify-space-between border-t">
+    <footer class="downscaled flex justify-space-between border-t mt-2">
       <p class="m-0 p-0">
         <a href={`/sites/${site().key}`}>{site().name}</a> /
         <a href={`/sites/${site().key}/${page().key}`}>{page().name}</a>
@@ -18,7 +18,8 @@ export const PageArticleFooter: Component<{ page: Page; site: Site }> = (
       <p class="m-0 p-0">
         <a href={`/sites/${site().key}/${page().key}/history`}>
           {(page().revisionHistory?.length || 0) + 1}
-          {t('sites:pages.revisionCount')}
+          &nbsp;
+          {t('site:page.revisionCount')}
         </a>
       </p>
     </footer>

@@ -39,9 +39,11 @@ export const site: Locale = {
     migrateContentInfo:
       'Sivu on tehty aiemmalla versiolla pelilaudasta, ja sen sisältöä ei voi muokata ilman konversiota. Konversio voi joskus muuttaa sivun ulkoasua ja rakennetta.',
     migrateContent: 'Konvertoi',
+    revisionCount: 'muokkausta',
   },
   frontPage: 'Etusivu',
   members: {
     title: 'Omistajat',
+    add: 'Lisää omistaja',
   },
 };

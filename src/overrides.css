@@ -30,6 +30,9 @@ nav.cn-tray .cn-tray-title {
 .m-0 {
   margin: 0;
 }
+.mt-2 {
+  margin-top: var(--cn-gap);
+}
 .p-0 {
   padding: 0;
 }
@@ -237,4 +240,14 @@ cn-bubble {
     background: var(--background-elevation-4);
     box-shadow: var(--shadow-elevation-4);
   }
+}
+blockquote {
+  border-left: var(--cn-grid) solid var(--chroma-primary-30);
+  padding: calc(var(--cn-grid) / 2);
+  padding-left: var(--cn-gap);
+  margin: var(--cn-gap) 0;
+  background-color: var(--chroma-primary-95);
+}
+ul:last-child {
+  padding-bottom: var(--cn-gap);
 }
