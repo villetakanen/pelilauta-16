@@ -13,7 +13,7 @@ import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
 interface Props {
   quoteRef?: string;
-  thread?: Thread;
+  threadKey: string;
   discussion?: Atom<Reply[]>;
   onQuote: (evt: CustomEvent<string>) => void;
 }
@@ -36,7 +36,7 @@ export const ReplyForm: Component<Props> = (props) => {
     const reply = createReply({
       markdownContent: message() || '',
       owners: [uid()],
-      threadKey: props.thread?.key || '',
+      threadKey: props.threadKey,
     });
 
     logDebug(await addReply(reply));
