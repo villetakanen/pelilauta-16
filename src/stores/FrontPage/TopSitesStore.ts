@@ -5,7 +5,6 @@ import {
   parseSite,
 } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { logDebug } from '@utils/logHelpers';
 import {
   collection,
   getDocs,
@@ -22,8 +21,6 @@ export const $topSites = persistentAtom<Site[]>('frontpage-top-sites', [], {
   decode: (data) => {
     return JSON.parse(data).map((entry: Partial<Site>) => {
       const site = parseSite(entry, entry.key as string);
-      logDebug('Decoding top site', entry, site);
-
       return site;
     });
   },

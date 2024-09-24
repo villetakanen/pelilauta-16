@@ -16,12 +16,12 @@ import {
   createSignal,
 } from 'solid-js';
 import { db } from 'src/firebase/client';
-import { $account } from 'src/stores/sessionStore';
+import { $uid } from 'src/stores/sessionStore';
 import { createSite } from 'src/stores/sitesStore';
 import { GameSystemSelect } from './GameSystemSelect';
 
 export const CreateSiteApp: Component = () => {
-  const account = useStore($account);
+  const uid = useStore($uid);
   const [siteName, setSiteName] = createSignal('');
   const [system, setSystem] = createSignal('homebrew');
   const [usePlainTextURL, setUsePlainTextURL] = createSignal(true);
@@ -80,12 +80,12 @@ export const CreateSiteApp: Component = () => {
           hidden: hidden(),
           customPageKeys: usePlainTextURL(),
           homepage: key,
-          owners: [account().uid],
+          owners: [uid()],
           pageRefs: [
             {
               key: key,
               name: t('site:frontPage'),
-              author: account().uid,
+              author: uid(),
               flowTime: Date.now(),
             },
           ],

@@ -9,7 +9,7 @@ import {
   PROFILES_COLLECTION_NAME,
   type Profile,
 } from 'src/schemas/ProfileSchema';
-import { $account, $profile } from '.';
+import { $profile, $uid } from '.';
 
 type ProfileType = Partial<Profile> & {
   updatedAt?: FieldValue;
@@ -26,10 +26,7 @@ export async function updateProfile(profile: ProfileType, silent = false) {
     profile.updatedAt = serverTimestamp();
   }
 
-  const profileRef = doc(
-    db,
-    `${PROFILES_COLLECTION_NAME}/${$account.get().uid}`,
-  );
+  const profileRef = doc(db, `${PROFILES_COLLECTION_NAME}/${$uid.get()}`);
 
   await updateDoc(profileRef, profile);
 

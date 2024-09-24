@@ -15,7 +15,7 @@ export const SUBSCRIPTIONS_FIRESTORE_PATH = 'subscriptions';
  * - messagingTokens: string[], an array of messaging tokens
  */
 export const SubscriptionSchema = z.object({
-  key: z.string(),
+  uid: z.string(),
   allSeenAt: z.number(),
   seenEntities: z.record(z.string(), z.number()),
   pushMessages: z.boolean(),
@@ -28,7 +28,7 @@ export type Subscription = z.infer<typeof SubscriptionSchema>;
 
 export function createSubscription(key: string): Subscription {
   return {
-    key,
+    uid: key,
     allSeenAt: Date.now(),
     seenEntities: {},
     pushMessages: false,
@@ -40,10 +40,10 @@ export function createSubscription(key: string): Subscription {
 
 export function parseSubscription(
   data: Partial<Subscription>,
-  key: string,
+  uid: string,
 ): Subscription {
   return {
-    key,
+    uid,
     allSeenAt: data.allSeenAt || Date.now(),
     seenEntities: data.seenEntities || {},
     pushMessages: data.pushMessages || false,

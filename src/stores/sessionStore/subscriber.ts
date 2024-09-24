@@ -1,8 +1,9 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { logDebug } from '@utils/logHelpers';
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { logDebug, logError } from '@utils/logHelpers';
+import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
-import { $account } from '.';
+import { $uid } from '.';
 import {
   SUBSCRIPTIONS_FIRESTORE_PATH,
   type Subscription,
@@ -24,26 +25,51 @@ export const $subscriber = persistentAtom<Subscription>(
 
 let unsubscribe: () => void;
 
+onMount($subscriber, () => {
+  const uid = $uid.get();
+  if (uid) initSubscriberStore(uid);
+});
+
 export async function initSubscriberStore(uid: string) {
   if (!uid) {
     unsubscribe();
     return;
   }
-  logDebug('initSubscriberStore', 'loading subscriber');
   unsubscribe = onSnapshot(
     doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`),
     (doc) => {
       if (doc.exists()) {
-        logDebug('initSubscriberStore', 'subscriber loaded', doc.data());
         $subscriber.set(parseSubscription(doc.data(), doc.id));
+      } else {
+        logDebug(
+          'initSubscriberStore',
+          'user has no subscription, creating it',
+        );
+        createSubscriptionEntry(uid);
       }
     },
   );
+  logDebug('subscriber', 'Firestore subscription of subscriber set up');
+}
+
+async function createSubscriptionEntry(uid: string) {
+  if (!uid) {
+    throw new Error('an uid is required to create a subscription');
+  }
+  const subscription = createSubscription(uid);
+  const subscriberRef = doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`);
+
+  const subscriberDoc = await getDoc(subscriberRef);
+  if (subscriberDoc.exists()) {
+    throw new Error('subscriber doc already exists, aborting');
+  }
+
+  await setDoc(subscriberRef, subscription);
 }
 
 export function hasSeenEntry(entryKey: string, timestamp: number) {
-  const account = $account.get();
-  if (!account || !account.uid) {
+  const uid = $uid.get();
+  if (!uid) {
     return true;
   }
 
@@ -53,13 +79,15 @@ export function hasSeenEntry(entryKey: string, timestamp: number) {
 
 export async function markEntrySeen(entryKey: string, timestamp: number) {
   const subscriber = $subscriber.get();
+  const uid = $uid.get();
   subscriber.seenEntities[entryKey] = timestamp;
-  await updateDoc(
-    doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${subscriber.key}`),
-    {
+  try {
+    await updateDoc(doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`), {
       seenEntities: {
         ...subscriber.seenEntities,
       },
-    },
-  );
+    });
+  } catch (e: unknown) {
+    logError(e);
+  }
 }

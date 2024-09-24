@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { $owners } from '@stores/SitesApp';
 import { updatePage } from '@stores/SitesApp/pagesStore';
-import { $account } from '@stores/sessionStore';
+import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createMemo } from 'solid-js';
@@ -13,9 +13,9 @@ export const MigrateContentPanel: Component<{
   htmlContent: string;
 }> = (props) => {
   const owners = useStore($owners);
-  const account = useStore($account);
+  const uid = useStore($uid);
 
-  const show = createMemo(() => owners().includes(account().uid));
+  const show = createMemo(() => owners().includes(uid()));
 
   function migrateContents() {
     logDebug('migration', 'migrating contents');

@@ -3,18 +3,18 @@ import { $site } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { $account } from 'src/stores/sessionStore';
+import { $uid } from 'src/stores/sessionStore';
 
 /**
  * Fabs available for the site owners and players
  */
 export const PageFabs: Component<{ pageKey: string }> = (props) => {
   const site = useStore($site);
-  const account = useStore($account);
+  const uid = useStore($uid);
 
-  const editor = createMemo(
-    () => site()?.owners.includes(account().uid) || false,
-  );
+  function editor() {
+    return site().owners.includes(uid());
+  }
 
   return (
     <>

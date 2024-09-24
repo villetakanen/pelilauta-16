@@ -1,3 +1,4 @@
+import { FirebaseError } from 'firebase/app';
 import { z } from 'zod';
 
 export function logError(...args: unknown[]) {
@@ -5,7 +6,11 @@ export function logError(...args: unknown[]) {
     if (arg instanceof z.ZodError) {
       logError(arg.issues);
     } else {
-      console.error('🦑', ...args);
+      if (arg instanceof FirebaseError) {
+        console.error('🔥', arg.code, arg.message);
+      } else {
+        console.error('🦑', ...args);
+      }
     }
   }
 }

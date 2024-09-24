@@ -8,6 +8,7 @@ export const actions: Locale = {
     thread: 'Uusi keskustelu',
     site: 'Uusi sivusto',
   },
+  choose: 'Valitse',
   confirm: {
     delete: 'Vahvista poisto',
   },

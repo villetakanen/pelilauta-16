@@ -4,7 +4,7 @@ import {
   type Notification,
   ParseNotification,
 } from '@schemas/NotificationSchema';
-import { $account } from '@stores/sessionStore';
+import { $uid } from '@stores/sessionStore';
 import { logDebug, logWarn } from '@utils/logHelpers';
 import {
   collection,
@@ -35,13 +35,13 @@ let unsubscribe = () => {};
 onMount($notifications, () => {
   unsubscribe();
 
-  const account = $account.get();
-  if (!account?.uid) {
+  const uid = $uid.get();
+  if (!uid) {
     logDebug('No account, not loading notifications');
     return;
   }
 
-  subscribeToNotifications(account.uid).then(() => {
+  subscribeToNotifications(uid).then(() => {
     logDebug('Subscribed to notifications');
   });
 });

@@ -65,3 +65,13 @@ async function fetchTopicsFromDB() {
     }
   }
 }
+
+export function topicToNoun(topic?: string) {
+  if (!topic) {
+    return 'close';
+  }
+  const topics = $topics.get();
+  // logDebug('topicToNoun', 'topics', topics, 'topic', topic);
+  const topicObj = topics.find((t) => t.slug === topic);
+  return topicObj?.icon || 'fox';
+}

@@ -1,14 +1,14 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
 import { $site, load, updateSite } from '@stores/SitesApp';
-import { $account } from '@stores/sessionStore';
+import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { type Component, For, createEffect } from 'solid-js';
 import { AddSiteMemberForm } from './AddSiteMemberForm';
 
 export const SiteMembersApp: Component<{ siteKey: string }> = (props) => {
   const site = useStore($site);
-  const account = useStore($account);
+  const uid = useStore($uid);
 
   createEffect(() => {
     load(props.siteKey);
@@ -29,7 +29,7 @@ export const SiteMembersApp: Component<{ siteKey: string }> = (props) => {
               <ProfileLink uid={owner} />
               <button
                 type="button"
-                disabled={account().uid === owner}
+                disabled={uid() === owner}
                 onclick={() => dropMember(owner)}
               >
                 <cn-icon noun="delete" />
