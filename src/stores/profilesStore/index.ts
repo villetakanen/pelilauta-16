@@ -3,7 +3,7 @@ import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
 import { t } from '@utils/i18n';
 import { logDebug, logWarn } from '@utils/logHelpers';
 import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
-import { atom } from 'nanostores';
+import { atom, computed } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { z } from 'zod';
 
@@ -48,6 +48,18 @@ export function getProfile(key: string): PublicProfile | undefined {
   fetchProfile(key);
 }
 
+export function getProfileAtom(uid: string) {
+  if (!uid)
+    throw new Error('getProfileAtom called with undefined uid, aborting');
+
+  // background fetch the profile to local store
+  if (!$profiles.get()[uid]) {
+    fetchProfile(uid);
+  }
+
+  return computed($profiles, (profiles) => profiles[uid]);
+}
+
 async function fetchProfile(key: string) {
   logDebug('profilesStore', 'fetchProfile', key);
   if ($loading.get().includes(key)) {
@@ -57,10 +69,18 @@ async function fetchProfile(key: string) {
   const publicProfileDoc = await getDoc(doc(db, 'profiles', key));
   logDebug('profilesStore', 'fetchProfile', key, publicProfileDoc.exists());
   if (publicProfileDoc.exists()) {
+    // Legacy support for avatarURL
+    const avatarURL =
+      publicProfileDoc.data().avatarURL ||
+      publicProfileDoc.data().photoURL ||
+      '';
+
     const publicProfile = PublicProfileSchema.parse({
       ...publicProfileDoc.data(),
-      key: publicProfileDoc.id,
+      avatarURL,
+      key,
     });
+
     $profiles.set({
       ...$profiles.get(),
       [key]: publicProfile,

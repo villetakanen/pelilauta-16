@@ -1,0 +1,10 @@
+---
+import { ProfileApp } from '@client/ProfileApp/ProfileApp';
+import Page from '@layouts/Page.astro';
+
+const { uid } = Astro.params;
+const profileKey = uid || ''; // This should not happen, but just in case
+---
+<Page>
+  <ProfileApp uid={profileKey} client:only="solid-js"/>
+</Page>
