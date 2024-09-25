@@ -9,6 +9,8 @@ import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 
+const THREADS_PER_PAGE = 3;
+
 export const $topThreads = persistentAtom<Thread[]>(
   'frontpage-top-threads',
   [],
@@ -26,7 +28,7 @@ async function fetchTopThreads() {
   const q = query(
     collection(db, THREADS_COLLECTION_NAME),
     orderBy('flowTime', 'desc'),
-    limit(11),
+    limit(THREADS_PER_PAGE),
   );
 
   const threadDocs = await getDocs(q);
