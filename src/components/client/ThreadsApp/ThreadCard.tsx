@@ -29,14 +29,14 @@ export const ThreadCard: Component<{
           <MarkdownSnippetSection content={`${props.thread.markdownContent}`} />
         </div>
 
-        <p class="text-right downscaled">
-          <ProfileLink uid={props.thread.owners[0]} />
-        </p>
-
         <div slot="actions">
           <div class="toolbar px-0">
-            <p class="m-0 px-1">{toDisplayString(props.thread.flowTime)}</p>
-            <div class="grow" />
+            <div class="grow downscaled">
+              <p class="m-0 px-1">
+                <ProfileLink uid={props.thread.owners[0]} /> <br />
+                {toDisplayString(props.thread.flowTime)}
+              </p>
+            </div>
             <ThreadLikeButton thread={props.thread} />
 
             <a href={`/threads/${props.thread.key}#discussion`}>
