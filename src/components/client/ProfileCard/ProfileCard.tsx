@@ -11,9 +11,9 @@ export const ProfileCard: Component<Profile> = (props) => {
         <section>
           <h3>{props.nick}</h3>
           <p>
-            <a href={`/profiles/${toFid(props.nick)}`}>{toFid(props.nick)}</a>
+            <a href={`/profiles/${props.key}`}>{toFid(props.nick)}</a>
           </p>
-          <MarkdownSection content={`${props.bio}`} />
+          {props.bio && <MarkdownSection content={`${props.bio}`} />}
         </section>
       </div>
     </cn-card>
