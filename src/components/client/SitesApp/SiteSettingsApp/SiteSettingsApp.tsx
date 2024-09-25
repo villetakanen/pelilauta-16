@@ -23,11 +23,6 @@ export const SiteSettingsApp: Component<{ site: string }> = (props) => {
       <SiteMetaDataSection />
       <ThemingSection />
       <DangerZoneSection />
-      <div class="debug">
-        <p>key: {props.site}</p>
-        <br />
-        <p>{JSON.stringify(site())}</p>
-      </div>
     </div>
   );
 };

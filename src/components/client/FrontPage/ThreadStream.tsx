@@ -20,7 +20,7 @@ export const ThreadStream: Component = () => {
       ))}
       <div class="flex justify-center border-top">
         <a href="/threads" class="button call-to-action">
-          {t('actions:see-more')}
+          {t('actions:readMore')}
         </a>
       </div>
     </div>

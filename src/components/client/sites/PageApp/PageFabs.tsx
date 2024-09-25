@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { $site } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
-import { type Component, createMemo } from 'solid-js';
+import type { Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import { $uid } from 'src/stores/sessionStore';
 

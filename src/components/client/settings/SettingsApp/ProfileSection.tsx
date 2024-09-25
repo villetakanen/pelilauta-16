@@ -1,5 +1,4 @@
 import { useStore } from '@nanostores/solid';
-import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 import {
