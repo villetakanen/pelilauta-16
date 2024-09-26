@@ -1,7 +1,6 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
 import { type Reply, createReply } from '@schemas/ReplySchema';
-import type { Thread } from '@schemas/ThreadSchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { addReply } from '@stores/ThreadsApp/discussion';
 import { $uid } from '@stores/sessionStore';

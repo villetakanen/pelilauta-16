@@ -15,10 +15,13 @@ import Page from 'src/layouts/Page.astro';
       <div class="column-s">
         <TopSitesSection client:only="solid-js"/>
       </div>
+
+      {import.meta.env.SECRET_FEATURE_FLAG_DEBUG === 'true' && ( 
       <article>
         <h2><cn-icon large noun="fox" />DEBUG</h2>
         <DebugSection client:only="solid-js"/>
-      </article>
+      </article> 
+      )}
     </div>
     <FrontPageFabs client:only="solid-js"/>
 </Page>

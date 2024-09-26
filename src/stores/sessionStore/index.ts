@@ -134,6 +134,7 @@ export async function logout() {
 
   // Clear the session
   await clear();
+  $loadingState.set('active');
 
   // Sign out from Firebase
   auth.signOut();
