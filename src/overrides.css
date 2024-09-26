@@ -251,3 +251,6 @@ blockquote {
 ul:last-child {
   padding-bottom: var(--cn-gap);
 }
+:root {
+  color-scheme: light dark;
+}
