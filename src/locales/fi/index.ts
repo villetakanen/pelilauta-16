@@ -14,9 +14,9 @@ export const fi: Locale = {
   app: {
     title: 'Pelilauta 2 - Versio 16 - Alfajulkaisu',
     meta: {
-      title: 'Pelilauta 2 16α',
+      title: 'Pelilauta 2 16 [RC]',
       description:
-        'Pelilauta 2 - Versio 16α – SSR tuella varustettu versio Pelilaudasta. Hyvin varhainen julkaisu, suurin osa toiminnoista puuttuu',
+        'Pelilauta 2 - Versio 16 [RC] – Roolipelikeskustelut, sivustot, wikit ja muuta sellaista',
       version: 'Versio',
       source: 'Koodi',
       dangerZone: 'Vaaravyöhyke',
