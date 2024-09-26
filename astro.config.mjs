@@ -8,6 +8,6 @@ export default defineConfig({
   integrations: [solidJs()],
   output: 'server',
   adapter: vercel({
-    webAnalytics: { enabled: true }
+    webAnalytics: { enabled: true },
   }),
 });
