@@ -1,0 +1,22 @@
+---
+import { systemToNounMapping } from '@schemas/nouns';
+import { toDisplayString } from '@utils/contentHelpers';
+
+const { site } = Astro.props;
+
+function systemToNoun(system: string): string {
+  const map = systemToNounMapping as Record<string, string>;
+  return map[system] || 'homebrew';
+}
+---
+<div>
+  <a class="flex flex-row hoverable p-1" style="text-decoration: none;" href={`/sites/${site.key}`}>
+    <span class="icon">
+      <cn-icon noun={systemToNoun(site.system)} />
+    </span>
+    <h4 class="grow downscaled m-0 p-0">{site.name}</h4>
+    <span>
+        {toDisplayString(site.flowTime)}
+    </span>
+  </a>
+</div>

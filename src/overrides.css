@@ -28,7 +28,7 @@ nav.cn-tray .cn-tray-title {
   margin-bottom: var(--cn-gap);
 }
 .m-0 {
-  margin: 0;
+  margin: 0 !important;
 }
 .mt-2 {
   margin-top: var(--cn-gap);
@@ -253,4 +253,7 @@ ul:last-child {
 }
 :root {
   color-scheme: light dark;
+}
+.hoverable:hover {
+  background-color: color-mix(in hsl, var(--color-on-primary), transparent 95%);
 }

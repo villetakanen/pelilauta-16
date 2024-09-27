@@ -1,0 +1,22 @@
+---
+import { type Site, parseSite } from '@schemas/SiteSchema';
+import { t } from '@utils/i18n';
+import SiteListItem from './SiteListItem.astro';
+
+const site = Astro.url.origin;
+
+const siteListResponse = await fetch(`${site}/api/sites`);
+const sitesJSON = await siteListResponse.json();
+const sites = (sitesJSON as Array<Site>).map((site) =>
+  parseSite(site, site.key),
+);
+---
+<div class="column-l">
+    <h2>{t('site:siteList.title')}</h2>
+    
+        {sites && sites.map((site) => (
+            <SiteListItem site={site} />
+        ))}
+
+        
+</div>
