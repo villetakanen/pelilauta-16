@@ -46,4 +46,7 @@ export const site: Locale = {
     title: 'Omistajat',
     add: 'Lisää omistaja',
   },
+  siteList: {
+    title: 'Julkiset sivustot',
+  },
 };

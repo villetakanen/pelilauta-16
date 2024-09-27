@@ -1,7 +1,6 @@
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
 import { toDisplayString } from '@utils/contentHelpers';
-import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSnippetSection } from 'src/components/shared/MarkdownSnippetSection';
 import type { Thread } from 'src/schemas/ThreadSchema';
