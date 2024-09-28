@@ -132,9 +132,6 @@ div.forum-topics {
   grid-template-columns: var(--cn-icon-medium, 48px) 1fr calc(var(--cn-icon-medium, 64px) * 2); 
   gap: var(--cn-gap);
 }
-div.forum-topics > * {
-  border-top: var(--color-border) solid 1px;
-}
 img.w-16-9 {
   aspect-ratio: 16/9;
   object-fit: cover;
