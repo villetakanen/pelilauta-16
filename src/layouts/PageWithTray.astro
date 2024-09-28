@@ -1,4 +1,5 @@
 ---
+import BottomBar from '@server/BottomBar.astro';
 import AppBar from 'src/components/server/AppBar.astro';
 import AppRail from 'src/components/server/AppRail.astro';
 import BasePostscripts from 'src/components/server/BasePostscripts.astro';
@@ -14,6 +15,7 @@ const { title } = Astro.props;
       <slot name="app-bar" />
     </AppBar>
 	  <AppRail title={title}/>
+    <BottomBar />
 
     <cn-tray-button></cn-tray-button> 
     <nav class="cn-tray">
@@ -23,9 +25,7 @@ const { title } = Astro.props;
 	  <main>
       <slot />
     </main>
-    <nav id="fab-tray">
-      <slot name="fab-tray"></slot>
-    </nav>
+    <nav id="fab-tray"><slot name="fab-tray"></slot></nav>
     <BasePostscripts />
     <script is:inline>
       // If the viewport is larger than 1280px, the tray should be open by default
