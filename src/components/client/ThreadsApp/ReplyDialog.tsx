@@ -1,26 +1,25 @@
 /**
  * A cn-dialog component that allows the user to reply to a thread.
- * 
- * Do note: we moved replying to a dialog to match the design of Threads, Linker, 
+ *
+ * Do note: we moved replying to a dialog to match the design of Threads, Linker,
  * and other social media platforms.
- * 
+ *
  * The theory here is that people find it more intuitive to use a similar interface
  * across different platforms.
  */
 import type { CnDialog } from '@11thdeg/cyan-next';
 import type { Thread } from '@schemas/ThreadSchema';
 import { logDebug } from '@utils/logHelpers';
-import { createEffect, createSignal, type Component } from 'solid-js';
+import { type Component, createEffect, createSignal } from 'solid-js';
 
 interface Props {
   thread?: Thread;
   open: boolean;
-  onClose?: () => void ;
-};
+  onClose?: () => void;
+}
 
 export const ReplyDialog: Component<Props> = (props) => {
-
-  let dialogRef: CnDialog | undefined
+  let dialogRef: CnDialog | undefined;
 
   createEffect(() => {
     logDebug('ReplyDialog', 'open', props.open);
@@ -35,7 +34,7 @@ export const ReplyDialog: Component<Props> = (props) => {
         (dialog as CnDialog).close();
       }
     }
-  })
+  });
 
   return (
     <cn-dialog
@@ -47,4 +46,4 @@ export const ReplyDialog: Component<Props> = (props) => {
       <p>[Reply Form goes here]</p>
     </cn-dialog>
   );
-}
+};

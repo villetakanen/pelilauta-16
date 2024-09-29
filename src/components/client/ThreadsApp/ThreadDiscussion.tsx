@@ -1,12 +1,12 @@
 import { ReplyBubble } from '@client/threads/ThreadApp/ReplyBubble';
 import { ReplyForm } from '@client/threads/ThreadApp/ReplyForm';
 import { useStore } from '@nanostores/solid';
+import { subscribeThread } from '@stores/ThreadsApp';
 import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, For, createSignal } from 'solid-js';
 import { ReplyButton } from './ReplyButton';
-import { subscribeThread } from '@stores/ThreadsApp';
 
 declare module 'solid-js' {
   namespace JSX {
@@ -44,7 +44,6 @@ export const ThreadDiscussion: Component<{
   return (
     <div class="content-columns">
       <div class="column-l">
-
         {thread() && <ReplyButton thread={thread() || undefined} />}
 
         <h3>{t('threads:discussion.title')}</h3>
