@@ -5,6 +5,8 @@ import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, For, createSignal } from 'solid-js';
+import { ReplyButton } from './ReplyButton';
+import { subscribeThread } from '@stores/ThreadsApp';
 
 declare module 'solid-js' {
   namespace JSX {
@@ -27,6 +29,7 @@ export const ThreadDiscussion: Component<{
   const discussionRef = subscribeToDiscussion(props.threadKey);
   const discussion = useStore(discussionRef);
   const [quoteRef, setQuoteRef] = createSignal<string | undefined>(undefined);
+  const thread = useStore(subscribeThread(props.threadKey));
 
   function handleQuote(e: Event) {
     logDebug('Quote', 'handleQuote 2', e);
@@ -41,6 +44,9 @@ export const ThreadDiscussion: Component<{
   return (
     <div class="content-columns">
       <div class="column-l">
+
+        {thread() && <ReplyButton thread={thread() || undefined} />}
+
         <h3>{t('threads:discussion.title')}</h3>
         <div class="flex flex-col downscaled" on:Quote={handleQuote}>
           <For each={discussion()} fallback={<p>No replies yet.</p>}>
