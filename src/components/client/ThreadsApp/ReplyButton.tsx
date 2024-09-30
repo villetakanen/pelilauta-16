@@ -37,7 +37,7 @@ export const ReplyButton: Component<Props> = (props) => {
             <cn-icon noun="send" />
             <span class="hide-on-mobile">{t('actions:reply')}</span>
           </button>
-          <ReplyDialog {...props} open={showModal()} onClose={handleClose}/>
+          <ReplyDialog {...props} open={showModal()} onClose={handleClose} />
         </>
       )}
       {!uid() && (
