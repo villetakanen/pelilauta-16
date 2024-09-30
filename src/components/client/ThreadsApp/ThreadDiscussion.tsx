@@ -1,7 +1,5 @@
 import { ReplyBubble } from '@client/threads/ThreadApp/ReplyBubble';
-import { ReplyForm } from '@client/threads/ThreadApp/ReplyForm';
 import { useStore } from '@nanostores/solid';
-import { subscribeThread } from '@stores/ThreadsApp';
 import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
@@ -29,7 +27,6 @@ export const ThreadDiscussion: Component<{
   const discussionRef = subscribeToDiscussion(props.threadKey);
   const discussion = useStore(discussionRef);
   const [quoteRef, setQuoteRef] = createSignal<string | undefined>(undefined);
-  const thread = useStore(subscribeThread(props.threadKey));
 
   function handleQuote(e: Event) {
     logDebug('Quote', 'handleQuote 2', e);
@@ -44,7 +41,12 @@ export const ThreadDiscussion: Component<{
   return (
     <div class="content-columns">
       <div class="column-l">
-        {thread() && <ReplyButton thread={thread() || undefined} />}
+        <ReplyButton
+          quoteRef={quoteRef()}
+          threadKey={props.threadKey}
+          discussion={discussionRef}
+          onQuote={handleQuote}
+        />
 
         <h3>{t('threads:discussion.title')}</h3>
         <div class="flex flex-col downscaled" on:Quote={handleQuote}>
@@ -52,12 +54,6 @@ export const ThreadDiscussion: Component<{
             {(reply) => <ReplyBubble reply={reply} onQuote={handleQuote} />}
           </For>
         </div>
-        <ReplyForm
-          quoteRef={quoteRef()}
-          threadKey={props.threadKey}
-          discussion={discussionRef}
-          onQuote={handleQuote}
-        />
       </div>
     </div>
   );

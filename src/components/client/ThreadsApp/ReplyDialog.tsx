@@ -100,7 +100,7 @@ export const ReplyDialog: Component<Props> = (props) => {
         </div>
       )}
 
-      <form>
+      <form onsubmit={send}>
         <textarea
           placeholder={t('disccussion:replyPlaceholder')}
           rows="5"

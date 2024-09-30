@@ -1,6 +1,5 @@
 import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
-import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import type { Atom } from 'nanostores';
@@ -32,14 +31,13 @@ export const ReplyButton: Component<Props> = (props) => {
 
   return (
     <>
-      {' '}
       {uid() && (
         <>
           <button type="button" onClick={() => setShowModal(true)}>
             <cn-icon noun="send" />
             <span class="hide-on-mobile">{t('actions:reply')}</span>
           </button>
-          <ReplyDialog {...props} open={showModal()} />
+          <ReplyDialog {...props} open={showModal()} onClose={handleClose}/>
         </>
       )}
       {!uid() && (
