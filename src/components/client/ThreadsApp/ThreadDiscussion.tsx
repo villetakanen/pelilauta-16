@@ -1,10 +1,10 @@
 import { ReplyBubble } from '@client/threads/ThreadApp/ReplyBubble';
-import { ReplyForm } from '@client/threads/ThreadApp/ReplyForm';
 import { useStore } from '@nanostores/solid';
 import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, For, createSignal } from 'solid-js';
+import { ReplyButton } from './ReplyButton';
 
 declare module 'solid-js' {
   namespace JSX {
@@ -47,12 +47,14 @@ export const ThreadDiscussion: Component<{
             {(reply) => <ReplyBubble reply={reply} onQuote={handleQuote} />}
           </For>
         </div>
-        <ReplyForm
-          quoteRef={quoteRef()}
-          threadKey={props.threadKey}
-          discussion={discussionRef}
-          onQuote={handleQuote}
-        />
+        <div class="flex flex-row border-t mt-2 justify-center">
+          <ReplyButton
+            quoteRef={quoteRef()}
+            threadKey={props.threadKey}
+            discussion={discussionRef}
+            onQuote={handleQuote}
+          />
+        </div>
       </div>
     </div>
   );
