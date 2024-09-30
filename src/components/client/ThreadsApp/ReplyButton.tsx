@@ -9,7 +9,7 @@ import type { Atom } from 'nanostores';
  * This component is used in the ThreadsApp component, it injects the ReplyDialog component
  * to the #base-tail div at the end of each astro-layout component.
  */
-import { type Component, createSignal } from 'solid-js';
+import { type Component, createEffect, createSignal } from 'solid-js';
 import { ReplyDialog } from './ReplyDialog';
 
 interface Props {
@@ -29,13 +29,19 @@ export const ReplyButton: Component<Props> = (props) => {
     props.onClose?.();
   }
 
+  createEffect(() => {
+    if (props.quoteRef) {
+      setShowModal(true);
+    }
+  });
+
   return (
     <>
       {uid() && (
         <>
           <button type="button" onClick={() => setShowModal(true)}>
             <cn-icon noun="send" />
-            <span class="hide-on-mobile">{t('actions:reply')}</span>
+            <span class="hide-on-mobile">{t('threads:discussion.reply')}</span>
           </button>
           <ReplyDialog {...props} open={showModal()} onClose={handleClose} />
         </>

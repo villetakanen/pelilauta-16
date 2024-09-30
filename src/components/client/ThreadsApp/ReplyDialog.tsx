@@ -31,6 +31,7 @@ interface Props {
 export const ReplyDialog: Component<Props> = (props) => {
   const uid = useStore($uid);
   let dialog: HTMLDialogElement | undefined;
+  let replyTextArea: HTMLTextAreaElement | undefined;
   const [message, setMessage] = createSignal<string | null>(null);
   const dispatch = createEventDispatcher(props);
   const discussion = useStore(props.discussion || atom([]));
@@ -39,7 +40,12 @@ export const ReplyDialog: Component<Props> = (props) => {
 
   createEffect(() => {
     if (props.open) {
+      setMessage('');
       dialog?.showModal();
+      if (replyTextArea) {
+        replyTextArea.value = '';
+        replyTextArea.focus();
+      }
     } else {
       dialog?.close();
     }
@@ -69,18 +75,22 @@ export const ReplyDialog: Component<Props> = (props) => {
       threadKey: props.threadKey,
     });
 
+    if (props.quoteRef) {
+      reply.quoteref = props.quoteRef;
+    }
+
     logDebug(await addReply(reply));
 
     handleClose();
   }
 
   return (
-    <dialog ref={dialog}>
+    <dialog ref={dialog} style="width: min(95vh, 700px)">
       <div class="header">
         <button type="button" onClick={handleClose} aria-label="Close dialog">
           <cn-icon noun="close" />
         </button>
-        <h3>{t('disccussion:reply')}</h3>
+        <h3>{t('threads:discussion.reply')}</h3>
       </div>
 
       {quote() && (
@@ -102,13 +112,19 @@ export const ReplyDialog: Component<Props> = (props) => {
 
       <form onsubmit={send}>
         <textarea
-          placeholder={t('disccussion:replyPlaceholder')}
+          ref={replyTextArea}
+          placeholder={t('entries:reply.markdownContent')}
           rows="5"
           onBlur={(e) => setMessage(e.currentTarget.value)}
-        >
-          {message()}
-        </textarea>
-        <button type="submit">{t('disccussion:reply')}</button>
+        />
+        <div class="toolbar justify-end">
+          <button type="button" class="text" onClick={handleClose}>
+            {t('actions:cancel')}
+          </button>
+          <button type="submit" class="call-to-action">
+            {t('actions:send')}
+          </button>
+        </div>
       </form>
     </dialog>
   );

@@ -41,18 +41,19 @@ export const ThreadDiscussion: Component<{
   return (
     <div class="content-columns">
       <div class="column-l">
-        <ReplyButton
-          quoteRef={quoteRef()}
-          threadKey={props.threadKey}
-          discussion={discussionRef}
-          onQuote={handleQuote}
-        />
-
         <h3>{t('threads:discussion.title')}</h3>
         <div class="flex flex-col downscaled" on:Quote={handleQuote}>
           <For each={discussion()} fallback={<p>No replies yet.</p>}>
             {(reply) => <ReplyBubble reply={reply} onQuote={handleQuote} />}
           </For>
+        </div>
+        <div class="flex flex-row border-t mt-2 justify-center">
+          <ReplyButton
+            quoteRef={quoteRef()}
+            threadKey={props.threadKey}
+            discussion={discussionRef}
+            onQuote={handleQuote}
+          />
         </div>
       </div>
     </div>

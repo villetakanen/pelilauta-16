@@ -41,6 +41,9 @@ export const entries: Locale = {
       title: 'Otsikko',
     },
   },
+  reply: {
+    markdownContent: '...',
+  },
   default: 'Oletus',
   page: {
     name: 'Sivun nimi',
