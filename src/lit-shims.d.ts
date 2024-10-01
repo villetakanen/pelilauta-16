@@ -32,6 +32,7 @@ declare module 'solid-js' {
         checked: boolean;
         value: string;
       };
+      'cn-menu': HTMLAttributes;
       'cn-toggle-button': HTMLAttributes & {
         label: string;
         checked: boolean;
