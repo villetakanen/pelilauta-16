@@ -257,3 +257,12 @@ ul:last-child {
 .hoverable:hover {
   background-color: color-mix(in hsl, var(--color-on-primary), transparent 95%);
 }
+cn-menu button.menu-item {
+  display: flex;
+  border-radius: 0;
+  padding: var(--cn-grid);
+  margin: 0;
+  width: 100%;
+  align-items: center;
+  justify-items: start;
+}
