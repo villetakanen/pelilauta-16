@@ -1,3 +1,4 @@
+import { ReplyDropdown } from '@client/ThreadsApp/ReplyDropdown';
 import { ProfileAvatar } from '@client/shared/ProfileAvatar';
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { useStore } from '@nanostores/solid';
@@ -66,19 +67,7 @@ export const ReplyBubble: Component<Props> = (props) => {
           >
             <cn-icon xsmall noun="quote" />
           </button>
-          {fromCurrentUser() && (
-            <cn-menu>
-              <ul>
-                <li>
-                  <a
-                    href={`/threads/${props.reply.threadKey}/replies/${props.reply.key}/delete`}
-                  >
-                    Delete
-                  </a>
-                </li>
-              </ul>
-            </cn-menu>
-          )}
+          <ReplyDropdown reply={props.reply} />
         </div>
         <MarkdownSection content={`${props.reply.markdownContent}`} />
       </cn-bubble>

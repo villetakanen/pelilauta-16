@@ -1,7 +1,17 @@
 ---
+import { ConfirmReplyDeleteApp } from '@client/ThreadsApp/ConfirmReplyDeleteApp';
 import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
+const { threadKey, replyKey } = Astro.params;
+
+if (!threadKey || !replyKey) {
+  throw new Error('threadKey/replyKey is required');
+}
 ---
 <ModalPage title={t('threads:discussion.delete.reply')}>
-  ...
+  <ConfirmReplyDeleteApp
+    threadKey={threadKey}
+    replyKey={replyKey}
+    client:only="solid-js"
+  />
 </ModalPage>

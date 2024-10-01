@@ -114,7 +114,7 @@ export function subscribeToDiscussionFirestore(
   );
 
   unsubscribe = onSnapshot(q, (snapshot) => {
-    let currentDiscussion = [...store.get()];
+    let currentDiscussion: Reply[] = [];
     for (const change of snapshot.docChanges()) {
       if (change.type === 'removed') {
         currentDiscussion = currentDiscussion.filter(
