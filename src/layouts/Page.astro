@@ -1,4 +1,5 @@
 ---
+import AppFooter from '@server/AppFooter.astro';
 import BottomBar from '@server/BottomBar.astro';
 import AppBar from 'src/components/server/AppBar.astro';
 import AppRail from 'src/components/server/AppRail.astro';
@@ -19,6 +20,7 @@ const { title } = Astro.props;
     <BottomBar />
 	  <main>
       <slot />
+      <AppFooter />
     </main>
     <nav id="fab-tray">
       <slot name="fab-tray"></slot>
