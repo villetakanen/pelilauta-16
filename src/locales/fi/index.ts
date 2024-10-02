@@ -24,8 +24,21 @@ export const fi: Locale = {
     docs: {
       title: 'Pelilauta',
     },
+    footer: {
+      partners: {
+        title: 'Yhteistyössä',
+      },
+    },
     settings: {
       title: 'Asetukset',
+    },
+    '404': {
+      title: 'Hups!',
+      subtitle: '404 - Tämä polku ei vie mihinkään.',
+      info: 'Ehkä löydät etsimäsi seuraavien linkkien avulla:',
+      'go-home': 'Etusivu',
+      'go-sites': 'Julkisten pelien ja sivustojen listaus',
+      'go-threads': 'Keskustelualueet',
     },
   },
   login,
