@@ -18,10 +18,6 @@ export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
   const site = useStore($site);
   const page = useStore(subscribePage(props.pageKey));
 
-  /*const page = createMemo(
-    () => pages().find((p) => p.key === props.pageKey) || createPage('', ''),
-  );*/
-
   onMount(() => {
     load(props.siteKey || '');
   });

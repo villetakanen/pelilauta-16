@@ -17,7 +17,6 @@ export const SitesApp: Component<{ siteKey: string }> = (props) => {
   return (
     <div>
       <WithLoader loading={!active()}>
-        <p>{pageKey()}</p>
         <PageApp pageKey={pageKey()} siteKey={site().key} />
       </WithLoader>
     </div>
