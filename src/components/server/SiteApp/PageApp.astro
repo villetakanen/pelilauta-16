@@ -26,7 +26,11 @@ const page = parsePage(toClientEntry(pageData), pageKey, site.key);
 <div class="content-columns">
   <article class="column-l elevation-1 p-2">
     <PageArticleHeader page={page} site={site}/>
-    <MarkdownSection content={page.markdownContent || ''} client:only="solid-js"/>
+    <h1>{page.name}</h1>
+    { page.markdownContent ? 
+      <MarkdownSection content={page.markdownContent || ''} client:only="solid-js"/> : 
+      <div set:html={page.htmlContent}></div> 
+    }
     <PageArticleFooter page={page} site={site}/>
   </article>
   <div class="column-s">
@@ -34,3 +38,6 @@ const page = parsePage(toClientEntry(pageData), pageKey, site.key);
   </div>
   <PageFabs pageKey={pageKey} client:only="solid-js"/>
 </div>
+{ site.backgroundURL && <div class="pageBackgroundPoster">
+  <img src={site.backgroundURL} alt=""/>
+</div> }
