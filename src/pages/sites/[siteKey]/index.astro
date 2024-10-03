@@ -1,12 +1,23 @@
 ---
 import { SiteTray } from '@client/SitesApp/SiteTray';
-import { SitesApp } from '@client/SitesApp/SitesApp';
+import { parseSite } from '@schemas/SiteSchema';
+import PageApp from '@server/SiteApp/PageApp.astro';
+import { toClientEntry } from '@utils/client/entryUtils';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
 const { siteKey: siteKeyParam } = Astro.params;
 const siteKey = siteKeyParam || 'mekanismi'; // This should not happen, but just in case
+
+const origin = new URL(Astro.request.url).origin;
+
+// Fetch site data from the api
+const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
+  res.json(),
+);
+const site = parseSite(toClientEntry(siteData), siteKey);
+const homePageKey = site.homepage || site.key;
 ---
-<PageWithTray>
-  <SiteTray slot="app-tray" siteKey={siteKey} client:only="solid-js"/>
-  <SitesApp siteKey={siteKey} client:only="solid-js"/>
+<PageWithTray title={site.name}>
+  <SiteTray slot="app-tray" siteKey={site.key} client:only="solid-js"/>
+  <PageApp site={site} pageKey={homePageKey}/>
 </PageWithTray>

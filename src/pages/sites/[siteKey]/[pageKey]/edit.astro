@@ -1,15 +1,37 @@
 ---
 import { PageEditor } from '@client/sites/PageApp/PageEditor';
-import Page from 'src/layouts/Page.astro';
+import ModalPage from '@layouts/ModalPage.astro';
+import { parsePage } from '@schemas/PageSchema';
+import { parseSite } from '@schemas/SiteSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { t } from '@utils/i18n';
 
-const { siteKey: siteKeyParam, pageKey } = Astro.params;
+interface Props {
+  siteKey: string;
+  pageKey: string;
+}
 
-const siteKey = siteKeyParam || '';
-const page = pageKey || siteKey || '';
+const { siteKey, pageKey } = Astro.params;
+
+if (!siteKey || !pageKey) {
+  throw new Error('Missing siteKey or pageKey');
+}
+
+// Fetch site data from the api
+const origin = new URL(Astro.request.url).origin;
+
+// Fetch site data from the api
+const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
+  res.json(),
+);
+const site = parseSite(toClientEntry(siteData), siteKey || 'mekanismi');
+
+// Fetch page data from the api
+const pageData = await fetch(
+  `${origin}/api/sites/${site.key}/pages/${pageKey}.json`,
+).then((res) => res.json());
+const page = parsePage(toClientEntry(pageData), pageKey, site.key);
 ---
-<Page>
-  <div slot="app-bar">
-    ...
-  </div>
-  <PageEditor siteKey={siteKey} pageKey={page} client:only="solid-js"/>
-</Page>
+<ModalPage title={t('site:editor.title')}>
+  <PageEditor site={site} page={page} client:only="solid-js"/>
+</ModalPage>

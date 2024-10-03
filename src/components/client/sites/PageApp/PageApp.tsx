@@ -4,27 +4,31 @@
 
 import { PageBackgroundPoster } from '@client/PageBackgroundPoster';
 import { useStore } from '@nanostores/solid';
-import { createPage } from '@schemas/PageSchema';
-import { $site, load } from '@stores/SitesApp';
-import { subscribePage } from '@stores/SitesApp/pagesStore';
-import { type Component, onMount } from 'solid-js';
+import { createPage, parsePage } from '@schemas/PageSchema';
+import { $site } from '@stores/SitesApp';
+import { type Component, createMemo, createResource } from 'solid-js';
 import { PageArticle } from '../../SitesApp/PageArticle';
 import { PageFabs } from './PageFabs';
 import { PageSidebar } from './PageSidebar';
 
-export const PageApp: Component<{ pageKey: string; siteKey?: string }> = (
+export const PageApp: Component<{ pageKey: string; siteKey: string }> = (
   props,
 ) => {
   const site = useStore($site);
-  const page = useStore(subscribePage(props.pageKey));
 
-  /*const page = createMemo(
-    () => pages().find((p) => p.key === props.pageKey) || createPage('', ''),
-  );*/
+  const fetchPage = async () => {
+    const origin = document.location.origin;
 
-  onMount(() => {
-    load(props.siteKey || '');
-  });
+    const response = await fetch(
+      `${origin}/api/sites/${props.siteKey}/pages/${props.pageKey}.json`,
+    );
+    return response.json();
+  };
+
+  const [pageData] = createResource(fetchPage);
+  const page = createMemo(() =>
+    parsePage(pageData(), props.pageKey, props.siteKey),
+  );
 
   return (
     <>

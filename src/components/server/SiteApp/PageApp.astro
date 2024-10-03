@@ -1,0 +1,36 @@
+---
+import { PageFabs } from '@client/sites/PageApp/PageFabs';
+import { PageSidebar } from '@client/sites/PageApp/PageSidebar';
+import { parsePage } from '@schemas/PageSchema';
+import type { Site } from '@schemas/SiteSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { MarkdownSection } from 'src/components/shared/MarkdownSection';
+import PageArticleFooter from './PageArticleFooter.astro';
+import PageArticleHeader from './PageArticleHeader.astro';
+
+/** SSR Site app */
+
+interface Props {
+  pageKey: string;
+  site: Site;
+}
+const { site, pageKey } = Astro.props as Props;
+const origin = new URL(Astro.request.url).origin;
+
+// Fetch page data from the api
+const pageData = await fetch(
+  `${origin}/api/sites/${site.key}/pages/${pageKey}.json`,
+).then((res) => res.json());
+const page = parsePage(toClientEntry(pageData), pageKey, site.key);
+---
+<div class="content-columns">
+  <article class="column-l elevation-1 p-2">
+    <PageArticleHeader page={page} site={site}/>
+    <MarkdownSection content={page.markdownContent || ''} client:only="solid-js"/>
+    <PageArticleFooter page={page} site={site}/>
+  </article>
+  <div class="column-s">
+    <PageSidebar site={site} client:only="solid-js"/>
+  </div>
+  <PageFabs pageKey={pageKey} client:only="solid-js"/>
+</div>
