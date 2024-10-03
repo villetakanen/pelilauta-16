@@ -9,7 +9,8 @@
       "@server/*": ["src/components/server/*"],
       "@schemas/*": ["src/schemas/*"],
       "@layouts/*": ["src/layouts/*"],
-      "@stores/*": ["src/stores/*"]
+      "@stores/*": ["src/stores/*"],
+      "@firebase/*": ["src/firebase/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"

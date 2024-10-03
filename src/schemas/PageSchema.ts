@@ -23,7 +23,7 @@ export const PageSchema = ContentEntrySchema.extend({
 export type Page = z.infer<typeof PageSchema>;
 
 export const parsePage = (
-  data: Record<string, unknown>,
+  data: Partial<Page>,
   key: string,
   siteKey: string,
 ): Page => {

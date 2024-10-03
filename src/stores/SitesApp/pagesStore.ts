@@ -205,7 +205,7 @@ export async function addPage(
   }
 
   fsPage.key = key;
-  const newPage = parsePage(fsPage, key, siteKey);
+  const newPage = parsePage(toClientEntry(fsPage), key, siteKey);
   patchToPages(newPage);
   await updatePageRefs(newPage);
 
