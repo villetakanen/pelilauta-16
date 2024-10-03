@@ -8,7 +8,7 @@ export const PageSidebar: Component<{ site: Site }> = (props) => {
   const site = createMemo(() => props.site);
 
   return (
-    <article class="elevation-1 p-2">
+    <article>
       <h3 class="downscaled">{site().name}</h3>
       {site().posterURL && (
         <img src={site().posterURL} alt={site().name} class="poster" />

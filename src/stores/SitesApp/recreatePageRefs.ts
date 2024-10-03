@@ -37,7 +37,7 @@ export async function recreatePageRefs(siteKey: string) {
     const ref = {
       key: pageDoc.id,
       name: pageDoc.data().name,
-      author: pageDoc.data().owners[0] || siteDoc.data().owners[0],
+      author: pageDoc.data().owners?.[0] || siteDoc.data().owners[0],
       category: pageDoc.data().category || '',
       flowTime: toDate(pageDoc.data().flowTime).getTime(),
     };
