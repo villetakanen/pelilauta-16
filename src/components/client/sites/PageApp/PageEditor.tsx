@@ -1,21 +1,18 @@
-import { useStore } from '@nanostores/solid';
 import type { Page } from '@schemas/PageSchema';
-import { $pages, updatePage } from '@stores/SitesApp/pagesStore';
+import type { Site } from '@schemas/SiteSchema';
+import { updatePage } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
-import { type Component, createMemo, createSignal } from 'solid-js';
+import { type Component, createSignal } from 'solid-js';
 
 export type PageEditorProps = {
-  siteKey: string;
-  pageKey: string;
+  site: Site;
+  page: Page;
 };
 
 export const PageEditor: Component<PageEditorProps> = (props) => {
   const [changed, setChanged] = createSignal(false);
-  const pages = useStore($pages);
-  const originalPage = createMemo(() =>
-    pages().find((page) => page.key === props.pageKey),
-  );
-  const originalContent = createMemo(() => originalPage()?.markdownContent);
+  const originalPage = props.page;
+  const originalContent = props.page.markdownContent || '';
 
   const handleSubmit = async (event: Event) => {
     event.preventDefault();
@@ -26,16 +23,16 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
     const updates: Partial<Page> = {};
 
     const name = formData.get('name') as string;
-    if (name !== originalPage()?.name) updates.name = name;
+    if (name !== originalPage?.name) updates.name = name;
 
     const content = formData.get('markdownContent') as string;
-    if (content !== originalContent()) updates.markdownContent = content;
+    if (content !== originalContent) updates.markdownContent = content;
 
     if (Object.keys(updates).length) {
-      await updatePage(props.siteKey, props.pageKey, updates);
+      await updatePage(props.site.key, props.page.key, updates);
     }
 
-    window.location.href = `/sites/${props.siteKey}/${props.pageKey}`;
+    window.location.href = `/sites/${props.site.key}/${props.page.key}`;
   };
 
   return (
@@ -45,7 +42,7 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
           {t('entries:page.name')}
           <input
             type="text"
-            value={originalPage()?.name}
+            value={originalPage?.name}
             name="name"
             onInput={() => setChanged(true)}
           />
@@ -59,11 +56,11 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
         name="markdownContent"
         onInput={() => setChanged(true)}
       >
-        {originalContent()}
+        {originalContent}
       </textarea>
       <section class="toolbar justify-end">
         <a
-          href={`/sites/${props.siteKey}/${props.pageKey}`}
+          href={`/sites/${props.site.key}/${props.page.key}`}
           class="button text"
         >
           <span>{t('actions:cancel')}</span>

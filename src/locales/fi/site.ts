@@ -35,6 +35,9 @@ export const site: Locale = {
       'Tämä toiminto poistaa sivuston lopullisesti. Toimintoa ei voi peruuttaa. Vahvistaaksesi toiminnon, kirjoita alla olevaan kenttään "Olen Aivan Varma" ja paina "Poista sivusto" -painiketta.',
     deleteSiteAction: 'Poista sivusto',
   },
+  editor: {
+    title: 'Muokkaa sivua',
+  },
   page: {
     migrateContentInfo:
       'Sivu on tehty aiemmalla versiolla pelilaudasta, ja sen sisältöä ei voi muokata ilman konversiota. Konversio voi joskus muuttaa sivun ulkoasua ja rakennetta.',
