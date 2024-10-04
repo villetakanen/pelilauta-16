@@ -1,0 +1,26 @@
+---
+import { SiteOwnerToken } from '@client/sites/SiteOwnerToken';
+import type { Site } from '@schemas/SiteSchema';
+import { toDisplayString } from '@utils/contentHelpers';
+import { systemToNoun } from '@utils/schemaHelpers';
+
+interface Props {
+  site: Site;
+}
+const { site } = Astro.props;
+---
+
+<cn-card
+  href={`/sites/${site.key}`}
+  noun={systemToNoun(site.system)}
+  title={site.name}
+  cover={site.posterURL || undefined}
+  >
+  <p>{site.description}</p>
+
+  <div slot="actions" class="toolbar">
+    <SiteOwnerToken {...site} client:only="solid-js"/>
+    <div class="grow"></div>
+    <p>{toDisplayString(site.flowTime)}</p>
+  </div>
+</cn-card>

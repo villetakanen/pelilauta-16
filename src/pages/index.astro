@@ -1,9 +1,9 @@
 ---
 import { FrontPageFabs } from '@client/FrontPage/FrontPageFabs';
-import { TopSitesSection } from '@client/FrontPage/SitesStream';
 import { ThreadStream } from '@client/FrontPage/ThreadStream';
 import { DebugSection } from '@client/debug';
 import SyndicateStream from '@server/FrontPage/SyndicateStream.astro';
+import TopSitesStream from '@server/FrontPage/TopSitesStream.astro';
 import Page from 'src/layouts/Page.astro';
 ---
 <Page title={import.meta.env.PUBLIC_APP_NAME}>
@@ -12,9 +12,7 @@ import Page from 'src/layouts/Page.astro';
         <ThreadStream client:only="solid-js"/>
       </div>
       <SyndicateStream />
-      <div class="column-s">
-        <TopSitesSection client:only="solid-js"/>
-      </div>
+      <TopSitesStream />
 
       {import.meta.env.SECRET_FEATURE_FLAG_DEBUG === 'true' && ( 
       <article>
