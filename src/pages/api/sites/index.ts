@@ -1,11 +1,27 @@
+import type { APIContext } from 'astro';
 import { serverDB } from 'src/firebase/server';
 import { type Site, parseSite } from 'src/schemas/SiteSchema';
 
-export async function GET() {
+export function getAstroQueryParams(request: Request) {
+  const url = new URL(request.url);
+  return Object.fromEntries(url.searchParams);
+}
+
+export async function GET({ request }: APIContext) {
   const publicSites = new Array<Site>();
 
-  const sitesCollection = serverDB.collection('sites');
-  const sites = await sitesCollection.where('hidden', '==', false).get();
+  const searchParams = getAstroQueryParams(request);
+  //if (searchParams.limit) logDebug('Limit', searchParams.limit);
+
+  const sitesCollection = searchParams.limit
+    ? serverDB
+        .collection('sites')
+        .where('hidden', '==', false)
+        .limit(Number.parseInt(searchParams.limit))
+        .orderBy('flowTime', 'desc')
+    : serverDB.collection('sites').where('hidden', '==', false);
+
+  const sites = await sitesCollection.get();
 
   for (const siteDoc of sites.docs) {
     // logDebug('Sitedata', siteDoc.data().name, siteDoc.data().owners);

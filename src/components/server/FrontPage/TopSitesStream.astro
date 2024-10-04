@@ -1,0 +1,23 @@
+---
+import { type Site, parseSite } from '@schemas/SiteSchema';
+import SiteCard from '@server/ui/SiteCard.astro';
+import { t } from '@utils/i18n';
+
+const origin = Astro.url.origin;
+
+const siteListResponse = await fetch(`${origin}/api/sites?limit=3`);
+const sitesJSON = await siteListResponse.json();
+const sites = (sitesJSON as Array<Site>).map((site) =>
+  parseSite(site, site.key),
+);
+---
+<div class="flex flex-col column-s">
+    {sites.map((site) => (
+      site && <SiteCard site={site}/>
+    ))}
+    <div class="flex justify-center mt-2">
+      <a href="/sites" class="button">
+        {t('actions:showMore')}
+      </a>
+    </div>
+  </div>
