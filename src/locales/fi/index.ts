@@ -28,6 +28,9 @@ export const fi: Locale = {
       partners: {
         title: 'Yhteistyössä',
       },
+      links: {
+        title: 'Roolipelit verkossa',
+      },
     },
     settings: {
       title: 'Asetukset',
