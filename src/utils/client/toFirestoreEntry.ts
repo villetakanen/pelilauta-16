@@ -1,5 +1,4 @@
 import type { Entry } from '@schemas/ContentEntry';
-import { auth } from 'firebase-admin';
 import { Timestamp, serverTimestamp } from 'firebase/firestore';
 
 export interface Params {
