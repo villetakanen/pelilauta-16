@@ -1,4 +1,5 @@
 import type { Entry } from '@schemas/ContentEntry';
+import { auth } from 'firebase-admin';
 import { Timestamp, serverTimestamp } from 'firebase/firestore';
 
 export interface Params {
@@ -22,6 +23,7 @@ export function toFirestoreEntry(
   if (!params.silent)
     return {
       ...entry,
+      author: entry.owners ? [0] : '-',
       createdAt: entry.createdAt
         ? new Timestamp(entry.createdAt.getTime() / 1000, 0)
         : serverTimestamp(),
@@ -32,5 +34,8 @@ export function toFirestoreEntry(
   // We want to return the entry, and delete the fields createdAt, updatedAt and flowTime if they are present
   const { createdAt, updatedAt, flowTime, ...rest } = entry;
 
-  return rest;
+  return {
+    ...rest,
+    author: entry.owners ? [0] : '-',
+  };
 }

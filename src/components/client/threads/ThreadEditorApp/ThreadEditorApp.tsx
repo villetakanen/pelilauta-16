@@ -68,6 +68,7 @@ export const ThreadEditorApp: Component<{
       topic: topic(),
       markdownContent: markdownContent(),
       owners: [uid()],
+      public: true,
     };
 
     let key = props.threadKey;
