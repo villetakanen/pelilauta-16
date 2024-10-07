@@ -8,12 +8,7 @@ import { parseReply } from '@schemas/ReplySchema';
 import type { Thread } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
-import {
-  type Component,
-  Show,
-  createMemo,
-  createResource,
-} from 'solid-js';
+import { type Component, Show, createMemo, createResource } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
 interface Props {
