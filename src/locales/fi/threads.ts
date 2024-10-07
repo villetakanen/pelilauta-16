@@ -4,6 +4,7 @@ export const threads: Locale = {
   fork: {
     title: 'Jaa uutena lankana',
     quoted: 'Lainaus',
+    crossPost: 'Jatkoi keskustelua [uudessa langassa]({link}).',
   },
   info: {
     title: 'Tietoja',

@@ -18,9 +18,17 @@ export interface Locales {
   };
 }
 
+export interface LocaleSubstitutions {
+  [key: string]: string;
+}
+
 const defaultLocale = 'fi'; // Your default locale
 
-export function t(key: string, currentLocale = defaultLocale): string {
+export function t(
+  key: string,
+  subs?: LocaleSubstitutions,
+  currentLocale = defaultLocale,
+): string {
   // Split the key into namespace (optional) and path
   const [namespace = 'app', ...pathSegments] = key.split(':');
   const path = pathSegments.join(':'); // Join the remaining segments
@@ -51,6 +59,13 @@ export function t(key: string, currentLocale = defaultLocale): string {
   if (!translation) {
     // ... logic to get currentLocale ...
     translation = findTranslation(locales[defaultLocale]?.[namespace], path);
+  }
+
+  // Replace substitutions, if translation found, and subs provided
+  if (translation && subs) {
+    for (const [key, value] of Object.entries(subs)) {
+      translation = translation.replace(new RegExp(`{${key}}`, 'g'), value);
+    }
   }
 
   // Return original input if no translation found

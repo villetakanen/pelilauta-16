@@ -7,7 +7,11 @@ import { ProfileLink } from '@client/shared/ProfileLink';
 import { WithLoader } from '@client/shared/WithLoader';
 import { db } from '@firebase/client';
 import { useStore } from '@nanostores/solid';
-import type { Reply } from '@schemas/ReplySchema';
+import {
+  REPLIES_COLLECTION,
+  type Reply,
+  createReply,
+} from '@schemas/ReplySchema';
 import {
   THREADS_COLLECTION_NAME,
   type Thread,
@@ -58,6 +62,23 @@ export const ForkThreadApp: Component<Props> = (props) => {
         await addDoc(collection(db, THREADS_COLLECTION_NAME), cleaned)
       ).id;
       await markEntrySeen(key, Date.now());
+
+      const crossPostReply = createReply({
+        owners: [uid()],
+        threadKey: props.thread.key,
+        markdownContent: t('threads:fork.crossPost', {
+          link: `/threads/${key}`,
+        }),
+        quoteref: `${props.reply.key}`,
+      });
+
+      await addDoc(
+        collection(
+          db,
+          `${THREADS_COLLECTION_NAME}/${props.thread.key}/${REPLIES_COLLECTION}`,
+        ),
+        toFirestoreEntry(crossPostReply),
+      );
 
       pushSessionSnack('snacks:threadCreated');
       window.location.href = `/threads/${key}`;

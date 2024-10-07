@@ -13,6 +13,7 @@ import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 interface Props {
   onQuote: (evt: CustomEvent<string>) => void;
   reply: Reply;
+  quotedReply?: Reply;
 }
 
 export const ReplyBubble: Component<Props> = (props) => {
@@ -69,6 +70,16 @@ export const ReplyBubble: Component<Props> = (props) => {
           </button>
           <ReplyDropdown reply={props.reply} />
         </div>
+        {props.quotedReply && (
+          <div class="border-radius p-1 mt-1 mb-1 color-secondary">
+            <p class="m-0">
+              <ProfileLink uid={props.quotedReply.owners[0]} />
+            </p>
+            <p class="downscaled">
+              <MarkdownSection content={props.quotedReply.markdownContent} />
+            </p>
+          </div>
+        )}
         <MarkdownSection content={`${props.reply.markdownContent}`} />
       </cn-bubble>
       {fromCurrentUser() && <ProfileAvatar uid={props.reply.owners[0]} />}
