@@ -1,4 +1,5 @@
 ---
+import { ForkThreadApp } from '@client/threads/ForkThreadApp/ForkThreadApp';
 import ModalPage from '@layouts/ModalPage.astro';
 import { parseReply } from '@schemas/ReplySchema';
 import { parseThread } from '@schemas/ThreadSchema';
@@ -34,13 +35,5 @@ if (!thread?.key || !reply?.key) {
 }
 ---
 <ModalPage title={t('threads:fork.title')}>
-    <div class="content-columns">
-        <div>
-    {JSON.stringify(reply)}
-</div>
-<div>
-    
-    {JSON.stringify(thread)}
-    </div>
-</div>
+  <ForkThreadApp thread={thread} reply={reply} client:only="solid-js"/>
 </ModalPage>

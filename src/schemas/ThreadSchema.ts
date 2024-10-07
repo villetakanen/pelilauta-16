@@ -10,7 +10,7 @@ export const ThreadSchema = ContentEntrySchema.extend({
   channel: z.string().optional(),
   siteKey: z.string().optional(),
   youtubeId: z.string().optional(),
-  topicKey: z.string().optional(), // key of the topic this thread belongs to, defaults to 'Yleinen'
+  topic: z.string().optional(), // key of the topic this thread belongs to, defaults to 'Yleinen'
   poster: z.string().optional(), // URL for the poster image
   images: z
     .array(
@@ -24,6 +24,7 @@ export const ThreadSchema = ContentEntrySchema.extend({
   lovedCount: z.number().optional(),
   createdAt: z.any().optional(),
   updatedAt: z.any().optional(),
+  quoteRef: z.string().optional(),
 });
 
 export type Thread = z.infer<typeof ThreadSchema>;
@@ -60,21 +61,38 @@ export function parseThread(
 }
 
 export function createThread(source?: Partial<Thread>): Thread {
-  return {
+  const thread = {
     key: source?.key || '',
     title: source?.title || '',
     channel: source?.channel || '',
-    siteKey: source?.siteKey || '',
-    youtubeId: source?.youtubeId || '',
-    topicKey: source?.topicKey || 'Yleinen',
+    siteKey: source?.siteKey || undefined,
+    youtubeId: source?.youtubeId || undefined,
+    // Legacy field, should be removed
+    topic: source?.channel || source?.topic || 'Yleinen',
     poster: source?.poster || '',
     images: source?.images || [],
     owners: source?.owners || [],
+    author: source?.owners ? [0] : '-',
     replyCount: 0,
     lovedCount: 0,
     createdAt: new Date(),
     updatedAt: new Date(),
     flowTime: new Date().getTime(),
     markdownContent: source?.markdownContent || '',
+    quoteRef: source?.quoteRef || undefined,
   };
+
+  // Remove empty fields, empty strings, and empty arrays
+  for (const key of Object.keys(thread) as (keyof typeof thread)[]) {
+    if (
+      thread[key] === undefined ||
+      thread[key] === null ||
+      (typeof thread[key] === 'string' && thread[key] === '') ||
+      (Array.isArray(thread[key]) && thread[key].length === 0)
+    ) {
+      delete thread[key];
+    }
+  }
+
+  return thread;
 }

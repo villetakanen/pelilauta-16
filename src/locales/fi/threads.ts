@@ -1,6 +1,10 @@
 import type { Locale } from '@utils/i18n';
 
 export const threads: Locale = {
+  fork: {
+    title: 'Jaa uutena lankana',
+    quoted: 'Lainaus',
+  },
   info: {
     title: 'Tietoja',
     author: 'Kirjoittanut',

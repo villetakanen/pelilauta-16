@@ -266,3 +266,27 @@ cn-menu button.menu-item {
   align-items: center;
   justify-items: start;
 }
+.clip-after-3 {
+  max-height: calc(var(--cn-grid) * 6 * 3);
+  overflow: hidden;
+}
+.clip-after-3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: calc(var(--cn-grid) * 12);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in hsl, var(--color-on-secondary), transparent 100%),
+    var(--color-on-secondary)
+  );
+}
+.border-radius.clip-after-3::after {
+  border-radius: 0 0 var(--cn-border-radius) var(--cn-border-radius);
+}
+.color-secondary {
+  color: var(--color-secondary);
+  background: var(--color-on-secondary);
+}
