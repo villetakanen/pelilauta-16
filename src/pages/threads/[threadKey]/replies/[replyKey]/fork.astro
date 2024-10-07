@@ -3,6 +3,7 @@ import ModalPage from '@layouts/ModalPage.astro';
 import { parseReply } from '@schemas/ReplySchema';
 import { parseThread } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 
 // We want to fetch the thread and the reply server side, and pass those to
@@ -10,19 +11,20 @@ import { logDebug } from '@utils/logHelpers';
 // write the authz lives in the Firestore rules.
 
 const { threadKey, replyKey } = Astro.params;
+const origin = new URL(Astro.request.url).origin;
 
 if (!threadKey || !replyKey) {
   Astro.redirect('/404');
 }
 
-const threadData = await fetch(`/api/threads/${threadKey}`).then((res) =>
-  res.json(),
+const threadData = await fetch(`${origin}/api/threads/${threadKey}.json`).then(
+  (res) => res.json(),
 );
 const thread = parseThread(toClientEntry(threadData), threadKey);
 
-const replyData = await fetch(`/api/replies/${threadKey}/${replyKey}`).then(
-  (res) => res.json(),
-);
+const replyData = await fetch(
+  `${origin}/api/replies/${threadKey}/${replyKey}.json`,
+).then((res) => res.json());
 const reply = parseReply(toClientEntry(replyData), replyKey, threadKey);
 
 // Lets check we have the right thread and reply
@@ -31,6 +33,14 @@ if (!thread?.key || !reply?.key) {
   Astro.redirect('/404');
 }
 ---
-<ModalPage>
-    ...
+<ModalPage title={t('threads:fork.title')}>
+    <div class="content-columns">
+        <div>
+    {JSON.stringify(reply)}
+</div>
+<div>
+    
+    {JSON.stringify(thread)}
+    </div>
+</div>
 </ModalPage>
