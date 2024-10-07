@@ -21,17 +21,27 @@ export const ReplyDropdown: Component<Props> = (props) => {
 
   return (
     <>
-      {fromCurrentUser() && (
+      {uid() && (
         <cn-menu rel={menu}>
           <ul>
             <li>
               <a
-                href={`/threads/${props.reply.threadKey}/replies/${props.reply.key}/delete`}
+                href={`/threads/${props.reply.threadKey}/replies/${props.reply.key}/fork`}
               >
-                <cn-icon noun="delete" small />
-                <span>{t('actions:delete')}</span>
+                <cn-icon noun="fork" small />
+                <span>{t('actions:fork')}</span>
               </a>
             </li>
+            {fromCurrentUser() && (
+              <li>
+                <a
+                  href={`/threads/${props.reply.threadKey}/replies/${props.reply.key}/delete`}
+                >
+                  <cn-icon noun="delete" small />
+                  <span>{t('actions:delete')}</span>
+                </a>
+              </li>
+            )}
           </ul>
         </cn-menu>
       )}

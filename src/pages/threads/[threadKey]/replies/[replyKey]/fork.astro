@@ -1,0 +1,36 @@
+---
+import ModalPage from '@layouts/ModalPage.astro';
+import { parseReply } from '@schemas/ReplySchema';
+import { parseThread } from '@schemas/ThreadSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { logDebug } from '@utils/logHelpers';
+
+// We want to fetch the thread and the reply server side, and pass those to
+// the client form. All authz for ui will happen on the client side, and for
+// write the authz lives in the Firestore rules.
+
+const { threadKey, replyKey } = Astro.params;
+
+if (!threadKey || !replyKey) {
+  Astro.redirect('/404');
+}
+
+const threadData = await fetch(`/api/threads/${threadKey}`).then((res) =>
+  res.json(),
+);
+const thread = parseThread(toClientEntry(threadData), threadKey);
+
+const replyData = await fetch(`/api/replies/${threadKey}/${replyKey}`).then(
+  (res) => res.json(),
+);
+const reply = parseReply(toClientEntry(replyData), replyKey, threadKey);
+
+// Lets check we have the right thread and reply
+if (!thread?.key || !reply?.key) {
+  logDebug('thread or reply not found', { threadKey, replyKey });
+  Astro.redirect('/404');
+}
+---
+<ModalPage>
+    ...
+</ModalPage>
