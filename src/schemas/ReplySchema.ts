@@ -30,8 +30,8 @@ export type Reply = z.infer<typeof ReplySchema>;
 
 export function parseReply(
   data: Partial<Reply>,
-  key: string,
-  threadKey: string,
+  key?: string,
+  threadKey?: string,
 ): Reply {
   try {
     return ReplySchema.parse({

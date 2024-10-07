@@ -1,5 +1,6 @@
 import { ReplyBubble } from '@client/threads/ThreadApp/ReplyBubble';
 import { useStore } from '@nanostores/solid';
+import type { Reply } from '@schemas/ReplySchema';
 import { subscribeToDiscussion } from '@stores/ThreadsApp/discussion';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
@@ -38,13 +39,26 @@ export const ThreadDiscussion: Component<{
     setQuoteRef(quoteRef);
   }
 
+  const getQuote = (rep: Reply) => {
+    if (rep.quoteref) {
+      return discussion().find((r) => r.key === rep.quoteref);
+    }
+    return undefined;
+  };
+
   return (
     <div class="content-columns">
       <div class="column-l">
         <h3>{t('threads:discussion.title')}</h3>
         <div class="flex flex-col downscaled" on:Quote={handleQuote}>
           <For each={discussion()} fallback={<p>No replies yet.</p>}>
-            {(reply) => <ReplyBubble reply={reply} onQuote={handleQuote} />}
+            {(reply) => (
+              <ReplyBubble
+                reply={reply}
+                onQuote={handleQuote}
+                quotedReply={getQuote(reply)}
+              />
+            )}
           </For>
         </div>
         <div class="flex flex-row border-t mt-2 justify-center">

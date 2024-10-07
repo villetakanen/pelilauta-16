@@ -1,11 +1,19 @@
 import type { Locale } from '@utils/i18n';
 
 export const threads: Locale = {
+  fork: {
+    title: 'Jaa uutena lankana',
+    quoted: 'Lainaus',
+    crossPost: 'Jatkoi keskustelua [uudessa langassa]({link}).',
+  },
   info: {
     title: 'Tietoja',
     author: 'Kirjoittanut',
     inTopic: 'aiheessa',
     replies: 'vastausta',
+  },
+  quote: {
+    fromThread: 'Lainaus keskustelusta',
   },
   tray: {
     title: 'Aiheet',

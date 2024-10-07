@@ -39,6 +39,7 @@ export const entries: Locale = {
     channel: 'Aihe',
     placeholders: {
       title: 'Otsikko',
+      content: 'Viesti...',
     },
   },
   reply: {

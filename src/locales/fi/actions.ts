@@ -14,6 +14,7 @@ export const actions: Locale = {
   },
   delete: 'Poista',
   edit: 'Muokkaa',
+  fork: 'Luo lanka',
   logout: 'Kirjaudu ulos',
   send: 'Lähetä',
   save: 'Tallenna',
