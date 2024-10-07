@@ -11,6 +11,9 @@ export const threads: Locale = {
     inTopic: 'aiheessa',
     replies: 'vastausta',
   },
+  quote: {
+    fromThread: 'Lainaus keskustelusta',
+  },
   tray: {
     title: 'Aiheet',
   },

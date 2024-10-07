@@ -1,6 +1,6 @@
 import { serverDB } from '@firebase/server';
 import { REPLIES_COLLECTION, parseReply } from '@schemas/ReplySchema';
-import { THREADS_COLLECTION_NAME, parseThread } from '@schemas/ThreadSchema';
+import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import type { APIContext } from 'astro';
 
@@ -21,7 +21,7 @@ export async function GET({ params }: APIContext): Promise<Response> {
   const data = replyDoc.data();
 
   if (!replyDoc.exists || !data) {
-    return new Response('Thread not found', { status: 404 });
+    return new Response('Reply not found', { status: 404 });
   }
 
   try {
