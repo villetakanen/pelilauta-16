@@ -101,10 +101,10 @@ export const ThemeImageForm: Component<{ imageFieldName: string }> = (
           />
         </div>
         <div>
-          <label>
+          <div>
             {t(`entries:site.${props.imageFieldName}`)}
             {fileUploadRef}
-          </label>
+          </div>
           <div class="toolbar flex flex-row justify-end">
             <button type="submit" disabled={!preview()}>
               {t('actions:upload')}
