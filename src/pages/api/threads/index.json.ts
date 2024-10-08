@@ -12,7 +12,7 @@ import { serverDB } from 'src/firebase/server';
 export async function GET({ request }: APIContext) {
   const publicThreads = new Array<Thread>();
 
-  const { startTime, channel, limit } = getAstroQueryParams(request);
+  const { startAt, channel, limit } = getAstroQueryParams(request);
 
   // Base query for all public threads
   const allPublicThreadsCollection = serverDB
@@ -26,12 +26,12 @@ export async function GET({ request }: APIContext) {
     : allPublicThreadsCollection;
 
   // Start time is a flowTime value, it needs to be converted into a firestore timestamp
-  const startTimeTimestamp = startTime
-    ? new Timestamp(Number(startTime) / 1000, 0)
+  const startTimeTimestamp = startAt
+    ? new Timestamp(Number(startAt) / 1000, 0)
     : null;
 
   // If startTime is provided, filter threads by startTime (pagination by flowTime to circumvent the firestore limitations)
-  const currentPageStart = startTime
+  const currentPageStart = startAt
     ? channelThreads.where('flowTime', '<', startTimeTimestamp)
     : channelThreads;
 

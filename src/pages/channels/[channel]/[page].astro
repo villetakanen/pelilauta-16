@@ -1,15 +1,31 @@
 ---
-import { ChannelPage } from '@client/threads/ChannelPage/ChannelPage';
 import { ForumTray } from '@client/threads/ForumTray';
 import PageWithTray from '@layouts/PageWithTray.astro';
+import { parseChannel } from '@schemas/ChannelSchema';
+import ChannelApp from '@server/ChannelApp/ChannelApp.astro';
 
 const channelKey = Astro.params.channel || 'pelilauta';
 const page = Astro.params.page ? Number(Astro.params.page) : 1;
+
+const origin = Astro.url.origin;
+const channelsResponse = await fetch(`${origin}/api/meta/channels.json`);
+const channels = await channelsResponse.json();
+const channeldata = channels.find(
+  (channel: { slug: string }) => channel.slug === channelKey,
+);
+
+if (!channeldata) {
+  Astro.response.status = 404;
+  Astro.response.headers.set(
+    'Cache-Control',
+    's-maxage=60, stale-while-revalidate',
+  );
+  return;
+}
+
+const channel = parseChannel(channeldata);
 ---
-<PageWithTray>
-  <ChannelPage
-    channel={channelKey}
-    page={page}
-    client:only="solid-js" />
+<PageWithTray title={channel.name}>
+  <ChannelApp channel={channel} startAt={page}/>
   <ForumTray slot="app-tray" client:only="solid-js"/>
 </PageWithTray>

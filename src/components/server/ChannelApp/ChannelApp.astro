@@ -1,0 +1,40 @@
+---
+import type { Channel } from '@schemas/ChannelSchema';
+import { type Thread, parseThread } from '@schemas/ThreadSchema';
+import PaginationToolbar from './PagingToolbar.astro';
+import ThreadListItem from './ThreadListItem.astro';
+
+interface Props {
+  channel: Channel;
+  startAt: number;
+}
+
+const { channel, startAt } = Astro.props;
+const origin = Astro.url.origin;
+
+const queryString =
+  startAt > 1
+    ? `${origin}/api/threads.json?channel=${channel.slug}&limit=10&startAt=${startAt}`
+    : `${origin}/api/threads.json?channel=${channel.slug}&limit=10`;
+
+const threadListResponse = await fetch(queryString);
+const threadsJSON = await threadListResponse.json();
+
+const threads = threadsJSON.map((thread: Thread) =>
+  parseThread(thread, thread.key),
+);
+const lastThreadFlowTime = threads[threads.length - 1]?.flowTime || 0;
+const hasNextPage = threads.length === 10;
+---
+<div class="content-columns">
+  <article class="column-l">
+   <PaginationToolbar
+     channel={channel} 
+     lastThreadFlowTime={lastThreadFlowTime} 
+     hasNextPage={hasNextPage}/>
+     { threads.map((thread: Thread) => (
+       <ThreadListItem thread={thread} />
+      )) }
+    <PaginationToolbar channel={channel} lastThreadFlowTime={lastThreadFlowTime} hasNextPage={hasNextPage}/>
+  </article>
+</div>

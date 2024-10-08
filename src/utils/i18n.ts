@@ -19,7 +19,7 @@ export interface Locales {
 }
 
 export interface LocaleSubstitutions {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 const defaultLocale = 'fi'; // Your default locale
@@ -64,7 +64,10 @@ export function t(
   // Replace substitutions, if translation found, and subs provided
   if (translation && subs) {
     for (const [key, value] of Object.entries(subs)) {
-      translation = translation.replace(new RegExp(`{${key}}`, 'g'), value);
+      translation = translation.replace(
+        new RegExp(`{${key}}`, 'g'),
+        `${value}`,
+      );
     }
   }
 

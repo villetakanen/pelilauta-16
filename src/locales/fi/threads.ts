@@ -10,7 +10,7 @@ export const threads: Locale = {
     title: 'Tietoja',
     author: 'Kirjoittanut',
     inTopic: 'aiheessa',
-    replies: 'vastausta',
+    replies: '{count} vastausta',
   },
   quote: {
     fromThread: 'Lainaus keskustelusta',
@@ -24,6 +24,8 @@ export const threads: Locale = {
   channel: {
     page: 'Sivu',
     pageCount: 'sivua',
+    toFirstPage: 'Ensimmäinen sivu <',
+    nextPage: '> Seuraava sivu',
   },
   discussion: {
     title: 'Keskustelu',
