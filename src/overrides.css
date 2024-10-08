@@ -54,14 +54,14 @@ cn-loader[for="navigation"] {
   margin-top: calc(var(--cn-app-bar-height) * -1 - var(--cn-grid));
   opacity: 0.72;
 }
-.pageBackgroundPoster img{
+.pageBackgroundPoster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0.88;
 }
 .pageBackgroundPoster::before {
-  content: '';
+  content: "";
   position: absolute;
   z-index: 3;
   top: 0;
@@ -83,7 +83,7 @@ main:has(.pageBackgroundPoster) .content-columns > * {
 }
 img.preview-icon {
   width: var(--cn-icon-size-large);
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
   border-radius: var(--cn-grid);
   object-fit: cover;
 }
@@ -93,7 +93,7 @@ p.align-right {
 .border-top {
   border-top: var(--color-border) solid 1px;
 }
-.justify-center  {
+.justify-center {
   justify-content: center;
 }
 .justify-space-between {
@@ -125,15 +125,18 @@ article + article {
   margin-top: 0;
 }
 main {
-  padding-bottom: calc(8 * var(--cn-grid))
+  padding-bottom: calc(8 * var(--cn-grid));
 }
 div.forum-topics {
   display: grid;
-  grid-template-columns: var(--cn-icon-medium, 48px) 1fr calc(var(--cn-icon-medium, 64px) * 2); 
+  grid-template-columns: var(--cn-icon-medium, 48px) 1fr calc(
+      var(--cn-icon-medium, 64px) *
+      2
+    );
   gap: var(--cn-gap);
 }
 img.w-16-9 {
-  aspect-ratio: 16/9;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   margin-bottom: var(--cn-gap);
 }
@@ -148,7 +151,7 @@ h3 img.icon {
   height: 1.5em;
   width: 1.5em;
   padding: 0;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
 }
 .cn-app-bar.on-modal {
   position: fixed;
@@ -209,11 +212,13 @@ span.notification-pill {
 cn-bubble {
   padding: var(--cn-gap);
 }
-.items-center	{align-items: center;}
+.items-center {
+  align-items: center;
+}
 
 @media (min-width: 621px) {
   cn-tray-button {
-      left: calc(var(--cn-rail-width) + var(--cn-grid));
+    left: calc(var(--cn-rail-width) + var(--cn-grid));
   }
   header.cn-app-bar.modal {
     margin-left: calc(var(--cn-rail-width) + var(--cn-grid));
@@ -271,7 +276,7 @@ cn-menu button.menu-item {
   overflow: hidden;
 }
 .clip-after-3::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   right: 0;

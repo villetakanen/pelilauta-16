@@ -35,7 +35,7 @@ export const PublicProfileTool: Component = () => {
             value={$profile.get().nick}
           />
         </label>
-        <label>
+        <label for="avatarButton">
           {t('entries:profile.avatar')}
           <AvatarButton />
         </label>
