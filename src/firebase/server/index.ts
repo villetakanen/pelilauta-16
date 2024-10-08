@@ -1,4 +1,4 @@
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import type { ServiceAccount } from 'firebase-admin';
 import { cert, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -20,7 +20,7 @@ const serviceAccount = {
 };
 
 const initApp = () => {
-  logDebug('Initializing server app');
+  logWarn('Initializing the Firebase Server App');
   return initializeApp({
     credential: cert(serviceAccount as ServiceAccount),
     databaseURL: import.meta.env.PUBLIC_databaseURL,
@@ -29,7 +29,7 @@ const initApp = () => {
 
 export const serverApp = activeApps.length === 0 ? initApp() : activeApps[0];
 export const serverDB = getFirestore(serverApp);
-logDebug('serverDB', serverDB);
+// logDebug('serverDB', serverDB);
 
 /*import type { ServiceAccount } from 'firebase-admin';
 import admin from 'firebase-admin';
