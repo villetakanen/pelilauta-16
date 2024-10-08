@@ -15,7 +15,7 @@ export const ThreadCard: Component<{
   const notify = createMemo(() => props.notify);
 
   return (
-    <div style="flex-basis: auto;">
+    <div style="flex-basis: auto; width: 100%">
       <cn-card
         notify={notify()}
         href={`/threads/${props.thread.key}`}

@@ -121,7 +121,7 @@ export const ForkThreadApp: Component<Props> = (props) => {
 
         <div>
           <p>{t('threads:fork.quoted')}</p>
-          <div class="elevation-1 border-radius p-1 clip-after-3 color-secondary">
+          <div class="elevation-1 border-radius p-1 clip-after-3 secondary">
             <p class="m-0">
               <ProfileLink uid={props.reply.owners[0]} />
             </p>

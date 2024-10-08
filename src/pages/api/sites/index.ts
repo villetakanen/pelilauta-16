@@ -1,17 +1,12 @@
+import { getAstroQueryParams } from '@utils/server/astroApiHelpers';
 import type { APIContext } from 'astro';
 import { serverDB } from 'src/firebase/server';
 import { type Site, parseSite } from 'src/schemas/SiteSchema';
-
-export function getAstroQueryParams(request: Request) {
-  const url = new URL(request.url);
-  return Object.fromEntries(url.searchParams);
-}
 
 export async function GET({ request }: APIContext) {
   const publicSites = new Array<Site>();
 
   const searchParams = getAstroQueryParams(request);
-  //if (searchParams.limit) logDebug('Limit', searchParams.limit);
 
   const sitesCollection = searchParams.limit
     ? serverDB

@@ -25,6 +25,7 @@ export const ThreadSchema = ContentEntrySchema.extend({
   createdAt: z.any().optional(),
   updatedAt: z.any().optional(),
   quoteRef: z.string().optional(),
+  author: z.string().optional(),
 });
 
 export type Thread = z.infer<typeof ThreadSchema>;
@@ -34,6 +35,7 @@ export function parseThread(
   key?: string,
 ): Thread {
   let images = data.images || undefined;
+
   // Handle legacy image-data, these are of form { url: 'https://example.com/image.jpg' }
   if (
     data.images &&
@@ -41,6 +43,11 @@ export function parseThread(
     typeof data.images[0] === 'string'
   ) {
     images = data.images.map((url: string) => ({ url, alt: `Image [${url}]` }));
+  }
+
+  // Forcing the author to be the first owner
+  if (Array.isArray(data.owners) && data.owners.length > 0) {
+    data.author = data.owners[0];
   }
 
   try {
@@ -60,9 +67,12 @@ export function parseThread(
   }
 }
 
-export function createThread(source?: Partial<Thread>): Thread {
+export function createThread(
+  source?: Partial<Thread>,
+  threadKey?: string,
+): Thread {
   const thread = {
-    key: source?.key || '',
+    key: threadKey || source?.key || '',
     title: source?.title || '',
     channel: source?.channel || '',
     siteKey: source?.siteKey || undefined,
@@ -72,7 +82,7 @@ export function createThread(source?: Partial<Thread>): Thread {
     poster: source?.poster || '',
     images: source?.images || [],
     owners: source?.owners || [],
-    author: source?.owners ? [0] : '-',
+    author: source?.owners?.[0] || '-',
     replyCount: 0,
     lovedCount: 0,
     createdAt: new Date(),
@@ -80,6 +90,7 @@ export function createThread(source?: Partial<Thread>): Thread {
     flowTime: new Date().getTime(),
     markdownContent: source?.markdownContent || '',
     quoteRef: source?.quoteRef || undefined,
+    public: source?.public || true,
   };
 
   // Remove empty fields, empty strings, and empty arrays
