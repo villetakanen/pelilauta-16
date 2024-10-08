@@ -39,6 +39,7 @@
     "@playwright/test": "^1.46.1",
     "@types/node": "^22.5.0",
     "@types/turndown": "^5.0.5",
+    "@vite-pwa/astro": "^0.4.3",
     "lefthook": "^1.7.14",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.0"
