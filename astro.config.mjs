@@ -1,15 +1,16 @@
 import solidJs from '@astrojs/solid-js';
+import AstroPWA from '@vite-pwa/astro';
 import { defineConfig } from 'astro/config';
-import AstroPWA from '@vite-pwa/astro'
 import manifest from '/manifest.webmanifest';
 
 import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [solidJs(),
+  integrations: [
+    solidJs(),
     AstroPWA({
-      registerType: "autoUpdate",
+      registerType: 'autoUpdate',
       manifest,
       workbox: {
         globDirectory: 'public',
@@ -19,8 +20,8 @@ export default defineConfig({
         // Don't fallback on document based (e.g. `/some-page`) requests
         // This removes an errant console.log message from showing up.
         navigateFallback: null,
-      }
-    })
+      },
+    }),
   ],
   output: 'server',
   adapter: vercel({
