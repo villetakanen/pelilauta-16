@@ -1,0 +1,24 @@
+---
+import { ThreadCard } from '@client/ThreadsApp/ThreadCard';
+import { type Thread, parseThread } from '@schemas/ThreadSchema';
+import { t } from '@utils/i18n';
+
+const origin = Astro.url.origin;
+
+const threadListResponse = await fetch(`${origin}/api/threads.json?limit=3`);
+const threadsJSON = await threadListResponse.json();
+const threads = (threadsJSON as Array<Thread>).map((thread) =>
+  parseThread(thread, thread.key),
+);
+---
+<div class="flex flex-col column" style="align-items: flex-start">
+    {threads.map((thread) => (
+      thread && <ThreadCard thread={thread} key={thread.key} client:only="solid-js"/>
+    ))}
+    <div class="flex justify-center mt-2">
+      <a href="/threads" class="button">
+        {t('actions:showMore')}
+      </a>
+    </div>
+  </div>
+

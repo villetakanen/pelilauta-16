@@ -1,9 +1,9 @@
 ---
 import { FrontPageFabs } from '@client/FrontPage/FrontPageFabs';
-import { ThreadStream } from '@client/FrontPage/ThreadStream';
 import { DebugSection } from '@client/debug';
 import SyndicateStream from '@server/FrontPage/SyndicateStream.astro';
 import TopSitesStream from '@server/FrontPage/TopSitesStream.astro';
+import TopThreadsStream from '@server/FrontPage/TopThreadsStream.astro';
 import Page from 'src/layouts/Page.astro';
 
 // Set a short cache time for the front page
@@ -14,9 +14,7 @@ Astro.response.headers.set(
 ---
 <Page title={import.meta.env.PUBLIC_APP_NAME}>
     <div class="content-columns">
-      <div>
-        <ThreadStream client:only="solid-js"/>
-      </div>
+      <TopThreadsStream/>
       <SyndicateStream />
       <TopSitesStream />
 
