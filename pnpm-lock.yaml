@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@11thdeg/cyan-next':
-        specifier: 1.0.0-alpha.124
-        version: 1.0.0-alpha.124
+        specifier: 1.0.0-alpha.125
+        version: 1.0.0-alpha.125
       '@astrojs/check':
         specifier: ^0.9.3
         version: 0.9.3(typescript@5.5.4)
@@ -93,8 +93,8 @@ importers:
 
 packages:
 
-  '@11thdeg/cyan-next@1.0.0-alpha.124':
-    resolution: {integrity: sha512-tgo0W9zcy84bwJfPB3AuoSUy40AMd/QFlYnPEqUcuNufPBVuEzN4jsAbJB7hEryOhZCXJa+jsEzECZGnl7YLaQ==}
+  '@11thdeg/cyan-next@1.0.0-alpha.125':
+    resolution: {integrity: sha512-ZFReddKytrpsQwCmaH4kpb+ijNM8oPByQKWCMMSqF8iLHpq3SgaNmXoXp3TGbFEddRAtdmbbLEe6j0XI90AkOQ==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -3903,7 +3903,7 @@ packages:
 
 snapshots:
 
-  '@11thdeg/cyan-next@1.0.0-alpha.124':
+  '@11thdeg/cyan-next@1.0.0-alpha.125':
     dependencies:
       '@types/node': 20.14.9
       lit: 3.1.4

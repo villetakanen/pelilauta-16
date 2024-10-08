@@ -248,7 +248,7 @@ blockquote {
   margin: var(--cn-gap) 0;
   background-color: var(--chroma-primary-95);
 }
-ul:last-child {
+article > ul:last-child {
   padding-bottom: var(--cn-gap);
 }
 :root {
