@@ -1,0 +1,30 @@
+---
+import { ProfileLink } from '@client/shared/ProfileLink';
+import type { Thread } from '@schemas/ThreadSchema';
+import { toDisplayString } from '@utils/contentHelpers';
+import { createSnippet } from '@utils/contentHelpers';
+import { t } from '@utils/i18n';
+
+interface Props {
+  thread: Thread;
+}
+const { thread } = Astro.props;
+---
+<div class="my-1 elevation-1 p-2">
+  <div class="toolbar m-0 p-0">
+  <h4 class="downscaled hoverable mb-0">
+    <a href={`/threads/${thread.key}`}>{thread.title}</a>
+  </h4>
+  <p>{toDisplayString(thread.createdAt)}</p>
+  </div>
+  <p class="downscaled">{createSnippet(thread.markdownContent || '')}</p>
+  <div class="toolbar m-0 p-0">
+    
+    <ProfileLink uid={thread.author} client:only="solid-js"/>
+    <p>
+        <a href={`/threads/${thread.key}#discussion`}>
+            {t('threads:info.replies', { count: thread.replyCount || 0 })}
+        </a>
+    </p>
+  </div>
+</div>

@@ -286,3 +286,6 @@ cn-menu button.menu-item {
 .border-radius.clip-after-3::after {
   border-radius: 0 0 var(--cn-border-radius) var(--cn-border-radius);
 }
+.hoverable a {
+  text-decoration: none;
+}

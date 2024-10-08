@@ -43,9 +43,7 @@ export const ThreadInfoCard: Component<{ thread?: Thread; author: string }> = (
         </section>
       )}
 
-      <p>
-        {thread()?.replyCount || 0} {t('threads:info.replies')}
-      </p>
+      <p>{t('threads:info.replies', { count: thread()?.replyCount || 0 })}</p>
 
       <div class="toolbar justify-space-between" slot="actions">
         <p>{toDisplayString(thread()?.flowTime)}</p>
