@@ -71,7 +71,7 @@ export const ReplyBubble: Component<Props> = (props) => {
           <ReplyDropdown reply={props.reply} />
         </div>
         {props.quotedReply && (
-          <div class="border-radius p-1 mt-1 mb-1 color-secondary">
+          <div class="border-radius p-1 mt-1 mb-1 secondary">
             <p class="m-0">
               <ProfileLink uid={props.quotedReply.owners[0]} />
             </p>
