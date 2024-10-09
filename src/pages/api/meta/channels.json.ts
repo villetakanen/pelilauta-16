@@ -1,6 +1,5 @@
 import { serverDB } from '@firebase/server';
 import { type Channel, parseChannel } from '@schemas/ChannelSchema';
-import { logDebug } from '@utils/logHelpers';
 
 export async function GET(): Promise<Response> {
   const channels = new Array<Channel>();
@@ -15,7 +14,7 @@ export async function GET(): Promise<Response> {
   }
 
   for (const channel of channelsArray) {
-    logDebug('Channel', channel);
+    // logDebug('Channel', channel);
     channels.push(parseChannel(channel));
   }
 

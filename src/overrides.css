@@ -294,3 +294,6 @@ cn-menu button.menu-item {
 .hoverable a {
   text-decoration: none;
 }
+.align-center {
+  align-items: center;
+}
