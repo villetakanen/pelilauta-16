@@ -4,20 +4,17 @@ import { toDisplayString } from '@utils/contentHelpers';
 import { type Component, For, createMemo } from 'solid-js';
 
 export const ForumPage: Component = () => {
-  const topics = useStore($topics);
+  const channels = useStore($topics);
 
-  const categories = createMemo(() => {
-    const cat = new Array<string>();
-    for (const topic of topics()) {
-      if (
-        Object.keys(topic).includes('category') &&
-        !cat.includes(`${topic.category}`)
-      ) {
-        cat.push(`${topic.category}`);
-      }
-    }
-    return cat;
-  });
+  // We want to list each distinct channel.category value once
+  const categories = () => {
+    const cats = channels().map((channel) => channel.category);
+    return [...new Set(cats)];
+  };
+
+  const categoryChannels = (category: string) => {
+    return channels().filter((channel) => channel.category === category);
+  };
 
   return (
     <div class="content-columns">
@@ -27,9 +24,7 @@ export const ForumPage: Component = () => {
             <section class="elevation-1 border-radius p-2 mb-2">
               <h4>{category}</h4>
               <div class="forum-topics">
-                <For
-                  each={topics().filter((topic) => topic.category === category)}
-                >
+                <For each={categoryChannels(category as string)}>
                   {(topic) => (
                     <>
                       <div>
