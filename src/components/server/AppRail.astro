@@ -1,5 +1,6 @@
 ---
 import { InboxRailButton } from '@client/SocialApp/InboxRailButton';
+import { AdminNavigationButton } from '@client/navigation/AdminNavigationButton';
 import { t } from 'src/utils/i18n';
 import { ProfileButton } from '../client/ProfileButton/ProfileButton';
 const currentPath = Astro.url.pathname;
@@ -46,6 +47,7 @@ const rail: Array<RailItem> = [
   }
   <InboxRailButton client:only="solid-js"/>
   <div class="grow"></div>
+  <AdminNavigationButton client:only="solid-js"/>
   <a href="/docs/fi/01-index">
     <cn-navigation-icon
       noun="design"

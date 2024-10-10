@@ -20,10 +20,18 @@ export function ParseNotification(
   n: Partial<Notification>,
   key?: string,
 ): Notification {
+  const from =
+    typeof n.from === 'string'
+      ? n.from
+      : Array.isArray(n.from)
+        ? `${n.from[0]}`
+        : '';
+
   return NotificationSchema.parse({
     ...n,
     key: key || n.key || '',
     createdAt: toDate(n.createdAt),
     read: n.read || false,
+    from,
   });
 }

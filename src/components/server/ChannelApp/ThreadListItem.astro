@@ -1,5 +1,6 @@
 ---
 import { ProfileLink } from '@client/shared/ProfileLink';
+import { ThreadLikeButton } from '@client/threads/ThreadLikeButton';
 import type { Thread } from '@schemas/ThreadSchema';
 import { toDisplayString } from '@utils/contentHelpers';
 import { createSnippet } from '@utils/contentHelpers';
@@ -19,12 +20,14 @@ const { thread } = Astro.props;
   </div>
   <p class="downscaled">{createSnippet(thread.markdownContent || '')}</p>
   <div class="toolbar m-0 p-0">
-    
-    <ProfileLink uid={thread.author} client:only="solid-js"/>
+    <ThreadLikeButton thread={thread} client:only="solid-js"/>
+    <p class="grow">
+      <ProfileLink uid={thread.author} client:only="solid-js"/>
+    </p>
     <p>
-        <a href={`/threads/${thread.key}#discussion`}>
-            {t('threads:info.replies', { count: thread.replyCount || 0 })}
-        </a>
+      <a href={`/threads/${thread.key}#discussion`}>
+        {t('threads:info.replies', { count: thread.replyCount || 0 })}
+      </a>
     </p>
   </div>
 </div>
