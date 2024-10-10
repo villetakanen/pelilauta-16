@@ -10,21 +10,30 @@ export const ForumIconSelect: Component<{
   onChange: (value: string) => void;
 }> = (props) => {
   const icons = [
-    'fox',
-    'discussion',
-    'd20',
     'adventurer',
+    'assets',
+    'books',
+    'card',
+    'check',
+    'd8',
+    'd20',
+    'dd5',
+    'discussion',
     'edit',
+    'fox',
     'monsters',
     'youtube',
   ];
 
   return (
-    <select
-      value={props.value}
-      onChange={(e) => props.onChange(e.currentTarget.value)}
-    >
-      <For each={icons}>{(icon) => <option value={icon}>{icon}</option>}</For>
-    </select>
+    <label>
+      icon:
+      <select
+        value={props.value}
+        onChange={(e) => props.onChange(e.currentTarget.value)}
+      >
+        <For each={icons}>{(icon) => <option value={icon}>{icon}</option>}</For>
+      </select>
+    </label>
   );
 };

@@ -9,7 +9,7 @@ import { type Channel, parseChannel } from '@schemas/ChannelSchema';
 import { isAdmin } from '@stores/metaStore/metaStore';
 import { $uid } from '@stores/sessionStore';
 import { logDebug, logWarn } from '@utils/logHelpers';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import {
   type Component,
   For,
@@ -48,6 +48,23 @@ export const ForumAdminApp: Component = () => {
     });
   });
 
+  const handleChannelUpdate = (channel: Channel) => {
+    logDebug('Updating channel', channel);
+    // Update the channel in the database
+
+    // get a local copy of the channels
+    const chans = channels();
+
+    // update the channel in the local copy
+    const idx = chans.findIndex((c) => c.slug === channel.slug);
+    chans[idx] = channel;
+
+    // update firestore, this will trigger the onSnapshot callback
+    // which will update the local copy
+    const channelsRef = doc(db, 'meta', 'threads');
+    updateDoc(channelsRef, { topics: chans });
+  };
+
   return (
     <WithAuth allow={visible()}>
       <div class="content-columns">
@@ -59,7 +76,12 @@ export const ForumAdminApp: Component = () => {
               <>
                 <h4>{category}</h4>
                 <For each={categoryChannels(`${category}`)}>
-                  {(channel) => <ForumAdminChannelItem channel={channel} />}
+                  {(channel) => (
+                    <ForumAdminChannelItem
+                      channel={channel}
+                      onChange={handleChannelUpdate}
+                    />
+                  )}
                 </For>
               </>
             )}
