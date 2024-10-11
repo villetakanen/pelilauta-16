@@ -20,7 +20,7 @@ export const PageSidebar: Component<{ site: Site }> = (props) => {
 
       <nav class="mt-1">
         <h3 class="downscaled">{t('site:contents.title')}</h3>
-        <SiteTocSection />
+        <SiteTocSection site={props.site} />
       </nav>
     </article>
   );

@@ -13,6 +13,8 @@ import { threads } from './threads';
 export const fi: Locale = {
   app: {
     title: 'Pelilauta 2 - Versio 16 - Alfajulkaisu',
+    shortname: 'Pelilauta 2',
+    mekanismi: 'Mekanismi',
     meta: {
       title: 'Pelilauta 2 16 [RC]',
       description:

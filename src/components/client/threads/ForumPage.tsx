@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { $topics } from '@stores/ThreadsApp/topics';
 import { toDisplayString } from '@utils/contentHelpers';
-import { type Component, For, createMemo } from 'solid-js';
+import { type Component, For } from 'solid-js';
 
 export const ForumPage: Component = () => {
   const channels = useStore($topics);

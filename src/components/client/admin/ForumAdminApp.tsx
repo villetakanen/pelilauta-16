@@ -8,15 +8,9 @@ import { useStore } from '@nanostores/solid';
 import { type Channel, parseChannel } from '@schemas/ChannelSchema';
 import { isAdmin } from '@stores/metaStore/metaStore';
 import { $uid } from '@stores/sessionStore';
-import { logDebug, logWarn } from '@utils/logHelpers';
-import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
-import {
-  type Component,
-  For,
-  createResource,
-  createSignal,
-  onMount,
-} from 'solid-js';
+import { logDebug } from '@utils/logHelpers';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { type Component, For, createSignal, onMount } from 'solid-js';
 import { ForumAdminChannelItem } from './ForumAdminChannelItem';
 
 export const ForumAdminApp: Component = () => {
