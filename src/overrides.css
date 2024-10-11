@@ -297,3 +297,6 @@ cn-menu button.menu-item {
 .align-center {
   align-items: center;
 }
+.h-full {
+  height: 100%;
+}

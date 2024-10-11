@@ -1,16 +1,30 @@
 ---
 import { SiteSettingsButton } from '@client/SitesApp/SiteSettingsButton';
 import { SiteTocPage } from '@client/SitesApp/SiteTocPage';
-import { SiteTray } from '@client/SitesApp/SiteTray';
+import { parseSite } from '@schemas/SiteSchema';
+import SiteTray from '@server/SiteApp/SiteTray.astro';
+import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
 const { siteKey } = Astro.params;
+
+if (!siteKey) {
+  throw new Error('No site key provided');
+}
+
+const origin = new URL(Astro.request.url).origin;
+
+// Fetch site data from the api
+const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
+  res.json(),
+);
+const site = parseSite(toClientEntry(siteData), siteKey);
 ---
 <PageWithTray title={t('site:toc.title')}>
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>
-  <SiteTray slot="app-tray" siteKey={siteKey + ''} client:only="solid-js"/>
-  <SiteTocPage client:only="solid-js"/>
+  <SiteTray slot="app-tray" site={site}/>
+  <SiteTocPage site={site} client:only="solid-js"/>
 </PageWithTray>

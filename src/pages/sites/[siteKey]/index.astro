@@ -1,7 +1,7 @@
 ---
-import { SiteTray } from '@client/SitesApp/SiteTray';
 import { parseSite } from '@schemas/SiteSchema';
 import PageApp from '@server/SiteApp/PageApp.astro';
+import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
@@ -18,6 +18,6 @@ const site = parseSite(toClientEntry(siteData), siteKey);
 const homePageKey = site.homepage || site.key;
 ---
 <PageWithTray title={site.name}>
-  <SiteTray slot="app-tray" siteKey={site.key} client:only="solid-js"/>
+  <SiteTray slot="app-tray" site={site}/>
   <PageApp site={site} pageKey={homePageKey}/>
 </PageWithTray>

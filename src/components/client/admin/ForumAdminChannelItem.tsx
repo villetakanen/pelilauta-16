@@ -17,11 +17,6 @@ export const ForumAdminChannelItem: Component<ForumAdminChannelItemProps> = (
 ) => {
   const { channel } = props;
 
-  const handleSubmit = (e: Event) => {
-    e.preventDefault();
-    console.log('Submit', e);
-  };
-
   const updateChannel = (field: string, value: string | number) => {
     console.log('Update', props.channel.slug, field, value);
     props.onChange({ ...channel, [field]: value });

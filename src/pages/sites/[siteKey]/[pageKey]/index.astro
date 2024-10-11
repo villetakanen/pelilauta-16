@@ -1,8 +1,8 @@
 ---
 import { SiteSettingsButton } from '@client/SitesApp/SiteSettingsButton';
-import { SiteTray } from '@client/SitesApp/SiteTray';
 import { parseSite } from '@schemas/SiteSchema';
 import PageApp from '@server/SiteApp/PageApp.astro';
+import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
@@ -27,6 +27,6 @@ const page = pageKey || site.homepage || site.key;
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>
-  <SiteTray slot="app-tray" siteKey={site.key} client:only="solid-js"/>
+  <SiteTray slot="app-tray" site={site}/>
   <PageApp site={site} pageKey={page}/>
 </PageWithTray>
