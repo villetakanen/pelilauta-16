@@ -1,15 +1,13 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
-import { useStore } from '@nanostores/solid';
+import type { Site } from '@schemas/SiteSchema';
 import { systemToNounMapping } from '@schemas/nouns';
-import { $site, updateSite } from '@stores/SitesApp';
+import { updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
 import { SiteHomePageSelect } from './SiteHomePageSelect';
 import { SiteSortOrderSelect } from './SiteSortOrderSelect';
 
-export const SiteMetaDataSection: Component = () => {
-  const site = useStore($site);
-
+export const SiteMetaDataSection: Component<{ site: Site }> = (props) => {
   async function onBlur(field: string, value: string) {
     // Update the site
     updateSite({ [field]: value });
@@ -23,7 +21,7 @@ export const SiteMetaDataSection: Component = () => {
           {t('entries:site.name')}
           <input
             type="text"
-            value={site().name}
+            value={props.site.name}
             onblur={(event) => onBlur('name', event.target.value)}
           />
         </label>
@@ -31,7 +29,7 @@ export const SiteMetaDataSection: Component = () => {
         <label>
           {t('entries:site.description')}
           <textarea
-            value={site().description}
+            value={props.site.description}
             onblur={(event) => onBlur('description', event.target.value)}
           />
         </label>
@@ -39,7 +37,7 @@ export const SiteMetaDataSection: Component = () => {
         <label>
           {t('entries:site.system')}
           <select
-            value={site().system}
+            value={props.site.system}
             onchange={(event) => onBlur('system', event.target.value)}
           >
             <For each={Object.keys(systemToNounMapping)}>
@@ -55,14 +53,14 @@ export const SiteMetaDataSection: Component = () => {
       <fieldset>
         <cn-toggle-button
           label={t('entries:site.hidden')}
-          pressed={site().hidden}
+          pressed={props.site.hidden}
           onChange={(event: Event) =>
             updateSite({ hidden: (event.target as CyanToggleButton).pressed })
           }
         />
         <cn-toggle-button
           label={t('entries:site.customPageKeys')}
-          pressed={site().customPageKeys}
+          pressed={props.site.customPageKeys}
           onChange={(event: Event) =>
             updateSite({
               customPageKeys: (event.target as CyanToggleButton).pressed,
