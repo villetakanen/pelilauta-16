@@ -4,9 +4,10 @@ import { t } from '@utils/i18n';
 interface Props {
   title?: string;
   modal?: boolean;
+  noun?: string;
 }
 
-const { title, modal } = Astro.props;
+const { title, modal, noun } = Astro.props;
 const barTitle = title || t('app:meta.title');
 ---
 
@@ -14,6 +15,8 @@ const barTitle = title || t('app:meta.title');
   { modal && <button class="text" type="button" onclick="history.back()">
     <cn-icon noun="arrow-left" />
   </button> }
+  { !modal && noun && <div class="ml-1"><cn-icon noun={noun}/></div> }
+  <p>{modal}</p>
   <h3>{barTitle}</h3>
   <div style="flex: 1"></div>
   <slot />
