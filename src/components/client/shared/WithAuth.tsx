@@ -6,5 +6,5 @@ type WithLoginProps<P = Record<string, unknown>> = P & {
 };
 
 export const WithAuth: Component<WithLoginProps> = (props) => {
-  return props.allow ? props.children : <cn-loader />;
+  return props.allow ? props.children : <p>FORBIDDEN</p>;
 };

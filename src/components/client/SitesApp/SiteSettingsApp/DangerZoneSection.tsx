@@ -1,13 +1,11 @@
-import { useStore } from '@nanostores/solid';
-import { $site } from '@stores/SitesApp';
+import type { Site } from '@schemas/SiteSchema';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createSignal } from 'solid-js';
 import { deleteSite } from 'src/stores/sitesStore';
 
-export const DangerZoneSection: Component = () => {
-  const site = useStore($site);
+export const DangerZoneSection: Component<{ site: Site }> = (props) => {
   const [deleteConfirm, setDeleteConfirm] = createSignal('');
   const deleteConfirmPhrase = 'Olen Aivan Varma';
 
@@ -19,7 +17,7 @@ export const DangerZoneSection: Component = () => {
       return;
     }
 
-    await deleteSite(site().key);
+    await deleteSite(props.site.key);
 
     pushSessionSnack('snacks:siteDeleted');
 

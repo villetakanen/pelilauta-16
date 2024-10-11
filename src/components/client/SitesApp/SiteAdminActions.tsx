@@ -30,13 +30,13 @@ export const SiteAdminActions: Component<{ site: Site }> = (props) => {
     <nav>
       <ul>
         <li>
-          <a href="/sites/${props.siteKey}/members" class="tray-button">
+          <a href={`/sites/${props.site.key}/members`} class="tray-button">
             <cn-icon noun="adventurer" xsmall />
             <span>{t('site:members.title')}</span>
           </a>
         </li>
         <li>
-          <a href="/sites/${props.siteKey}/settings" class="tray-button">
+          <a href={`/sites/${props.site.key}/settings`} class="tray-button">
             <cn-icon noun="tools" xsmall />
             <span>{t('site:settings.title')}</span>
           </a>

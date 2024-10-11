@@ -1,20 +1,19 @@
-import { useStore } from '@nanostores/solid';
-import { $site, updateSite } from '@stores/SitesApp';
+import type { Site } from '@schemas/SiteSchema';
+import { updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { type Component, createMemo, createSignal } from 'solid-js';
 import { storage } from 'src/firebase/client';
 
-export const ThemeImageForm: Component<{ imageFieldName: string }> = (
-  props,
-) => {
-  const site = useStore($site);
-
+export const ThemeImageForm: Component<{
+  imageFieldName: string;
+  site: Site;
+}> = (props) => {
   const [preview, setPreview] = createSignal<string | null>(null);
 
   const siteURL = createMemo(() => {
-    const url = (site() as Record<string, unknown>)[props.imageFieldName];
+    const url = (props.site as Record<string, unknown>)[props.imageFieldName];
     if (url) return url as string;
     return '';
   });
@@ -55,7 +54,7 @@ export const ThemeImageForm: Component<{ imageFieldName: string }> = (
       // Create a reference to the file
       const storageRef = ref(
         storage,
-        `sites/${site().key}/${props.imageFieldName}.${ext}`,
+        `sites/${props.site.key}/${props.imageFieldName}.${ext}`,
       );
 
       await uploadString(storageRef, dataurl, 'data_url');
