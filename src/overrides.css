@@ -53,6 +53,7 @@ cn-loader[for="navigation"] {
   overflow: hidden;
   margin-top: calc(var(--cn-app-bar-height) * -1 - var(--cn-grid));
   opacity: 0.72;
+  overflow: hidden;
 }
 .pageBackgroundPoster img {
   width: 100%;
@@ -299,4 +300,11 @@ cn-menu button.menu-item {
 }
 .h-full {
   height: 100%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+.ml-1 {
+  padding-left: var(--cn-grid);
 }
