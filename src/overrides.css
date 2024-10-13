@@ -246,6 +246,9 @@ cn-bubble {
     background: var(--background-elevation-4);
     box-shadow: var(--shadow-elevation-4);
   }
+  .content-columns {
+    padding: var(--cn-grid);
+  }
 }
 blockquote {
   border-left: var(--cn-grid) solid var(--chroma-primary-30);
@@ -282,11 +285,11 @@ cn-menu button.menu-item {
   bottom: 0;
   right: 0;
   left: 0;
-  height: calc(var(--cn-grid) * 12);
+  height: calc(var(--cn-grid) * 8);
   background: linear-gradient(
     to bottom,
-    color-mix(in hsl, var(--color-on-secondary), transparent 100%),
-    var(--color-on-secondary)
+    color-mix(in hsl, var(--color-secondary), transparent 100%),
+    var(--color-secondary)
   );
 }
 .border-radius.clip-after-3::after {
@@ -307,4 +310,7 @@ body::-webkit-scrollbar {
 }
 .ml-1 {
   padding-left: var(--cn-grid);
+}
+.secondary {
+  background-color: var(--color-secondary);
 }

@@ -44,7 +44,11 @@ export const ReplyBubble: Component<Props> = (props) => {
 
   return (
     <section class="flex-no-wrap" style="display:flex">
-      {!fromCurrentUser() && <ProfileAvatar uid={props.reply.owners[0]} />}
+      {!fromCurrentUser() && (
+        <div class="sm-hidden">
+          <ProfileAvatar uid={props.reply.owners[0]} />
+        </div>
+      )}
       <cn-bubble reply={fromCurrentUser()} class="grow">
         <div class="toolbar" style="margin-top: -16px">
           <p class="grow">
@@ -82,7 +86,11 @@ export const ReplyBubble: Component<Props> = (props) => {
         )}
         <MarkdownSection content={`${props.reply.markdownContent}`} />
       </cn-bubble>
-      {fromCurrentUser() && <ProfileAvatar uid={props.reply.owners[0]} />}
+      {fromCurrentUser() && (
+        <div class="sm-hidden">
+          <ProfileAvatar uid={props.reply.owners[0]} />
+        </div>
+      )}
     </section>
   );
 };
