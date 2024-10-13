@@ -36,7 +36,7 @@ const page = parsePage(toClientEntry(pageData), pageKey, site.key);
   <div class="column-s">
     <PageSidebar site={site} client:only="solid-js"/>
   </div>
-  <PageFabs pageKey={pageKey} client:only="solid-js"/>
+  <PageFabs pageKey={pageKey} site={site} client:only="solid-js"/>
 </div>
 { site.backgroundURL && <div class="pageBackgroundPoster">
   <img src={site.backgroundURL} alt=""/>

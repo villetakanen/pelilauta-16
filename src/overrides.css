@@ -246,9 +246,6 @@ cn-bubble {
     background: var(--background-elevation-4);
     box-shadow: var(--shadow-elevation-4);
   }
-  .content-columns {
-    padding: var(--cn-grid);
-  }
 }
 blockquote {
   border-left: var(--cn-grid) solid var(--chroma-primary-30);
