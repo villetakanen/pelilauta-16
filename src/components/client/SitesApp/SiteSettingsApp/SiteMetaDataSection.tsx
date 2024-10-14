@@ -10,7 +10,7 @@ import { SiteSortOrderSelect } from './SiteSortOrderSelect';
 export const SiteMetaDataSection: Component<{ site: Site }> = (props) => {
   async function onBlur(field: string, value: string) {
     // Update the site
-    updateSite({ [field]: value });
+    updateSite({ [field]: value }, props.site.key);
   }
 
   return (
@@ -55,20 +55,26 @@ export const SiteMetaDataSection: Component<{ site: Site }> = (props) => {
           label={t('entries:site.hidden')}
           pressed={props.site.hidden}
           onChange={(event: Event) =>
-            updateSite({ hidden: (event.target as CyanToggleButton).pressed })
+            updateSite(
+              { hidden: (event.target as CyanToggleButton).pressed },
+              props.site.key,
+            )
           }
         />
         <cn-toggle-button
           label={t('entries:site.customPageKeys')}
           pressed={props.site.customPageKeys}
           onChange={(event: Event) =>
-            updateSite({
-              customPageKeys: (event.target as CyanToggleButton).pressed,
-            })
+            updateSite(
+              {
+                customPageKeys: (event.target as CyanToggleButton).pressed,
+              },
+              props.site.key,
+            )
           }
         />
-        <SiteHomePageSelect />
-        <SiteSortOrderSelect />
+        <SiteHomePageSelect site={props.site} />
+        <SiteSortOrderSelect site={props.site} />
       </fieldset>
     </section>
   );

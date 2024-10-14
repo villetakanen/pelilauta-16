@@ -1,10 +1,11 @@
 import { useStore } from '@nanostores/solid';
+import type { Site } from '@schemas/SiteSchema';
 import { updateSite } from '@stores/SitesApp';
 import { $pages } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
 import { type Component, For, createMemo } from 'solid-js';
 
-export const SiteHomePageSelect: Component = () => {
+export const SiteHomePageSelect: Component<{ site: Site }> = (props) => {
   const pages = useStore($pages);
 
   const homePageOptions = createMemo(() => {
@@ -19,7 +20,7 @@ export const SiteHomePageSelect: Component = () => {
       {t('entries:site.homePage')}
       <select
         onchange={(event) => {
-          updateSite({ homepage: event.target.value });
+          updateSite({ homepage: event.target.value }, props.site.key);
         }}
       >
         <option value="">{t('entries:default')}</option>

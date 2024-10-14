@@ -1,16 +1,49 @@
 import { WithLoader } from '@client/shared/WithLoader';
 import { WithLogin } from '@client/shared/WithLogin';
 import { SiteCard } from '@client/sites/SiteCard';
+import { db } from '@firebase/client';
 import { useStore } from '@nanostores/solid';
+import {
+  SITES_COLLECTION_NAME,
+  type Site,
+  parseSite,
+} from '@schemas/SiteSchema';
+import { $uid } from '@stores/sessionStore';
+import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
-import { type Component, For, createMemo } from 'solid-js';
-import { $loadingState, $sites } from 'src/stores/sitesStore';
+import { logDebug } from '@utils/logHelpers';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { type Component, For, createMemo, createResource } from 'solid-js';
 
 export const SitesList: Component = () => {
-  const sites = useStore($sites);
-  const loadingState = useStore($loadingState);
+  const uid = useStore($uid);
 
-  const loading = createMemo(() => loadingState() !== 'active');
+  const fetchSites = async (uid: string) => {
+    if (!uid) return new Array<Site>();
+
+    const siteDocs = await getDocs(
+      query(
+        collection(db, SITES_COLLECTION_NAME),
+        where('owners', 'array-contains', uid),
+      ),
+    );
+
+    const sitesArray = siteDocs.docs.map((doc) => {
+      return parseSite(toClientEntry(doc.data()), doc.id);
+    });
+
+    logDebug('SitesList', 'fetchSites', sitesArray);
+
+    return sitesArray;
+  };
+
+  const [sitesData] = createResource(uid, fetchSites);
+  const sitesArray = createMemo(() =>
+    sitesData.loading
+      ? new Array<Site>()
+      : sitesData()?.sort((a, b) => b.flowTime - a.flowTime),
+  );
+  const loading = () => sitesData.loading;
 
   return (
     <WithLogin>
@@ -21,7 +54,7 @@ export const SitesList: Component = () => {
       </div>
       <WithLoader loading={loading()}>
         <div class="content-cards">
-          <For each={sites()}>
+          <For each={sitesArray()}>
             {(site) => <SiteCard {...site} key={site.key} />}
           </For>
         </div>

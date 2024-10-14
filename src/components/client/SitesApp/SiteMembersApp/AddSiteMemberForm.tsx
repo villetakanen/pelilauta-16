@@ -1,5 +1,6 @@
 import { useStore } from '@nanostores/solid';
-import { $site, updateSite } from '@stores/SitesApp';
+import type { Site } from '@schemas/SiteSchema';
+import { updateSite } from '@stores/SitesApp';
 import { $profiles, fetchAllProfiles } from '@stores/profilesStore';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
@@ -11,8 +12,7 @@ import {
   onMount,
 } from 'solid-js';
 
-export const AddSiteMemberForm: Component = () => {
-  const site = useStore($site);
+export const AddSiteMemberForm: Component<{ site: Site }> = (props) => {
   const profiles = useStore($profiles);
   const [selected, setSelected] = createSignal<string | null>(null);
 
@@ -24,7 +24,7 @@ export const AddSiteMemberForm: Component = () => {
 
   const nonMembers = createMemo(() => {
     return Object.keys(profiles()).filter(
-      (key) => !site().owners.includes(key),
+      (key) => !props.site.owners.includes(key),
     );
   });
 
@@ -35,9 +35,9 @@ export const AddSiteMemberForm: Component = () => {
     if (s) {
       // add the selected member to the site
       console.log('adding', selected());
-      const owners = [...site().owners];
+      const owners = [...props.site.owners];
       owners.push(s);
-      updateSite({ owners });
+      updateSite({ owners }, props.site.key);
     }
   }
 
