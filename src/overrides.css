@@ -243,10 +243,20 @@ cn-bubble {
     bottom: calc(8.5 * var(--cn-grid));
   }
   #nav-bar {
-    background: var(--background-elevation-4);
-    box-shadow: var(--shadow-elevation-4);
+    box-shadow: none;
+  }
+  #nav-bar-shader {
+    height: 100px;
+    width: 100%;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-index-bar);
+    background: linear-gradient(transparent, var(--shadow-color));
   }
 }
+
 blockquote {
   border-left: var(--cn-grid) solid var(--chroma-primary-30);
   padding: calc(var(--cn-grid) / 2);
