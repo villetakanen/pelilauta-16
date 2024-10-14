@@ -10,6 +10,6 @@ module.exports = {
   globPatterns: [
     "**/*.{css,png,webp,avif,mp4,html,ico,woff2,json,js,svg,xml,txt}",
   ],
-  swDest: `${globPath}/sw.js`,
+  swDest: `${globPath}/service-worker.js`,
   swSrc: "./public/sw.js",
 };
