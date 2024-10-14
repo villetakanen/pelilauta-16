@@ -4,7 +4,11 @@ import {
   type Page,
   parsePage,
 } from '@schemas/PageSchema';
-import { PageRefSchema, SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
+import {
+  PageRefSchema,
+  SITES_COLLECTION_NAME,
+  parseSite,
+} from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { logError, logWarn } from '@utils/logHelpers';
@@ -213,12 +217,12 @@ export async function addPage(
 }
 
 async function updatePageRefs(page: Page) {
-  const site = $site.get();
-  if (!site) {
-    logWarn('updatePageRefs', 'site is not loaded');
+  const siteDoc = await getDoc(doc(db, SITES_COLLECTION_NAME, page.siteKey));
+  if (!siteDoc.exists()) {
+    logError('updatePageRefs', 'site not found');
     return;
   }
-
+  const site = parseSite(toClientEntry(siteDoc.data()), page.siteKey);
   const refs = site.pageRefs || [];
   // remove the page from the refs, if it exists
   const filteredRefs = refs.filter((ref) => ref.key !== page.key);
@@ -228,7 +232,6 @@ async function updatePageRefs(page: Page) {
       ...page,
       author: page.owners[0] || site.owners[0] || '-',
     }),
-  ); // pageref is a subset of page, so we can just parse it
-
-  await updateSite({ pageRefs: filteredRefs });
+  );
+  await updateSite({ pageRefs: filteredRefs }, site.key);
 }

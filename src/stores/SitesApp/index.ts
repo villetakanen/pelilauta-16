@@ -85,10 +85,10 @@ async function subscribeToSite(key: string) {
   });
 }
 
-export async function updateSite(site: Partial<Site>) {
+export async function updateSite(site: Partial<Site>, key: string) {
   const update = {
     ...site,
     updatedAt: serverTimestamp(),
   };
-  await updateDoc(doc(db, SITES_COLLECTION_NAME, $key.get()), update);
+  await updateDoc(doc(db, SITES_COLLECTION_NAME, key), update);
 }

@@ -1,12 +1,9 @@
-import { useStore } from '@nanostores/solid';
-import { SITE_SORT_ORDER_VALUES } from '@schemas/SiteSchema';
-import { $site, updateSite } from '@stores/SitesApp';
+import { SITE_SORT_ORDER_VALUES, type Site } from '@schemas/SiteSchema';
+import { updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
 
-export const SiteSortOrderSelect: Component = () => {
-  const site = useStore($site);
-
+export const SiteSortOrderSelect: Component<{ site: Site }> = (props) => {
   const sortOrderOptions = SITE_SORT_ORDER_VALUES.map((sortOrder) => ({
     value: sortOrder,
     title: t(`entries:site.sortOrders.${sortOrder}`),
@@ -25,9 +22,12 @@ export const SiteSortOrderSelect: Component = () => {
     <label>
       {t('entries:site.sortOrder')}
       <select
-        value={site().sortOrder}
+        value={props.site.sortOrder}
         onchange={(event) => {
-          updateSite({ sortOrder: verifySortOrder(event.target.value) });
+          updateSite(
+            { sortOrder: verifySortOrder(event.target.value) },
+            props.site.key,
+          );
         }}
       >
         <option value="">{t('entries:default')}</option>

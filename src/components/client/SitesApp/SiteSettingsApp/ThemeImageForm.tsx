@@ -60,9 +60,12 @@ export const ThemeImageForm: Component<{
       await uploadString(storageRef, dataurl, 'data_url');
 
       const downloadURL = await getDownloadURL(storageRef);
-      updateSite({
-        [props.imageFieldName]: downloadURL,
-      });
+      updateSite(
+        {
+          [props.imageFieldName]: downloadURL,
+        },
+        props.site.key,
+      );
     } catch (error) {
       logError(error);
     }
@@ -84,9 +87,12 @@ export const ThemeImageForm: Component<{
   }
 
   function deleteImage() {
-    updateSite({
-      [props.imageFieldName]: '',
-    });
+    updateSite(
+      {
+        [props.imageFieldName]: '',
+      },
+      props.site.key,
+    );
   }
 
   return (

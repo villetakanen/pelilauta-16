@@ -12,20 +12,6 @@ export const SiteAdminActions: Component<{ site: Site }> = (props) => {
   const uid = useStore($uid);
   const visible = createMemo(() => props.site.owners.includes(uid()));
 
-  /*
-  base.push({
-        label: ,
-        href: `/sites/${props.siteKey}/members`,
-        noun: 'adventurer',
-        break: true,
-      });
-      base.push({
-        label: t('site:settings.title'),
-        href: `/sites/${props.siteKey}/settings`,
-        noun: 'tools',
-      });
-      */
-
   return visible() ? (
     <nav>
       <ul>
