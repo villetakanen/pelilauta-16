@@ -1,10 +1,12 @@
 ---
 import { t } from '@utils/i18n';
+import {version} from 'package.json';
 ---
 
 <footer class="AppFooter content-columns border-t">
-  <section class="column-s flex justify-center" style="opacity:0.11">
+  <section class="column-s flex flex-col align-center justify-center" style="opacity:0.11">
     <cn-icon noun="fox" xlarge />
+    <p class="caption text-center">{version}</p>
   </section>
   <section class="column-s">
     <h4>{t('app:footer.partners.title')}</h4>
