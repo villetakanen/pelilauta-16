@@ -19,6 +19,6 @@
     }
   },
   "files": {
-    "ignore": ["node_modules/*", "dist/*", ".astro/*", ".vercel/*"]
+    "ignore": ["node_modules/*", "dist/*", ".astro/*", ".vercel/*", "**/*.cjs"]
   }
 }

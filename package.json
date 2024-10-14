@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && npm run generateSW",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest",
     "check": "npx @biomejs/biome check --write .",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
   },
   "dependencies": {
     "@11thdeg/cyan-next": "1.0.0-alpha.125",
@@ -41,6 +42,7 @@
     "@types/turndown": "^5.0.5",
     "lefthook": "^1.7.18",
     "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "workbox-cli": "^7.1.0"
   }
 }
