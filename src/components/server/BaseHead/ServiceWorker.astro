@@ -1,0 +1,15 @@
+<script is:inline>
+    addEventListener("load", () => {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(() => {
+            console.log("Service Worker Registered");
+          })
+          .catch((err) => {
+            console.log("Some error occurred while registering service worker");
+            console.log(err);
+          });
+      }
+    });
+  </script>
