@@ -63,7 +63,9 @@ export const emptySite: Site = {
   hidden: true,
 };
 
-export function parseSite(data: Partial<Site>, key: string): Site {
+export function parseSite(data: Partial<Site>, newKey?: string): Site {
+  // Forcing key to be a string, even if it's undefined. Legacy support for key field.
+  const key = newKey || data.key || '';
   // Legacy support for system field
   const system = data.system ? data.system : 'homebrew';
 

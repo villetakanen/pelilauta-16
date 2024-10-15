@@ -1,5 +1,6 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import { WithLogin } from '@client/shared/WithLogin';
+import { createSite } from '@firebase/client/site/createSite';
 import { useStore } from '@nanostores/solid';
 import { PAGES_COLLECTION_NAME } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
@@ -17,7 +18,6 @@ import {
 } from 'solid-js';
 import { db } from 'src/firebase/client';
 import { $uid } from 'src/stores/sessionStore';
-import { createSite } from 'src/stores/sitesStore';
 import { GameSystemSelect } from './GameSystemSelect';
 
 export const CreateSiteApp: Component = () => {
