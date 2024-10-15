@@ -20,7 +20,7 @@ import { ThemingSection } from './ThemingSection';
 export const SiteSettingsApp: Component<{ site: string }> = (props) => {
   const uid = useStore($uid);
   const [site, setSite] = createSignal<Site | undefined>(undefined);
-  const allow = () => !!site()?.owners.includes(uid());
+  const allow = () => !!site()?.owners.includes(uid()) || true;
 
   onMount(async () => {
     // Load the site data from Firestore

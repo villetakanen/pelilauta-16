@@ -1,9 +1,9 @@
+import { deleteSite } from '@firebase/client/site/deleteSite';
 import type { Site } from '@schemas/SiteSchema';
-import { pushSessionSnack } from '@utils/client/snackUtils';
+import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createSignal } from 'solid-js';
-import { deleteSite } from 'src/stores/sitesStore';
 
 export const DangerZoneSection: Component<{ site: Site }> = (props) => {
   const [deleteConfirm, setDeleteConfirm] = createSignal('');
@@ -16,12 +16,14 @@ export const DangerZoneSection: Component<{ site: Site }> = (props) => {
       logDebug('Delete confirm phrase does not match');
       return;
     }
-
-    await deleteSite(props.site.key);
-
-    pushSessionSnack('snacks:siteDeleted');
-
-    window.location.href = '/library';
+    try {
+      await deleteSite(props.site);
+      pushSessionSnack('site:snacks.siteDeleted', { name: props.site.name });
+      window.location.href = '/library';
+    } catch (error) {
+      logDebug('Error deleting site', error);
+      pushSnack('site:snacks.errorDeletingSite');
+    }
   }
 
   return (

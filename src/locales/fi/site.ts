@@ -1,6 +1,9 @@
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {
+  contents: {
+    title: 'Sivut',
+  },
   toc: {
     title: 'Hakemisto',
     missing:
@@ -17,8 +20,9 @@ export const site: Locale = {
       title: 'Ulkoasu',
     },
   },
-  contents: {
-    title: 'Sivut',
+  snacks: {
+    siteDeleted: 'Sivusto {name} poistettu',
+    errorDeletingSite: 'Virhe poistettaessa sivustoa',
   },
   tray: {
     actions: {
