@@ -2,7 +2,8 @@ import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { updatePage } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
-import { type Component, createSignal } from 'solid-js';
+import { logDebug } from '@utils/logHelpers';
+import { type Component, createSignal, onMount } from 'solid-js';
 
 export type PageEditorProps = {
   site: Site;
@@ -11,8 +12,10 @@ export type PageEditorProps = {
 
 export const PageEditor: Component<PageEditorProps> = (props) => {
   const [changed, setChanged] = createSignal(false);
+  const [content, setContent] = createSignal(props.page.markdownContent || '');
   const originalPage = props.page;
   const originalContent = props.page.markdownContent || '';
+  let editorRef: undefined | HTMLElement;
 
   const handleSubmit = async (event: Event) => {
     event.preventDefault();
@@ -25,8 +28,8 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
     const name = formData.get('name') as string;
     if (name !== originalPage?.name) updates.name = name;
 
-    const content = formData.get('markdownContent') as string;
-    if (content !== originalContent) updates.markdownContent = content;
+    const c = content();
+    if (c !== originalContent) updates.markdownContent = c;
 
     if (Object.keys(updates).length) {
       await updatePage(props.site.key, props.page.key, updates);
@@ -34,6 +37,21 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
 
     window.location.href = `/sites/${props.site.key}/${props.page.key}`;
   };
+
+  onMount(() => {
+    const r = document.querySelector('cn-editor');
+    if (r instanceof HTMLElement) {
+      editorRef = r;
+      editorRef.addEventListener('input', handleEditorInput);
+    }
+  });
+
+  function handleEditorInput(e: Event) {
+    setChanged(true);
+    const content = (e as CustomEvent<{ value: string }>).detail.value;
+    logDebug('Editor input', content);
+    setContent(content);
+  }
 
   return (
     <form class="content-editor" onSubmit={handleSubmit}>
@@ -51,13 +69,9 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
           <cn-icon noun="assets" />
         </button>
       </section>
-      <textarea
-        class="content"
-        name="markdownContent"
-        onInput={() => setChanged(true)}
-      >
-        {originalContent}
-      </textarea>
+      <div class="grow">
+        <cn-editor ref={editorRef} value={originalContent} />
+      </div>
       <section class="toolbar justify-end">
         <a
           href={`/sites/${props.site.key}/${props.page.key}`}

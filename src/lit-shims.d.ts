@@ -26,6 +26,10 @@ declare module 'solid-js' {
       'cn-bubble': HTMLAttributes;
       'cn-reaction-button': CnReactionButton;
       'cn-loader': HTMLAttributes;
+      'cn-editor': HTMLAttributes & {
+        value: string;
+        onInput: (e: Event) => void;
+      };
       'cn-pill': HTMLAttributes & {
         label: string;
         noun: string;
