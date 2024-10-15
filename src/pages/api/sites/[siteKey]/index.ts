@@ -26,8 +26,8 @@ export async function GET({ params }: APIContext): Promise<Response> {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        // Vercel cache control, 30 seconds
-        'Cache-Control': 's-maxage=30, stale-while-revalidate',
+        // Vercel cache control, 5 seconds
+        // 'Cache-Control': 's-maxage=5, stale-while-revalidate',
       },
     });
   } catch (err: unknown) {

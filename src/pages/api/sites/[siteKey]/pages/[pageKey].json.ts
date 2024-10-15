@@ -29,6 +29,7 @@ export async function GET({ params }: APIContext): Promise<Response> {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
+        // No cache, as pages can be edited
       },
     });
   } catch (err: unknown) {
