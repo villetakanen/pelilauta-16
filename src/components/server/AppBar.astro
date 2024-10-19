@@ -4,20 +4,16 @@ import { t } from '@utils/i18n';
 interface Props {
   title?: string;
   modal?: boolean;
+  sticky?: boolean;
   noun?: string;
 }
 
-const { title, modal, noun } = Astro.props;
+const { title, modal, noun, sticky } = Astro.props;
 const barTitle = title || t('app:meta.title');
+const mode = modal ? 'modal' : sticky ? 'sticky' : undefined;
 ---
 
-<header class={`${modal && 'modal'} cn-app-bar`}>
-  { modal && <button class="text" type="button" onclick="history.back()">
-    <cn-icon noun="arrow-left" />
-  </button> }
-  { !modal && noun && <div class="ml-1"><cn-icon noun={noun}/></div> }
-  <h3>{barTitle}</h3>
-  <div style="flex: 1"></div>
+<cn-app-bar title={barTitle} mode={mode} noun={noun}>
   <slot />
   <cn-share-button></cn-share-button>
-</header>
+</cn-app-bar>
