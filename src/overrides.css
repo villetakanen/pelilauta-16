@@ -217,14 +217,6 @@ cn-bubble {
   align-items: center;
 }
 
-@media (min-width: 621px) {
-  cn-tray-button {
-    left: calc(var(--cn-rail-width) + var(--cn-grid));
-  }
-  header.cn-app-bar.modal {
-    margin-left: calc(var(--cn-rail-width) + var(--cn-grid));
-  }
-}
 .border-t {
   border-color: var(--color-border);
 }
