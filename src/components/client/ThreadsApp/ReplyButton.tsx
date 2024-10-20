@@ -2,7 +2,6 @@ import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
-import type { Atom } from 'nanostores';
 /**
  * A Solid-js component that renders a button that opens a dialog to reply to a thread.
  *
@@ -15,7 +14,7 @@ import { ReplyDialog } from './ReplyDialog';
 interface Props {
   quoteRef?: string;
   threadKey: string;
-  discussion?: Atom<Reply[]>;
+  discussion?: Reply[];
   onQuote: (evt: CustomEvent<string>) => void;
   onClose?: () => void;
 }
