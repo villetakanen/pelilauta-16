@@ -1,5 +1,5 @@
 ---
-import type { PageRef, Site } from '@schemas/SiteSchema';
+import type { CategoryRef, PageRef, Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 
 /**
@@ -17,19 +17,20 @@ interface Props {
 
 const { site } = Astro.props;
 const sortBy = site.sortOrder || 'name';
-const categories: Array<string> = [];
+const categories: Array<CategoryRef> = [...(site.pageCategories || [])];
 const pages = new Map<string, PageRef[]>();
 
 for (const category of categories) {
   const pagesInCategory: Array<PageRef> =
-    site.pageRefs?.filter((page: PageRef) => page.category === category) || [];
+    site.pageRefs?.filter((page: PageRef) => page.category === category.slug) ||
+    [];
   // Sort the pages in the category
   if (sortBy === 'name') {
     pagesInCategory?.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sortBy === 'flowTime') {
     pagesInCategory?.sort((a, b) => (a.flowTime || 0) - (b.flowTime || 0));
   }
-  pages.set(category, pagesInCategory || []);
+  pages.set(category.slug, pagesInCategory || []);
 }
 
 // Pages without a category go to category 't('site:toc.other')' or 't('site:toc.all')'
@@ -40,14 +41,14 @@ if (pagesWithoutCategory.length > 0) {
   const category =
     categories.length > 0 ? t('site:toc.other') : t('site:toc.all');
   pages.set(category, pagesWithoutCategory);
-  categories.push(category);
+  categories.push({ slug: category, name: category });
 }
 ---
 { categories.map((category) => (
   <section class="toc-category">
-    <h4>{category}</h4>
+    <h4>{category.name}</h4>
     <ul>
-      {pages.get(category)?.map((page) => (
+      {pages.get(category.slug)?.map((page) => (
         <li>
           <a href={`/sites/${site.key}/pages/${page.key}`}>{page.name}</a>
         </li>

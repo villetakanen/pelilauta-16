@@ -37,6 +37,8 @@ export const CategoryRefSchema = z.object({
   name: z.string(),
 });
 
+export type CategoryRef = z.infer<typeof CategoryRefSchema>;
+
 export const SiteSchema = EntrySchema.extend({
   name: z.string(),
   system: z.string().optional(),

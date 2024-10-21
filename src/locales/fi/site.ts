@@ -4,12 +4,6 @@ export const site: Locale = {
   contents: {
     title: 'Sivut',
   },
-  toc: {
-    title: 'Hakemisto',
-    missing:
-      'Sivusto on luotu ennen Pelilaudan versiota 16, joten sivuston hakemisto on luotava uudestaan',
-    repair: 'Luo hakemisto',
-  },
   settings: {
     title: 'Asetukset',
     meta: {
@@ -55,5 +49,20 @@ export const site: Locale = {
   },
   siteList: {
     title: 'Julkiset sivustot',
+  },
+  toc: {
+    title: 'Hakemisto',
+    missing:
+      'Sivusto on luotu ennen Pelilaudan versiota 16, joten sivuston hakemisto on luotava uudestaan',
+    repair: 'Luo hakemisto',
+    admin: {
+      title: 'Hallinta',
+      newCategory: 'Uusi kategoria',
+    },
+    regenerate: {
+      info: 'Luo hakemisto uudelleen sivujen kategorioiden perusteella',
+    },
+    other: 'Luokittelemattomat',
+    all: 'Sisältö',
   },
 };

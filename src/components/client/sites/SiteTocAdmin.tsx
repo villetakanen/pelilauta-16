@@ -10,6 +10,7 @@ import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { doc, updateDoc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';
+import { SiteTocRegenSection } from './SiteTocRegen';
 
 export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
   const uid = useStore($uid);
@@ -54,6 +55,8 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
           <cn-icon noun="add" />
         </button>
       </div>
+
+      <SiteTocRegenSection site={props.site} />
     </div>
   ) : null;
 };

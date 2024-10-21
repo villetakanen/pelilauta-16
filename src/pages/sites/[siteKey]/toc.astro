@@ -28,7 +28,9 @@ const site = parseSite(toClientEntry(siteData), siteKey);
   </div>
   <SiteTray slot="app-tray" site={site}/>
   <div class="content-columns">
-    <SiteTocSection site={site}/>
+    <article class="column-l">
+      <SiteTocSection site={site}/>
+    </article>
     <div class="column-s">
       <SiteTocAdmin site={site} client:only="solid-js"/>
     </div>
