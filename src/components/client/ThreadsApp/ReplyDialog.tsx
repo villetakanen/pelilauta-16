@@ -15,7 +15,6 @@ import { addReply } from '@stores/ThreadsApp/discussion';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
-import { type Atom, atom } from 'nanostores';
 import { type Component, createEffect, createSignal } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
@@ -23,7 +22,7 @@ interface Props {
   open: boolean;
   quoteRef?: string;
   threadKey: string;
-  discussion?: Atom<Reply[]>;
+  discussion?: Reply[];
   onQuote: (evt: CustomEvent<string>) => void;
   onClose?: () => void;
 }
@@ -34,9 +33,8 @@ export const ReplyDialog: Component<Props> = (props) => {
   let replyTextArea: HTMLTextAreaElement | undefined;
   const [message, setMessage] = createSignal<string | null>(null);
   const dispatch = createEventDispatcher(props);
-  const discussion = useStore(props.discussion || atom([]));
   const quote = () =>
-    discussion().find((reply) => reply.key === props.quoteRef);
+    props.discussion?.find((reply) => reply.key === props.quoteRef);
 
   createEffect(() => {
     if (props.open) {

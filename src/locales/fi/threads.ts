@@ -30,6 +30,7 @@ export const threads: Locale = {
   discussion: {
     title: 'Keskustelu',
     reply: 'Vastaa',
+    empty: 'Aloita keskustelu aiheesta vastaamalla alta.',
   },
   confirmDelete: {
     title: 'Vahvista poisto',

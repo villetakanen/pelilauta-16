@@ -1,5 +1,5 @@
 ---
-import { ThreadDiscussion } from '@client/ThreadsApp/ThreadDiscussion';
+import { Discussion } from '@client/ThreadApp/Discussion';
 import { ThreadApp } from '@client/threads/ThreadApp/ThreadApp';
 import Page from 'src/layouts/Page.astro';
 
@@ -11,5 +11,5 @@ if (!threadKey) {
 ---
 <Page>
   <ThreadApp thread={threadKey} client:only="solid-js"/>
-  <ThreadDiscussion threadKey={threadKey} client:only="solid-js"/>
+  <Discussion threadKey={threadKey} client:only="solid-js"/>
 </Page>
