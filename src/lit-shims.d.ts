@@ -37,6 +37,9 @@ declare module 'solid-js' {
         value: string;
       };
       'cn-menu': HTMLAttributes;
+      'cn-sortable-list': HTMLAttributes & {
+        items: { key: string; title: string }[];
+      };
       'cn-toggle-button': HTMLAttributes & {
         label: string;
         checked: boolean;

@@ -1,7 +1,8 @@
 ---
+import { SiteTocAdmin } from '@client/SiteApp/SiteTocAdmin';
 import { SiteSettingsButton } from '@client/SitesApp/SiteSettingsButton';
-import { SiteTocPage } from '@client/SitesApp/SiteTocPage';
 import { parseSite } from '@schemas/SiteSchema';
+import SiteTocSection from '@server/SiteApp/SiteTocSection.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
@@ -26,5 +27,13 @@ const site = parseSite(toClientEntry(siteData), siteKey);
     <SiteSettingsButton client:only="solid-js"/>
   </div>
   <SiteTray slot="app-tray" site={site}/>
-  <SiteTocPage site={site} client:only="solid-js"/>
+  <div class="content-columns">
+    <article class="column-l">
+      <SiteTocSection site={site}/>
+    </article>
+    <div class="column-s">
+      <SiteTocAdmin site={site} client:only="solid-js"/>
+    </div>
+    </div>
+  </div>
 </PageWithTray>

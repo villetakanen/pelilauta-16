@@ -1,0 +1,58 @@
+---
+import type { CategoryRef, PageRef, Site } from '@schemas/SiteSchema';
+import { t } from '@utils/i18n';
+
+/**
+ * The Table of contents section used in the SiteApp -microfrontend.
+ *
+ * @param {Site} site - The site this tray is for.
+ *
+ * The base-tray visible to anonymoous users is loaded SSR, and all
+ * _authz_ requiring components are islands on the client side
+ */
+
+interface Props {
+  site: Site;
+}
+
+const { site } = Astro.props;
+const sortBy = site.sortOrder || 'name';
+const categories: Array<CategoryRef> = [...(site.pageCategories || [])];
+const pages = new Map<string, PageRef[]>();
+
+for (const category of categories) {
+  const pagesInCategory: Array<PageRef> =
+    site.pageRefs?.filter((page: PageRef) => page.category === category.slug) ||
+    [];
+  // Sort the pages in the category
+  if (sortBy === 'name') {
+    pagesInCategory?.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === 'flowTime') {
+    pagesInCategory?.sort((a, b) => (a.flowTime || 0) - (b.flowTime || 0));
+  }
+  pages.set(category.slug, pagesInCategory || []);
+}
+
+// Pages without a category go to category 't('site:toc.other')' or 't('site:toc.all')'
+// Depending if there are categories or not
+const pagesWithoutCategory =
+  site.pageRefs?.filter((page: PageRef) => !page.category) || [];
+if (pagesWithoutCategory.length > 0) {
+  const category =
+    categories.length > 0 ? t('site:toc.other') : t('site:toc.all');
+  pages.set(category, pagesWithoutCategory);
+  categories.push({ slug: category, name: category });
+}
+---
+{ categories.map((category) => (
+  <section class="toc-category">
+    <h4>{category.name}</h4>
+    <ul>
+      {pages.get(category.slug)?.map((page) => (
+        <li>
+          <a href={`/sites/${site.key}/pages/${page.key}`}>{page.name}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+))}
