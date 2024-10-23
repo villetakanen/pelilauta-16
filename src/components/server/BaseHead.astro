@@ -4,10 +4,18 @@ import 'src/overrides.css'; // Import your custom CSS
 import { t } from '@utils/i18n';
 import ServiceWorker from './BaseHead/ServiceWorker.astro';
 
-const { title, description } = Astro.props;
+type Props = {
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+const { title, description, image } = Astro.props;
 const metaDescription = description || t('app:meta.description');
 const metaTitle = title || t('app:meta.title');
 const canonicalURL = Astro.url;
+
+const ogImage = image || `${canonicalURL.origin}/favicons/favicon-512x512.png`;
 ---
 <head>
 
@@ -19,6 +27,10 @@ const canonicalURL = Astro.url;
   <script>
     import '@11thdeg/cyan-next'
   </script>
+
+  <meta property="og:title" content={metaTitle} />
+  <meta property="og:description" content={metaDescription} />
+  <meta property="og:image" content={ogImage} />
 
   <link rel="manifest" href="/manifest.webmanifest" />
 

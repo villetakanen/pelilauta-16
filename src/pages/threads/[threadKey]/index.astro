@@ -1,6 +1,10 @@
 ---
 import { Discussion } from '@client/ThreadApp/Discussion';
 import { ThreadApp } from '@client/threads/ThreadApp/ThreadApp';
+import { parseThread } from '@schemas/ThreadSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { createSnippet } from '@utils/contentHelpers';
+import { t } from '@utils/i18n';
 import Page from 'src/layouts/Page.astro';
 
 const { threadKey } = Astro.params;
@@ -8,8 +12,20 @@ const { threadKey } = Astro.params;
 if (!threadKey) {
   throw new Error('threadKey is required');
 }
+
+const origin = new URL(Astro.request.url).origin;
+
+// Fetch site data from the api
+const threadData = await fetch(`${origin}/api/threads/${threadKey}.json`).then(
+  (res) => res.json(),
+);
+const thread = parseThread(toClientEntry(threadData), threadKey);
+
+const title = `${t('app:shortname')} - ${thread.title}`;
+
+const snippet = createSnippet(thread.markdownContent || '');
 ---
-<Page>
+<Page title={title} description={snippet}>
   <ThreadApp thread={threadKey} client:only="solid-js"/>
   <Discussion threadKey={threadKey} client:only="solid-js"/>
 </Page>
