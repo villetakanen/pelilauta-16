@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 28.6.0, SVG Export Plug-In . SVG Version: 9.03 Build 54939)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
-<g id="icon" color="currentColor">
-<polygon points="61,0 0,64 61,128 27.6,64 "/>
-<polyline points="128,64 12,51.2 12,76.8 "/>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/">
+    <g id="icon" fill="currentColor" transform="matrix(6.12323e-17,-1,1,6.12323e-17,2.12132,127.768)">
+        <path d="M59.757,9.757L68.243,9.757L96.243,37.757L87.757,46.243C87.757,46.243 77.038,35.523 70,28.485L70,114L58,114L58,28.485L39.778,46.707L31.293,38.222L59.757,9.757Z"/>
+    </g>
 </svg>
