@@ -5,7 +5,7 @@
   "display": "standalone",
   "description": "A Tabletop Gaming Community App",
   "background_color": "#294f61",
-  "theme_color": "#127854",
+  "theme_color": "#00304f",
   "icons": [
     {
       "src": "/favicons/favicon-64x64.png",
@@ -23,7 +23,7 @@
       "src": "/favicons/favicon-256x256.png",
       "type": "image/png",
       "sizes": "256x256",
-      "purpose": "any"
+      "purpose": "maskable"
     },
     {
       "src": "/favicons/favicon-512x512.png",
