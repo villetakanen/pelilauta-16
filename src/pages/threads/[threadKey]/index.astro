@@ -1,5 +1,6 @@
 ---
 import { Discussion } from '@client/ThreadApp/Discussion';
+import { ThreadInfoCard } from '@client/ThreadsApp/ThreadInfoCard';
 import { ThreadApp } from '@client/threads/ThreadApp/ThreadApp';
 import { parseThread } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -26,6 +27,17 @@ const title = `${t('app:shortname')} - ${thread.title}`;
 const snippet = createSnippet(thread.markdownContent || '');
 ---
 <Page title={title} description={snippet}>
-  <ThreadApp thread={threadKey} client:only="solid-js"/>
+  <div class="content-columns">
+    <div class="column-l">
+      <ThreadApp thread={threadKey} client:only="solid-js"/>
+    </div>
+    <div class="column-s">
+      <ThreadInfoCard
+        thread={thread}
+        author={`${thread?.owners[0]}`}
+        client:only="solid-js"
+      />
+    </div>
+  </div>
   <Discussion threadKey={threadKey} client:only="solid-js"/>
 </Page>
