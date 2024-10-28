@@ -303,7 +303,7 @@ cn-menu button.menu-item {
 .h-full {
   height: 100%;
 }
-
+/*
 body::-webkit-scrollbar {
   display: none;
 }
@@ -323,4 +323,4 @@ ul.compact li {
 ul.compact {
   margin-top: 0;
   margin-bottom: calc(2 * var(--cn-gap));
-}
+}*/
