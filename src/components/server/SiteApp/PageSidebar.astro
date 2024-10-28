@@ -1,0 +1,17 @@
+---
+import type { Site } from '@schemas/SiteSchema';
+import SiteTocSection from './SiteTocSection.astro';
+
+interface Props {
+  site: Site;
+}
+const { site } = Astro.props as Props;
+---
+<article class="column-s">
+  <h3 class="downscaled">{site.name}</h3>
+  {site.posterURL && (
+    <img src={site.posterURL} alt={site.name} class="poster" />
+  )}
+  {site.description && <p>{site.description}</p>}
+  <SiteTocSection site={site} />
+</article>
