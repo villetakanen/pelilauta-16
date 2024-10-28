@@ -313,3 +313,6 @@ body::-webkit-scrollbar {
 .secondary {
   background-color: var(--color-secondary);
 }
+cn-card *:first-child {
+  margin-top: 0;
+}

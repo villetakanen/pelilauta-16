@@ -1,0 +1,42 @@
+---
+import { ThreadActions } from '@client/ThreadsApp/ThreadActions';
+import { ProfileLink } from '@client/shared/ProfileLink';
+import { ThreadLikeButton } from '@client/threads/ThreadLikeButton';
+import type { Thread } from '@schemas/ThreadSchema';
+import { ThreadRepliesButton } from '@shared/ThreadsApp/ThreadRepliesButton';
+import { topicToNoun } from '@stores/ThreadsApp/topics';
+import { toDisplayString } from '@utils/contentHelpers';
+import { t } from '@utils/i18n';
+
+interface Props {
+  thread: Thread;
+}
+
+const { thread } = Astro.props;
+
+const author = `${thread?.owners[0] || ''}`;
+const channel = `${thread?.channel || '-'}`;
+const noun = topicToNoun(channel);
+---
+<section class="column-s">
+  <cn-card
+    title={t('threads:info.title')}
+    noun={noun}
+  >
+    <p>
+      {toDisplayString(thread.flowTime)}
+    </p>
+    <p class="mb-0">
+      <ProfileLink uid={author} client:only="solid-js" /> 
+      {t('threads:info.inTopic')}
+      <a href={`/channels/${channel}/1`} class="link">
+        {channel.charAt(0).toUpperCase() + channel.slice(1)}
+      </a>
+      <div slot="actions" class="toolbar items-center">
+        <ThreadRepliesButton thread={thread} client:only="solid-js" />
+        <ThreadLikeButton thread={thread} client:only="solid-js" />
+      </div>
+     </p>
+    </cn-card>
+  <ThreadActions thread={thread} client:only="solid-js" />
+</section>
