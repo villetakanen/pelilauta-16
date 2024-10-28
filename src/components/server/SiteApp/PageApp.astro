@@ -1,12 +1,12 @@
 ---
 import { PageFabs } from '@client/sites/PageApp/PageFabs';
-import { PageSidebar } from '@client/sites/PageApp/PageSidebar';
 import { parsePage } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import PageArticleFooter from './PageArticleFooter.astro';
 import PageArticleHeader from './PageArticleHeader.astro';
+import PageSidebar from './PageSidebar.astro';
 
 /** SSR Site app */
 
@@ -33,9 +33,7 @@ const page = parsePage(toClientEntry(pageData), pageKey, site.key);
     }
     <PageArticleFooter page={page} site={site}/>
   </article>
-  <div class="column-s">
-    <PageSidebar site={site} client:only="solid-js"/>
-  </div>
+  <PageSidebar site={site} />
   <PageFabs pageKey={pageKey} site={site} client:only="solid-js"/>
 </div>
 { site.backgroundURL && <div class="pageBackgroundPoster">

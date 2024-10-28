@@ -316,3 +316,11 @@ body::-webkit-scrollbar {
 cn-card *:first-child {
   margin-top: 0;
 }
+ul.compact li {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+ul.compact {
+  margin-top: 0;
+  margin-bottom: calc(2 * var(--cn-gap));
+}
