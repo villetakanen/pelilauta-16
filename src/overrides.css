@@ -275,6 +275,10 @@ cn-bubble {
 cn-bubble {
   padding: var(--cn-gap);
 }
+a .decoration-none,
+.decoration-none {
+  text-decoration: none;
+}
 
 /*
 body::-webkit-scrollbar {
