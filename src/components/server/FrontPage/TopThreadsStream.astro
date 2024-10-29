@@ -1,5 +1,5 @@
 ---
-import { ThreadCard } from '@client/ThreadsApp/ThreadCard';
+import { ThreadCard } from '@client/FrontPage/ThreadCard';
 import { type Thread, parseThread } from '@schemas/ThreadSchema';
 import { t } from '@utils/i18n';
 
@@ -13,7 +13,7 @@ const threads = (threadsJSON as Array<Thread>).map((thread) =>
 ---
 <div class="flex flex-col column" style="align-items: flex-start">
     {threads.map((thread) => (
-      thread && <ThreadCard thread={thread} key={thread.key} client:only="solid-js"/>
+      thread && <ThreadCard thread={thread} client:only="solid-js"/>
     ))}
     <div class="flex justify-center mt-2">
       <a href="/threads" class="button">

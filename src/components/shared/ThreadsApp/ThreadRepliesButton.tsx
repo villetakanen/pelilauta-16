@@ -18,7 +18,9 @@ export const ThreadRepliesButton: Component<ThreadRepliesButtonProps> = (
   return (
     <div class="flex align-center">
       <cn-icon noun="send" small />
-      <span class="text-caption">{props.thread.replyCount}</span>
+      <span class="text-caption decoration-none">
+        {props.thread.replyCount}
+      </span>
     </div>
   );
 };
