@@ -137,9 +137,6 @@ astro-slot {
   margin: 0;
   padding: 0;
 }
-main:has(.content-editor) {
-  margin-top: calc(var(--cn-gap) * 3);
-}
 .toolbar label:first-child {
   margin-left: calc(var(--cn-grid) * -1);
 }
