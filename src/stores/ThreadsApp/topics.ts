@@ -28,6 +28,9 @@ export const $topics = persistentAtom<Topic[]>('thread-topics', [], {
   },
 });
 
+// $channels is an alias for $topics
+export const $channels = $topics;
+
 onMount($topics, () => {
   fetchTopicsFromDB();
 });

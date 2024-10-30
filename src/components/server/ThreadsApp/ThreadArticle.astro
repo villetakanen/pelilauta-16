@@ -1,0 +1,25 @@
+---
+import type { Thread } from '@schemas/ThreadSchema';
+import { marked } from 'marked';
+
+interface Props {
+  thread: Thread;
+}
+const { thread } = Astro.props;
+const htmlContent = marked(thread.markdownContent || '');
+---
+<article class="column-l">
+  <h1 class="downscaled">
+    {thread.title}
+  </h1>
+  <section set:html={htmlContent} />
+  { thread.tags && thread.tags.length > 0 &&
+    <div class="tags">
+      {thread.tags.map((tag) => (
+        <a href={`/tags/${tag.toLowerCase().slice(1)}`} class="tag">
+          {tag}
+        </a>
+      ))}
+    </div>
+  }
+</article>

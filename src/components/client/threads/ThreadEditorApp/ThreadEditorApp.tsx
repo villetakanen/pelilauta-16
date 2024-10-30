@@ -2,7 +2,6 @@ import { WithLoader } from '@client/shared/WithLoader';
 import { useStore } from '@nanostores/solid';
 import { createThread } from '@schemas/ThreadSchema';
 import { fetchThread } from '@stores/ThreadsApp';
-import { $topics } from '@stores/ThreadsApp/topics';
 import { updateThread } from '@stores/ThreadsApp/updateThread';
 import { $uid, markEntrySeen } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
@@ -18,13 +17,14 @@ import {
   onMount,
 } from 'solid-js';
 import { db } from 'src/firebase/client';
+import { ThreadEditorTopBar } from './ThreadEditorTopBar';
 
 export const ThreadEditorApp: Component<{
   threadKey?: string;
   topic?: string;
 }> = (props) => {
-  const topics = useStore($topics);
   const uid = useStore($uid);
+  let editorRef: undefined | HTMLElement;
 
   const [topic, setTopic] = createSignal<string>(props.topic || 'yleinen');
   const [tags, setTags] = createSignal<string[]>([]);
@@ -36,7 +36,21 @@ export const ThreadEditorApp: Component<{
     setTags(extractTags(markdownContent()));
   });
 
+  async function handleEditorInput(e: Event) {
+    const content = (e as CustomEvent<{ value: string }>).detail.value;
+    setMarkdownContent(content);
+
+    // Extract tags
+    setTags(extractTags(content));
+  }
+
   onMount(() => {
+    const r = document.querySelector('cn-editor');
+    if (r instanceof HTMLElement) {
+      editorRef = r;
+      editorRef.addEventListener('input', handleEditorInput);
+    }
+
     if (props.threadKey) {
       setSuspend(true);
       // Load the thread
@@ -90,54 +104,38 @@ export const ThreadEditorApp: Component<{
 
   return (
     <WithLoader loading={suspend()}>
-      <form class="content-editor" onsubmit={send}>
-        <div class="toolbar">
-          <label class="grow">
-            {t('entries:thread.title')}
-            <input
-              name="title"
-              type="text"
-              value={title()}
-              onInput={(e) => setTitle(e.currentTarget.value)}
-              placeholder={t('entries:thread.placeholders.title')}
+      <form onsubmit={send}>
+        <div class="content-editor">
+          <ThreadEditorTopBar
+            title={title()}
+            setTitle={setTitle}
+            channel={topic()}
+            setChannel={setTopic}
+          />
+          <div class="grow">
+            <cn-editor
+              ref={editorRef}
+              value={markdownContent()}
+              placeholder={t('entries:thread.placeholders.content')}
             />
-          </label>
-          <label>
-            {t('entries:thread.channel')}
-            <select
-              name="channel"
-              value={topic()}
-              onChange={(e) => setTopic(e.currentTarget.value)}
-            >
-              <For each={topics()}>
-                {(topic) => <option value={topic.slug}>{topic.name}</option>}
+          </div>
+          {tags().length > 0 && (
+            <p class="cursive p-1 m-0">
+              <span>{t('entries:thread.tags')}: </span>
+              <For each={tags()}>
+                {(tag) => <span class="pill">{tag}</span>}
               </For>
-            </select>
-          </label>
-          <button type="button">
-            <cn-icon noun="add" />
-          </button>
-        </div>
-
-        <textarea
-          name="markdownContent"
-          value={markdownContent()}
-          onInput={(e) => setMarkdownContent(e.currentTarget.value)}
-          placeholder={t('entries:thread.placeholders.content')}
-        />
-
-        <p>
-          <For each={tags()}>{(tag) => <span class="pill">{tag}</span>}</For>
-        </p>
-
-        <div class="toolbar">
-          <button type="reset" class="text">
-            {t('actions:cancel')}
-          </button>
-          <button type="submit">
-            <cn-icon noun="send" />
-            <span>{t('actions:send')}</span>
-          </button>
+            </p>
+          )}
+          <div class="toolbar">
+            <button type="reset" class="text">
+              {t('actions:cancel')}
+            </button>
+            <button type="submit">
+              <cn-icon noun="send" />
+              <span>{t('actions:send')}</span>
+            </button>
+          </div>
         </div>
       </form>
     </WithLoader>
