@@ -45,14 +45,11 @@ export const ThreadEditorApp: Component<{
   }
 
   onMount(() => {
-
-      const r = document.querySelector('cn-editor');
-      if (r instanceof HTMLElement) {
-        editorRef = r;
-        editorRef.addEventListener('input', handleEditorInput);
-      }
-
-
+    const r = document.querySelector('cn-editor');
+    if (r instanceof HTMLElement) {
+      editorRef = r;
+      editorRef.addEventListener('input', handleEditorInput);
+    }
 
     if (props.threadKey) {
       setSuspend(true);
@@ -109,32 +106,36 @@ export const ThreadEditorApp: Component<{
     <WithLoader loading={suspend()}>
       <form onsubmit={send}>
         <div class="content-editor">
-        <ThreadEditorTopBar
-          title={title()}
-          setTitle={setTitle}
-          channel={topic()}
-          setChannel={setTopic}
-        />
-        <div class="grow" >
-        <cn-editor
-          ref={editorRef} 
-          value={markdownContent()} 
-          placeholder={t('entries:thread.placeholders.content')}/>
-        </div>
-        { tags().length > 0 &&
-        <p class="cursive p-1 m-0">
-          <span>{t('entries:thread.tags')}: </span>
-          <For each={tags()}>{(tag) => <span class="pill">{tag}</span>}</For>
-        </p> }
-        <div class="toolbar">
-          <button type="reset" class="text">
-            {t('actions:cancel')}
-          </button>
-          <button type="submit">
-            <cn-icon noun="send" />
-            <span>{t('actions:send')}</span>
-          </button>
-        </div>
+          <ThreadEditorTopBar
+            title={title()}
+            setTitle={setTitle}
+            channel={topic()}
+            setChannel={setTopic}
+          />
+          <div class="grow">
+            <cn-editor
+              ref={editorRef}
+              value={markdownContent()}
+              placeholder={t('entries:thread.placeholders.content')}
+            />
+          </div>
+          {tags().length > 0 && (
+            <p class="cursive p-1 m-0">
+              <span>{t('entries:thread.tags')}: </span>
+              <For each={tags()}>
+                {(tag) => <span class="pill">{tag}</span>}
+              </For>
+            </p>
+          )}
+          <div class="toolbar">
+            <button type="reset" class="text">
+              {t('actions:cancel')}
+            </button>
+            <button type="submit">
+              <cn-icon noun="send" />
+              <span>{t('actions:send')}</span>
+            </button>
+          </div>
         </div>
       </form>
     </WithLoader>
