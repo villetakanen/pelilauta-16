@@ -91,6 +91,7 @@ export function createThread(
     markdownContent: source?.markdownContent || '',
     quoteRef: source?.quoteRef || undefined,
     public: source?.public || true,
+    tags: source?.tags || undefined,
   };
 
   // Remove empty fields, empty strings, and empty arrays

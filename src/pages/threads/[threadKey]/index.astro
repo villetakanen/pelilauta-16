@@ -1,7 +1,7 @@
 ---
 import { Discussion } from '@client/ThreadApp/Discussion';
-import { ThreadApp } from '@client/threads/ThreadApp/ThreadApp';
 import { parseThread } from '@schemas/ThreadSchema';
+import ThreadArticle from '@server/ThreadsApp/ThreadArticle.astro';
 import ThreadInfoSection from '@server/ThreadsApp/ThreadInfoSection.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { createSnippet } from '@utils/contentHelpers';
@@ -22,15 +22,13 @@ const threadData = await fetch(`${origin}/api/threads/${threadKey}.json`).then(
 );
 const thread = parseThread(toClientEntry(threadData), threadKey);
 
-const title = `${t('app:shortname')} - ${thread.title}`;
+const title = `${t('app:shortname')} - ${thread.channel}`;
 
 const snippet = createSnippet(thread.markdownContent || '');
 ---
 <Page title={title} description={snippet}>
   <div class="content-columns">
-    <div class="column-l">
-      <ThreadApp thread={threadKey} client:only="solid-js"/>
-    </div>
+    <ThreadArticle thread={thread} />
     <ThreadInfoSection thread={thread} />
   </div>
   <Discussion threadKey={threadKey} client:only="solid-js"/>
