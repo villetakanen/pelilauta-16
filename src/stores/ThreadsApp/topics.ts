@@ -7,7 +7,7 @@ import {
 import { logError, logWarn } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { doc, getDoc } from 'firebase/firestore';
-import { computed, onMount } from 'nanostores';
+import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { ZodError } from 'zod';
 

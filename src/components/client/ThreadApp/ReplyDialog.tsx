@@ -16,8 +16,8 @@ import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { addReply } from '@stores/ThreadsApp/discussion';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
-import { doc, increment, updateDoc } from 'firebase/firestore';
+import { logDebug, logWarn } from '@utils/logHelpers';
+import { doc, increment, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { type Component, createEffect, createSignal } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
@@ -85,7 +85,12 @@ export const ReplyDialog: Component<Props> = (props) => {
     // This is a temporary workaround to increase the replyCount of the thread.
     updateDoc(doc(db, THREADS_COLLECTION_NAME, props.threadKey), {
       replyCount: increment(1),
+      flowTime: serverTimestamp(),
     });
+    logWarn(
+      'ReplyDialog',
+      'Increased thread replyCount and flowTime, this should be moved to a cloud function.',
+    );
 
     handleClose();
   }

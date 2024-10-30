@@ -11,7 +11,7 @@ import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { type Component, For, createSignal, onMount } from 'solid-js';
-import { ReplyButton } from '../ThreadsApp/ReplyButton';
+import { ReplyButton } from './ReplyButton';
 
 declare module 'solid-js' {
   namespace JSX {
