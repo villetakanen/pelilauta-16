@@ -7,7 +7,7 @@ import {
 import { logError, logWarn } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { doc, getDoc } from 'firebase/firestore';
-import { onMount } from 'nanostores';
+import { computed, onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { ZodError } from 'zod';
 
@@ -27,6 +27,9 @@ export const $topics = persistentAtom<Topic[]>('thread-topics', [], {
     });
   },
 });
+
+// $channels is an alias for $topics
+export const $channels = $topics;
 
 onMount($topics, () => {
   fetchTopicsFromDB();

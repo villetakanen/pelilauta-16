@@ -279,6 +279,15 @@ a .decoration-none,
 .decoration-none {
   text-decoration: none;
 }
+.toolbar {
+  align-items: center;
+}
+cn-menu ul {
+  list-style-type: none !important;
+}
+cn-menu ul li::before {
+  content: none;
+}
 
 /*
 body::-webkit-scrollbar {

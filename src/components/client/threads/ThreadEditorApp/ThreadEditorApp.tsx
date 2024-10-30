@@ -2,7 +2,6 @@ import { WithLoader } from '@client/shared/WithLoader';
 import { useStore } from '@nanostores/solid';
 import { createThread } from '@schemas/ThreadSchema';
 import { fetchThread } from '@stores/ThreadsApp';
-import { $topics } from '@stores/ThreadsApp/topics';
 import { updateThread } from '@stores/ThreadsApp/updateThread';
 import { $uid, markEntrySeen } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
@@ -18,12 +17,12 @@ import {
   onMount,
 } from 'solid-js';
 import { db } from 'src/firebase/client';
+import { ThreadEditorTopBar } from './ThreadEditorTopBar';
 
 export const ThreadEditorApp: Component<{
   threadKey?: string;
   topic?: string;
 }> = (props) => {
-  const topics = useStore($topics);
   const uid = useStore($uid);
 
   const [topic, setTopic] = createSignal<string>(props.topic || 'yleinen');
@@ -91,33 +90,12 @@ export const ThreadEditorApp: Component<{
   return (
     <WithLoader loading={suspend()}>
       <form class="content-editor" onsubmit={send}>
-        <div class="toolbar">
-          <label class="grow">
-            {t('entries:thread.title')}
-            <input
-              name="title"
-              type="text"
-              value={title()}
-              onInput={(e) => setTitle(e.currentTarget.value)}
-              placeholder={t('entries:thread.placeholders.title')}
-            />
-          </label>
-          <label>
-            {t('entries:thread.channel')}
-            <select
-              name="channel"
-              value={topic()}
-              onChange={(e) => setTopic(e.currentTarget.value)}
-            >
-              <For each={topics()}>
-                {(topic) => <option value={topic.slug}>{topic.name}</option>}
-              </For>
-            </select>
-          </label>
-          <button type="button">
-            <cn-icon noun="add" />
-          </button>
-        </div>
+        <ThreadEditorTopBar
+          title={title()}
+          setTitle={setTitle}
+          channel={topic()}
+          setChannel={setTopic}
+        />
 
         <textarea
           name="markdownContent"
