@@ -288,7 +288,9 @@ cn-menu ul {
 cn-menu ul li::before {
   content: none;
 }
-
+.cursive {
+  font-style: italic;
+}
 /*
 body::-webkit-scrollbar {
   display: none;

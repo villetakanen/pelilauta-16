@@ -24,6 +24,7 @@ export const ThreadEditorApp: Component<{
   topic?: string;
 }> = (props) => {
   const uid = useStore($uid);
+  let editorRef: undefined | HTMLElement;
 
   const [topic, setTopic] = createSignal<string>(props.topic || 'yleinen');
   const [tags, setTags] = createSignal<string[]>([]);
@@ -35,7 +36,24 @@ export const ThreadEditorApp: Component<{
     setTags(extractTags(markdownContent()));
   });
 
+  async function handleEditorInput(e: Event) {
+    const content = (e as CustomEvent<{ value: string }>).detail.value;
+    setMarkdownContent(content);
+
+    // Extract tags
+    setTags(extractTags(content));
+  }
+
   onMount(() => {
+
+      const r = document.querySelector('cn-editor');
+      if (r instanceof HTMLElement) {
+        editorRef = r;
+        editorRef.addEventListener('input', handleEditorInput);
+      }
+
+
+
     if (props.threadKey) {
       setSuspend(true);
       // Load the thread
@@ -89,25 +107,25 @@ export const ThreadEditorApp: Component<{
 
   return (
     <WithLoader loading={suspend()}>
-      <form class="content-editor" onsubmit={send}>
+      <form onsubmit={send}>
+        <div class="content-editor">
         <ThreadEditorTopBar
           title={title()}
           setTitle={setTitle}
           channel={topic()}
           setChannel={setTopic}
         />
-
-        <textarea
-          name="markdownContent"
-          value={markdownContent()}
-          onInput={(e) => setMarkdownContent(e.currentTarget.value)}
-          placeholder={t('entries:thread.placeholders.content')}
-        />
-
-        <p>
+        <div class="grow" >
+        <cn-editor
+          ref={editorRef} 
+          value={markdownContent()} 
+          placeholder={t('entries:thread.placeholders.content')}/>
+        </div>
+        { tags().length > 0 &&
+        <p class="cursive p-1 m-0">
+          <span>{t('entries:thread.tags')}: </span>
           <For each={tags()}>{(tag) => <span class="pill">{tag}</span>}</For>
-        </p>
-
+        </p> }
         <div class="toolbar">
           <button type="reset" class="text">
             {t('actions:cancel')}
@@ -116,6 +134,7 @@ export const ThreadEditorApp: Component<{
             <cn-icon noun="send" />
             <span>{t('actions:send')}</span>
           </button>
+        </div>
         </div>
       </form>
     </WithLoader>
