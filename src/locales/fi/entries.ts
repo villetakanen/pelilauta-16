@@ -41,6 +41,10 @@ export const entries: Locale = {
       title: 'Otsikko',
       content: 'Viesti...',
     },
+    meta: {
+      entryName: 'Viesti',
+      entryNamePlural: 'Viestit',
+    },
   },
   reply: {
     markdownContent: '...',

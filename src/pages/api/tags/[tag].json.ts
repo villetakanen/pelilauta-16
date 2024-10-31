@@ -8,6 +8,7 @@ type Thread = {
   key: string;
   tags: string[];
   flowTime: number;
+  author: string;
 };
 
 type TagData = {
@@ -38,6 +39,7 @@ async function fetchThreads(tag: string) {
       key: thread.id as string,
       tags: data.tags || [],
       flowTime: toDate(data.flowTime).getTime(),
+      author: data.owners?.[0] as string,
     });
   }
 
