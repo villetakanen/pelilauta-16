@@ -14,7 +14,7 @@
     "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-beta.8",
+    "@11thdeg/cyan-next": "1.0.0-beta.9",
     "@astrojs/check": "^0.9.4",
     "@astrojs/solid-js": "^4.4.2",
     "@astrojs/vercel": "^7.8.1",
@@ -23,9 +23,9 @@
     "@solid-primitives/event-dispatcher": "^0.0.107",
     "@vercel/analytics": "^1.3.1",
     "astro": "^4.15.12",
-    "firebase": "^10.14.0",
-    "firebase-admin": "^12.6.0",
-    "marked": "^14.1.2",
+    "firebase": "^11.0.1",
+    "firebase-admin": "^12.7.0",
+    "marked": "^14.1.3",
     "nanostores": "^0.11.3",
     "rss-parser": "^3.13.0",
     "solid-js": "^1.9.2",
@@ -43,6 +43,6 @@
     "lefthook": "^1.7.18",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.0",
-    "workbox-cli": "^7.1.0"
+    "workbox-cli": "^7.3.0"
   }
 }
