@@ -5,7 +5,8 @@ import {
   type Reply,
   parseReply,
 } from '@schemas/ReplySchema';
-import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
+import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
+import { $subscriber, $uid, markEntrySeen } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
@@ -24,22 +25,49 @@ declare module 'solid-js' {
   }
 }
 
+interface DiscussionProps {
+  thread: Thread;
+}
+
 /**
  * A Solid JS component that displays the discussion of a thread, and allows
  * users to participate in the discussion.
  */
-export const Discussion: Component<{
-  threadKey: string;
-}> = (props) => {
+export const Discussion: Component<DiscussionProps> = (props) => {
   const [discussion, setDiscussion] = createSignal<Reply[]>([]);
   const [quoteRef, setQuoteRef] = createSignal<string | undefined>(undefined);
 
-  onMount(async () => {
+  onMount(() => {
+    subscribeToDiscussion();
+    markThreadSeen();
+  });
+
+  function markThreadSeen() {
+    const uid = $uid.get();
+    if (!uid) {
+      return;
+    }
+
+    // check if the thread is already marked as seen
+    const subscriber = $subscriber.get();
+    if (!subscriber) {
+      // no subscriber, no need to mark as seen
+      logDebug('No subscriber, not marking thread as seen', props.thread.key);
+      return;
+    }
+    const seenTime = subscriber.seenEntities[props.thread.key] || 0;
+    if (seenTime < props.thread.flowTime) {
+      logDebug('Marking thread as seen', props.thread.key);
+      markEntrySeen(props.thread.key, props.thread.flowTime);
+    }
+  }
+
+  async function subscribeToDiscussion() {
     const discussionRef = query(
       collection(
         db,
         THREADS_COLLECTION_NAME,
-        props.threadKey,
+        props.thread.key,
         REPLIES_COLLECTION,
       ),
       orderBy('flowTime'),
@@ -55,13 +83,13 @@ export const Discussion: Component<{
           const reply = parseReply(
             toClientEntry(doc.doc.data()),
             doc.doc.id,
-            props.threadKey,
+            props.thread.key,
           );
           patchReply(reply);
         }
       }
     });
-  });
+  }
 
   function patchReply(reply: Reply) {
     const patchedDiscussion = [...discussion()];
@@ -122,7 +150,7 @@ export const Discussion: Component<{
         >
           <ReplyButton
             quoteRef={quoteRef()}
-            threadKey={props.threadKey}
+            threadKey={props.thread.key}
             discussion={discussion()}
             onQuote={handleQuote}
           />

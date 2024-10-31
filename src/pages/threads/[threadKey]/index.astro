@@ -11,15 +11,19 @@ import Page from 'src/layouts/Page.astro';
 const { threadKey } = Astro.params;
 
 if (!threadKey) {
-  throw new Error('threadKey is required');
+  return Astro.redirect('/404');
 }
 
 const origin = new URL(Astro.request.url).origin;
 
 // Fetch site data from the api
-const threadData = await fetch(`${origin}/api/threads/${threadKey}.json`).then(
-  (res) => res.json(),
-);
+const threadResponse = await fetch(`${origin}/api/threads/${threadKey}.json`);
+
+if (threadResponse.status === 404) {
+  return Astro.redirect('/404');
+}
+const threadData = await threadResponse.json();
+
 const thread = parseThread(toClientEntry(threadData), threadKey);
 
 const title = `${t('app:shortname')} - ${thread.channel}`;
@@ -31,5 +35,5 @@ const snippet = createSnippet(thread.markdownContent || '');
     <ThreadArticle thread={thread} />
     <ThreadInfoSection thread={thread} />
   </div>
-  <Discussion threadKey={threadKey} client:only="solid-js"/>
+  <Discussion thread={thread} client:only="solid-js"/>
 </Page>
