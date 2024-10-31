@@ -1,5 +1,5 @@
 {
-  "name": "pelilauta-16",
+  "name": "pelilauta-17",
   "type": "module",
   "version": "16.0.0-rc.15",
   "scripts": {
@@ -34,7 +34,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.3",
+    "@biomejs/biome": "1.9.4",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@playwright/test": "^1.46.1",

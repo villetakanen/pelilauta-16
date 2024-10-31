@@ -1,0 +1,49 @@
+---
+import { ProfileLink } from '@client/shared/ProfileLink';
+import Page from '@layouts/Page.astro';
+import { toDisplayString } from '@utils/contentHelpers';
+import { t } from '@utils/i18n';
+
+const { tag } = Astro.params;
+
+if (!tag) {
+  return Astro.redirect('/404');
+}
+
+type Thread = {
+  title: string;
+  key: string;
+  tags: string[];
+  flowTime: number;
+  author: string;
+};
+
+const origin = new URL(Astro.request.url).origin;
+
+// Fetch site data from the api
+const tagResponse = await fetch(`${origin}/api/tags/${tag}.json`);
+
+if (tagResponse.status === 404) {
+  return Astro.redirect('/404');
+}
+
+const tagData = await tagResponse.json();
+const threads = tagData.threads as Thread[];
+---
+<Page title={`#${tag}`} description="A list of threads with this tag">
+  <div class="content-columns">
+    <article>
+      <h2 class="downscaled">{t('entries:thread.meta.entryNamePlural')}</h2>
+
+      <ul>
+        {threads.map((thread) => (
+        <li>
+            <a href={`/threads/${thread.key}`}>{thread.title}</a><br />
+            <ProfileLink uid={thread.author} client:only="solid-js" />
+            {toDisplayString(thread.flowTime)}
+        </li>
+        ))}
+      </ul>
+    </article>
+  </div>
+</Page>
