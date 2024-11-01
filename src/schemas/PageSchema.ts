@@ -9,6 +9,7 @@ export const PageSchema = ContentEntrySchema.extend({
   name: z.string(),
   siteKey: z.string(),
   content: z.string().optional(),
+  category: z.string().optional(),
   revisionHistory: z
     .array(
       z.object({
