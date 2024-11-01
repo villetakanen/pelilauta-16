@@ -21,8 +21,13 @@ const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
   res.json(),
 );
 const site = parseSite(toClientEntry(siteData), siteKey);
+const title = `${site.name} – ${t('site:toc.title')}`;
 ---
-<PageWithTray title={t('site:toc.title')}>
+<PageWithTray
+  title={title}
+  description={site.description}
+  image={site.backgroundURL}
+>
   <div slot="app-bar">
     <SiteSettingsButton client:only="solid-js"/>
   </div>

@@ -29,7 +29,6 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
   const [categories, setCategories] = createSignal<Array<CategoryRef>>(
     props.site.pageCategories || [],
   );
-  const [newCategory, setNewCategory] = createSignal('');
 
   const hasChanged = () => {
     return (
@@ -47,13 +46,14 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
 
   function addCategory(e: Event) {
     e.preventDefault();
-    const newCat = (e.target as HTMLInputElement).value;
-    const cats = [...categories()];
-    cats.push({
-      name: newCat,
-      slug: newCat.toLowerCase().replace(/ /g, '-'),
-    });
-    setCategories(cats);
+    const formdata = new FormData(e.target as HTMLFormElement);
+    const newCat = formdata.get('newCategory') as string;
+    if (newCat) {
+      setCategories([
+        ...categories(),
+        { name: newCat, slug: newCat.toLowerCase().replace(/ /g, '-') },
+      ]);
+    }
   }
 
   async function reorderCategories(newOrder: Array<CnListItem>) {
@@ -109,33 +109,28 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
           </select>
         </label>
 
-        {orderBy() === 'manual' ? (
-          <div>
-            <h4>{t('site:toc.admin.categories.title')}</h4>
+        <div>
+          <h4>{t('site:toc.admin.categories.title')}</h4>
 
-            <SortableList
-              items={categoryItems()}
-              onItemsChanged={reorderCategories}
-              delete
-            />
+          <SortableList
+            items={categoryItems()}
+            onItemsChanged={reorderCategories}
+            delete
+          />
 
-            <div class="toolbar">
-              <div class="grow">
-                <input
-                  type="text"
-                  placeholder={t('site:toc.admin.newCategory')}
-                  value={newCategory()}
-                  onInput={(e) =>
-                    setNewCategory((e.target as HTMLInputElement).value)
-                  }
-                />
-              </div>
-              <button type="button" onClick={addCategory}>
-                <cn-icon noun="add" />
-              </button>
+          <form class="toolbar" onsubmit={addCategory}>
+            <div class="grow">
+              <input
+                type="text"
+                placeholder={t('site:toc.admin.newCategory')}
+                name="newCategory"
+              />
             </div>
-          </div>
-        ) : null}
+            <button type="submit">
+              <cn-icon noun="add" />
+            </button>
+          </form>
+        </div>
 
         <div class="toolbar">
           <button
