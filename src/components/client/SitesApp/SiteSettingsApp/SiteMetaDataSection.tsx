@@ -5,7 +5,6 @@ import { updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
 import { SiteHomePageSelect } from './SiteHomePageSelect';
-import { SiteSortOrderSelect } from './SiteSortOrderSelect';
 
 export const SiteMetaDataSection: Component<{ site: Site }> = (props) => {
   async function onBlur(field: string, value: string) {
@@ -74,7 +73,6 @@ export const SiteMetaDataSection: Component<{ site: Site }> = (props) => {
           }
         />
         <SiteHomePageSelect site={props.site} />
-        <SiteSortOrderSelect site={props.site} />
       </fieldset>
     </section>
   );

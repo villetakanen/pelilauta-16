@@ -1,5 +1,6 @@
 import { type CnListItem, CnSortableList } from '@11thdeg/cyan-next';
-import { type Component, For, createSignal, onMount } from 'solid-js';
+import { logDebug } from '@utils/logHelpers';
+import { type Component, For, createEffect, onMount } from 'solid-js';
 
 interface Props {
   items: CnListItem[];
@@ -8,10 +9,7 @@ interface Props {
 }
 
 export const SortableList: Component<Props> = (props) => {
-  const [items, setItems] = createSignal(props.items);
-
   function onItemsChanged(items: CnListItem[]) {
-    setItems(items);
     props.onItemsChanged?.(items);
   }
 
@@ -26,16 +24,20 @@ export const SortableList: Component<Props> = (props) => {
     }
   });
 
+  createEffect(() => {
+    logDebug('SortableList items changed', props.items);
+  });
+
   return (
-    <cn-sortable-list items={items()}>
+    <cn-sortable-list items={props.items}>
       {props.delete && (
-        <For each={items()}>
+        <For each={props.items}>
           {(item) => (
             <button
               slot={item.key}
               type="button"
               onClick={() =>
-                onItemsChanged(items().filter((i) => i.key !== item.key))
+                onItemsChanged(props.items.filter((i) => i.key !== item.key))
               }
             >
               <cn-icon noun="delete" />

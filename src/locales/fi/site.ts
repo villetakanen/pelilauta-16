@@ -58,6 +58,9 @@ export const site: Locale = {
     admin: {
       title: 'Hallinta',
       newCategory: 'Uusi kategoria',
+      categories: {
+        title: 'Kategoriat',
+      },
     },
     regenerate: {
       info: 'Luo hakemisto uudelleen sivujen kategorioiden perusteella',

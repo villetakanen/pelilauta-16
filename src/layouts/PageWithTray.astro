@@ -5,11 +5,18 @@ import AppRail from 'src/components/server/AppRail.astro';
 import BasePostscripts from 'src/components/server/BasePostscripts.astro';
 import BaseHead from '../components/server/BaseHead/BaseHead.astro';
 
-const { title, noun } = Astro.props;
+type Props = {
+  title?: string;
+  description?: string;
+  image?: string;
+  noun?: string;
+};
+
+const { title, description, image, noun } = Astro.props;
 ---
 
 <html lang="en">
-  <BaseHead />
+  <BaseHead title={title} description={description} image={image}/>
   <body>
     <AppBar title={title} noun={noun}>
       <slot name="app-bar" />

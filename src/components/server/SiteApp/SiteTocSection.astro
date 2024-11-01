@@ -33,15 +33,25 @@ for (const category of categories) {
   pages.set(category.slug, pagesInCategory || []);
 }
 
+const categorySlugs = categories.map((category) => category.slug);
+
 // Pages without a category go to category 't('site:toc.other')' or 't('site:toc.all')'
 // Depending if there are categories or not
 const pagesWithoutCategory =
-  site.pageRefs?.filter((page: PageRef) => !page.category) || [];
+  site.pageRefs?.filter(
+    (page: PageRef) => !page.category || !categorySlugs.includes(page.category),
+  ) || [];
 if (pagesWithoutCategory.length > 0) {
   const category =
     categories.length > 0 ? t('site:toc.other') : t('site:toc.all');
+  // Sort the pages in the category
+  if (sortBy === 'name') {
+    pagesWithoutCategory?.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === 'flowTime') {
+    pagesWithoutCategory?.sort((a, b) => (a.flowTime || 0) - (b.flowTime || 0));
+  }
   pages.set(category, pagesWithoutCategory);
-  categories.push({ slug: category, name: category });
+  categories.push({ slug: `${category}`, name: category });
 }
 ---
 { categories.map((category) => (
@@ -50,7 +60,7 @@ if (pagesWithoutCategory.length > 0) {
     <ul class="compact">
       {pages.get(category.slug)?.map((page) => (
         <li>
-          <a href={`/sites/${site.key}/pages/${page.key}`} class="hoverable">{page.name}</a>
+          <a href={`/sites/${site.key}/${page.key}`} class="hoverable">{page.name}</a>
         </li>
       ))}
     </ul>
