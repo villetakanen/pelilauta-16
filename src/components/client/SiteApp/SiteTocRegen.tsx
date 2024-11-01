@@ -83,11 +83,14 @@ export const SiteTocRegenSection: Component<{ site: Site }> = (props) => {
   }
 
   return visible() ? (
-    <section class="secondary p-1 border-radius">
+    <section class="border p-2 border-radius mt-2">
       <p>{t('site:toc.regenerate.info')}</p>
-      <button type="button" class="button" onClick={regenPageRefs}>
-        {t('site:toc.repair')}
-      </button>
+      <div class="flex justify-center">
+        <button type="button" class="button" onClick={regenPageRefs}>
+          <cn-icon noun="tools" />
+          <span>{t('site:toc.repair')}</span>
+        </button>
+      </div>
     </section>
   ) : null;
 };

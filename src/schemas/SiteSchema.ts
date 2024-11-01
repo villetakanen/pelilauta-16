@@ -5,12 +5,6 @@ import { z } from 'zod';
 import { EntrySchema } from './ContentEntry';
 
 export const SITES_COLLECTION_NAME = 'sites';
-export const SITE_SORT_ORDER_VALUES = [
-  'name',
-  'createdAt',
-  'flowTime',
-  'manual',
-];
 
 /**
  * Each site has a page index. This is a list of keys that point to pages with
@@ -39,6 +33,14 @@ export const CategoryRefSchema = z.object({
 
 export type CategoryRef = z.infer<typeof CategoryRefSchema>;
 
+export const SiteSortOrderSchema = z.enum([
+  'name',
+  'createdAt',
+  'flowTime',
+  'manual',
+]);
+export type SiteSortOrder = z.infer<typeof SiteSortOrderSchema>;
+
 export const SiteSchema = EntrySchema.extend({
   name: z.string(),
   system: z.string().optional(),
@@ -48,7 +50,7 @@ export const SiteSchema = EntrySchema.extend({
   homepage: z.string().optional(),
   description: z.string().optional(),
   players: z.array(z.string()).optional(),
-  sortOrder: z.enum(['name', 'createdAt', 'flowTime', 'manual']).optional(),
+  sortOrder: SiteSortOrderSchema,
   backgroundURL: z.string().optional(),
   customPageKeys: z.boolean().optional(),
   pageRefs: z.array(PageRefSchema).optional(),
@@ -63,6 +65,7 @@ export const emptySite: Site = {
   name: '',
   owners: [],
   hidden: true,
+  sortOrder: 'name',
 };
 
 export function parseSite(data: Partial<Site>, newKey?: string): Site {
@@ -78,7 +81,7 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
   const homepage = data.homepage ? data.homepage : key;
 
   // Legacy support for sortOrder field
-  const sortOrder = data.sortOrder ? data.sortOrder : 'flowTime';
+  const sortOrder = data.sortOrder ? data.sortOrder : 'name';
 
   // Legacy support for customPageKeys field
   const customPageKeys = data.customPageKeys ? data.customPageKeys : false;
@@ -120,7 +123,7 @@ export function createSite(template?: Partial<Site>): Site {
     hidden: template?.hidden || true,
     // Default values for new sites
     system: template?.system || 'homebrew',
-    sortOrder: template?.sortOrder || 'flowTime',
+    sortOrder: template?.sortOrder || 'name',
     customPageKeys: template?.customPageKeys || false,
   };
 }

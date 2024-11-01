@@ -6,7 +6,11 @@ import type { CnListItem } from '@11thdeg/cyan-next';
 import { SortableList } from '@client/shared/SortableList';
 import { db } from '@firebase/client';
 import { useStore } from '@nanostores/solid';
-import { SITES_COLLECTION_NAME, type Site } from '@schemas/SiteSchema';
+import {
+  SITES_COLLECTION_NAME,
+  type Site,
+  type SiteSortOrder,
+} from '@schemas/SiteSchema';
 import type { CategoryRef } from '@schemas/SiteSchema';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
@@ -18,6 +22,10 @@ import { SiteTocRegenSection } from './SiteTocRegen';
 export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
   const uid = useStore($uid);
   const visible = () => props.site.owners.includes(uid());
+
+  const [orderBy, setOrderBy] = createSignal<SiteSortOrder>(
+    props.site.sortOrder,
+  );
   const [categories, setCategories] = createSignal<Array<CategoryRef>>(
     props.site.pageCategories || [],
   );
@@ -25,7 +33,9 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
 
   const hasChanged = () => {
     return (
-      JSON.stringify(categories()) !== JSON.stringify(props.site.pageCategories)
+      JSON.stringify(categories()) !==
+        JSON.stringify(props.site.pageCategories) ||
+      orderBy() !== props.site.sortOrder
     );
   };
 
@@ -35,18 +45,15 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
       title: cat.name,
     }));
 
-  async function addCategory() {
-    if (!newCategory()) return;
+  function addCategory(e: Event) {
+    e.preventDefault();
+    const newCat = (e.target as HTMLInputElement).value;
     const cats = [...categories()];
     cats.push({
-      name: newCategory(),
-      slug: newCategory().toLowerCase().replace(/ /g, '-'),
+      name: newCat,
+      slug: newCat.toLowerCase().replace(/ /g, '-'),
     });
     setCategories(cats);
-    /*const siteRef = doc(db, SITES_COLLECTION_NAME, props.site.key);
-    await updateDoc(siteRef, { pageCategories: cats });
-    logDebug('Added category', newCategory());
-    window.location.reload();*/
   }
 
   async function reorderCategories(newOrder: Array<CnListItem>) {
@@ -59,44 +66,92 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
 
   async function saveToDB() {
     const siteRef = doc(db, SITES_COLLECTION_NAME, props.site.key);
-    await updateDoc(siteRef, { pageCategories: categories() });
+    await updateDoc(siteRef, {
+      sortOrder: orderBy(),
+      pageCategories: categories(),
+    });
     logDebug('Saved categories', categories());
     window.location.reload();
   }
 
+  function onOrderByChange(e: Event) {
+    const target = e.target as HTMLSelectElement;
+    setOrderBy(target.value as SiteSortOrder);
+  }
+
+  function reset() {
+    setCategories(props.site.pageCategories || []);
+    setOrderBy(props.site.sortOrder);
+  }
+
   return visible() ? (
-    <div class="elevation-1 p-1 border-radius">
+    <div>
       <h3>
         <cn-icon noun="tools" />
         &nbsp;
         {t('site:toc.admin.title')}
       </h3>
-      <SortableList
-        items={categoryItems()}
-        onItemsChanged={reorderCategories}
-        delete
-      />
-      <div class="toolbar">
-        <div class="grow">
-          <input
-            type="text"
-            placeholder={t('site:toc.admin.newCategory')}
-            value={newCategory()}
-            onInput={(e) =>
-              setNewCategory((e.target as HTMLInputElement).value)
-            }
-          />
-        </div>
-        <button type="button" onClick={addCategory}>
-          <cn-icon noun="add" />
-        </button>
-      </div>
 
-      <div class="toolbar">
-        <button type="button" disabled={!hasChanged()} onClick={saveToDB}>
-          {t('save')}
-        </button>
-      </div>
+      <section class="elevation-1 p-2 border-radius">
+        <label>
+          {t('entries:site.sortOrder')}
+          <select value={orderBy()} onChange={onOrderByChange}>
+            <option value="name">{t('entries:site.sortOrders.name')}</option>
+            <option value="createdAt">
+              {t('entries:site.sortOrders.createdAt')}
+            </option>
+            <option value="flowTime">
+              {t('entries:site.sortOrders.flowTime')}
+            </option>
+            <option value="manual">
+              {t('entries:site.sortOrders.manual')}
+            </option>
+          </select>
+        </label>
+
+        {orderBy() === 'manual' ? (
+          <div>
+            <h4>{t('site:toc.admin.categories.title')}</h4>
+
+            <SortableList
+              items={categoryItems()}
+              onItemsChanged={reorderCategories}
+              delete
+            />
+
+            <div class="toolbar">
+              <div class="grow">
+                <input
+                  type="text"
+                  placeholder={t('site:toc.admin.newCategory')}
+                  value={newCategory()}
+                  onInput={(e) =>
+                    setNewCategory((e.target as HTMLInputElement).value)
+                  }
+                />
+              </div>
+              <button type="button" onClick={addCategory}>
+                <cn-icon noun="add" />
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        <div class="toolbar">
+          <button
+            type="button"
+            class="text"
+            disabled={!hasChanged()}
+            onClick={reset}
+          >
+            {t('actions:reset')}
+          </button>
+
+          <button type="button" disabled={!hasChanged()} onClick={saveToDB}>
+            {t('actions:save')}
+          </button>
+        </div>
+      </section>
 
       <SiteTocRegenSection site={props.site} />
     </div>
