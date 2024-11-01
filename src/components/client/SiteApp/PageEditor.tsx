@@ -4,6 +4,7 @@ import { updatePage } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Component, createSignal, onMount } from 'solid-js';
+import { PageCategorySelect } from './PageCategorySelect';
 
 export type PageEditorProps = {
   site: Site;
@@ -15,6 +16,7 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
   const [content, setContent] = createSignal(props.page.markdownContent || '');
   const originalPage = props.page;
   const originalContent = props.page.markdownContent || '';
+  const [category, setCategory] = createSignal(props.page.category || '');
   let editorRef: undefined | HTMLElement;
 
   const handleSubmit = async (event: Event) => {
@@ -30,6 +32,9 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
 
     const c = content();
     if (c !== originalContent) updates.markdownContent = c;
+
+    const cat = category();
+    if (cat !== originalPage?.category) updates.category = cat;
 
     if (Object.keys(updates).length) {
       await updatePage(props.site.key, props.page.key, updates);
@@ -53,6 +58,11 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
     setContent(content);
   }
 
+  function categoryChaged(cat: string) {
+    setCategory(cat);
+    setChanged(true);
+  }
+
   return (
     <form class="content-editor" onSubmit={handleSubmit}>
       <section class="toolbar">
@@ -65,6 +75,13 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
             onInput={() => setChanged(true)}
           />
         </label>
+
+        <PageCategorySelect
+          site={props.site}
+          pageCategory={category()}
+          setPageCategory={categoryChaged}
+        />
+
         <button disabled type="button" class="fab secondary">
           <cn-icon noun="assets" />
         </button>
