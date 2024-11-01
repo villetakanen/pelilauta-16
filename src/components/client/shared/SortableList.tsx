@@ -1,11 +1,6 @@
 import { type CnListItem, CnSortableList } from '@11thdeg/cyan-next';
 import { logDebug } from '@utils/logHelpers';
-import {
-  type Component,
-  For,
-  createEffect,
-  onMount,
-} from 'solid-js';
+import { type Component, For, createEffect, onMount } from 'solid-js';
 
 interface Props {
   items: CnListItem[];
