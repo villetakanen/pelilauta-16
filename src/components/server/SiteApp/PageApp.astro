@@ -3,7 +3,6 @@ import { PageFabs } from '@client/sites/PageApp/PageFabs';
 import { parsePage } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import PageArticleFooter from './PageArticleFooter.astro';
 import PageArticleHeader from './PageArticleHeader.astro';
 import PageSidebar from './PageSidebar.astro';
@@ -27,10 +26,11 @@ const page = parsePage(toClientEntry(pageData), pageKey, site.key);
   <article class="column-l elevation-1 p-2">
     <PageArticleHeader page={page} site={site}/>
     <h1>{page.name}</h1>
-    { page.markdownContent ? 
+    <!--{ page.markdownContent ? 
       <MarkdownSection content={page.markdownContent || ''} client:only="solid-js"/> : 
       <div set:html={page.htmlContent}></div> 
-    }
+    }-->
+    <div set:html={page.htmlContent}></div>
     <PageArticleFooter page={page} site={site}/>
   </article>
   <PageSidebar site={site} />
