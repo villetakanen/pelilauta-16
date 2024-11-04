@@ -2,9 +2,11 @@ import { serverDB } from '@firebase/server';
 import { PAGES_COLLECTION_NAME, parsePage } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { rewriteWikiLinks } from '@utils/server/contentHelpers';
 import type { APIContext } from 'astro';
+import { marked } from 'marked';
 
-export async function GET({ params }: APIContext): Promise<Response> {
+export async function GET({ params, url }: APIContext): Promise<Response> {
   const { siteKey, pageKey } = params;
 
   if (!siteKey || !pageKey) {
@@ -25,6 +27,13 @@ export async function GET({ params }: APIContext): Promise<Response> {
 
   try {
     const page = parsePage(toClientEntry(data), pageKey, siteKey);
+
+    page.htmlContent = rewriteWikiLinks(
+      await marked(page.markdownContent || ''),
+      page.siteKey,
+      url.origin,
+    );
+
     return new Response(JSON.stringify(page), {
       status: 200,
       headers: {
