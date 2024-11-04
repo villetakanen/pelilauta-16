@@ -1,11 +1,11 @@
 ---
-import { CreateSiteApp } from '@client/SitesApp/CreateSiteApp';
+import { CreateSiteView } from '@client/SiteApp/CreateSiteView';
 import { t } from '@utils/i18n';
 import Page from 'src/layouts/Page.astro';
+
+const title = `${t('app:shortname')} – ${t('site:create.title')}`;
 ---
 
-<Page title={t('site:create.title')}>
-  <div>
-    <CreateSiteApp client:only="solid-js" />
-  </div>
+<Page title={title}>
+  <CreateSiteView client:only="solid-js" />
 </Page>
