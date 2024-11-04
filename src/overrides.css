@@ -291,6 +291,10 @@ cn-menu ul li::before {
 .cursive {
   font-style: italic;
 }
+.alert {
+  background-color: var(--color-alert);
+  color: var(--color-on-alert);
+}
 /*
 body::-webkit-scrollbar {
   display: none;
