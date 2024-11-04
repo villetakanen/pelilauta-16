@@ -18,9 +18,9 @@ import {
 } from 'solid-js';
 import { db } from 'src/firebase/client';
 import { $uid } from 'src/stores/sessionStore';
-import { GameSystemSelect } from './GameSystemSelect';
+import { SiteSystemSelect } from './SiteSystemSelect';
 
-export const CreateSiteApp: Component = () => {
+export const CreateSiteView: Component = () => {
   const uid = useStore($uid);
   const [siteName, setSiteName] = createSignal('');
   const [system, setSystem] = createSignal('homebrew');
@@ -136,7 +136,7 @@ export const CreateSiteApp: Component = () => {
                 />
               </label>
               <p>
-                <code class="p-1">{`pelilauta.web.app/sites/${usePlainTextURL() ? proposedKey() : '[auto]'}`}</code>
+                <code class="p-1">{`https://pelilauta.social/sites/${usePlainTextURL() ? proposedKey() : '[auto]'}`}</code>
               </p>
               {usePlainTextURL() && keyTaken() && (
                 <p class="error text-caption" style="padding: var(--cn-grid)">
@@ -144,7 +144,7 @@ export const CreateSiteApp: Component = () => {
                 </p>
               )}
 
-              <GameSystemSelect value={system()} onChange={setSystem} />
+              <SiteSystemSelect system={system()} setSystem={setSystem} />
 
               <label>
                 {t('entries:site.description')}

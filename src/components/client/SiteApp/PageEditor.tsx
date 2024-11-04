@@ -66,6 +66,12 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
     }
   });
 
+  const r = document.querySelector('cn-editor');
+  if (r instanceof HTMLElement) {
+    editorRef = r;
+    editorRef.addEventListener('input', handleEditorInput);
+  }
+
   function handleEditorInput(e: Event) {
     setChanged(true);
     const content = (e as CustomEvent<{ value: string }>).detail.value;
