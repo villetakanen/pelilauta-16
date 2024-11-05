@@ -3,6 +3,7 @@ import { ForumTray } from '@client/threads/ForumTray';
 import PageWithTray from '@layouts/PageWithTray.astro';
 import { parseChannel } from '@schemas/ChannelSchema';
 import ChannelApp from '@server/ChannelApp/ChannelApp.astro';
+import { t } from '@utils/i18n';
 
 const channelKey = Astro.params.channel || 'pelilauta';
 const page = Astro.params.page ? Number(Astro.params.page) : 1;
@@ -24,8 +25,9 @@ if (!channeldata) {
 }
 
 const channel = parseChannel(channeldata);
+const title = `${t('app:shortname')} - ${channel.name}`;
 ---
-<PageWithTray title={channel.name}>
+<PageWithTray title={title} description={channel.description}>
   <ChannelApp channel={channel} startAt={page}/>
   <ForumTray slot="app-tray" client:only="solid-js"/>
 </PageWithTray>

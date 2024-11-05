@@ -20,6 +20,8 @@ export const threads: Locale = {
   },
   forum: {
     title: 'Foorumi',
+    description:
+      'Keskustelua roolipeleistä, pelinkehityksestä, ja muista roolipelaamiseen liittyvistä aiheista.',
   },
   channel: {
     page: 'Sivu',
