@@ -11,7 +11,9 @@ import { logDebug } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { type Component, onMount } from 'solid-js';
 
-export const CreatePageForm: Component<{ siteKey: string }> = (props) => {
+export const CreatePageForm: Component<{ siteKey: string; name?: string }> = (
+  props,
+) => {
   const site = useStore($site);
 
   onMount(() => {
@@ -47,7 +49,7 @@ export const CreatePageForm: Component<{ siteKey: string }> = (props) => {
       <form onSubmit={handleSubmit}>
         <label>
           {t('entries:page.name')}
-          <input type="text" name="name" />
+          <input type="text" name="name" value={`${props.name}`} />
         </label>
         <div class="toolbar justify-end">
           <button type="button" onClick={cancel}>

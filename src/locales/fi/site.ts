@@ -41,6 +41,7 @@ export const site: Locale = {
       'Sivu on tehty aiemmalla versiolla pelilaudasta, ja sen sisältöä ei voi muokata ilman konversiota. Konversio voi joskus muuttaa sivun ulkoasua ja rakennetta.',
     migrateContent: 'Konvertoi',
     revisionCount: 'muokkausta',
+    missing: 'Sivua ei löydy, voit luoda sen tästä',
   },
   frontPage: 'Etusivu',
   members: {

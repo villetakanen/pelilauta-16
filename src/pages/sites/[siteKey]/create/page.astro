@@ -4,7 +4,9 @@ import PageLayout from '@layouts/Page.astro';
 
 const { siteKey } = Astro.params;
 const site = `${siteKey}`;
+
+const name = Astro.url.searchParams.get('name') || '';
 ---
 <PageLayout>
-  <CreatePageForm siteKey={site} client:only="solid-js"/>
+  <CreatePageForm siteKey={site} name={name} client:only="solid-js"/>
 </PageLayout>

@@ -1,6 +1,7 @@
 ---
+import { CreateMissingPageSection } from '@client/SiteApp/CreateMissingPageSection';
 import { PageFabs } from '@client/sites/PageApp/PageFabs';
-import { parsePage } from '@schemas/PageSchema';
+import { createPage, parsePage } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import PageArticleFooter from './PageArticleFooter.astro';
@@ -17,22 +18,31 @@ const { site, pageKey } = Astro.props as Props;
 const origin = new URL(Astro.request.url).origin;
 
 // Fetch page data from the api
-const pageData = await fetch(
+const pageResponse = await fetch(
   `${origin}/api/sites/${site.key}/pages/${pageKey}.json`,
-).then((res) => res.json());
-const page = parsePage(toClientEntry(pageData), pageKey, site.key);
+);
+
+const exists = pageResponse.status !== 404;
+const page = exists
+  ? parsePage(toClientEntry(await pageResponse.json()), pageKey, site.key)
+  : createPage(pageKey, site.key);
 ---
 <div class="content-columns">
-  <article class="column-l elevation-1 p-2">
+  { exists ? <article class="column-l elevation-1 p-2">
     <PageArticleHeader page={page} site={site}/>
     <h1>{page.name}</h1>
-    <!--{ page.markdownContent ? 
-      <MarkdownSection content={page.markdownContent || ''} client:only="solid-js"/> : 
-      <div set:html={page.htmlContent}></div> 
-    }-->
     <div set:html={page.htmlContent}></div>
     <PageArticleFooter page={page} site={site}/>
-  </article>
+  </article> :
+  <article class="column-l elevation-1 p-2">
+    <div class="flex">
+        <cn-icon noun="monsters" xlarge />
+        <h1>404</h1>
+      </div>
+      
+      <CreateMissingPageSection site={site} pageKey={pageKey} client:only="solid-js"/>
+
+  </article>}
   <PageSidebar site={site} />
   <PageFabs pageKey={pageKey} site={site} client:only="solid-js"/>
 </div>
