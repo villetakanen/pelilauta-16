@@ -1,5 +1,6 @@
 ---
-import { SiteTocAdmin } from '@client/SiteApp/SiteTocAdmin';
+import { ImportExportTool } from '@client/SiteApp/toc/ImportExportTool';
+import { SiteTocAdmin } from '@client/SiteApp/toc/SiteTocAdmin';
 import { SiteSettingsButton } from '@client/SitesApp/SiteSettingsButton';
 import { parseSite } from '@schemas/SiteSchema';
 import SiteTocSection from '@server/SiteApp/SiteTocSection.astro';
@@ -33,10 +34,13 @@ const title = `${site.name} – ${t('site:toc.title')}`;
   </div>
   <SiteTray slot="app-tray" site={site}/>
   <div class="content-columns">
-    <article class="column-l">
+    <article class="column">
       <SiteTocSection site={site}/>
     </article>
-    <div class="column">
+    <div class="column-s">
+      <ImportExportTool site={site} client:only="solid-js"/>
+    </div>
+    <div class="column-s">
       <SiteTocAdmin site={site} client:only="solid-js"/>
     </div>
     </div>

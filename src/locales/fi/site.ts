@@ -67,5 +67,10 @@ export const site: Locale = {
     },
     other: 'Luokittelemattomat',
     all: 'Sisältö',
+    importExport: {
+      title: 'Tuo ja vie',
+      description:
+        'Voit viedä koko sivuston sisällön markdown-muodossa zip-tiedostona. Sivujen metadata tallennetaan markdown frontmatter -muotoon.',
+    },
   },
 };

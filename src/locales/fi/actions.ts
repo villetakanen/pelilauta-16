@@ -14,6 +14,9 @@ export const actions: Locale = {
   },
   delete: 'Poista',
   edit: 'Muokkaa',
+  export: {
+    asZippedFolder: 'Vie zip-tiedostona',
+  },
   fork: 'Luo lanka',
   logout: 'Kirjaudu ulos',
   send: 'Lähetä',
