@@ -25,8 +25,8 @@ export type Page = z.infer<typeof PageSchema>;
 
 export const parsePage = (
   data: Partial<Page>,
-  key: string,
-  siteKey: string,
+  key = '',
+  siteKey = '',
 ): Page => {
   const revisionHistory = [];
   if (data.revisionHistory && Array.isArray(data.revisionHistory)) {

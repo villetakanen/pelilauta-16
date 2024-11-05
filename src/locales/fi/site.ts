@@ -73,4 +73,7 @@ export const site: Locale = {
         'Voit viedä koko sivuston sisällön markdown-muodossa zip-tiedostona. Sivujen metadata tallennetaan markdown frontmatter -muotoon.',
     },
   },
+  deletePage: {
+    info: 'Olet poistamassa sivua {name}. Toimintoa ei voi peruuttaa.',
+  },
 };
