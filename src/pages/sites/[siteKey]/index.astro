@@ -12,10 +12,12 @@ const siteKey = siteKeyParam || 'mekanismi'; // This should not happen, but just
 const origin = new URL(Astro.request.url).origin;
 
 // Fetch site data from the api
-const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
-  res.json(),
-);
-const site = parseSite(toClientEntry(siteData), siteKey);
+const siteResponse = await fetch(`${origin}/api/sites/${siteKey}`);
+if (siteResponse.status === 404) {
+  return Astro.redirect('/404');
+}
+
+const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
 const homePageKey = site.homepage || site.key;
 const noun = systemToNoun(site.system);
 ---
