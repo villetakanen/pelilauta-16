@@ -15,7 +15,7 @@ const metaDescription = description || t('app:meta.description');
 const metaTitle = title || t('app:meta.title');
 const canonicalURL = Astro.url;
 
-const ogImage = image || `${canonicalURL.origin}/favicons/favicon-512x512.png`;
+const ogImage = image || `${canonicalURL.origin}/favicons/fox-ico-512.png`;
 ---
 <head>
 
@@ -28,14 +28,11 @@ const ogImage = image || `${canonicalURL.origin}/favicons/favicon-512x512.png`;
     import '@11thdeg/cyan-next'
   </script>
 
-  <meta property="og:title" content={metaTitle} />
-  <meta property="og:description" content={metaDescription} />
-  <meta property="og:image" content={ogImage} />
-
   <link rel="manifest" href="/manifest.webmanifest" />
 
     <link rel="canonical" href={canonicalURL} />
-    <meta name="theme-color" content="#127854" />
+    <meta name="theme-color" content="#00304f" />
+    <meta name="color-scheme" content="dark light">
 
     <!-- Site info -->    
     <meta name="description" content={metaDescription} />
@@ -49,4 +46,8 @@ const ogImage = image || `${canonicalURL.origin}/favicons/favicon-512x512.png`;
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
 
   <ServiceWorker />
+
+  <meta property="og:title" content={metaTitle} />
+  <meta property="og:description" content={metaDescription} />
+  <meta property="og:image" content={ogImage} />
 </head>

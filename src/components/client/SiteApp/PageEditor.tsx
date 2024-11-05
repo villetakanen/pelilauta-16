@@ -118,7 +118,17 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
       <div class="grow">
         <cn-editor ref={editorRef} value={content()} />
       </div>
-      <section class="toolbar justify-end">
+      <section class="toolbar">
+        <a
+          href={`/sites/${props.site.key}/${props.page.key}/deleteConfirm`}
+          class="button text"
+        >
+          <cn-icon noun="delete" xsmall />
+          <span>{t('actions:delete.page')}</span>
+        </a>
+
+        <div class="grow" />
+
         <a
           href={`/sites/${props.site.key}/${props.page.key}`}
           class="button text"
