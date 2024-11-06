@@ -50,8 +50,13 @@ export const RemoveAccountSection: Component = () => {
             />
           </label>
           <div class="toolbar flex justify-end">
-            <button disabled={verify() !== 'olen aivan varma'} type="submit">
-              {t('actions:confirm')}
+            <button
+              disabled={verify() !== 'olen aivan varma'}
+              type="submit"
+              class="cta"
+            >
+              <cn-icon noun="check" />
+              <span>{t('actions:confirm.delete')}</span>
             </button>
           </div>
         </form>
