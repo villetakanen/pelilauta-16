@@ -24,7 +24,7 @@ export const CreateMissingPageSection: Component<
       <p>{t('site:page.missing')}</p>
       <div class="toolbar justify-end">
         <a
-          href={`/sites/${props.site.key}s/create/page?name=${props.pageKey}`}
+          href={`/sites/${props.site.key}/create/page?name=${props.pageKey}`}
           class="button"
         >
           {t('actions:create.page')}
