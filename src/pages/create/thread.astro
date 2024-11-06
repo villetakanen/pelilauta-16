@@ -4,8 +4,11 @@ import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
 
 const title = `${t('app:shortname')} – ${t('actions:create.thread')}`;
+const channel = Astro.url.searchParams.get('channel') || undefined;
 ---
 
 <ModalPage title={title}>
- <ThreadEditorApp client:only="solid-js"/>
+ <ThreadEditorApp
+   topic={channel}
+   client:only="solid-js"/>
 </ModalPage>
