@@ -47,7 +47,9 @@ export const $requiresEula = persistentAtom<boolean>(
 );
 
 const defaultProfile: Profile = {
+  key: '',
   nick: '',
+  username: '',
   avatarURL: '',
   bio: '',
 };
@@ -160,7 +162,12 @@ async function fetchProfile(uid: string) {
     return;
   }
 
-  return parseProfile(profileDoc.data(), uid);
+  return parseProfile(
+    {
+      ...profileDoc.data(),
+    },
+    uid,
+  );
 }
 
 export * from './subscriber';

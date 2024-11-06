@@ -1,6 +1,6 @@
-import { ProfileCard } from '@client/ProfileCard/ProfileCard';
 import { WithLogin } from '@client/shared/WithLogin';
 import { useStore } from '@nanostores/solid';
+import { ProfileCard } from '@shared/ProfileCard';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 import { $profile } from 'src/stores/sessionStore';
@@ -15,7 +15,7 @@ export const SettingsApp: Component = () => {
     <WithLogin>
       <div class="content-columns">
         <article>
-          <ProfileCard {...profile()} />
+          <ProfileCard profile={profile()} />
           <PublicProfileTool />
         </article>
         <article>
