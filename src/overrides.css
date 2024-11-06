@@ -295,6 +295,18 @@ cn-menu ul li::before {
   background-color: var(--color-alert);
   color: var(--color-on-alert);
 }
+button.cta,
+a.button.cta {
+  background: var(--color-alert) !important;
+}
+button.cta:hover,
+a.button.cta:hover {
+  background: color-mix(in hsl, var(--color-alert), transparent 22%) !important;
+}
+button.cta:disabled,
+a.button.cta:disabled {
+  background: var(--color-button-disabled) !important;
+}
 /*
 body::-webkit-scrollbar {
   display: none;

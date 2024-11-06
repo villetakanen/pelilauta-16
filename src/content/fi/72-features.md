@@ -37,3 +37,34 @@ New features and improvements:
 | *Thread edit action*         | done     | Visible to thread author, links to edit thread route |
 | *Paste to thread content*    | BUG      | Paste from clipboard to thread content field |
 | *Thread name edit*           | BUG      | Required, max 30 characters |
+
+## Account
+
+### Create Account
+
+### Settings
+
+| Feature                      | Status   | Description  |
+| ---------------------------- | -------- | ------------ |
+| *Account page*               | done     | Visible to authenticated, links to account route |
+| *Account page: title*        | done     | View Title|
+| *Account page: description*  | done     | View Description |
+| *Account page: debug*        | done     | Debug information |
+
+#### Profile Card
+
+| Feature                      | Status   | Description  |
+| ---------------------------- | -------- | ------------ |
+| *Profile card*               | BUG     | Visible to authenticated, links to profile page |
+| *Profile card: title*        | BUG     | Link to /profile/:id |
+| *Profile card: id*           | BUG     | User ID in ActivityPub format |
+| *Profile card: avatar*       | BUG     | User avatar |
+| *Profile card: description*  | BUG     | User name |
+
+#### Danger Zone
+
+| Feature                        | Status   | Description  |
+| ------------------------------ | -------- | ------------ |
+| *Danger zone*                  | done     | Open with a button |
+| *Danger zone: delete account*  | done     | Button to delete account |
+| *Danger zone: verify function* | done     | Verify account deletion field |

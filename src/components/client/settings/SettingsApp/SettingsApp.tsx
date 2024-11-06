@@ -1,5 +1,4 @@
 import { ProfileCard } from '@client/ProfileCard/ProfileCard';
-import { DebugSection } from '@client/debug';
 import { WithLogin } from '@client/shared/WithLogin';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
@@ -22,9 +21,6 @@ export const SettingsApp: Component = () => {
         <article>
           <h2>{t('settings:personal.title')}</h2>
           <ProfileSection />
-        </article>
-        <article>
-          <DebugSection />
         </article>
         <article>
           <AuthzSection />

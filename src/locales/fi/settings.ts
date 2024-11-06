@@ -28,4 +28,6 @@ export const settings: Locale = {
     },
     updateAvatar: 'Päivitä avatar',
   },
+  description:
+    'Sovelluksen asetukset. Sivu vaatii sisäänkirjautumisen toimiakseen.',
 };
