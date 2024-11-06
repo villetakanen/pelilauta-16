@@ -2,8 +2,10 @@
 import { ThreadEditorApp } from '@client/threads/ThreadEditorApp/ThreadEditorApp';
 import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
+
+const title = `${t('app:shortname')} – ${t('actions:create.thread')}`;
 ---
 
-<ModalPage title={t('actions:create.thread')}>
+<ModalPage title={title}>
  <ThreadEditorApp client:only="solid-js"/>
 </ModalPage>

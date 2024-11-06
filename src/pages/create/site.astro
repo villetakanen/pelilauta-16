@@ -1,11 +1,11 @@
 ---
 import { CreateSiteView } from '@client/SiteApp/CreateSiteView';
+import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
-import Page from 'src/layouts/Page.astro';
 
 const title = `${t('app:shortname')} – ${t('site:create.title')}`;
 ---
 
-<Page title={title}>
+<ModalPage title={title}>
   <CreateSiteView client:only="solid-js" />
-</Page>
+</ModalPage>
