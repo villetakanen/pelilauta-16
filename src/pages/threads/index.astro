@@ -1,4 +1,5 @@
 ---
+import { ForumFabs } from '@client/ThreadsApp/ForumFabs';
 import { ForumPage } from '@client/threads/ForumPage';
 import Page from '@layouts/Page.astro';
 import { t } from '@utils/i18n';
@@ -8,4 +9,5 @@ const description = t('threads:forum.description');
 ---
 <Page title={title} description={description}>
   <ForumPage client:only="solid-js"/>
+  <ForumFabs client:only="solid-js"/>
 </Page>
