@@ -95,6 +95,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
         avatarURL: avatarSrc(),
         updatedAt: serverTimestamp(),
         createdAt: serverTimestamp(),
+        username: username(),
       };
 
       const profileRef = doc(db, 'profiles', key);

@@ -127,7 +127,7 @@ export const Discussion: Component<DiscussionProps> = (props) => {
   };
 
   return (
-    <div class="content-columns">
+    <div class="content-columns" id="discussion">
       <div class="column-l">
         <h3>{t('threads:discussion.title')}</h3>
         <div class="flex flex-col downscaled" on:Quote={handleQuote}>

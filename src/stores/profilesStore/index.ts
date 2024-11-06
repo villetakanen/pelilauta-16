@@ -2,6 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
 import { t } from '@utils/i18n';
 import { logDebug, logWarn } from '@utils/logHelpers';
+import { toFid } from '@utils/toFid';
 import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { atom, computed } from 'nanostores';
 import { db } from 'src/firebase/client';
@@ -11,6 +12,7 @@ const PublicProfileSchema = z.object({
   key: z.string(),
   nick: z.string(),
   avatarURL: z.string().optional(),
+  username: z.string(),
 });
 
 export type PublicProfile = z.infer<typeof PublicProfileSchema>;
@@ -79,6 +81,8 @@ async function fetchProfile(key: string) {
       ...publicProfileDoc.data(),
       avatarURL,
       key,
+      username:
+        publicProfileDoc.data().username || toFid(publicProfileDoc.data().nick),
     });
 
     $profiles.set({
@@ -96,6 +100,7 @@ async function fetchProfile(key: string) {
       [key]: {
         key,
         nick: t('app:meta.anonymous'),
+        username: t('app:meta.anonymous'),
       },
     });
   }
@@ -116,6 +121,7 @@ export async function fetchAllProfiles() {
     const profile = PublicProfileSchema.parse({
       ...doc.data(),
       key: doc.id,
+      username: toFid(doc.data().nick),
     });
     $profiles.set({
       ...$profiles.get(),

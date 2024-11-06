@@ -4,8 +4,8 @@ import { z } from 'zod';
 export const PROFILES_COLLECTION_NAME = 'profiles';
 
 export const ProfileSchema = z.object({
-  key: z.string().optional(),
-  username: z.string().optional(),
+  key: z.string(),
+  username: z.string(),
   nick: z.string(),
   avatarURL: z.string().optional(),
   bio: z.string().optional(),

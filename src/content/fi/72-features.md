@@ -55,11 +55,11 @@ New features and improvements:
 
 | Feature                      | Status   | Description  |
 | ---------------------------- | -------- | ------------ |
-| *Profile card*               | BUG     | Visible to authenticated, links to profile page |
-| *Profile card: title*        | BUG     | Link to /profile/:id |
-| *Profile card: id*           | BUG     | User ID in ActivityPub format |
-| *Profile card: avatar*       | BUG     | User avatar |
-| *Profile card: description*  | BUG     | User name |
+| *Profile card*               | done     | Visible to authenticated, links to profile page |
+| *Profile card: title*        | BUG      | Link to /profile/:id |
+| *Profile card: id*           | done     | User ID in ActivityPub format |
+| *Profile card: avatar*       | done     | User avatar |
+| *Profile card: description*  | done     | User name |
 
 #### Danger Zone
 

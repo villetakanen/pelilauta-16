@@ -1,6 +1,6 @@
-import { ProfileCard } from '@client/ProfileCard/ProfileCard';
 import { WithLoader } from '@client/shared/WithLoader';
 import { useStore } from '@nanostores/solid';
+import { ProfileCard } from '@shared/ProfileCard';
 import { getProfileAtom } from '@stores/profilesStore';
 import type { Component } from 'solid-js';
 
@@ -10,13 +10,7 @@ export const ProfileApp: Component<{ uid: string }> = (props) => {
   return (
     <WithLoader loading={!profile()}>
       <div class="content-columns">
-        {profile() && (
-          <ProfileCard
-            key={profile().key}
-            nick={profile().nick}
-            avatarURL={profile().avatarURL}
-          />
-        )}
+        {profile() && <ProfileCard profile={profile()} />}
       </div>
     </WithLoader>
   );
