@@ -1,6 +1,9 @@
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {
+  assets: {
+    title: 'Lataukset',
+  },
   contents: {
     title: 'Sivut',
   },
@@ -22,6 +25,7 @@ export const site: Locale = {
     actions: {
       homepage: 'Etusivu',
       toc: 'Hakemisto',
+      assets: 'Lataukset',
     },
   },
   create: {
