@@ -1,4 +1,4 @@
-import { ASSET_LICENSES, type Asset, parseAsset } from '@schemas/AssetSchema';
+import { type Asset, parseAsset } from '@schemas/AssetSchema';
 import {
   SITES_COLLECTION_NAME,
   type Site,
@@ -19,7 +19,10 @@ import { db, storage } from '..';
  * @returns {Promise<{ downloadURL: string, storagePath: string }>} A promise that resolves
  * with the download URL and storage path of the uploaded asset.
  */
-async function addAssetToStorage(site: Site, file: File) {
+async function addAssetToStorage(
+  site: Site,
+  file: File,
+): Promise<{ downloadURL: string; storagePath: string }> {
   const uniqueFilename = `${uuidv4()}-${file.name}`; // Generate a unique filename
   const storagePath = `Sites/${site.key}/${uniqueFilename}`; // The path to store the file in Firebase Storage
   const siteAssetsRef = ref(storage, storagePath);
@@ -51,7 +54,7 @@ export async function addAssetToSite(
   site: Site,
   file: File,
   metadata: Partial<Asset> = {},
-) {
+): Promise<string> {
   const siteRef = doc(db, SITES_COLLECTION_NAME, site.key);
   const siteDoc = await getDoc(siteRef);
 
@@ -66,7 +69,7 @@ export async function addAssetToSite(
   const assetData = parseAsset({
     url: downloadURL,
     description: metadata.description || '',
-    license: metadata.license || ASSET_LICENSES.default,
+    license: metadata.license || '0',
     name: metadata.name || file.name,
     mimetype: file.type,
     storagePath: storagePath,

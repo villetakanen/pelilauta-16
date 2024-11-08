@@ -1,4 +1,5 @@
 ---
+import { SiteAssetsView } from '@client/SiteApp/assets/SiteAssetsView';
 import { parseSite } from '@schemas/SiteSchema';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -26,7 +27,6 @@ const title = `${site.name} – ${t('site:assets.title')}`;
   image={site.backgroundURL}
 >
   <SiteTray slot="app-tray" site={site}/>
-  <h1>ASSETS SERVERSIDE DONE!</h1>
-
-  <p>Client side missing</p>
+  
+  <SiteAssetsView siteKey={site.key} client:only="solid-js" />
 </PageWithTray>

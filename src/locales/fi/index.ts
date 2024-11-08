@@ -12,6 +12,10 @@ import { threads } from './threads';
 
 export const fi: Locale = {
   app: {
+    forbidden: {
+      title: 'Hups!',
+      message: 'Tämä sivu vaatii kirjautumisen pelilaudalle.',
+    },
     title: 'Pelilauta 2 - Versio 16 - Alfajulkaisu',
     shortname: 'Pelilauta 2',
     mekanismi: 'Mekanismi',

@@ -3,6 +3,8 @@ import type { Locale } from '@utils/i18n';
 export const site: Locale = {
   assets: {
     title: 'Lataukset',
+    forbidden:
+      'Koneellisen luvun ja tiedonkeruun estämiseksi lataukset-listaus vaatii kirjautumisen pelilaudalle. Voit kirjautua alla olevan painikkeen kautta.',
   },
   contents: {
     title: 'Sivut',

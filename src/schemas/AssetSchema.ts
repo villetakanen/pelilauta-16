@@ -1,7 +1,5 @@
 import { logError } from '@utils/logHelpers';
-import { toDate } from '@utils/schemaHelpers';
 import { z } from 'zod';
-import { EntrySchema } from './ContentEntry';
 
 export const ASSETS_COLLECTION_NAME = 'assets';
 
@@ -18,7 +16,7 @@ export const ASSET_LICENSES = z
   ])
   .default('0');
 
-export const AssetSchema = EntrySchema.extend({
+export const AssetSchema = z.object({
   url: z.string(),
   description: z.string().default(''),
   license: z.string().default('0'),
@@ -29,12 +27,10 @@ export const AssetSchema = EntrySchema.extend({
 
 export type Asset = z.infer<typeof AssetSchema>;
 
-export function parseAsset(data: Record<string, unknown>, key?: string): Asset {
+export function parseAsset(data: Record<string, unknown>): Asset {
   try {
     return AssetSchema.parse({
       ...data,
-      flowTime: toDate(data.flowTime).getTime(),
-      key,
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
