@@ -42,6 +42,10 @@ export const site: Locale = {
     migrateContent: 'Konvertoi',
     revisionCount: 'muokkausta',
     missing: 'Sivua ei löydy, voit luoda sen tästä',
+    editor: {
+      contentMigrateWarning:
+        'Sivun aiempi sisältö on konvertoitu markdown-muotoon',
+    },
   },
   frontPage: 'Etusivu',
   members: {

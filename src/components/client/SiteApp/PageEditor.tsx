@@ -111,7 +111,7 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
       {converted() && (
         <div class="alert warning flex flex-row items-center px-1">
           <cn-icon noun="admin" />
-          <p>{t('sites:page.editor.convertWarning')}</p>
+          <p>{t('site:page.editor.contentMigrateWarning')}</p>
         </div>
       )}
 
@@ -124,7 +124,7 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
           class="button text"
         >
           <cn-icon noun="delete" xsmall />
-          <span>{t('actions:delete.page')}</span>
+          <span>{t('actions:delete')}</span>
         </a>
 
         <div class="grow" />

@@ -26,7 +26,7 @@ export const PageCategorySelect = (props: PageCategorySelectProps) => {
         value={pageCategory}
         onChange={(e) => setPageCategory(e.currentTarget.value)}
       >
-        <option value="">{t('entries:page.category.none')}</option>
+        <option value="">{t('entries:page.defaults.category')}</option>
         <For each={site.pageCategories}>
           {(category) => <option value={category.slug}>{category.name}</option>}
         </For>
