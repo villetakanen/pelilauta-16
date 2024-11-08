@@ -31,11 +31,23 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
   try {
     const page = parsePage(toClientEntry(data), pageKey, siteKey);
 
-    page.htmlContent = rewriteWikiLinks(
-      await marked(page.markdownContent || ''),
-      page.siteKey,
-      url.origin,
-    );
+    // If the page has markdown content, convert it to HTML
+    // Legacy pages might have HTML content, that we want to convert to
+    // markdown if they are edited - thus we only convert if the ma
+    // rkdown content is present
+    //
+    // @TODO: this should be moved to a utility function, as there are
+    // multiple places where we convert markdown to HTML, and more extensions
+    // in addition to wikilinks might be added in the future
+    //
+    // F.ex. support for attach:file.jpg style asset links, or other
+    // custom markdown extensions
+    if (page.markdownContent)
+      page.htmlContent = rewriteWikiLinks(
+        await marked(page.markdownContent || ''),
+        page.siteKey,
+        url.origin,
+      );
 
     return new Response(JSON.stringify(page), {
       status: 200,
