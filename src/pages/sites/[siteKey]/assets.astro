@@ -1,9 +1,7 @@
 ---
-import { ImportExportTool } from '@client/SiteApp/toc/ImportExportTool';
-import { SiteTocAdmin } from '@client/SiteApp/toc/SiteTocAdmin';
+import { SiteAssetsView } from '@client/SiteApp/assets/SiteAssetsView';
 import { parseSite } from '@schemas/SiteSchema';
 import SitePoster from '@server/SiteApp/SitePoster.astro';
-import SiteTocSection from '@server/SiteApp/SiteTocSection.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
@@ -22,7 +20,7 @@ const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
   res.json(),
 );
 const site = parseSite(toClientEntry(siteData), siteKey);
-const title = `${site.name} – ${t('site:toc.title')}`;
+const title = `${site.name} – ${t('site:assets.title')}`;
 ---
 <PageWithTray
   title={title}
@@ -30,17 +28,6 @@ const title = `${site.name} – ${t('site:toc.title')}`;
   image={site.backgroundURL}
 >
   <SiteTray slot="app-tray" site={site}/>
-  <div class="content-columns">
-    <article class="column">
-      <SiteTocSection site={site}/>
-    </article>
-    <div class="column-s">
-      <ImportExportTool site={site} client:only="solid-js"/>
-    </div>
-    <div class="column-s">
-      <SiteTocAdmin site={site} client:only="solid-js"/>
-    </div>
-    </div>
-  </div>
+  <SiteAssetsView siteKey={site.key} client:only="solid-js" />
   <SitePoster site={site}/>
 </PageWithTray>

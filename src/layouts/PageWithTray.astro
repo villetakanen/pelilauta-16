@@ -1,4 +1,6 @@
 ---
+import AppFooter from '@server/AppFooter.astro';
+import BaseTail from '@server/BaseTail.astro';
 import BottomBar from '@server/BottomBar.astro';
 import AppBar from 'src/components/server/AppBar.astro';
 import AppRail from 'src/components/server/AppRail.astro';
@@ -31,14 +33,10 @@ const { title, description, image, noun } = Astro.props;
    
 	  <main>
       <slot />
+      <AppFooter />
     </main>
     <nav id="fab-tray"><slot name="fab-tray"></slot></nav>
     <BasePostscripts />
-    <!--script is:inline>
-      // If the viewport is larger than 1280px, the tray should be open by default
-      if (window.innerWidth > 1280) {
-        document.querySelector('cn-tray-button').setAttribute('aria-expanded', 'true');
-      }
-    </script-->
+    <BaseTail />
   </body>
 </html>

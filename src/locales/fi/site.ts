@@ -1,6 +1,12 @@
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {
+  assets: {
+    title: 'Lataukset',
+    description: 'Sivustolle ladatut tiedostot',
+    forbidden:
+      'Koneellisen luvun ja tiedonkeruun estämiseksi lataukset-listaus vaatii kirjautumisen pelilaudalle. Voit kirjautua alla olevan painikkeen kautta.',
+  },
   contents: {
     title: 'Sivut',
   },
@@ -22,6 +28,7 @@ export const site: Locale = {
     actions: {
       homepage: 'Etusivu',
       toc: 'Hakemisto',
+      assets: 'Lataukset',
     },
   },
   create: {

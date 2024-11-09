@@ -1,7 +1,7 @@
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { ThemeImageForm } from './ThemeImageForm';
+import { ThemeImageForm } from '../../SitesApp/SiteSettingsApp/ThemeImageForm';
 
 export const ThemingSection: Component<{ site: Site }> = (props) => {
   return (

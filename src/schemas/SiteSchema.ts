@@ -2,6 +2,7 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import { logError } from '@utils/logHelpers';
 import { parseFlowTime } from '@utils/schemaHelpers';
 import { z } from 'zod';
+import { AssetSchema } from './AssetSchema';
 import { EntrySchema } from './ContentEntry';
 
 export const SITES_COLLECTION_NAME = 'sites';
@@ -42,6 +43,7 @@ export const SiteSortOrderSchema = z.enum([
 export type SiteSortOrder = z.infer<typeof SiteSortOrderSchema>;
 
 export const SiteSchema = EntrySchema.extend({
+  assets: z.array(AssetSchema).optional(),
   name: z.string(),
   system: z.string().optional(),
   posterURL: z.string().optional(),

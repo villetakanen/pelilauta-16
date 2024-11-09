@@ -2,7 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import {
   ASSETS_COLLECTION_NAME,
   type Asset,
-  ParseAsset,
+  parseAsset,
 } from '@schemas/AssetSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
@@ -23,7 +23,7 @@ export const $assets = persistentAtom<Asset[]>(
     encode: JSON.stringify,
     decode: (data) => {
       return JSON.parse(data)?.map((entry: Record<string, unknown>) => {
-        return ParseAsset(toClientEntry(entry), entry.key as string);
+        return parseAsset(toClientEntry(entry));
       });
     },
   },
@@ -42,7 +42,7 @@ export async function loadUserAssets(uid: string) {
   const docs = await getDocs(q);
 
   for (const doc of docs.docs) {
-    mergeAssetToStore(ParseAsset(toClientEntry(doc.data()), doc.id));
+    mergeAssetToStore(parseAsset(toClientEntry(doc.data())));
   }
 
   logDebug('loadUserAssets', 'assets loaded');
@@ -58,7 +58,9 @@ export async function loadUserAssets(uid: string) {
 function mergeAssetToStore(asset: Asset) {
   const currentAssets = $assets.get();
 
-  const index = currentAssets.findIndex((a) => a.key === asset.key);
+  const index = currentAssets.findIndex(
+    (a) => a.storagePath === asset.storagePath,
+  );
   if (index === -1) {
     currentAssets.push(asset);
   } else {

@@ -67,8 +67,8 @@ cn-loader[for="navigation"] {
   opacity: 1;
 }
 main:has(.pageBackgroundPoster) .content-columns > * {
-  background: color-mix(in hsl, var(--color-primary), transparent 10%);
-  padding: var(--cn-gap);
+  background: var(--color-primary);
+  padding: var(--cn-grid) var(--cn-gap);
 }
 img.preview-icon {
   width: var(--cn-icon-size-large);
@@ -76,6 +76,7 @@ img.preview-icon {
   border-radius: var(--cn-grid);
   object-fit: cover;
 }
+
 p.align-right {
   text-align: right;
 }
