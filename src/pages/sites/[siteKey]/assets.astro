@@ -1,6 +1,7 @@
 ---
 import { SiteAssetsView } from '@client/SiteApp/assets/SiteAssetsView';
 import { parseSite } from '@schemas/SiteSchema';
+import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
@@ -27,6 +28,6 @@ const title = `${site.name} – ${t('site:assets.title')}`;
   image={site.backgroundURL}
 >
   <SiteTray slot="app-tray" site={site}/>
-  
   <SiteAssetsView siteKey={site.key} client:only="solid-js" />
+  <SitePoster site={site}/>
 </PageWithTray>

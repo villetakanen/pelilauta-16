@@ -1,10 +1,8 @@
+import { addAssetToSite } from '@firebase/client/site/addAssetToSite';
 import type { Site } from '@schemas/SiteSchema';
 import { updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
-import { logError } from '@utils/logHelpers';
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { type Component, createMemo, createSignal } from 'solid-js';
-import { storage } from 'src/firebase/client';
 
 export const ThemeImageForm: Component<{
   imageFieldName: string;
@@ -35,40 +33,14 @@ export const ThemeImageForm: Component<{
     const file = (fileUploadRef as HTMLInputElement).files?.[0];
     if (!file) return;
 
-    // Check the file size
-    if (file.size > 1024 * 1024) {
-      throw new Error('File size too large');
-    }
+    const downloadURL = await addAssetToSite(props.site, file);
 
-    const dataurl = preview();
-    if (!dataurl || !dataurl.startsWith('data:image')) {
-      logError('Invalid file type', dataurl);
-      return;
-    }
-
-    // Try to upload the file to the storage
-    try {
-      // Get the file extension
-      const ext = file.name.split('.').pop();
-
-      // Create a reference to the file
-      const storageRef = ref(
-        storage,
-        `sites/${props.site.key}/${props.imageFieldName}.${ext}`,
-      );
-
-      await uploadString(storageRef, dataurl, 'data_url');
-
-      const downloadURL = await getDownloadURL(storageRef);
-      updateSite(
-        {
-          [props.imageFieldName]: downloadURL,
-        },
-        props.site.key,
-      );
-    } catch (error) {
-      logError(error);
-    }
+    updateSite(
+      {
+        [props.imageFieldName]: downloadURL,
+      },
+      props.site.key,
+    );
   }
 
   function updatePreview() {

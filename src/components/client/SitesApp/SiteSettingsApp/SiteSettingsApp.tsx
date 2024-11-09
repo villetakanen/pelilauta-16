@@ -12,10 +12,10 @@ import { $uid } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { type Component, createSignal, onMount } from 'solid-js';
+import { ThemingSection } from '../../SiteApp/settings/ThemingSection';
 import { SiteCard } from '../../sites/SiteCard';
 import { DangerZoneSection } from './DangerZoneSection';
 import { SiteMetaDataSection } from './SiteMetaDataSection';
-import { ThemingSection } from './ThemingSection';
 
 export const SiteSettingsApp: Component<{ site: string }> = (props) => {
   const uid = useStore($uid);

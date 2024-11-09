@@ -1,6 +1,7 @@
 ---
 import { parseSite } from '@schemas/SiteSchema';
 import PageApp from '@server/SiteApp/PageApp.astro';
+import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { systemToNoun } from '@utils/schemaHelpers';
@@ -38,4 +39,5 @@ const noun = systemToNoun(site.system);
 <PageWithTray title={title} description={site.description} noun={noun}>
   <SiteTray slot="app-tray" site={site}/>
   <PageApp site={site} pageKey={page}/>
+  <SitePoster site={site}/>
 </PageWithTray>

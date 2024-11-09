@@ -64,11 +64,17 @@ export const SiteAssetsView: Component<SiteAssetsViewProps> = (props) => {
     <WithAuth allow={allow()} message={t('site:assets.forbidden')}>
       <div class="content-columns">
         <article class="column-l">
+          <h1>{t('site:assets.title')}</h1>
+          <p>{t('site:assets.description')}</p>
           {site()?.assets?.length && (
             <div class="flex flex-col">
               <For each={site()?.assets}>
                 {(asset) => (
-                  <AssetRowItem asset={asset} onDelete={deleteAsset} />
+                  <AssetRowItem
+                    asset={asset}
+                    onDelete={deleteAsset}
+                    site={site()}
+                  />
                 )}
               </For>
             </div>

@@ -1,0 +1,13 @@
+---
+import type { Site } from '@schemas/SiteSchema';
+
+interface Props {
+  site: Site;
+}
+const { site } = Astro.props;
+---
+{ site.backgroundURL && 
+  <div class="pageBackgroundPoster sm-hidden">
+    <img src={site.backgroundURL} alt=""/>
+  </div> 
+}

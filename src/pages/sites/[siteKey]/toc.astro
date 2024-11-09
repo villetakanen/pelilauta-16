@@ -1,8 +1,8 @@
 ---
 import { ImportExportTool } from '@client/SiteApp/toc/ImportExportTool';
 import { SiteTocAdmin } from '@client/SiteApp/toc/SiteTocAdmin';
-import { SiteSettingsButton } from '@client/SitesApp/SiteSettingsButton';
 import { parseSite } from '@schemas/SiteSchema';
+import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTocSection from '@server/SiteApp/SiteTocSection.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -29,9 +29,6 @@ const title = `${site.name} – ${t('site:toc.title')}`;
   description={site.description}
   image={site.backgroundURL}
 >
-  <div slot="app-bar">
-    <SiteSettingsButton client:only="solid-js"/>
-  </div>
   <SiteTray slot="app-tray" site={site}/>
   <div class="content-columns">
     <article class="column">
@@ -45,4 +42,5 @@ const title = `${site.name} – ${t('site:toc.title')}`;
     </div>
     </div>
   </div>
+  <SitePoster site={site}/>
 </PageWithTray>
