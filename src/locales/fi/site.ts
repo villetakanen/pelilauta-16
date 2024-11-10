@@ -6,6 +6,7 @@ export const site: Locale = {
     description: 'Sivustolle ladatut tiedostot',
     forbidden:
       'Koneellisen luvun ja tiedonkeruun estämiseksi lataukset-listaus vaatii kirjautumisen pelilaudalle. Voit kirjautua alla olevan painikkeen kautta.',
+    upload: { success: '{file} ladattu onnistuneesti' },
   },
   contents: {
     title: 'Sivut',

@@ -10,7 +10,6 @@ import {
   type Profile,
   parseProfile,
 } from 'src/schemas/ProfileSchema';
-import { loadUserAssets } from '../assetStore';
 import { initSubscriberStore } from './subscriber';
 
 // The active user's UID - stored in localStorage for session persistence
@@ -115,9 +114,6 @@ async function login(uid: string) {
 
   // Set the loading state to active
   $loadingState.set('active');
-
-  // Prefetch user assets
-  loadUserAssets(uid);
 
   // subscribe to user subscriptions data
   initSubscriberStore(uid);
