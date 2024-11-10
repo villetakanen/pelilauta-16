@@ -1,9 +1,10 @@
 import { serverDB } from '@firebase/server';
 import { PAGES_COLLECTION_NAME, parsePage } from '@schemas/PageSchema';
-import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
+import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
 import { rewriteWikiLinks } from '@utils/server/contentHelpers';
+import { renderAssetMarkup } from '@utils/server/renderAssetMarkup';
 import type { APIContext } from 'astro';
 import { marked } from 'marked';
 
@@ -13,6 +14,12 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
   if (!siteKey || !pageKey) {
     return new Response('Invalid request', { status: 400 });
   }
+
+  const siteDoc = await serverDB
+    .collection(SITES_COLLECTION_NAME)
+    .doc(siteKey)
+    .get();
+  const site = parseSite(toClientEntry(siteDoc.data() || {}), siteKey);
 
   const pagesCollection = serverDB
     .collection(SITES_COLLECTION_NAME)
@@ -48,6 +55,12 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
         page.siteKey,
         url.origin,
       );
+
+    page.htmlContent = renderAssetMarkup(
+      page.htmlContent || '',
+      site,
+      url.origin,
+    );
 
     return new Response(JSON.stringify(page), {
       status: 200,
