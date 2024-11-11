@@ -1,6 +1,6 @@
 ---
 
-import { ThreadEditorApp } from '@client/threads/ThreadEditorApp/ThreadEditorApp';
+import { ThreadEditor } from '@client/ThreadApp/ThreadEditor/ThreadEditor';
 import ModalPage from '@layouts/ModalPage.astro';
 
 const { threadKey } = Astro.params;
@@ -10,5 +10,5 @@ if (!threadKey) {
 }
 ---
 <ModalPage>
-  <ThreadEditorApp threadKey={threadKey} client:only="solid-js"/>
+  <ThreadEditor threadKey={threadKey} client:only="solid-js"/>
 </ModalPage>

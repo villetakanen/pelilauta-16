@@ -8,6 +8,7 @@ import { pushSessionSnack } from '@utils/client/snackUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
+import { logDebug } from '@utils/logHelpers';
 import { addDoc, collection } from 'firebase/firestore';
 import {
   type Component,
@@ -17,9 +18,10 @@ import {
   onMount,
 } from 'solid-js';
 import { db } from 'src/firebase/client';
+import { ImagesPreviewSection } from './ImagesPreviewSection';
 import { ThreadEditorTopBar } from './ThreadEditorTopBar';
 
-export const ThreadEditorApp: Component<{
+export const ThreadEditor: Component<{
   threadKey?: string;
   topic?: string;
 }> = (props) => {
@@ -31,6 +33,7 @@ export const ThreadEditorApp: Component<{
   const [title, setTitle] = createSignal<string>('');
   const [markdownContent, setMarkdownContent] = createSignal<string>('');
   const [suspend, setSuspend] = createSignal<boolean>(false);
+  const [files, setFiles] = createSignal<File[]>([]);
 
   createEffect(() => {
     setTags(extractTags(markdownContent()));
@@ -102,6 +105,16 @@ export const ThreadEditorApp: Component<{
     window.location.href = `/threads/${key}`;
   }
 
+  function filesUploaded(newFiles: File[]) {
+    setFiles([...files(), ...newFiles]);
+    logDebug(
+      'Files uploaded',
+      files()
+        .map((f) => f.name)
+        .join(', '),
+    );
+  }
+
   return (
     <WithLoader loading={suspend()}>
       <form onsubmit={send}>
@@ -111,6 +124,7 @@ export const ThreadEditorApp: Component<{
             setTitle={setTitle}
             channel={topic()}
             setChannel={setTopic}
+            filesUploaded={filesUploaded}
           />
           <div class="grow">
             <cn-editor
@@ -127,6 +141,7 @@ export const ThreadEditorApp: Component<{
               </For>
             </p>
           )}
+          <ImagesPreviewSection files={files()} />
           <div class="toolbar">
             <button type="reset" class="text">
               {t('actions:cancel')}
