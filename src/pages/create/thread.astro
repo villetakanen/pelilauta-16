@@ -8,7 +8,7 @@ const channel = Astro.url.searchParams.get('channel') || undefined;
 ---
 
 <ModalPage title={title}>
- <ThreadEditor
-   topic={channel}
-   client:only="solid-js"/>
+  <ThreadEditor
+    topic={channel}
+    client:only="solid-js"/>
 </ModalPage>

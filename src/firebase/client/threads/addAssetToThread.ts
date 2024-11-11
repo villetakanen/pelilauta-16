@@ -1,4 +1,3 @@
-import type { Thread } from '@schemas/ThreadSchema';
 import { logError } from '@utils/logHelpers';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,10 +12,10 @@ import { storage } from '..';
  * with the download URL and storage path of the uploaded asset.
  */
 export async function addAssetToThread(
-  thread: Thread,
+  threadKey: string,
   file: File,
 ): Promise<{ downloadURL: string; storagePath: string }> {
-  if (!thread || !thread.key || !file || !file.name) {
+  if (!threadKey || !file || !file.name) {
     throw new Error('Invalid thread or file provided, aborting asset upload');
   }
 
@@ -26,7 +25,7 @@ export async function addAssetToThread(
   }
 
   const uniqueFilename = `${uuidv4()}-${file.name}`; // Generate a unique filename
-  const storagePath = `Threads/${thread.key}/${uniqueFilename}`; // The path to store the file in Firebase Storage
+  const storagePath = `Threads/${threadKey}/${uniqueFilename}`; // The path to store the file in Firebase Storage
   const threadAssetRef = ref(storage, storagePath);
 
   try {

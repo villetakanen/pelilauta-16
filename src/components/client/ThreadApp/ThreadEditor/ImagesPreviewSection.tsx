@@ -24,5 +24,5 @@ export const ImagesPreviewSection: Component<ImagesPreviewSectionProps> = (
       };
     });
 
-  return props.files.length > 0 ? <ImagesSection figures={figures()} /> : null;
+  return <ImagesSection figures={figures()} />;
 };

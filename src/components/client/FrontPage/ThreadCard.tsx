@@ -28,13 +28,16 @@ export const ThreadCard: Component<ThreadCardProps> = (props) => {
     subscriber().seenEntities[props.thread.key] >= props.thread.flowTime ||
     !uid();
 
+  const poster =
+    props.thread.poster || props.thread.images?.[0].url || undefined;
+
   return (
     <div style="flex-basis: auto; width: 100%">
       <cn-card
         notify={!hasSeen()}
         href={`/threads/${props.thread.key}`}
         title={props.thread.title}
-        cover={props.thread.poster || undefined}
+        cover={poster}
         elevation="1"
         noun={topicToNoun(props.thread.channel)}
       >

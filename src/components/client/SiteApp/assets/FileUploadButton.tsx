@@ -29,8 +29,8 @@ const FileUploadButton: Component<FileUploadButtonProps> = (props) => {
         style={{ display: 'none' }}
       />
       <button class={props.class} onClick={handleButtonClick} type="button">
-        <cn-icon noun="arrow-up" />
-        <span>{t('actions:upload.asset')}</span>
+        <cn-icon noun="assets" />
+        <span>{t('actions:upload')}</span>
       </button>
     </div>
   );

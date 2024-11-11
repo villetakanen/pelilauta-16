@@ -13,12 +13,15 @@ if (!siteKey) {
   throw new Error('No site key provided');
 }
 
-const origin = new URL(Astro.request.url).origin;
-
 // Fetch site data from the api
-const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
-  res.json(),
-);
+const origin = new URL(Astro.request.url).origin;
+const siteResponse = await fetch(`${origin}/api/sites/${siteKey}`);
+if (siteResponse.status === 404) {
+  return Astro.redirect('/404');
+}
+
+// Parse the site data and create the site object
+const siteData = await siteResponse.json();
 const site = parseSite(toClientEntry(siteData), siteKey);
 const title = `${site.name} – ${t('site:assets.title')}`;
 ---
