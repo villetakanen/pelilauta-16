@@ -28,8 +28,12 @@ export const ThreadCard: Component<ThreadCardProps> = (props) => {
     subscriber().seenEntities[props.thread.key] >= props.thread.flowTime ||
     !uid();
 
-  const poster =
-    props.thread.poster || props.thread.images?.[0].url || undefined;
+  // @TODO - move this to parseThread, as it's a common pattern
+  const poster = props.thread.poster
+    ? props.thread.poster
+    : props.thread.images && props.thread.images.length > 0
+      ? props.thread.images[0].url
+      : undefined;
 
   return (
     <div style="flex-basis: auto; width: 100%">
