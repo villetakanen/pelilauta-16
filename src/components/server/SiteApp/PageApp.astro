@@ -30,7 +30,6 @@ const page = exists
 <div class="content-columns">
   { exists ? <article class="column-l elevation-1 p-2">
     <PageArticleHeader page={page} site={site}/>
-    <h1>{page.name}</h1>
     <div set:html={page.htmlContent}></div>
     <PageArticleFooter page={page} site={site}/>
   </article> :
