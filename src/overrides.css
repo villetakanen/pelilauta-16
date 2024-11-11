@@ -308,6 +308,28 @@ button.cta:disabled,
 a.button.cta:disabled {
   background: var(--color-button-disabled) !important;
 }
+main p + table {
+  margin-top: var(--cn-gap);
+}
+main table thead {
+  background-color: var(--color-elevation-1);
+}
+main table td {
+  border: solid 1px var(--color-elevation-1);
+}
+.shrink {
+  flex-shrink: 1;
+}
+.items-start {
+  align-items: start;
+}
+.justify-start {
+  justify-content: start;
+}
+.justify-center {
+  justify-content: center;
+}
+
 /*
 body::-webkit-scrollbar {
   display: none;

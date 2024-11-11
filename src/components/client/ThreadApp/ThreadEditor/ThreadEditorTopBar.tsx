@@ -9,6 +9,7 @@
  * 4. Images-to-be-uploaded section, with delete buttons for each image
  */
 
+import FileUploadButton from '@client/SiteApp/assets/FileUploadButton';
 import { useStore } from '@nanostores/solid';
 import { $channels } from '@stores/ThreadsApp/topics';
 import { t } from '@utils/i18n';
@@ -19,12 +20,19 @@ interface ThreadEditorTopBarProps {
   setTitle: (title: string) => void;
   channel: string;
   setChannel: (channel: string) => void;
+  filesUploaded?: (files: File[]) => void;
 }
 
 export const ThreadEditorTopBar: Component<ThreadEditorTopBarProps> = (
   props,
 ) => {
   const channels = useStore($channels);
+
+  function filesUploaded(files: FileList) {
+    if (props.filesUploaded) {
+      props.filesUploaded(Array.from(files));
+    }
+  }
 
   return (
     <div>
@@ -53,6 +61,9 @@ export const ThreadEditorTopBar: Component<ThreadEditorTopBarProps> = (
             </For>
           </select>
         </label>
+        {props.filesUploaded && (
+          <FileUploadButton filesUploaded={filesUploaded} />
+        )}
       </div>
     </div>
   );

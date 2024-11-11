@@ -1,25 +1,19 @@
 import { WithLoader } from '@client/shared/WithLoader';
+import { addThread } from '@firebase/client/threads/addThread';
 import { useStore } from '@nanostores/solid';
-import { createThread } from '@schemas/ThreadSchema';
 import { fetchThread } from '@stores/ThreadsApp';
 import { updateThread } from '@stores/ThreadsApp/updateThread';
-import { $uid, markEntrySeen } from '@stores/sessionStore';
+import { $uid } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
-import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
-import { addDoc, collection } from 'firebase/firestore';
-import {
-  type Component,
-  For,
-  createEffect,
-  createSignal,
-  onMount,
-} from 'solid-js';
-import { db } from 'src/firebase/client';
+import { logDebug } from '@utils/logHelpers';
+import { type Component, createEffect, createSignal, onMount } from 'solid-js';
+import { ImagesPreviewSection } from './ImagesPreviewSection';
+import { TagsPreview } from './TagsPreviewSection';
 import { ThreadEditorTopBar } from './ThreadEditorTopBar';
 
-export const ThreadEditorApp: Component<{
+export const ThreadEditor: Component<{
   threadKey?: string;
   topic?: string;
 }> = (props) => {
@@ -31,6 +25,7 @@ export const ThreadEditorApp: Component<{
   const [title, setTitle] = createSignal<string>('');
   const [markdownContent, setMarkdownContent] = createSignal<string>('');
   const [suspend, setSuspend] = createSignal<boolean>(false);
+  const [files, setFiles] = createSignal<File[]>([]);
 
   createEffect(() => {
     setTags(extractTags(markdownContent()));
@@ -88,11 +83,7 @@ export const ThreadEditorApp: Component<{
     let key = props.threadKey;
     // If we dont have a threadKey, we are creating a new thread
     if (!props.threadKey) {
-      console.log('Creating new thread', data);
-
-      const thread = toFirestoreEntry(createThread(data));
-      key = (await addDoc(collection(db, 'stream'), thread)).id;
-      await markEntrySeen(key, Date.now());
+      key = await addThread(data, files(), uid());
     } else {
       console.log('Updating thread', props.threadKey, data);
       await updateThread(props.threadKey, data);
@@ -100,6 +91,16 @@ export const ThreadEditorApp: Component<{
 
     // Redirect to the thread
     window.location.href = `/threads/${key}`;
+  }
+
+  function filesUploaded(newFiles: File[]) {
+    setFiles([...files(), ...newFiles]);
+    logDebug(
+      'Files uploaded',
+      files()
+        .map((f) => f.name)
+        .join(', '),
+    );
   }
 
   return (
@@ -111,6 +112,7 @@ export const ThreadEditorApp: Component<{
             setTitle={setTitle}
             channel={topic()}
             setChannel={setTopic}
+            filesUploaded={filesUploaded}
           />
           <div class="grow">
             <cn-editor
@@ -119,14 +121,8 @@ export const ThreadEditorApp: Component<{
               placeholder={t('entries:thread.placeholders.content')}
             />
           </div>
-          {tags().length > 0 && (
-            <p class="cursive p-1 m-0">
-              <span>{t('entries:thread.tags')}: </span>
-              <For each={tags()}>
-                {(tag) => <span class="pill">{tag}</span>}
-              </For>
-            </p>
-          )}
+          {tags().length > 0 && <TagsPreview tags={tags()} />}
+          {files().length && <ImagesPreviewSection files={files()} />}
           <div class="toolbar">
             <button type="reset" class="text">
               {t('actions:cancel')}
