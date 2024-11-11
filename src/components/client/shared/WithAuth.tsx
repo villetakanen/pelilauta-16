@@ -17,7 +17,7 @@ export const WithAuth: Component<WithLoginProps> = (props) => {
         <p>{props.message || t('app:forbidden.message')}</p>
         <div class="toolbar">
           <a href="/login" class="button">
-            {t('app:forbidden.login')}
+            {t('actions:login')}
           </a>
         </div>
       </article>
