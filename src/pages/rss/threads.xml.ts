@@ -8,6 +8,15 @@ import type { APIContext } from 'astro';
 import { marked } from 'marked';
 
 export async function GET({ request }: APIContext) {
+  if (import.meta.env.SECRET_FEATURE_FLAG_RSS !== 'true') {
+    return new Response('Not Implemented', {
+      status: 501,
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+  }
+
   const url = new URL('/api/threads.json', request.url);
   const response = await fetch(url.toString());
   const allThreadsDocs = await response.json();

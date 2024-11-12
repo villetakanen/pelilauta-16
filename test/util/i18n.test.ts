@@ -12,9 +12,7 @@ test('Prints out app name in English', () => {
 });
 
 test('Prints out the app name in Finnish, if we ask for spanish', () => {
-  expect(t('app:title', {}, 'es')).toBe(
-    'Pelilauta 2 - Versio 16',
-  );
+  expect(t('app:title', {}, 'es')).toBe('Pelilauta 2 - Versio 16');
 });
 
 test('Prints out the key if not found', () => {

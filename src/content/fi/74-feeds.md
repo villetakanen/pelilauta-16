@@ -5,8 +5,7 @@ noun: 'veil-advance'
 ---
 
 Starting with 16.1.0 we'll provide RSS feeds for all posts, and for each channel. The feeds will be available at the following URLs:
-- https://pelilauta.social/rss/threads.xml
-- https://pelilauta.social/rss/channels/{channelId}.xml
+- https://pelilauta.social/rss/threads.xml (latest 11 public threads)
 
 The feeds will be updated every 15 minutes, and will include 11 of the most recent posts. 
 
