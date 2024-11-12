@@ -4,9 +4,17 @@ import { version } from 'package.json';
 ---
 
 <footer class="AppFooter content-columns border-t">
-  <section class="column-s flex flex-col align-center justify-center" style="opacity:0.5;">
-    <cn-icon noun="fox" xlarge style="color:var(--chroma-surface-50)"/>
-    <p class="caption text-center">{version}</p>
+  <section class="column-s flex flex-col align-center justify-center">
+    <cn-icon noun="fox" xlarge style="color:var(--chroma-surface-70)"/>
+    <p class="caption text-center mb-0">
+      {t('app:shortname')}<br>
+      <a href="/docs/fi/80-release-notes">{version}</a></p>
+
+      {import.meta.env.SECRET_FEATURE_FLAG_RSS === 'true' && (
+        <p class="caption text-center mt-0">
+          <a href="/rss/threads.xml">RSS</a>
+        </p>
+      )}
   </section>
   <section class="column-s">
     <h4>{t('app:footer.partners.title')}</h4>
