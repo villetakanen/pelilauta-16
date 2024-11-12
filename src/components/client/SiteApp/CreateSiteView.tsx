@@ -1,5 +1,5 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
-import { WithLogin } from '@client/shared/WithLogin';
+import { WithAuth } from '@client/shared/WithAuth';
 import { createSite } from '@firebase/client/site/createSite';
 import { useStore } from '@nanostores/solid';
 import { PAGES_COLLECTION_NAME } from '@schemas/PageSchema';
@@ -119,7 +119,7 @@ export const CreateSiteView: Component = () => {
 
   return (
     <div class="content-columns">
-      <WithLogin>
+      <WithAuth allow={!!uid()}>
         <article class="column-l">
           <h1>{t('site:create.title')}</h1>
           <form onsubmit={handleSubmit}>
@@ -180,7 +180,7 @@ export const CreateSiteView: Component = () => {
             </div>
           </form>
         </article>
-      </WithLogin>
+      </WithAuth>
     </div>
   );
 };

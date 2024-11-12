@@ -1,5 +1,3 @@
-import { logDebug } from '@utils/logHelpers';
-
 /**
  * Takes in markdown and rewrites tag markup to links pointing to
  * the tag's page
@@ -28,7 +26,6 @@ export const renderTags = (markdown: string, origin: string) => {
   for (const match of matches) {
     const fullMatch = match[0];
     const tagName = match[1];
-    logDebug('Found tag link', tagName);
 
     const newLink = `${origin}/tags/${encodeURIComponent(tagName.toLowerCase())}`;
     result = result.replaceAll(fullMatch, `[${fullMatch}](${newLink})`);

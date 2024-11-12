@@ -1,5 +1,5 @@
+import { WithAuth } from '@client/shared/WithAuth';
 import { WithLoader } from '@client/shared/WithLoader';
-import { WithLogin } from '@client/shared/WithLogin';
 import { SiteCard } from '@client/sites/SiteCard';
 import { db } from '@firebase/client';
 import { useStore } from '@nanostores/solid';
@@ -46,7 +46,7 @@ export const SitesList: Component = () => {
   const loading = () => sitesData.loading;
 
   return (
-    <WithLogin>
+    <WithAuth allow={!!uid()}>
       <div class="content-columns">
         <article class="column-l">
           <h4>{t('library:sites.title')}</h4>
@@ -59,6 +59,6 @@ export const SitesList: Component = () => {
           </For>
         </div>
       </WithLoader>
-    </WithLogin>
+    </WithAuth>
   );
 };
