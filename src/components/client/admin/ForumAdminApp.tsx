@@ -8,7 +8,6 @@ import { useStore } from '@nanostores/solid';
 import { type Channel, parseChannel } from '@schemas/ChannelSchema';
 import { isAdmin } from '@stores/metaStore/metaStore';
 import { $uid } from '@stores/sessionStore';
-import { logDebug } from '@utils/logHelpers';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { type Component, For, createSignal, onMount } from 'solid-js';
 import { ForumAdminChannelItem } from './ForumAdminChannelItem';
@@ -34,7 +33,6 @@ export const ForumAdminApp: Component = () => {
     onSnapshot(channelsRef, (doc) => {
       if (doc.exists()) {
         const data = doc.data();
-        logDebug('Channels snapshot', { data });
         if (data) {
           setChannels(data.topics.map(parseChannel));
         }
@@ -43,7 +41,6 @@ export const ForumAdminApp: Component = () => {
   });
 
   const handleChannelUpdate = (channel: Channel) => {
-    logDebug('Updating channel', channel);
     // Update the channel in the database
 
     // get a local copy of the channels
