@@ -16,7 +16,7 @@ export const fi: Locale = {
       title: 'Hups!',
       message: 'Tämä sivu vaatii kirjautumisen pelilaudalle.',
     },
-    title: 'Pelilauta 2 - Versio 16 - Alfajulkaisu',
+    title: 'Pelilauta 2 - Versio 16',
     shortname: 'Pelilauta 2',
     mekanismi: 'Mekanismi',
     meta: {
