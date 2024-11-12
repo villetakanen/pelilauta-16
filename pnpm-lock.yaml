@@ -5746,6 +5746,11 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
+  '@astrojs/rss@4.0.9':
+    dependencies:
+      fast-xml-parser: 4.5.0
+      kleur: 4.1.5
+
   '@astrojs/solid-js@4.4.2(solid-js@1.9.3)(vite@5.4.11(@types/node@22.9.0)(terser@5.34.1))':
     dependencies:
       solid-js: 1.9.3
