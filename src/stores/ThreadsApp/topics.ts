@@ -49,7 +49,6 @@ async function fetchTopicsFromDB() {
             flowTime: toDate(entry.flowTime).getTime(),
           })),
         );
-        // logDebug('fetchTopicsFromDB', 'Fetched topics from db', topics);
         // force category 'pelilauta' if empty
         for (const topic of topics) {
           if (!topic.category) {

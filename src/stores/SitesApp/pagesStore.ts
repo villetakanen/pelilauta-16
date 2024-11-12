@@ -83,49 +83,6 @@ export function subscribePage(key: string): Atom<Page | null> {
   return pageStore;
 }
 
-/*onSet($site, (site) => {
-  subscibeToPages(site.newValue.key);
-});
-
-let unsubscribePages: () => void;
-
-async function subscibeToPages(siteKey: string) {
-  if (!siteKey) {
-    logWarn('subscibeToPages', 'siteKey is empty');
-    return;
-  }
-  if ($loadingState.get() !== 'initial') {
-    logWarn('subscibeToPages', 'trying to reinitialize pages store');
-    return;
-  }
-  $loadingState.set('loading');
-
-  logDebug('subscibeToPages', siteKey);
-  unsubscribePages?.();
-  $pages.set([]);
-
-  const sitePagesRef = collection(
-    db,
-    SITES_COLLECTION_NAME,
-    siteKey,
-    PAGES_COLLECTION_NAME,
-  );
-  onSnapshot(sitePagesRef, (snapshot) => {
-    for (const change of snapshot.docChanges()) {
-      if (change.type === 'removed') removePage(change.doc.id);
-      else {
-        const page = parsePage(
-          toClientEntry(change.doc.data()),
-          change.doc.id,
-          siteKey,
-        );
-        patchToPages(page);
-      }
-    }
-  });
-  $loadingState.set('active');
-} */
-
 function removePage(key: string) {
   const pages = $pages.get().filter((page) => page.key !== key);
   $pages.set([...pages]);

@@ -68,7 +68,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
 
   async function onaccept() {
     const key = userKey();
-    logDebug(
+    logWarn(
       'User',
       key,
       'accepted the EULA, storing to db, and refreshing local state',
