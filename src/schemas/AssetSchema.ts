@@ -16,6 +16,17 @@ export const ASSET_LICENSES = z
   ])
   .default('0');
 
+export const ASSET_LICENSES_KEYS = [
+  '0',
+  'cc-by',
+  'cc-by-sa',
+  'cc-by-nc',
+  'cc-by-nc-sa',
+  'cc0',
+  'public-domain',
+  'OGL',
+] as const;
+
 export const AssetSchema = z.object({
   url: z.string(),
   description: z.string().default(''),

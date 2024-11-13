@@ -42,6 +42,15 @@ export const AssetRowItem: Component<AssetRowItemProps> = (props) => {
         </a>
       </p>
 
+      {showActions() && (
+        <a
+          href={`/sites/${props.site?.key}/assets/${props.asset.name}`}
+          class="button"
+        >
+          <cn-icon noun="edit" />
+        </a>
+      )}
+
       {showActions() && props.onDelete && (
         <button onClick={onDelete} type="button">
           <cn-icon noun="delete" />
