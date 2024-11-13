@@ -1,7 +1,4 @@
-import {
-  type Asset,
-  parseAsset,
-} from '@schemas/AssetSchema';
+import { type Asset, parseAsset } from '@schemas/AssetSchema';
 import { SITES_COLLECTION_NAME, type Site } from '@schemas/SiteSchema';
 import { logDebug } from '@utils/logHelpers';
 import { doc, updateDoc } from 'firebase/firestore';
