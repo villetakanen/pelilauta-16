@@ -25,7 +25,7 @@ export const ASSET_LICENSES_KEYS = [
   'cc0',
   'public-domain',
   'OGL',
-] as const;
+];
 
 export const AssetSchema = z.object({
   url: z.string(),

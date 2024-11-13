@@ -1,9 +1,10 @@
+import { updateSiteAsset } from '@firebase/client/site/updateSiteAsset';
 import type { Asset } from '@schemas/AssetSchema';
 import type { Site } from '@schemas/SiteSchema';
+import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 import { type Component, createSignal } from 'solid-js';
-import { createStore } from 'solid-js/store';
 import { LicenseSelect } from './LicenseSelect';
 
 interface AssetEdiorFormProps {
@@ -18,12 +19,20 @@ const AssetEditorForm: Component<AssetEdiorFormProps> = (props) => {
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    // TODO: Implement Firebase submit logic
-    logDebug('Form submitted', {
-      name: name(),
-      description: description(),
-      license: license(),
-    });
+
+    try {
+      await updateSiteAsset(props.site, {
+        storagePath: props.asset.storagePath,
+        name: name(),
+        description: description(),
+        license: license(),
+      });
+
+      window.location.href = `/sites/${props.site.key}/assets`;
+    } catch (e) {
+      logError('Failed to update asset', e);
+      pushSnack(t('site:assets.failed_to_update_asset'));
+    }
   };
 
   const hasFormChanged = () =>
