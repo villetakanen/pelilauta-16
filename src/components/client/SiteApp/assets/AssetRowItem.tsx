@@ -29,6 +29,11 @@ export const AssetRowItem: Component<AssetRowItemProps> = (props) => {
     }
   }
 
+  const hasLicense = () => props.asset.license !== '0';
+  const license = hasLicense()
+    ? `${t(`meta:licenses.${props.asset.license}`)} -`
+    : '';
+
   return (
     <div class="flex flex-row items-center">
       {isImage && (
@@ -40,6 +45,10 @@ export const AssetRowItem: Component<AssetRowItemProps> = (props) => {
         <a href={props.asset.url} target="_blank" rel="noopener noreferrer">
           {props.asset.name}
         </a>
+        <br />
+        <span class="small">
+          {hasLicense() && license} {props.asset.mimetype}
+        </span>
       </p>
 
       {showActions() && (

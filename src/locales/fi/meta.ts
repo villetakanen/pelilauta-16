@@ -10,4 +10,14 @@ export const meta: Locale = {
     mekanismi: 'Mekanismi',
     pbta: 'PBTA',
   },
+  licenses: {
+    none: '',
+    'cc-by': 'Creative Commons Attribution',
+    'cc-by-sa': 'Creative Commons Attribution-ShareAlike',
+    'cc-by-nc': 'Creative Commons Attribution-NonCommercial',
+    'cc-by-nc-sa': 'Creative Commons Attribution-NonCommercial-ShareAlike',
+    cc0: 'CC0',
+    'public-domain': 'Public Domain',
+    OGL: 'Open Game License (OGL)',
+  },
 };
