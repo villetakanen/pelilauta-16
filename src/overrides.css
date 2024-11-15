@@ -339,3 +339,10 @@ main table td {
 .justify-center {
   justify-content: center;
 }
+cn-dice {
+  z-index: 1;
+}
+li cn-dice,
+p cn-dice {
+  display: inline-flex;
+}

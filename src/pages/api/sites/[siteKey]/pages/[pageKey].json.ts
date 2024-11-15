@@ -4,6 +4,7 @@ import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { rewriteWikiLinks } from '@utils/server/contentHelpers';
 import { renderAssetMarkup } from '@utils/server/renderAssetMarkup';
+import { renderDice } from '@utils/server/renderDice';
 import { renderTags } from '@utils/server/renderTags';
 import type { APIContext } from 'astro';
 import { marked } from 'marked';
@@ -54,10 +55,8 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
         url.origin,
       );
 
-    page.htmlContent = renderAssetMarkup(
-      page.htmlContent || '',
-      site,
-      url.origin,
+    page.htmlContent = renderDice(
+      renderAssetMarkup(page.htmlContent || '', site, url.origin),
     );
 
     return new Response(JSON.stringify(page), {
