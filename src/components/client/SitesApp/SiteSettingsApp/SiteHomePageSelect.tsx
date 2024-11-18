@@ -1,19 +1,14 @@
-import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
 import { updateSite } from '@stores/SitesApp';
-import { $pages } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
-import { type Component, For, createMemo } from 'solid-js';
+import { type Component, For } from 'solid-js';
 
 export const SiteHomePageSelect: Component<{ site: Site }> = (props) => {
-  const pages = useStore($pages);
-
-  const homePageOptions = createMemo(() => {
-    return pages().map((page) => ({
+  const homePageOptions = () =>
+    props.site.pageRefs?.map((page) => ({
       value: page.key,
       title: page.name,
     }));
-  });
 
   return (
     <label>
@@ -25,7 +20,9 @@ export const SiteHomePageSelect: Component<{ site: Site }> = (props) => {
       >
         <option value="">{t('entries:default')}</option>
         <For each={homePageOptions()}>
-          {(option) => <option value={option.value}>{option.title}</option>}
+          {(option) => <option 
+            selected={option.value === props.site.homepage}
+            value={option.value}>{option.title}</option>}
         </For>
       </select>
     </label>

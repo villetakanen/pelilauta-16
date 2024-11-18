@@ -29,7 +29,7 @@ import { $site, updateSite } from '.';
 
 // export const $loadingState = atom<'initial' | 'loading' | 'active'>('initial');
 
-export const $pages = persistentAtom<Page[]>('pages', [], {
+const $pages = persistentAtom<Page[]>('pages', [], {
   encode: (value) => JSON.stringify(value),
   decode: (data) => {
     return JSON.parse(data).map((entry: Record<string, unknown>) => {
