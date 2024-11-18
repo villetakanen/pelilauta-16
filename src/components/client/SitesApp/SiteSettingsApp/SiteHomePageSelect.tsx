@@ -20,9 +20,14 @@ export const SiteHomePageSelect: Component<{ site: Site }> = (props) => {
       >
         <option value="">{t('entries:default')}</option>
         <For each={homePageOptions()}>
-          {(option) => <option 
-            selected={option.value === props.site.homepage}
-            value={option.value}>{option.title}</option>}
+          {(option) => (
+            <option
+              selected={option.value === props.site.homepage}
+              value={option.value}
+            >
+              {option.title}
+            </option>
+          )}
         </For>
       </select>
     </label>
