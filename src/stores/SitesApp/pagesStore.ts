@@ -17,19 +17,13 @@ import {
   collection,
   doc,
   getDoc,
-  onSnapshot,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { type Atom, atom } from 'nanostores';
-// import { atom, onSet } from 'nanostores';
 import { db } from 'src/firebase/client';
-import { $site, updateSite } from '.';
-// import { $site } from '.';
+import { updateSite } from '.';
 
-// export const $loadingState = atom<'initial' | 'loading' | 'active'>('initial');
-
-export const $pages = persistentAtom<Page[]>('pages', [], {
+const $pages = persistentAtom<Page[]>('pages', [], {
   encode: (value) => JSON.stringify(value),
   decode: (data) => {
     return JSON.parse(data).map((entry: Record<string, unknown>) => {
@@ -41,52 +35,6 @@ export const $pages = persistentAtom<Page[]>('pages', [], {
     });
   },
 });
-
-let unsubscribePage: () => void;
-const pageStore = atom<Page | null>(null);
-
-/**
- * Subscribe to a page, this will load the page from the local store to a nanostore
- *
- * After loading the page, it will subscribe to the page in the Firestore
- */
-export function subscribePage(key: string): Atom<Page | null> {
-  if (pageStore.get()?.key === key) {
-    return pageStore;
-  }
-
-  unsubscribePage?.();
-
-  // add the page from the local store
-  const page = $pages.get().find((page) => page.key === key);
-  page ? pageStore.set({ ...page }) : pageStore.set(null);
-
-  // subscribe to the page in Firestore, the updates are async!
-  unsubscribePage = onSnapshot(
-    doc(db, SITES_COLLECTION_NAME, $site.get().key, PAGES_COLLECTION_NAME, key),
-    (snapshot) => {
-      if (snapshot.exists()) {
-        const page = parsePage(
-          toClientEntry(snapshot.data()),
-          snapshot.id,
-          $site.get().key,
-        );
-        patchToPages(page);
-        pageStore.set(page);
-      } else {
-        removePage(key);
-        pageStore.set(null);
-      }
-    },
-  );
-
-  return pageStore;
-}
-
-function removePage(key: string) {
-  const pages = $pages.get().filter((page) => page.key !== key);
-  $pages.set([...pages]);
-}
 
 function patchToPages(page: Page) {
   const pages = [...$pages.get()];

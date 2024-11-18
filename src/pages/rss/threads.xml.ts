@@ -28,7 +28,7 @@ export async function GET({ request }: APIContext) {
   const items: RSSFeedItem[] = await Promise.all(
     allThreads.map(async (thread) => ({
       title: thread.title,
-      link: `/thread/${thread.key}`,
+      link: `/threads/${thread.key}`,
       description: createSnippet(thread.markdownContent || '', 500).split(
         '\n',
       )[0],
