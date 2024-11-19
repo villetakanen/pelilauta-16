@@ -1,7 +1,8 @@
 ---
 import { SocialApp } from '@client/SocialApp/SocialApp';
 import Page from '@layouts/Page.astro';
+import { t } from '@utils/i18n';
 ---
-<Page>
+<Page title={t('social:inbox.title')}>
   <SocialApp client:only="solid-js" />
 </Page>

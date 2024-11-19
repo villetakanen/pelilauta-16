@@ -9,17 +9,19 @@ import BaseTail from '../components/server/BaseTail.astro';
 
 type Props = {
   title?: string;
+  shortTitle?: string;
   description?: string;
   image?: string;
+  noSharing?: boolean;
 };
 
-const { title, description, image } = Astro.props;
+const { title, description, image, shortTitle, noSharing } = Astro.props;
 ---
 
 <html lang="fi">
-  <BaseHead title={title} description={description} image={image}/>
+  <BaseHead title={title} description={description} image={image} />
   <body>
-    <AppBar title={title}>
+    <AppBar title={title} shortTitle={shortTitle} noSharing={noSharing}>
       <slot name="app-bar" />
     </AppBar>
     <AppRail />

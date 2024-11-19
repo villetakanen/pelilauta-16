@@ -3,17 +3,20 @@ import { t } from '@utils/i18n';
 
 interface Props {
   title?: string;
+  shortTitle?: string;
   modal?: boolean;
   sticky?: boolean;
   noun?: string;
+  noSharing?: boolean;
 }
 
-const { title, modal, noun, sticky } = Astro.props;
+const { title, modal, noun, sticky, shortTitle, noSharing } = Astro.props;
 const barTitle = title || t('app:meta.title');
 const mode = modal ? 'modal' : sticky ? 'sticky' : undefined;
+const shareButton = !noSharing;
 ---
 
-<cn-app-bar title={barTitle} mode={mode} noun={noun}>
+<cn-app-bar title={barTitle} shortTitle={shortTitle} mode={mode} noun={noun}>
   <slot />
-  <cn-share-button></cn-share-button>
+  {shareButton && <cn-share-button></cn-share-button>}
 </cn-app-bar>
