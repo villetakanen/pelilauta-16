@@ -27,8 +27,9 @@ if (!channeldata) {
 
 const channel = parseChannel(channeldata);
 const title = `${t('app:shortname')} - ${channel.name}`;
+const shortTitle = channel.name;
 ---
-<PageWithTray title={title} description={channel.description}>
+<PageWithTray title={title} shortTitle={shortTitle} description={channel.description}>
   <ChannelApp channel={channel} startAt={page}/>
   <ForumTray slot="app-tray" client:only="solid-js"/>
   <ForumFabs channel={channel.slug} client:only="solid-js"/>

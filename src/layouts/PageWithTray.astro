@@ -12,15 +12,16 @@ type Props = {
   description?: string;
   image?: string;
   noun?: string;
+  shortTitle?: string;
 };
 
-const { title, description, image, noun } = Astro.props;
+const { title, description, image, noun, shortTitle } = Astro.props;
 ---
 
 <html lang="en">
-  <BaseHead title={title} description={description} image={image}/>
+  <BaseHead title={title} description={description} image={image} />
   <body>
-    <AppBar title={title} noun={noun}>
+    <AppBar title={title} noun={noun} shortTitle={shortTitle}>
       <slot name="app-bar" />
     </AppBar>
 	  <AppRail title={title}/>

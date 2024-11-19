@@ -4,8 +4,9 @@ import ModalPage from '@layouts/ModalPage.astro';
 import { t } from '@utils/i18n';
 
 const title = `${t('app:shortname')} – ${t('site:create.title')}`;
+const shortTitle = t('site:create.title');
 ---
 
-<ModalPage title={title}>
+<ModalPage title={title} shortTitle={shortTitle}>
   <CreateSiteView client:only="solid-js" />
 </ModalPage>
