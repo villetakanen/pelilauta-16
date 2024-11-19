@@ -6,10 +6,11 @@ import { t } from '@utils/i18n';
 import Page from 'src/layouts/Page.astro';
 
 const title = `${t('app:shortname')} – ${t('library:title')}`;
+const shortTitle = t('library:title');
 const description = t('library:description');
 ---
 
-<Page title={title} description={description}>
+<Page title={title} description={description} shortTitle={shortTitle}>
   <SitesList client:only="solid-js" />
   <SiteFabs slot="fab-tray" client:only="solid-js"/>
 </Page>
