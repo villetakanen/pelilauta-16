@@ -12,7 +12,7 @@ Astro.response.headers.set(
   's-maxage=30, stale-while-revalidate',
 );
 ---
-<Page title={import.meta.env.PUBLIC_APP_NAME}>
+<Page title={import.meta.env.PUBLIC_APP_NAME} noSharing>
     <div class="content-columns">
       <TopThreadsStream/>
       <SyndicateStream />
