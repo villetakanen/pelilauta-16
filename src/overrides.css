@@ -351,3 +351,13 @@ p cn-dice {
     background: var(--chroma-surface-10);
   }
 }
+
+cn-dialog li {
+  margin-left: var(--cn-gap);
+}
+cn-dialog li::before {
+  content: "•";
+  margin-left: calc(-1 * var(--cn-gap));
+  margin-right: var(--cn-gap);
+  position: absolute;
+}

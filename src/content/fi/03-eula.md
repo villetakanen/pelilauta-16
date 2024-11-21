@@ -2,15 +2,14 @@
 name: 'Käyttöehdot'
 noun: 'fox'
 ---
+#### Pelilaudan käyttöehdot
 
-Rekisteröityminen Pellaudalle luo kullekin käyttäjälle tilin ja profiilin. Tilitiedot ovat näkyvissä vain käyttäjälle itselleen ja Pelilaudan hallinnolle. Profiilitiedot ja kaikki viestit ja sivut, jotka julkaiset sovelluksessa, ovat näkyvissä sovelluksen käyttäjille.
+**Rekisteröityessäsi**
 
-Käyttäjänä vastaat itse kaikista julkaisemistasi viesteistä ja sivuista. Sovelluksen hallinto, tai erillisillä moderaattorioikeuksilla varustetut käyttäjät voivat poistaa viestejä ja sivuja, jotka rikkovat lakia, asetuksia tai sovelluksen ohjeistusta ([Code of Conduct](/docs/fi/coc)).
+- Saat tilin ja profiilin. Tilisi tiedot ovat vain sinun ja hallinnon nähtävillä. Profiilisi ja julkaisusi ovat kaikkien käyttäjien nähtävillä.
+- Olet vastuussa julkaisuistasi. Hallinto voi poistaa [sääntöjen](/docs/fi/coc). tai lain vastaista sisältöä.
+- Voit poistaa tuottamasi sisältösi itse. Jos poistat tilisi, mutta et sisältöäsi, se merkitään anonyymiksi.
 
-Voit poistaa kaiken luomasi sisällön soveluksen avulla kirjautumistietoja lukuunottamatta. Kirjautumistietojen poistaminen tapahtuu hallinnon toimesta 1-2 viikkoa siitä, kun poistat tilisi. Sovelluksen tallentama tieto on kuvattu tietokannan mallintavassa GitHub -repositoriossa avoimena koodina.
-
-*Huomaathan, että jos poistat tilisi ennen kuin olet poistanut kaiken luomasi sisällön, sisältö jää sovellukseen näkyviin, eikä sen kirjoittajaa tai luojaa voida enää tunnistaa.*
-
-Kaikki yllä mainitussa kuvauksessa kuvatut tiedot tallennetaan Googlen Firebase -pilvipalvelun EU:ssa sijaitsevaan kantaan. Jotkin Firebasen toiminnot, kuten kuvien ja sivujen välimuisti saattavat käyttää Googlen tai kolmannen osapuolen palveluita EU:n ulkopuolella.
-
-Sovellus tarjoaa erilaisia syötteitä (RSS, ActivityPub), joiden kautta kolmas osapuoli voi lukea tietoja. Sovelluksen hallinnolla ei ole mitään kykyä vaikuttaa näitä syötteitä lukevien tahojen toimintaan. Sovelluksen hallinto ei siten voi vastata kolmansien osapuolien toiminnasta.
+Tietojen tallennus:
+* Tietosi tallennetaan salattuina Googlen pilvipalveluun EU:ssa. Tallennettavat tiedot on kuvattu [avoimena koodina GitHubissa](https://github.com/villetakanen/pelilauta-16/tree/main/src/schemas).
+* Sovellus tarjoaa syötteitä (RSS, ActivityPub), joiden kautta kolmannet osapuolet voivat lukea tietoja.

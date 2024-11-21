@@ -127,7 +127,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
         open={openDialog()}
       >
         {props.children}
-        <section class="elevation-1 border-radius p-1 flex flex-row">
+        <section class="elevation-1 border-radius p-1 flex flex-row mt-2">
           <cn-avatar nick={nickname()} src={avatarSrc()} />
           <div>
             <div class="field-grid">
