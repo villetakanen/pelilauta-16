@@ -395,6 +395,6 @@ p cn-dice {
     );
   }
   body:has(#cn-background-poster) nav.rail {
-    background: var(--chroma-surface-10)
+    background: var(--chroma-surface-10);
   }
 }

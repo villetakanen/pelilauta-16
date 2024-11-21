@@ -1,4 +1,3 @@
-import { PageBackgroundPoster } from '@client/PageBackgroundPoster';
 import { WithAuth } from '@client/shared/WithAuth';
 import { WithLoader } from '@client/shared/WithLoader';
 import { db } from '@firebase/client';
@@ -38,9 +37,6 @@ export const SiteSettingsApp: Component<{ site: string }> = (props) => {
     <WithLoader loading={!site()}>
       <WithAuth allow={allow()}>
         <div class="content-columns">
-          {!!site()?.backgroundURL && (
-            <PageBackgroundPoster url={`${site()?.backgroundURL}`} />
-          )}
           <SiteCard {...(site() as Site)} />
           <SiteMetaDataSection site={site() as Site} />
           <ThemingSection site={site() as Site} />
