@@ -7,7 +7,7 @@ interface Props {
 }
 const { site } = Astro.props as Props;
 ---
-<article class="column-s">
+<article class="column-s surface p-1">
   <h3 class="downscaled">{site.name}</h3>
   {site.posterURL && (
     <img src={site.posterURL} alt={site.name} class="poster" />
