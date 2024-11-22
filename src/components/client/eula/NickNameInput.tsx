@@ -1,5 +1,4 @@
-import { createSignal, onMount, type Component } from "solid-js";
-
+import { type Component, createSignal, onMount } from 'solid-js';
 
 interface NickNameInputProps {
   nickname: string;
@@ -9,12 +8,12 @@ interface NickNameInputProps {
 
 /**
  * A Solid js wrapper for the nickname input field.
- * 
+ *
  * On blue checksif the nickname is already taken and displays an error
  * message if it is.
  */
 export const NickNameInput: Component<NickNameInputProps> = (props) => {
-  const [ exists, setExists ] = createSignal(false);
+  const [exists, setExists] = createSignal(false);
 
   onMount(() => {
     // This component is mounted with a auto-generated nickname, which
@@ -23,7 +22,9 @@ export const NickNameInput: Component<NickNameInputProps> = (props) => {
   });
 
   async function checkForDuplicate(nickname: string) {
-    const { getProfileByNick } = await import('@firebase/client/profile/getPofileByNick');
+    const { getProfileByNick } = await import(
+      '@firebase/client/profile/getPofileByNick'
+    );
 
     const profile = await getProfileByNick(nickname);
     const hasDuplicate = !!profile;
@@ -47,6 +48,11 @@ export const NickNameInput: Component<NickNameInputProps> = (props) => {
   }
 
   return (
-    <input type="text" value={props.nickname} onBlur={onBlur} data-error={exists}/>
+    <input
+      type="text"
+      value={props.nickname}
+      onBlur={onBlur}
+      data-error={exists}
+    />
   );
-}
+};

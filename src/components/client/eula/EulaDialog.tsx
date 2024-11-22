@@ -20,7 +20,7 @@ type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
 /**
  * This is a solid-js component, that displays a dialog, when there is a
  * logged in user, that has not accepted the EULA yet.
- * 
+ *
  * Depending on the users profile status, it will either allow accepting
  * the EULA for an existing profile, or additionally create a new profile
  * for the user.
@@ -108,9 +108,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
   return (
     <dialog ref={dialog}>
       <h2>{t('login:eula.title')}</h2>
-      <section class="downscaled">
-        {props.children}
-      </section>
+      <section class="downscaled">{props.children}</section>
       {legacyProdile()?.nick ? null : (
         <ProfileCreationCard nickname={nickname()} setNickname={setNickname} />
       )}

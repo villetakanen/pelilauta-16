@@ -1,7 +1,7 @@
-import { t } from "@utils/i18n";
-import type { Component } from "solid-js";
-import { NickNameInput } from "./NickNameInput";
-import { toFid } from "@utils/toFid";
+import { t } from '@utils/i18n';
+import { toFid } from '@utils/toFid';
+import type { Component } from 'solid-js';
+import { NickNameInput } from './NickNameInput';
 
 interface ProfileCreationCardProps {
   nickname: string;
@@ -12,9 +12,11 @@ interface ProfileCreationCardProps {
 /**
  * A Solid-js wrapper for the profile creation card, containing field
  * for the nickname, and preview of the profile data to be created based
- * on the SSO data. 
+ * on the SSO data.
  */
-export const ProfileCreationCard: Component<ProfileCreationCardProps> = (props) => {
+export const ProfileCreationCard: Component<ProfileCreationCardProps> = (
+  props,
+) => {
   return (
     <section class="border border-radius p-1 flex flex-row mt-2">
       <cn-avatar nick={props.nickname} src={props.avararUrl} />
@@ -34,4 +36,4 @@ export const ProfileCreationCard: Component<ProfileCreationCardProps> = (props) 
       </div>
     </section>
   );
-}
+};
