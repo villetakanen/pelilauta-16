@@ -1,4 +1,5 @@
 import { useStore } from '@nanostores/solid';
+import { $account } from '@stores/sessionStore/account';
 import type { Component } from 'solid-js';
 import {
   $active,
@@ -13,6 +14,7 @@ export const DebugSection: Component = () => {
   const uid = useStore($uid);
   const eulaAccepted = useStore($requiresEula);
   const anonymous = useStore($isAnonymous);
+  const account = useStore($account);
 
   const subsciption = useStore($subscriber);
 
@@ -22,6 +24,7 @@ export const DebugSection: Component = () => {
       <section class="debug border-radius">
         <h4>Account</h4>
         <p>uid: {uid()}</p>
+        <pre>{JSON.stringify(account(), null, 2)}</pre>
       </section>
 
       <section class="debug border-radius">

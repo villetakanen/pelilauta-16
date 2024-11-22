@@ -11,6 +11,7 @@ import {
   parseProfile,
 } from 'src/schemas/ProfileSchema';
 import { initSubscriberStore } from './subscriber';
+import { $requiresEula, handleLogin, handleLogout } from './account';
 
 // The active user's UID - stored in localStorage for session persistence
 export const $uid = persistentAtom<string>('session-uid', '');
@@ -36,14 +37,7 @@ export const $isAnonymous = computed([$active, $uid], (active, uid) => {
   return !uid;
 });
 
-export const $requiresEula = persistentAtom<boolean>(
-  'session_requiresEula',
-  false,
-  {
-    encode: JSON.stringify,
-    decode: JSON.parse,
-  },
-);
+export { $requiresEula }
 
 const defaultProfile: Profile = {
   key: '',
@@ -80,6 +74,8 @@ onMount($uid, () => {
 async function handleFirebaseAuthChange(user: User | null) {
   // Lets see if Firebase has a user for us
   if (user) {
+    // We need to subscribe to the account data
+    handleLogin(user.uid);
     // Lets see if we have an active session, with same UID, if so, we are done
     if ($loadingState.get() === 'active' && user.uid === $uid.get()) {
       logDebug(
@@ -92,6 +88,8 @@ async function handleFirebaseAuthChange(user: User | null) {
       await login(user.uid);
     }
   } else {
+    // User is logged out, lets clear the account store
+    handleLogout();
     await logout();
   }
 }
@@ -123,7 +121,7 @@ async function clear() {
   window?.localStorage.clear();
   $profile.set({ ...defaultProfile });
   $uid.set('');
-  $requiresEula.set(false);
+  handleLogout();
 }
 
 export async function logout() {
@@ -147,7 +145,6 @@ async function fetchAccount(uid: string) {
   const data = accountDoc.data();
   $theme.set(data?.theme || 'dark');
   $locale.set(data?.locale || 'fi');
-  $requiresEula.set(!data?.eulaAccepted);
 }
 
 async function fetchProfile(uid: string) {
