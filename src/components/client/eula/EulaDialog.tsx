@@ -65,7 +65,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
     console.log('User declined the EULA, logging out');
     // When the user cancels the dialog, sign out
     await logout();
-    (document.getElementById('eulaDialog') as CnDialog).close();
+    dialog?.close();
   }
 
   async function onaccept() {
