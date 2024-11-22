@@ -18,22 +18,21 @@ export const ProfileCreationCard: Component<ProfileCreationCardProps> = (
   props,
 ) => {
   return (
-    <section class="border border-radius p-1 flex flex-row mt-2">
-      <cn-avatar nick={props.nickname} src={props.avararUrl} />
-      <div>
-        <fieldset>
-          <legend>{t('entries:profile.meta.title')}</legend>
+    <section class="border border-radius p-2 mt-2">
+      <div class="flex flex-no-wrap">
+        <cn-avatar nick={props.nickname} src={props.avararUrl} />
+        <fieldset class="grow">
           <NickNameInput
             nickname={props.nickname}
             setNickname={props.setNickname}
           />
           <p>
-            <strong>{t('entries:profile.username')}:</strong>
+            <strong>{t('entries:profile.username')}: </strong>
             <span>{toFid(props.nickname)} </span>
           </p>
         </fieldset>
-        <p class="text-caption">{t('login:eula.profileInfo')}</p>
       </div>
+      <p class="text-caption">{t('login:eula.profileInfo')}</p>
     </section>
   );
 };

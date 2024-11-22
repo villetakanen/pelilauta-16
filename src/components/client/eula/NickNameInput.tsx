@@ -1,8 +1,10 @@
+import { t } from '@utils/i18n';
 import { type Component, createSignal, onMount } from 'solid-js';
 
 interface NickNameInputProps {
   nickname: string;
   setNickname: (nickname: string) => void;
+  setInvalid?: (invalid: boolean) => void;
   disabled?: boolean;
 }
 
@@ -30,6 +32,7 @@ export const NickNameInput: Component<NickNameInputProps> = (props) => {
     const hasDuplicate = !!profile;
 
     setExists(hasDuplicate);
+    props.setInvalid?.(hasDuplicate);
     return hasDuplicate;
   }
 
@@ -43,16 +46,23 @@ export const NickNameInput: Component<NickNameInputProps> = (props) => {
 
     const doSet = await checkForDuplicate(nickname);
     if (!doSet) {
+      props.setInvalid?.(false);
       props.setNickname(nickname);
     }
   }
 
   return (
-    <input
-      type="text"
-      value={props.nickname}
-      onBlur={onBlur}
-      data-error={exists}
-    />
+    <div>
+      <label>
+        {t('entries:profile.nick')}
+        <input
+          type="text"
+          value={props.nickname}
+          onBlur={onBlur}
+          data-error={exists}
+        />
+      </label>
+      {exists() && <p class="alert p-0 m-0">{t('login:eula.nickTaken')}</p>}
+    </div>
   );
 };
