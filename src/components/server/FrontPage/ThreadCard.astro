@@ -1,0 +1,61 @@
+---
+import { CardSubscriber } from '@client/FrontPage/CardSubscriber';
+import { ProfileLink } from '@client/shared/ProfileLink';
+import { ThreadLikeButton } from '@client/threads/ThreadLikeButton';
+import type { Thread } from '@schemas/ThreadSchema';
+import { MarkdownSnippetSection } from '@shared/MarkdownSnippetSection';
+import { topicToNoun } from '@stores/ThreadsApp/topics';
+import { toDisplayString } from '@utils/contentHelpers';
+
+export interface Props {
+  thread: Thread;
+}
+
+const { thread } = Astro.props;
+
+const poster = thread.poster
+  ? thread.poster
+  : thread.images && thread.images.length > 0
+    ? thread.images[0].url
+    : undefined;
+---
+
+<div style="flex-basis: auto; width: 100%">
+  <cn-card 
+    href={`/threads/${thread.key}`} 
+    title={thread.title} 
+    cover={poster} 
+    elevation="1" 
+    noun={topicToNoun(thread.channel)}
+    id={`thread-card-${thread.key}`} 
+  >
+    <div class="downscaled">
+      <MarkdownSnippetSection content={`${thread.markdownContent}`} client:only="solid-js"/>
+    </div>
+
+    <CardSubscriber thread={thread} client:only="solid-js"/>
+
+    <div slot="actions" class="toolbar items-center">
+      <div class="grow downscaled">
+        <p class="m-0 px-1">
+          <ProfileLink uid={thread.owners[0]} client:load /> 
+          <br />
+          {toDisplayString(thread.flowTime)}
+        </p>
+      </div>
+
+      <ThreadLikeButton thread={thread} client:only="solid-js"/>
+
+      <div>
+        <a href={`/threads/${thread.key}#discussion`} class="decoration-none">
+          <div class="flex align-center">
+            <cn-icon noun="send" small />
+            <span class="text-caption decoration-none">
+              {thread.replyCount || 0}
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </cn-card>
+</div>
