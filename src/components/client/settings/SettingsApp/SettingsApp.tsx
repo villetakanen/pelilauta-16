@@ -16,7 +16,7 @@ export const SettingsApp: Component = () => {
     <WithAuth allow={!!uid()}>
       <div class="content-columns">
         <article>
-          <ProfileCard profile={profile()} />
+          <ProfileCard profile={profile() || undefined} />
           <PublicProfileTool />
         </article>
         <article>

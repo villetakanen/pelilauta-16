@@ -2,21 +2,12 @@ import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 import { $profile } from 'src/stores/sessionStore';
-import { updateProfile } from 'src/stores/sessionStore/profile';
+
+import { updateProfile } from '@firebase/client/profile/updateProfile';
 import { AvatarButton } from './AvatarButton';
 
 export const PublicProfileTool: Component = () => {
   const profile = useStore($profile);
-
-  function updateNick(e: Event) {
-    e.preventDefault();
-    const nick = (e.target as HTMLInputElement).value;
-    if (nick.length < 3) {
-      console.log('Nickname must be at least 3 characters long');
-      return;
-    }
-    updateProfile({ nick });
-  }
 
   return (
     <>
@@ -25,15 +16,11 @@ export const PublicProfileTool: Component = () => {
         <legend>{t('settings:publicprofile.legend')}</legend>
         <div>
           <p class="text-caption">{t('entries:profile.username')}</p>
-          <p>{profile().username}</p>
+          <p>{profile()?.username}</p>
         </div>
         <label>
           {t('entries:profile.nick')}
-          <input
-            type="text"
-            onChange={updateNick}
-            value={$profile.get().nick}
-          />
+          <input type="text" disabled />
         </label>
         <label for="avatarButton">
           {t('entries:profile.avatar')}
@@ -42,9 +29,12 @@ export const PublicProfileTool: Component = () => {
         <label>
           {t('entries:profile.bio')}
           <textarea
-            value={$profile.get().bio}
+            value={profile()?.bio}
             onBlur={(e) =>
-              updateProfile({ bio: (e.target as HTMLTextAreaElement).value })
+              updateProfile(
+                { bio: (e.target as HTMLTextAreaElement).value },
+                `${profile()?.key}`,
+              )
             }
           />
         </label>

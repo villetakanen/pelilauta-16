@@ -17,7 +17,7 @@ export const ProfileButton: Component = () => {
       )}
       {active() && !isAnonymous() && (
         <a href="/settings">
-          <cn-navigation-icon noun="avatar" label={profile().nick || '...'} />
+          <cn-navigation-icon noun="avatar" label={profile()?.nick || '...'} />
         </a>
       )}
       {active() && isAnonymous() && (

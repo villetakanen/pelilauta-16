@@ -33,7 +33,7 @@ export const $requiresEula = computed($account, (account) => {
 
 let unsubscribe: () => void;
 
-export function handleLogin(uid: string) {
+export function subscribeToAccount(uid: string) {
   const accountRef = doc(db, ACCOUNTS_COLLECTION_NAME, uid);
   unsubscribe = onSnapshot(accountRef, (snapshot) => {
     if (snapshot.exists()) {
@@ -44,7 +44,7 @@ export function handleLogin(uid: string) {
   });
 }
 
-export const handleLogout = () => {
+export const unsubscribeFromAccount = () => {
   $account.set(null);
   unsubscribe();
 };

@@ -1,4 +1,3 @@
-import type { CnDialog } from '@11thdeg/cyan-next';
 import { createAccount } from '@firebase/client/account/createAccount';
 import { updateAccount } from '@firebase/client/account/updateAccount';
 import { createProfile } from '@firebase/client/profile/createProfile';
@@ -45,7 +44,7 @@ export const EulaDialog: Component = (props: DialogProps) => {
   });
 
   async function initValues() {
-    if (legacyProdile().nick) {
+    if (legacyProdile()?.nick) {
       // The user has already accepted an earlier EULA, no need reset the nick.
       return;
     }
@@ -82,11 +81,11 @@ export const EulaDialog: Component = (props: DialogProps) => {
     // Assuming either of the above operations succeeded,
     // we can now create a profile for the user, if it does not
     // exist
-    if (!legacyProdile().nick) {
+    if (!legacyProdile()?.nick) {
       const profileData: Partial<Profile> = {};
       profileData.nick = nickname();
-      if (auth.currentUser?.photoURL) {
-        profileData.avatarURL = auth.currentUser.photoURL;
+      if (avatarSrc()) {
+        profileData.avatarURL = avatarSrc();
       }
       createProfile(profileData, uid());
       pushSnack(t('snacks:profile.created'));
@@ -102,16 +101,13 @@ export const EulaDialog: Component = (props: DialogProps) => {
     return auth.currentUser?.photoURL || '';
   }
 
-  function username() {
-    return toFid(nickname());
-  }
-
   return (
     <dialog ref={dialog}>
       <h2>{t('login:eula.title')}</h2>
       <section class="downscaled">{props.children}</section>
       {legacyProdile()?.nick ? null : (
         <ProfileCreationCard
+          avararUrl={avatarSrc()}
           nickname={nickname()}
           setNickname={setNickname}
           setInvalid={setInvalid}

@@ -3,11 +3,11 @@ import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import type { Profile } from 'src/schemas/ProfileSchema';
 
 interface ProfileCardProps {
-  profile: Profile;
+  profile?: Profile;
 }
 
 export const ProfileCard: Component<ProfileCardProps> = (props) => {
-  return (
+  return props.profile ? (
     <cn-card>
       <div class="flex">
         <cn-avatar src={props.profile.avatarURL} alt={props.profile.nick} />
@@ -24,5 +24,5 @@ export const ProfileCard: Component<ProfileCardProps> = (props) => {
         </section>
       </div>
     </cn-card>
-  );
+  ) : null;
 };

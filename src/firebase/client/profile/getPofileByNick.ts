@@ -1,6 +1,6 @@
 import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
 import { type PublicProfile, PublicProfileSchema } from '@stores/profilesStore';
-import { collection, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '..';
 
 export async function getProfileByNick(
