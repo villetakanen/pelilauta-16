@@ -7,6 +7,7 @@ interface ProfileCreationCardProps {
   nickname: string;
   avararUrl?: string;
   setNickname: (nickname: string) => void;
+  setInvalid?: (invalid: boolean) => void;
 }
 
 /**
@@ -25,6 +26,7 @@ export const ProfileCreationCard: Component<ProfileCreationCardProps> = (
           <NickNameInput
             nickname={props.nickname}
             setNickname={props.setNickname}
+            setInvalid={props.setInvalid}
           />
           <p>
             <strong>{t('entries:profile.username')}: </strong>

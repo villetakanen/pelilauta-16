@@ -27,6 +27,7 @@ type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };
  */
 export const EulaDialog: Component = (props: DialogProps) => {
   const [nickname, setNickname] = createSignal('');
+  const [inValid, setInvalid] = createSignal(false);
   let dialog: HTMLDialogElement | undefined;
 
   const uid = useStore($uid);
@@ -110,13 +111,22 @@ export const EulaDialog: Component = (props: DialogProps) => {
       <h2>{t('login:eula.title')}</h2>
       <section class="downscaled">{props.children}</section>
       {legacyProdile()?.nick ? null : (
-        <ProfileCreationCard nickname={nickname()} setNickname={setNickname} />
+        <ProfileCreationCard
+          nickname={nickname()}
+          setNickname={setNickname}
+          setInvalid={setInvalid}
+        />
       )}
       <div class="flex toolbar justify-end">
         <button type="button" class="text" onclick={oncancel}>
           {t('login:eula.decline')}
         </button>
-        <button class="cta" type="submit" onclick={onaccept}>
+        <button
+          class="cta"
+          disabled={inValid()}
+          type="submit"
+          onclick={onaccept}
+        >
           {t('login:eula.accept')}
         </button>
       </div>
