@@ -38,6 +38,7 @@ export function subscribeToAccount(uid: string) {
   unsubscribe = onSnapshot(accountRef, (snapshot) => {
     if (snapshot.exists()) {
       $account.set(parseAccount(snapshot.data()));
+      accountNotFound.set(false);
     } else {
       accountNotFound.set(true);
     }

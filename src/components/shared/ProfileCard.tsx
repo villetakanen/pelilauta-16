@@ -10,16 +10,16 @@ export const ProfileCard: Component<ProfileCardProps> = (props) => {
   return props.profile ? (
     <cn-card>
       <div class="flex">
-        <cn-avatar src={props.profile.avatarURL} alt={props.profile.nick} />
+        <cn-avatar src={props.profile?.avatarURL} alt={props.profile?.nick} />
         <section>
-          <h3>{props.profile.nick}</h3>
+          <h3>{props.profile?.nick}</h3>
           <p>
-            <a href={`/profiles/${props.profile.key}`}>
-              {props.profile.username}
+            <a href={`/profiles/${props.profile?.key}`}>
+              {props.profile?.username}
             </a>
           </p>
-          {props.profile.bio && (
-            <MarkdownSection content={`${props.profile.bio}`} />
+          {props.profile?.bio && (
+            <MarkdownSection content={`${props.profile?.bio}`} />
           )}
         </section>
       </div>

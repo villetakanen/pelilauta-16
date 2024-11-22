@@ -6,7 +6,6 @@ import type { Account } from '@schemas/AccountSchema';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
-import { toFid } from '@utils/toFid';
 import { type Component, type JSX, createEffect, createSignal } from 'solid-js';
 import { auth } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';
@@ -40,6 +39,8 @@ export const EulaDialog: Component = (props: DialogProps) => {
       // Initialize the state, only if the eula is required
       initValues();
       dialog?.showModal();
+    } else {
+      dialog?.close();
     }
   });
 
