@@ -2,7 +2,7 @@
 name: 'Käyttöehdot'
 noun: 'fox'
 ---
-#### Pelilaudan käyttöehdot
+### Pelilaudan käyttöehdot
 
 **Rekisteröityessäsi**
 

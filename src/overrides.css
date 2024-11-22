@@ -351,13 +351,41 @@ p cn-dice {
     background: var(--chroma-surface-10);
   }
 }
-
-cn-dialog li {
+dialog {
+  color: var(--color-text);
+    font-family: var(--cn-font-family-text);
+    font-size: var(--cn-font-size-text);
+    font-weight: var(--cn-font-weight-text);
+    line-height: var(--cn-line-height-text);
+    letter-spacing: var(--cn-letter-spacing-text);
+}
+dialog li {
   margin-left: var(--cn-gap);
 }
-cn-dialog li::before {
+dialog li::before {
   content: "•";
   margin-left: calc(-1 * var(--cn-gap));
   margin-right: var(--cn-gap);
   position: absolute;
+}
+dialog h2 {
+  font-family: var(--cn-font-family-headings);
+    font-weight: var(--cn-font-weight-heading-2);
+    font-size: var(--cn-font-size-heading-2);
+    line-height: var(--cn-line-height-heading-2);
+    letter-spacing: var(--cn-letter-spacing-heading-2);
+    margin-top: calc(var(--cn-grid)* 4);
+    margin-bottom: calc(var(--cn-grid)* 2);
+    color: var(--color-heading-1);
+}
+
+dialog h3 {
+  font-family: var(--cn-font-family-headings);
+    font-weight: var(--cn-font-weight-heading-3);
+    font-size: var(--cn-font-size-heading-3);
+    line-height: var(--cn-line-height-heading-3);
+    letter-spacing: var(--cn-letter-spacing-heading-3);
+    margin-top: calc(var(--cn-grid)* 4);
+    margin-bottom: calc(var(--cn-grid)* 2);
+    color: var(--color-heading-2);
 }

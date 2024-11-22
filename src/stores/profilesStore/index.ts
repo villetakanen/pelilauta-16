@@ -8,7 +8,7 @@ import { atom, computed } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { z } from 'zod';
 
-const PublicProfileSchema = z.object({
+export const PublicProfileSchema = z.object({
   key: z.string(),
   nick: z.string(),
   avatarURL: z.string().optional(),
