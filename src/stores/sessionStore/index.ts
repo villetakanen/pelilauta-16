@@ -10,8 +10,8 @@ import {
   type Profile,
   parseProfile,
 } from 'src/schemas/ProfileSchema';
-import { initSubscriberStore } from './subscriber';
 import { $requiresEula, handleLogin, handleLogout } from './account';
+import { initSubscriberStore } from './subscriber';
 
 // The active user's UID - stored in localStorage for session persistence
 export const $uid = persistentAtom<string>('session-uid', '');
@@ -37,7 +37,7 @@ export const $isAnonymous = computed([$active, $uid], (active, uid) => {
   return !uid;
 });
 
-export { $requiresEula }
+export { $requiresEula };
 
 const defaultProfile: Profile = {
   key: '',
