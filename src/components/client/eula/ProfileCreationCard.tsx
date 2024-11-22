@@ -14,7 +14,7 @@ interface ProfileCreationCardProps {
  * A Solid-js wrapper for the profile creation card, containing field
  * for the nickname, and preview of the profile data to be created based
  * on the SSO data.
- * 
+ *
  * border border-radius p-2 mt-2
  */
 export const ProfileCreationCard: Component<ProfileCreationCardProps> = (
