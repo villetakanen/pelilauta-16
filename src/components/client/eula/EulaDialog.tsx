@@ -106,7 +106,12 @@ export const EulaDialog: Component = (props: DialogProps) => {
     <dialog ref={dialog}>
       <h2>{t('login:eula.title')}</h2>
       <section class="downscaled">{props.children}</section>
-      {legacyProdile()?.nick ? null : (
+      {legacyProdile()?.nick ? (
+        <div class="elevation-3 border-radius p-2 mt-2">
+          <h3 class="downscaled mt-0">{t('login:eula.updateNotice.title')}</h3>
+          <p class="text-small">{t('login:eula.updateNotice.description')}</p>
+        </div>
+      ) : (
         <ProfileCreationCard
           avararUrl={avatarSrc()}
           nickname={nickname()}
