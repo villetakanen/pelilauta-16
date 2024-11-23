@@ -13,7 +13,10 @@ export const CardSubscriber: Component<CardSubscriberProps> = (props) => {
 
   createEffect(() => {
     if (uid()) {
-      if (subscriber().seenEntities[props.thread.key] < props.thread.flowTime) {
+      const hasSeenAt =
+        subscriber().seenEntities[props.thread.key] || subscriber().allSeenAt;
+
+      if (hasSeenAt && props.thread.flowTime > hasSeenAt) {
         const parentCard = document.querySelector(
           `#thread-card-${props.thread.key}`,
         );
