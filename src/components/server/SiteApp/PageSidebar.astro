@@ -6,8 +6,9 @@ interface Props {
   site: Site;
 }
 const { site } = Astro.props as Props;
+const withPosterCSS = site.posterURL ? 'surface p-2' : 'p-1';
 ---
-<article class="column-s surface p-1">
+<article class={`column-s ${withPosterCSS}`}>
   <h3 class="downscaled">{site.name}</h3>
   {site.posterURL && (
     <img src={site.posterURL} alt={site.name} class="poster" />

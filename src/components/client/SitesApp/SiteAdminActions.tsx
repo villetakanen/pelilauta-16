@@ -6,11 +6,13 @@ import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
+import { systemToNoun } from '@utils/schemaHelpers';
 import { type Component, createMemo } from 'solid-js';
 
 export const SiteAdminActions: Component<{ site: Site }> = (props) => {
   const uid = useStore($uid);
   const visible = createMemo(() => props.site.owners.includes(uid()));
+  const noun = () => systemToNoun(props.site.system);
 
   return visible() ? (
     <nav>
@@ -29,5 +31,9 @@ export const SiteAdminActions: Component<{ site: Site }> = (props) => {
         </li>
       </ul>
     </nav>
-  ) : null;
+  ) : (
+    <div class="flex items-center justify-center p-2" style="opacity:0.11">
+      <cn-icon noun={noun()} large />
+    </div>
+  );
 };
