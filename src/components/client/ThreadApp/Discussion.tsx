@@ -9,7 +9,6 @@ import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
 import { $subscriber, $uid, markEntrySeen } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { type Component, For, createSignal, onMount } from 'solid-js';
 import { ReplyButton } from './ReplyButton';
@@ -52,12 +51,12 @@ export const Discussion: Component<DiscussionProps> = (props) => {
     const subscriber = $subscriber.get();
     if (!subscriber) {
       // no subscriber, no need to mark as seen
-      logDebug('No subscriber, not marking thread as seen', props.thread.key);
+      //logDebug('No subscriber, not marking thread as seen', props.thread.key);
       return;
     }
     const seenTime = subscriber.seenEntities[props.thread.key] || 0;
     if (seenTime < props.thread.flowTime) {
-      logDebug('Marking thread as seen', props.thread.key);
+      //logDebug('Marking thread as seen', props.thread.key);
       markEntrySeen(props.thread.key, props.thread.flowTime);
     }
   }
@@ -100,7 +99,7 @@ export const Discussion: Component<DiscussionProps> = (props) => {
       patchedDiscussion.push(reply);
     }
     patchedDiscussion.sort((a, b) => a.flowTime - b.flowTime);
-    logDebug('patching to discussion, lenght is ', patchedDiscussion.length);
+    //logDebug('patching to discussion, lenght is ', patchedDiscussion.length);
     setDiscussion(patchedDiscussion);
   }
 
@@ -110,7 +109,7 @@ export const Discussion: Component<DiscussionProps> = (props) => {
   }
 
   function handleQuote(e: Event) {
-    logDebug('Quote', 'handleQuote 2', e);
+    //logDebug('Quote', 'handleQuote 2', e);
     e.preventDefault();
     e.stopPropagation();
 

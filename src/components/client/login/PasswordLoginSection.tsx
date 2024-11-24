@@ -1,4 +1,4 @@
-import { logDebug, logError } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 import { FirebaseError } from 'firebase/app';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import type { Component } from 'solid-js';
@@ -17,11 +17,6 @@ export const PasswordLoginSection: Component = () => {
     const { email, password } = e.target as HTMLFormElement;
 
     try {
-      logDebug(
-        'Attempting to login with email and password',
-        email.value,
-        password.value,
-      );
       await signInWithEmailAndPassword(auth, email.value, password.value);
       window.location.href = '/';
     } catch (error: unknown) {

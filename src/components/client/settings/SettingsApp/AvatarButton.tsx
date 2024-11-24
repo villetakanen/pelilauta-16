@@ -22,7 +22,7 @@ export const AvatarButton: Component = () => {
     <>
       <cn-avatar-button
         popovertarget="avatar-popup"
-        src={profile().avatarURL}
+        src={profile()?.avatarURL}
       />
       <div id="avatar-popup" popover onclick={closeOnClick}>
         <nav class="menu">

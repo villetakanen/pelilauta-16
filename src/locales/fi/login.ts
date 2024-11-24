@@ -17,10 +17,16 @@ export const login: Locale = {
     action: 'Google-tilillä',
   },
   eula: {
-    title: 'Rekisteröityminen',
+    title: 'Tervetuloa!',
+    nickTaken: 'Tunnus on käytössä. Valitse toinen.',
     profileInfo:
-      'Rekisteröityminen täyttää tässä annetut profiilisi tiedot automaattisesti. Voit muokata nimimerkkiä, ja muita profiilitietoja myöhemmin.',
+      'Kun kirjaudut ensimmäistä kertaa Pelilaudalle, luomme sinulle profiilin. Profiilin avulla voit osallistua keskusteluihin ja jakaa sisältöä muiden käyttäjien kanssa.',
     decline: 'Keskeytä, ja kirjaudu ulos',
     accept: 'Hyväksy ja jatka',
+    updateNotice: {
+      title: 'Miksi näen tämän?',
+      description:
+        'Olemme päivittäneet tietosuojakäytäntöjä ja käyttöehtoja sovelluksen version 16 myötä, ja siksi joudumme pyytämään sinulta uudelleen suostumuksen tietojesi käsittelyyn.',
+    },
   },
 };

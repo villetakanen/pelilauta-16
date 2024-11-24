@@ -4,6 +4,7 @@ import { DebugSection } from '@client/debug';
 import SyndicateStream from '@server/FrontPage/SyndicateStream.astro';
 import TopSitesStream from '@server/FrontPage/TopSitesStream.astro';
 import TopThreadsStream from '@server/FrontPage/TopThreadsStream.astro';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import Page from 'src/layouts/Page.astro';
 
 // Set a short cache time for the front page
@@ -26,4 +27,12 @@ Astro.response.headers.set(
       )}
     </div>
     <FrontPageFabs client:only="solid-js"/>
+    <BackgroundPoster
+      slot="app-background-poster"
+      src="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-1.webp"
+      md="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-1-960.webp"
+    />
+    <p class="text-caption text-center" style="opacity:0.44" slot="app-footer-credits">
+      Taustakuva © Juno Viinikka (<a href="https://linktr.ee/junowski">https://linktr.ee/junowski</a>)
+    </p>
 </Page>

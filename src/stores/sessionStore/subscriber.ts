@@ -1,6 +1,5 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { logDebug, logError } from '@utils/logHelpers';
-import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import { logError } from '@utils/logHelpers';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { $uid } from '.';
@@ -35,21 +34,18 @@ export async function initSubscriberStore(uid: string) {
     unsubscribe();
     return;
   }
+  const { onSnapshot, doc } = await import('firebase/firestore');
   unsubscribe = onSnapshot(
     doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`),
     (doc) => {
       if (doc.exists()) {
         $subscriber.set(parseSubscription(doc.data(), doc.id));
       } else {
-        logDebug(
-          'initSubscriberStore',
-          'user has no subscription, creating it',
-        );
         createSubscriptionEntry(uid);
       }
     },
   );
-  logDebug('subscriber', 'Firestore subscription of subscriber set up');
+  //logDebug('subscriber', 'Firestore subscription of subscriber set up');
 }
 
 async function createSubscriptionEntry(uid: string) {
@@ -57,6 +53,7 @@ async function createSubscriptionEntry(uid: string) {
     throw new Error('an uid is required to create a subscription');
   }
   const subscription = createSubscription(uid);
+  const { getDoc, setDoc, doc } = await import('firebase/firestore');
   const subscriberRef = doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`);
 
   const subscriberDoc = await getDoc(subscriberRef);
@@ -81,6 +78,7 @@ export async function markEntrySeen(entryKey: string, timestamp: number) {
   const subscriber = $subscriber.get();
   const uid = $uid.get();
   subscriber.seenEntities[entryKey] = timestamp;
+  const { updateDoc, doc } = await import('firebase/firestore');
   try {
     await updateDoc(doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`), {
       seenEntities: {

@@ -1,5 +1,6 @@
 ---
 import type { Site } from '@schemas/SiteSchema';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 
 interface Props {
   site: Site;
@@ -7,7 +8,5 @@ interface Props {
 const { site } = Astro.props;
 ---
 { site.backgroundURL && 
-  <div class="pageBackgroundPoster sm-hidden">
-    <img src={site.backgroundURL} alt=""/>
-  </div> 
+  <BackgroundPoster src={site.backgroundURL} />
 }

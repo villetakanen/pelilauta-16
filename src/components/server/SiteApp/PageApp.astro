@@ -26,9 +26,11 @@ const exists = pageResponse.status !== 404;
 const page = exists
   ? parsePage(toClientEntry(await pageResponse.json()), pageKey, site.key)
   : createPage(pageKey, site.key);
+
+const elevation = site.posterURL ? 'surface' : 'elevation-1';
 ---
 <div class="content-columns">
-  { exists ? <article class="column-l elevation-1 p-2">
+  { exists ? <article class={`column-l ${elevation} p-2`}>
     <PageArticleHeader page={page} site={site}/>
     <div set:html={page.htmlContent}></div>
     <PageArticleFooter page={page} site={site}/>

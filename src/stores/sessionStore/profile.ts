@@ -1,38 +1,43 @@
-import {
-  type FieldValue,
-  doc,
-  serverTimestamp,
-  updateDoc,
-} from 'firebase/firestore';
+import { persistentAtom } from '@nanostores/persistent';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { atom } from 'nanostores';
 import { db } from 'src/firebase/client';
 import {
   PROFILES_COLLECTION_NAME,
   type Profile,
+  parseProfile,
 } from 'src/schemas/ProfileSchema';
-import { $profile, $uid } from '.';
-
-type ProfileType = Partial<Profile> & {
-  updatedAt?: FieldValue;
-};
 
 /**
- * Update the profile of the current user, merging the new data with the existing data in the store.
- *
- * @param profile Partial<Profile> & { updatedAt: FieldValue }
- * @param silent boolean, optional, default false - will omit updating the updatedAt field if true
+ * The nanostores atom that holds the current user Profile data.
  */
-export async function updateProfile(profile: ProfileType, silent = false) {
-  if (!silent) {
-    profile.updatedAt = serverTimestamp();
-  }
+export const $profile = persistentAtom<Profile | null>(
+  'session-profile',
+  null,
+  {
+    encode: JSON.stringify,
+    decode: (data) => {
+      const object = JSON.parse(data);
+      return object;
+    },
+  },
+);
+export const $profileMissing = atom(false);
 
-  const profileRef = doc(db, `${PROFILES_COLLECTION_NAME}/${$uid.get()}`);
+let unsubscribe: () => void;
 
-  await updateDoc(profileRef, profile);
-
-  // Merge with the current profile
-  $profile.set({
-    ...$profile.get(),
-    ...profile,
+export function subscribeToProfile(uid: string) {
+  const profileRef = doc(db, PROFILES_COLLECTION_NAME, uid);
+  unsubscribe = onSnapshot(profileRef, (snapshot) => {
+    if (snapshot.exists()) {
+      $profile.set(parseProfile(snapshot.data(), snapshot.id));
+      $profileMissing.set(false);
+    } else {
+      $profileMissing.set(true);
+    }
   });
+}
+export function unsubscribeFromProfile() {
+  $profile.set(null);
+  unsubscribe();
 }

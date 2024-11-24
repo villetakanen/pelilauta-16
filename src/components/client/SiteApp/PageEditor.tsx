@@ -2,7 +2,6 @@ import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { updatePage } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { type Component, createSignal, onMount } from 'solid-js';
 import TurndownService from 'turndown';
 import { PageCategorySelect } from './PageCategorySelect';
@@ -75,7 +74,7 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
   function handleEditorInput(e: Event) {
     setChanged(true);
     const content = (e as CustomEvent<{ value: string }>).detail.value;
-    logDebug('Editor input', content);
+    //logDebug('Editor input', content);
     setContent(content);
   }
 

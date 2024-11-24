@@ -4,7 +4,7 @@ import {
   parseSite,
 } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { logDebug, logError } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { db } from '..';
@@ -40,7 +40,7 @@ export async function deleteSiteAsset(site: Site, storagePath: string) {
 
     if (assetIndex > -1) {
       // Remove the asset from the array's index
-      logDebug('Deleting asset from site:', storagePath, assetIndex);
+      //logDebug('Deleting asset from site:', storagePath, assetIndex);
       assets.splice(assetIndex, 1);
       await updateDoc(siteRef, {
         assets: assets,

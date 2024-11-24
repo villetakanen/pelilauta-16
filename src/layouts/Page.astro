@@ -28,11 +28,14 @@ const { title, description, image, shortTitle, noSharing } = Astro.props;
     <BottomBar />
 	  <main>
       <slot />
-      <AppFooter />
+      <AppFooter>
+        <slot name="app-footer-credits" slot="app-footer-credits"/>
+      </AppFooter>
     </main>
     <nav id="fab-tray">
       <slot name="fab-tray"></slot>
     </nav>
+    <slot name="app-background-poster" />
     <BasePostscripts />
     <BaseTail />
   </body>

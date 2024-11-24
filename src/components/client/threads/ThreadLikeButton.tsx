@@ -18,8 +18,8 @@ export const ThreadLikeButton: Component<{ thread?: Thread }> = (props) => {
     () => !uid() || props.thread?.owners.includes(uid()),
   );
 
-  const loves = createMemo(() =>
-    profile().lovedThreads?.includes(props.thread?.key || ''),
+  const loves = createMemo(
+    () => profile()?.lovedThreads?.includes(props.thread?.key || '') || false,
   );
 
   function toggleLove() {

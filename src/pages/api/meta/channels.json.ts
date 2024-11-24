@@ -14,7 +14,7 @@ export async function GET(): Promise<Response> {
   }
 
   for (const channel of channelsArray) {
-    // logDebug('Channel', channel);
+    // //logDebug('Channel', channel);
     channels.push(parseChannel(channel));
   }
 

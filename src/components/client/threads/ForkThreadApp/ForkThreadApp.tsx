@@ -22,7 +22,7 @@ import { $uid, markEntrySeen } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { t } from '@utils/i18n';
-import { logDebug, logError } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 import { addDoc, collection } from 'firebase/firestore';
 import { type Component, For, createSignal } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
@@ -54,7 +54,7 @@ export const ForkThreadApp: Component<Props> = (props) => {
       quoteRef: `${props.reply.threadKey}/${props.reply.key}`,
     });
 
-    logDebug('ForkThreadApp', 'Creating thread', thread);
+    //logDebug('ForkThreadApp', 'Creating thread', thread);
 
     try {
       const cleaned = toFirestoreEntry(thread);

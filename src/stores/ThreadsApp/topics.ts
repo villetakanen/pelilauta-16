@@ -73,7 +73,7 @@ export function topicToNoun(topic?: string) {
     return 'close';
   }
   const topics = $topics.get();
-  // logDebug('topicToNoun', 'topics', topics, 'topic', topic);
+  // //logDebug('topicToNoun', 'topics', topics, 'topic', topic);
   const topicObj = topics.find((t) => t.slug === topic);
   return topicObj?.icon || 'fox';
 }

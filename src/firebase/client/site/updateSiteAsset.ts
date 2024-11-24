@@ -1,6 +1,5 @@
 import { type Asset, parseAsset } from '@schemas/AssetSchema';
 import { SITES_COLLECTION_NAME, type Site } from '@schemas/SiteSchema';
-import { logDebug } from '@utils/logHelpers';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '..';
 
@@ -15,7 +14,7 @@ export async function updateSiteAsset(site: Site, asset: Partial<Asset>) {
   const assets = [...site.assets];
   const index = assets.findIndex((a) => a.storagePath === asset.storagePath);
 
-  logDebug('Updating site asset', asset, assets[index]);
+  //logDebug('Updating site asset', asset, assets[index]);
 
   if (index === -1) {
     throw new Error('Asset does not exist in site');
@@ -29,7 +28,7 @@ export async function updateSiteAsset(site: Site, asset: Partial<Asset>) {
 
   assets[index] = update;
 
-  logDebug('Updating site asset', assets[index]);
+  //logDebug('Updating site asset', assets[index]);
 
   await updateDoc(doc(db, SITES_COLLECTION_NAME, site.key), {
     assets: assets,

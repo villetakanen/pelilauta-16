@@ -1,5 +1,4 @@
 import type { Site } from '@schemas/SiteSchema';
-import { logDebug } from '@utils/logHelpers';
 
 /**
  * Takes in rendered HTML and rewrites asset wikimarkup to assets to point to the correct site.
@@ -34,7 +33,7 @@ export function renderAssetMarkup(
   for (const match of matches) {
     const fullMatch = match[0];
     const assetName = match[1];
-    logDebug('Found asset link', assetName);
+    //logDebug('Found asset link', assetName);
 
     const asset = site.assets.find((asset) => asset.name === assetName);
     if (!asset) {

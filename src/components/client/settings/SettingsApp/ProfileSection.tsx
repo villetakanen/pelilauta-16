@@ -14,6 +14,7 @@ export const ProfileSection: Component = () => {
   const uid = useStore($uid);
   const theme = useStore($theme);
   const locale = useStore($locale);
+  const profile = useStore($profile);
 
   async function logoutAction() {
     await logout();
@@ -29,13 +30,13 @@ export const ProfileSection: Component = () => {
         <p>{t('entries:profile.key')}</p>
         <p>{uid()}</p>
         <p>{t('entries:profile.nick')}</p>
-        <p>{$profile.get().nick}</p>
+        <p>{profile()?.nick}</p>
         <p>{t('entries:profile.avatar')}</p>
         <p>
-          <a href={$profile.get().avatarURL}>{$profile.get().avatarURL}</a>
+          <a href={profile()?.avatarURL}>{profile()?.avatarURL}</a>
         </p>
         <p>{t('entries:profile.bio')}</p>
-        <p>{$profile.get().bio}</p>
+        <p>{profile()?.bio}</p>
         <p>{t('entries:account.lightMode')}</p>
         <p>{theme()}</p>
         <p>{t('entries:account.language')}</p>

@@ -19,7 +19,7 @@ export async function GET({ request }: APIContext) {
   const sites = await sitesCollection.get();
 
   for (const siteDoc of sites.docs) {
-    // logDebug('Sitedata', siteDoc.data().name, siteDoc.data().owners);
+    // //logDebug('Sitedata', siteDoc.data().name, siteDoc.data().owners);
     const site = parseSite(siteDoc.data(), siteDoc.id);
     publicSites.push(site);
   }

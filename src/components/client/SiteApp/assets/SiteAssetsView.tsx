@@ -63,7 +63,7 @@ export const SiteAssetsView: Component<SiteAssetsViewProps> = (props) => {
   return (
     <WithAuth allow={allow()} message={t('site:assets.forbidden')}>
       <div class="content-columns">
-        <article class="column-l">
+        <article class="column-l surface p-2">
           <h1>{t('site:assets.title')}</h1>
           <p>{t('site:assets.description')}</p>
           {site()?.assets?.length && (

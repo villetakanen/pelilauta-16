@@ -31,13 +31,13 @@ const title = `${site.name} – ${t('site:toc.title')}`;
 >
   <SiteTray slot="app-tray" site={site}/>
   <div class="content-columns">
-    <article class="column">
+    <article class="column surface p-2">
       <SiteTocSection site={site}/>
     </article>
-    <div class="column-s">
+    <div class="column-s surface p-2">
       <ImportExportTool site={site} client:only="solid-js"/>
     </div>
-    <div class="column-s">
+    <div class="column-s surface p-2">
       <SiteTocAdmin site={site} client:only="solid-js"/>
     </div>
     </div>
