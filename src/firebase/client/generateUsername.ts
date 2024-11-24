@@ -1,4 +1,3 @@
-import { logDebug } from '@utils/logHelpers';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '.';
 
@@ -31,10 +30,10 @@ export async function generateUsername(displayName: string, email: string) {
     if (docs.size === 0) {
       usernameIsUnique = true;
     } else {
-      logDebug('Username', username, 'is not unique, trying again');
+      //logDebug('Username', username, 'is not unique, trying again');
       username = username + Math.floor(Math.random() * 10);
     }
   }
-  logDebug('Generated username', username);
+  //logDebug('Generated username', username);
   return username;
 }

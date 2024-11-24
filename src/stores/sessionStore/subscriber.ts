@@ -1,5 +1,5 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { logDebug, logError } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 import { $uid } from '.';
@@ -41,15 +41,11 @@ export async function initSubscriberStore(uid: string) {
       if (doc.exists()) {
         $subscriber.set(parseSubscription(doc.data(), doc.id));
       } else {
-        logDebug(
-          'initSubscriberStore',
-          'user has no subscription, creating it',
-        );
         createSubscriptionEntry(uid);
       }
     },
   );
-  logDebug('subscriber', 'Firestore subscription of subscriber set up');
+  //logDebug('subscriber', 'Firestore subscription of subscriber set up');
 }
 
 async function createSubscriptionEntry(uid: string) {

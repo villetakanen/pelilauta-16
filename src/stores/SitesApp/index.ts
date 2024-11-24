@@ -6,7 +6,7 @@ import {
   emptySite,
   parseSite,
 } from '@schemas/SiteSchema';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import {
   doc,
   onSnapshot,
@@ -46,12 +46,12 @@ export async function load(key: string) {
   }
 
   if (unsubscribe && $key.get() === key) {
-    logDebug('activeSiteStore', 'load', key, 'already subscribed');
+    //logDebug('activeSiteStore', 'load', key, 'already subscribed');
     return;
   }
 
   // Load the site from the server
-  logDebug('activeSiteStore', { state: 'loading ', key: $key.get() });
+  //logDebug('activeSiteStore', { state: 'loading ', key: $key.get() });
 
   // Set the loading state
   loadingState.set('loading');
@@ -72,14 +72,14 @@ export async function load(key: string) {
   // Set the loading state
   loadingState.set('active');
 
-  logDebug('activeSiteStore', 'load', key, 'done');
+  //logDebug('activeSiteStore', 'load', key, 'done');
 }
 
 async function subscribeToSite(key: string) {
   // Subscribe to the site
   return onSnapshot(doc(db, SITES_COLLECTION_NAME, key), (snapshot) => {
     if (snapshot.exists()) {
-      logDebug('activeSiteStore', 'subscribeToSite', snapshot.data());
+      //logDebug('activeSiteStore', 'subscribeToSite', snapshot.data());
       $site.set(parseSite(snapshot.data(), snapshot.id));
     }
   });

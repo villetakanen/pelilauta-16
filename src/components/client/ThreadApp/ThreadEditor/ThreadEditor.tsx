@@ -7,7 +7,6 @@ import { $uid } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { type Component, createEffect, createSignal, onMount } from 'solid-js';
 import { ImagesPreviewSection } from './ImagesPreviewSection';
 import { TagsPreview } from './TagsPreviewSection';
@@ -95,12 +94,6 @@ export const ThreadEditor: Component<{
 
   function filesUploaded(newFiles: File[]) {
     setFiles([...files(), ...newFiles]);
-    logDebug(
-      'Files uploaded',
-      files()
-        .map((f) => f.name)
-        .join(', '),
-    );
   }
 
   return (

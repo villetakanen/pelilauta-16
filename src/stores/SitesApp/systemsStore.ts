@@ -4,7 +4,6 @@ import {
   type GameSystems,
   parseGameSystem,
 } from '@schemas/GameSystemSchema';
-import { logDebug } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
@@ -36,9 +35,5 @@ async function fetchGameSystemsFromDB() {
       newData.push(parseGameSystem(system));
     }
     $gamesystems.set(newData);
-    logDebug(
-      'fetchGameSystemsFromDB',
-      `Fetched ${newData.length} game systems from db`,
-    );
   }
 }

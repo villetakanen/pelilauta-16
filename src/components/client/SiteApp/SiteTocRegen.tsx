@@ -10,7 +10,7 @@ import {
 import { $uid } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import {
   collection,
@@ -63,7 +63,7 @@ export const SiteTocRegenSection: Component<{ site: Site }> = (props) => {
         flowTime: toDate(pageDoc.data().flowTime).getTime(),
       };
       refs.push(ref);
-      logDebug(`Page reference for ${pageDoc.id} added to the list.`, ref);
+      //logDebug(`Page reference for ${pageDoc.id} added to the list.`, ref);
     }
 
     if (!refs.length)

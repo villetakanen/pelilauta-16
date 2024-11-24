@@ -1,6 +1,5 @@
 import type { SnackbarMessage } from '@11thdeg/cyan-next';
 import { type LocaleSubstitutions, t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 
 function _toMessage(
   snack: string | SnackbarMessage,
@@ -15,7 +14,7 @@ export function pushSessionSnack(
 ) {
   const message = _toMessage(snack, subs);
   window.sessionStorage.setItem('snack', JSON.stringify(message));
-  logDebug('Session snack pushed', message);
+  //logDebug('Session snack pushed', message);
 }
 
 export function pushSnack(snack: string | SnackbarMessage) {
@@ -26,5 +25,5 @@ export function pushSnack(snack: string | SnackbarMessage) {
       detail: message,
     }),
   );
-  logDebug('Snack pushed', message);
+  //logDebug('Snack pushed', message);
 }

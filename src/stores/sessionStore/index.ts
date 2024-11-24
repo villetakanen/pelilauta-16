@@ -1,5 +1,5 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import type { User } from 'firebase/auth';
 import { computed, onMount } from 'nanostores';
 import { auth } from 'src/firebase/client';
@@ -49,7 +49,7 @@ export { $profile, $profileMissing } from './profile';
 // are interested in the session state
 onMount($uid, () => {
   auth.onAuthStateChanged(handleFirebaseAuthChange);
-  logDebug('sessionStore mounted, subscribing to Firebase auth state changes');
+  //logDebug('sessionStore mounted, subscribing to Firebase auth state changes');
 });
 
 /**
@@ -65,11 +65,7 @@ async function handleFirebaseAuthChange(user: User | null) {
     subscribeToProfile(user.uid);
     // Lets see if we have an active session, with same UID, if so, we are done
     if ($loadingState.get() === 'active' && user.uid === $uid.get()) {
-      logDebug(
-        'sessionStore',
-        'handleFirebaseAuthChange',
-        'Session data found for the firebase uid, skipping state change',
-      );
+      // no-op
     } else {
       // We have a new user, lets login
       await login(user.uid);

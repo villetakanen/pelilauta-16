@@ -14,7 +14,6 @@ import {
 import type { CategoryRef } from '@schemas/SiteSchema';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { doc, updateDoc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';
 import { SiteTocRegenSection } from '../SiteTocRegen';
@@ -70,7 +69,7 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
       sortOrder: orderBy(),
       pageCategories: categories(),
     });
-    logDebug('Saved categories', categories());
+    //logDebug('Saved categories', categories());
     window.location.reload();
   }
 

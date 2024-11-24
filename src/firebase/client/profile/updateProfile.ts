@@ -1,5 +1,4 @@
 import { PROFILES_COLLECTION_NAME, type Profile } from '@schemas/ProfileSchema';
-import { logDebug } from '@utils/logHelpers';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '..';
 
@@ -13,7 +12,7 @@ export async function updateProfile(data: Partial<Profile>, uid: string) {
   };
 
   const { createdAt, ...prunedProfile } = profile;
-  logDebug('updateProfile', 'prunedProfile', prunedProfile);
+  //logDebug('updateProfile', 'prunedProfile', prunedProfile);
 
   await updateDoc(profileRef, prunedProfile);
 }

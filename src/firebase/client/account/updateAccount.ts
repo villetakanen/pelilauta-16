@@ -1,5 +1,4 @@
 import { ACCOUNTS_COLLECTION_NAME, type Account } from '@schemas/AccountSchema';
-import { logDebug } from '@utils/logHelpers';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '..';
 
@@ -13,6 +12,6 @@ export async function updateAccount(data: Partial<Account>, uid: string) {
     updatedAt: serverTimestamp(),
   };
   const { createdAt, uid: prunedUid, ...prunedAccount } = account;
-  logDebug('updateAccount', 'prunedAccount', prunedAccount);
+  //logDebug('updateAccount', 'prunedAccount', prunedAccount);
   await updateDoc(accountRef, prunedAccount);
 }

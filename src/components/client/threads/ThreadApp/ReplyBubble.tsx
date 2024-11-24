@@ -6,7 +6,6 @@ import type { Reply } from '@schemas/ReplySchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { loveReply, unloveReply } from '@stores/ThreadsApp/reactions';
 import { $uid } from '@stores/sessionStore';
-import { logDebug } from '@utils/logHelpers';
 import { type Component, createMemo } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 
@@ -38,7 +37,7 @@ export const ReplyBubble: Component<Props> = (props) => {
   }
 
   function handleQuote(e: Event) {
-    logDebug('ReplyBubble', 'handleQuote', e);
+    e.preventDefault();
     dispatch('quote', props.reply.key);
   }
 

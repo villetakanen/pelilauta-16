@@ -29,7 +29,7 @@ const initApp = () => {
 
 export const serverApp = activeApps.length === 0 ? initApp() : activeApps[0];
 export const serverDB = getFirestore(serverApp);
-// logDebug('serverDB', serverDB);
+// //logDebug('serverDB', serverDB);
 
 /*import type { ServiceAccount } from 'firebase-admin';
 import admin from 'firebase-admin';

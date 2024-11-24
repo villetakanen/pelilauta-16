@@ -2,7 +2,6 @@ import type { Notification } from '@schemas/NotificationSchema';
 import { parseReply } from '@schemas/ReplySchema';
 import { addReaction } from '@stores/SocialApp/reactionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { logDebug } from '@utils/logHelpers';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
 import { updateReply } from './discussion';
@@ -50,7 +49,7 @@ export async function loveReply(
 
   lovesArray.push(uid);
 
-  logDebug('legacy reactions/loveReply, lovesArray', lovesArray);
+  //logDebug('legacy reactions/loveReply, lovesArray', lovesArray);
   updateReply(
     { lovers: lovesArray, lovesCount: lovesArray.length },
     replyKey,
@@ -117,7 +116,7 @@ export async function unloveReply(
   const index = lovesArray.indexOf(uid);
   lovesArray.splice(index, 1);
 
-  logDebug('legacy reactions/unloveReply, lovesArray', lovesArray);
+  //logDebug('legacy reactions/unloveReply, lovesArray', lovesArray);
   updateReply(
     { lovers: lovesArray, lovesCount: lovesArray.length },
     replyid,

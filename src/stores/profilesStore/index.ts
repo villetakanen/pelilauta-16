@@ -1,7 +1,7 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
 import { t } from '@utils/i18n';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import { toFid } from '@utils/toFid';
 import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { atom, computed } from 'nanostores';
@@ -40,7 +40,7 @@ const $loading = atom<string[]>([]);
 
 export function getProfile(key: string): PublicProfile | undefined {
   if (!key) {
-    logDebug('profilesStore', 'getProfile', 'key is undefined');
+    //logDebug('profilesStore', 'getProfile', 'key is undefined');
     return undefined;
   }
   if ($profiles.get()[key]) {
@@ -63,13 +63,13 @@ export function getProfileAtom(uid: string) {
 }
 
 async function fetchProfile(key: string) {
-  logDebug('profilesStore', 'fetchProfile', key);
+  //logDebug('profilesStore', 'fetchProfile', key);
   if ($loading.get().includes(key)) {
     return;
   }
   $loading.set([...$loading.get(), key]);
   const publicProfileDoc = await getDoc(doc(db, 'profiles', key));
-  logDebug('profilesStore', 'fetchProfile', key, publicProfileDoc.exists());
+  //logDebug('profilesStore', 'fetchProfile', key, publicProfileDoc.exists());
   if (publicProfileDoc.exists()) {
     // Legacy support for avatarURL
     const avatarURL =
@@ -90,11 +90,6 @@ async function fetchProfile(key: string) {
       [key]: publicProfile,
     });
   } else {
-    logDebug(
-      'profilesStore',
-      'fetchProfile',
-      'no profile found, assuming anonymous user',
-    );
     $profiles.set({
       ...$profiles.get(),
       [key]: {

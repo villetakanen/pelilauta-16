@@ -6,7 +6,7 @@ import {
 } from '@schemas/ThreadSchema';
 import { $topics } from '@stores/ThreadsApp/topics';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import {
   collection,
   doc,
@@ -45,7 +45,7 @@ export const $channelKey = persistentAtom<string>('active-channel-key', '');
  * @returns an Atom<Array<Thread>> with the requested page of threads
  */
 export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
-  logDebug('fetchPage', channelKey, page);
+  //logDebug('fetchPage', channelKey, page);
 
   // if there is no channel key, we'll return an empty array
   if (!channelKey || page < 1) {
@@ -68,7 +68,7 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
 
   // If the channel has not changed, we'll need to reset the cache
   if ($channelKey.get() !== channelKey) {
-    logDebug('fetchPage', 'channel key has changed, resetting cache');
+    //logDebug('fetchPage', 'channel key has changed, resetting cache');
     $channelKey.set(channelKey);
     $channel.set([]);
   } else {
@@ -85,11 +85,6 @@ export function fetchPage(channelKey: string, page = 1): Atom<Thread[]> {
       $channel.set(mergeThreads($channel.get(), newThreads));
       threads.set(newThreads);
     });
-    logDebug(
-      'fetchPage',
-      'fetching the first page of the channel from Firestore, cache size is:',
-      $channel.get().length,
-    );
   }
   // Else we'll need to fetch the requested page by fetching from firestore, untill we have the requested page
   else {
@@ -125,10 +120,6 @@ async function getChannelPage(channelKey: string, page: number) {
   }
 
   if (!fromThreadKey) {
-    logDebug(
-      'getChannelPage',
-      'we do not have the previous thread, fetching the previous page',
-    );
     if (page > 1) await getChannelPage(channelKey, page - 1);
     else
       throw new Error(
@@ -143,7 +134,7 @@ async function getChannelPage(channelKey: string, page: number) {
 }
 
 function mergeThreads(currentThreads: Thread[], newThreads: Thread[]) {
-  logDebug('mergeThreads', currentThreads.length, newThreads.length);
+  //logDebug('mergeThreads', currentThreads.length, newThreads.length);
 
   const threadsMap = new Map<string, Thread>();
   for (const thread of currentThreads) {
@@ -161,15 +152,10 @@ async function fetchPageFromFirestore(
   channelKey: string,
   fromThreadKey?: string,
 ) {
-  logDebug('fetchPageFromFirestore', channelKey, fromThreadKey);
+  //logDebug('fetchPageFromFirestore', channelKey, fromThreadKey);
 
   // if we do not have the fromThreadKey, we'll fetch the beginning of the channel
   if (!fromThreadKey) {
-    logDebug(
-      'fetchPageFromFirestore',
-      'fetching the beginning of the channel',
-      channelKey,
-    );
     const q = query(
       collection(db, THREADS_COLLECTION_NAME),
       orderBy('flowTime', 'desc'),
@@ -193,7 +179,7 @@ async function fetchPageFromFirestore(
   if (!startRef.exists())
     throw new Error('Can not start from a non-existing thread, aborting');
 
-  logDebug('fetching threads from the db, starting from:', fromThreadKey);
+  //logDebug('fetching threads from the db, starting from:', fromThreadKey);
 
   // We'll fetch the data from Firestore
   const q = query(

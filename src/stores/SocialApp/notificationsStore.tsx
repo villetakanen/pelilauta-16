@@ -5,7 +5,7 @@ import {
   ParseNotification,
 } from '@schemas/NotificationSchema';
 import { $uid } from '@stores/sessionStore';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import {
   collection,
   doc,
@@ -37,12 +37,12 @@ onMount($notifications, () => {
 
   const uid = $uid.get();
   if (!uid) {
-    logDebug('No account, not loading notifications');
+    //logDebug('No account, not loading notifications');
     return;
   }
 
   subscribeToNotifications(uid).then(() => {
-    logDebug('Subscribed to notifications');
+    //logDebug('Subscribed to notifications');
   });
 });
 
@@ -53,14 +53,14 @@ async function subscribeToNotifications(accountUid: string) {
   );
 
   unsubscribe = onSnapshot(q, (snapshot) => {
-    logDebug('Notifications snapshot received', snapshot.docChanges().length);
+    //logDebug('Notifications snapshot received', snapshot.docChanges().length);
     for (const change of snapshot.docChanges()) {
       if (change.type === 'removed') {
         // Remove the notification
         $notifications.set(
           $notifications.get().filter((n) => n.key !== change.doc.id),
         );
-        logDebug('Notification removed', change.doc.id);
+        //logDebug('Notification removed', change.doc.id);
       } else {
         pathcNotification(change.doc.id, change.doc.data());
       }

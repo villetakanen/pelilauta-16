@@ -13,10 +13,9 @@ import { useStore } from '@nanostores/solid';
 import { type Reply, createReply } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
-import { addReply } from '@stores/ThreadsApp/discussion';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import { doc, increment, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { type Component, createEffect, createSignal } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
@@ -60,7 +59,7 @@ export const ReplyDialog: Component<Props> = (props) => {
   }
 
   function resetQuote(e: Event) {
-    logDebug('ReplyDialog', 'resetQuote', e);
+    e.preventDefault();
     dispatch('quote', '');
   }
 
@@ -68,7 +67,7 @@ export const ReplyDialog: Component<Props> = (props) => {
     e.preventDefault();
     e.stopPropagation();
 
-    logDebug('ReplyForm', 'send', e);
+    //logDebug('ReplyForm', 'send', e);
 
     const reply = createReply({
       markdownContent: message() || '',
@@ -80,7 +79,7 @@ export const ReplyDialog: Component<Props> = (props) => {
       reply.quoteref = props.quoteRef;
     }
 
-    logDebug(await addReply(reply));
+    //logDebug(await addReply(reply));
 
     // This is a temporary workaround to increase the replyCount of the thread.
     updateDoc(doc(db, THREADS_COLLECTION_NAME, props.threadKey), {

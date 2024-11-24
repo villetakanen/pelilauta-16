@@ -3,7 +3,6 @@ import { $owners } from '@stores/SitesApp';
 import { updatePage } from '@stores/SitesApp/pagesStore';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { type Component, createMemo } from 'solid-js';
 import TurndownService from 'turndown';
 
@@ -18,7 +17,7 @@ export const MigrateContentPanel: Component<{
   const show = createMemo(() => owners().includes(uid()));
 
   function migrateContents() {
-    logDebug('migration', 'migrating contents');
+    //logDebug('migration', 'migrating contents');
     const turndownService = new TurndownService();
     const markdownContent = turndownService.turndown(props.htmlContent);
     updatePage(

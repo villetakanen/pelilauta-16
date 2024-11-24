@@ -10,7 +10,6 @@ import {
 import { $uid } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import {
   type Component,
@@ -43,7 +42,7 @@ export const SitesList: Component = () => {
       return parseSite(toClientEntry(doc.data()), doc.id);
     });
 
-    logDebug('SitesList', 'fetchSites', sitesArray);
+    //logDebug('SitesList', 'fetchSites', sitesArray);
 
     return sitesArray;
   };

@@ -5,7 +5,6 @@ import { parseReply } from '@schemas/ReplySchema';
 import { parseThread } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 
 // We want to fetch the thread and the reply server side, and pass those to
 // the client form. All authz for ui will happen on the client side, and for
@@ -30,7 +29,7 @@ const reply = parseReply(toClientEntry(replyData), replyKey, threadKey);
 
 // Lets check we have the right thread and reply
 if (!thread?.key || !reply?.key) {
-  logDebug('thread or reply not found', { threadKey, replyKey });
+  //logDebug('thread or reply not found', { threadKey, replyKey });
   Astro.redirect('/404');
 }
 ---
