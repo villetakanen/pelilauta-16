@@ -13,6 +13,7 @@ import { useStore } from '@nanostores/solid';
 import { type Reply, createReply } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
+import { addReply } from '@stores/ThreadsApp/discussion';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
@@ -79,7 +80,7 @@ export const ReplyDialog: Component<Props> = (props) => {
       reply.quoteref = props.quoteRef;
     }
 
-    //logDebug(await addReply(reply));
+    await addReply(reply);
 
     // This is a temporary workaround to increase the replyCount of the thread.
     updateDoc(doc(db, THREADS_COLLECTION_NAME, props.threadKey), {
