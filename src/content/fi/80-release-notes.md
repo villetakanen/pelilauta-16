@@ -5,9 +5,15 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.1.x (ongoing)
+### 16.2.x (ongoing)
+- \[no changes, for now\]
+
+### 16.2.0
 - Cyan design system updates for mobile use.
 - Various small bug fixes and improvements.
+- Refactored enrollment and login pages and stores for faster loading.
+- Added support for "posters", e.g. bacground images for pages, sites and all of the static pages.
+- Merged site branding assets with the site assets, all assets and branding assets are now managed in the same views.
 
 ### 16.1.0
 - Added RSS feeds for all posts and channels. [Read more](/docs/fi/01-index)
