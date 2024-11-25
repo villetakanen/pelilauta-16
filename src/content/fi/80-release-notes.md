@@ -8,6 +8,8 @@ noun: 'monsters'
 ### 16.2.x (ongoing)
 - Moved overrides back to the Cyan design system.
 - Added poster slot on the layout with a side tray.
+- Copy paste to editor fixed in page editor.
+- Copy paste to editor fixed in thread editor.
 
 ### 16.2.0
 - Cyan design system updates for mobile use.
