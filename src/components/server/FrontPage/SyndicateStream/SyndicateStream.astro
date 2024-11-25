@@ -2,20 +2,28 @@
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import Parser from 'rss-parser';
+import SyndicatePost from './SyndicatePost.astro';
 
-let posts: Record<string, unknown>[] = [];
-let posts2: Record<string, unknown>[] = [];
+type RSSItem = {
+  title: string;
+  link: string;
+  pubDate: string;
+  contentSnippet: string;
+};
+
+let posts: RSSItem[] = [];
+let posts2: RSSItem[] = [];
 
 try {
   // We want to grab the myrrys.com RSS feed and post the latest 3 posts in this stream.
   const parser = new Parser();
   const feed = await parser.parseURL('https://myrrys.com/rss.xml');
-  posts = feed.items.slice(0, 3);
+  posts = feed.items.slice(0, 3) as RSSItem[];
 
   // We want to grab the https://roolipelitiedotus.fi/feed/ RSS feed and post the latest 3 posts in this stream.
   const parser2 = new Parser();
   const feed2 = await parser2.parseURL('https://roolipelitiedotus.fi/feed/');
-  posts2 = feed2.items.slice(0, 3);
+  posts2 = feed2.items.slice(0, 3) as RSSItem[];
 } catch (e) {
   logError(e);
 }
@@ -24,16 +32,10 @@ try {
   <div>
     <h3 class="downscaled mb-1">
       <cn-icon noun="myrrys-scarlet"></cn-icon>
-      Myrrys.com</h3>
-  <img src="https://www.myrrys.com/branding/LetL_gm_screen_splash.webp" alt="Myrrys logo" class="w-16-9 poster" />
-    
-  {posts.map((post) => (
-    <section class=" border-t pt-1" >
-      <h4 class="downscaled">
-        {post.title}</h4>
-      <p class="downscaled">{post.contentSnippet}</p>
-    </section>)
-  )}
+      Myrrys.com
+    </h3>
+    <img src="https://www.myrrys.com/branding/LetL_gm_screen_splash.webp" alt="Myrrys logo" class="w-16-9 poster" />
+    {posts.map((post:RSSItem) => <SyndicatePost post={post} /> )}
 
     <div class="toolbar justify-center">
       <a href="https://myrrys.com" class="text button">
@@ -50,13 +52,7 @@ try {
   <h3 class="downscaled mt-1 mb-1">
     <img src="https://roolipelitiedotus.fi/wp-content/uploads/2018/07/logonayte-150x150.png" class="icon">
     Roolipelitiedotus.fi</h3>
-    {posts2.map((post) => (
-    <section class=" border-t pt-1" >
-      <h4 class="downscaled">
-        {post.title}</h4>
-      <p class="downscaled">{post.contentSnippet}</p>
-    </section>)
-    )}
+    {posts2.map((post) => <SyndicatePost post={post} /> )}
 
     <div class="toolbar justify-center">
       <a href="https://roolipelitiedotus.fi" class="text button">
