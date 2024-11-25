@@ -386,5 +386,9 @@ cn-card p:last-of-type {
   margin-bottom: 0;
 }
 .secondary {
-  --color-heading-2: color-mix(in hsl, var(--chroma-primary-10), transparent 10%);
+  --color-heading-2: color-mix(
+    in hsl,
+    var(--chroma-primary-10),
+    transparent 10%
+  );
 }
