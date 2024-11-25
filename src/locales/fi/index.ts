@@ -41,6 +41,10 @@ export const fi: Locale = {
     settings: {
       title: 'Asetukset',
     },
+    onboarding: {
+      title: 'Tervetuloa!',
+      text: 'Voit luoda Pelilaudalle oman sivuston pelillesi, ja osallistautua keskusteluihin kirjautumalla ensin tästä.',
+    },
     '404': {
       title: 'Hups!',
       subtitle: '404 - Tämä polku ei vie mihinkään.',

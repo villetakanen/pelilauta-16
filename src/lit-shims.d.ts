@@ -18,6 +18,7 @@ declare module 'solid-js' {
         href: string;
         noun: string;
         title: string;
+        cover: string;
       };
       'cn-dialog': HTMLAttributes & { open: boolean; close: () => void };
       'cn-navigation-icon': HTMLAttributes & { noun: string; label: string };
