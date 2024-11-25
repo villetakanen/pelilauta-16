@@ -5,6 +5,8 @@ import { t } from '@utils/i18n';
 import { type Component, createSignal, onMount } from 'solid-js';
 import TurndownService from 'turndown';
 import { PageCategorySelect } from './PageCategorySelect';
+import { CyanEditor } from '@client/shared/CyanEditor';
+import { createEffect } from 'solid-js';
 
 export type PageEditorProps = {
   site: Site;
@@ -18,7 +20,10 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
   const originalContent = props.page.markdownContent || '';
   const [converted, setConverted] = createSignal(false);
   const [category, setCategory] = createSignal(props.page.category || '');
-  let editorRef: undefined | HTMLElement;
+
+  createEffect(() => {
+    console.log(content());
+  });
 
   const handleSubmit = async (event: Event) => {
     event.preventDefault();
@@ -45,12 +50,6 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
   };
 
   onMount(() => {
-    const r = document.querySelector('cn-editor');
-    if (r instanceof HTMLElement) {
-      editorRef = r;
-      editorRef.addEventListener('input', handleEditorInput);
-    }
-
     // Check if we are missing markdown content, if so, convert the HTML content to markdown
     // And add a warning to the form
     if (!props.page.markdownContent) {
@@ -65,21 +64,13 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
     }
   });
 
-  const r = document.querySelector('cn-editor');
-  if (r instanceof HTMLElement) {
-    editorRef = r;
-    editorRef.addEventListener('input', handleEditorInput);
-  }
-
-  function handleEditorInput(e: Event) {
-    setChanged(true);
-    const content = (e as CustomEvent<{ value: string }>).detail.value;
-    //logDebug('Editor input', content);
-    setContent(content);
-  }
-
   function categoryChaged(cat: string) {
     setCategory(cat);
+    setChanged(true);
+  }
+
+  function handleContentChange(content: string) {
+    setContent(content);
     setChanged(true);
   }
 
@@ -114,9 +105,8 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
         </div>
       )}
 
-      <div class="grow">
-        <cn-editor ref={editorRef} value={content()} />
-      </div>
+      <CyanEditor content={content()} onInput={handleContentChange} />
+
       <section class="toolbar">
         <a
           href={`/sites/${props.site.key}/${props.page.key}/deleteConfirm`}
