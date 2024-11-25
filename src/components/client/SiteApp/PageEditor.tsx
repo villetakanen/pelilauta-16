@@ -105,7 +105,7 @@ export const PageEditor: Component<PageEditorProps> = (props) => {
         </div>
       )}
 
-      <CyanEditor content={content()} onInput={handleContentChange} />
+      <CyanEditor value={content()} onInput={handleContentChange} />
 
       <section class="toolbar">
         <a

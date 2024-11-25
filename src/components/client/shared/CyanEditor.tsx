@@ -2,7 +2,7 @@ import { CnEditor } from '@11thdeg/cyan-next';
 import { type Component, onCleanup, onMount } from 'solid-js';
 
 interface CnEditorProps {
-  content: string;
+  value: string;
   onInput: (content: string) => void;
 }
 
@@ -33,7 +33,7 @@ export const CyanEditor: Component<CnEditorProps> = (props) => {
 
   return (
     <div class="grow">
-      <cn-editor content={props.content} ref={editorRef} />
+      <cn-editor value={props.value} ref={editorRef} />
     </div>
   );
 };

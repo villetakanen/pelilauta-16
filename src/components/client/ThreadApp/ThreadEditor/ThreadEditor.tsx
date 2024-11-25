@@ -1,3 +1,4 @@
+import { CyanEditor } from '@client/shared/CyanEditor';
 import { WithLoader } from '@client/shared/WithLoader';
 import { addThread } from '@firebase/client/threads/addThread';
 import { useStore } from '@nanostores/solid';
@@ -17,7 +18,6 @@ export const ThreadEditor: Component<{
   topic?: string;
 }> = (props) => {
   const uid = useStore($uid);
-  let editorRef: undefined | HTMLElement;
 
   const [topic, setTopic] = createSignal<string>(props.topic || 'yleinen');
   const [tags, setTags] = createSignal<string[]>([]);
@@ -30,8 +30,7 @@ export const ThreadEditor: Component<{
     setTags(extractTags(markdownContent()));
   });
 
-  async function handleEditorInput(e: Event) {
-    const content = (e as CustomEvent<{ value: string }>).detail.value;
+  async function handleEditorInput(content: string) {
     setMarkdownContent(content);
 
     // Extract tags
@@ -39,12 +38,6 @@ export const ThreadEditor: Component<{
   }
 
   onMount(() => {
-    const r = document.querySelector('cn-editor');
-    if (r instanceof HTMLElement) {
-      editorRef = r;
-      editorRef.addEventListener('input', handleEditorInput);
-    }
-
     if (props.threadKey) {
       setSuspend(true);
       // Load the thread
@@ -107,13 +100,7 @@ export const ThreadEditor: Component<{
             setChannel={setTopic}
             filesUploaded={filesUploaded}
           />
-          <div class="grow">
-            <cn-editor
-              ref={editorRef}
-              value={markdownContent()}
-              placeholder={t('entries:thread.placeholders.content')}
-            />
-          </div>
+          <CyanEditor value={markdownContent()} onInput={handleEditorInput} />
           {tags().length > 0 && <TagsPreview tags={tags()} />}
           {files().length && <ImagesPreviewSection files={files()} />}
           <div class="toolbar">
