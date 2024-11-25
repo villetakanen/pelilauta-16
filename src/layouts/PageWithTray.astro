@@ -37,6 +37,7 @@ const { title, description, image, noun, shortTitle } = Astro.props;
       <AppFooter />
     </main>
     <nav id="fab-tray"><slot name="fab-tray"></slot></nav>
+    <slot name="app-background-poster" />
     <BasePostscripts />
     <BaseTail />
   </body>

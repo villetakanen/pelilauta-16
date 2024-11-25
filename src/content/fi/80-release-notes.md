@@ -6,7 +6,8 @@ noun: 'monsters'
 ## Version 16
 
 ### 16.2.x (ongoing)
-- \[no changes, for now\]
+- Moved overrides back to the Cyan design system.
+- Added poster slot on the layout with a side tray.
 
 ### 16.2.0
 - Cyan design system updates for mobile use.
