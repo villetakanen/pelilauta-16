@@ -1,12 +1,12 @@
+import { CyanEditor } from '@client/shared/CyanEditor';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { updatePage } from '@stores/SitesApp/pagesStore';
 import { t } from '@utils/i18n';
 import { type Component, createSignal, onMount } from 'solid-js';
+import { createEffect } from 'solid-js';
 import TurndownService from 'turndown';
 import { PageCategorySelect } from './PageCategorySelect';
-import { CyanEditor } from '@client/shared/CyanEditor';
-import { createEffect } from 'solid-js';
 
 export type PageEditorProps = {
   site: Site;

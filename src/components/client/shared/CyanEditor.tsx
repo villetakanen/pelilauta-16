@@ -1,5 +1,5 @@
-import { CnEditor } from "@11thdeg/cyan-next";
-import { onCleanup, onMount, type Component } from "solid-js";
+import { CnEditor } from '@11thdeg/cyan-next';
+import { type Component, onCleanup, onMount } from 'solid-js';
 
 interface CnEditorProps {
   content: string;
@@ -10,7 +10,7 @@ interface CnEditorProps {
  * This is a solid-js wrapper for <cn-editor> custom (Lit) element
  */
 export const CyanEditor: Component<CnEditorProps> = (props) => {
-  let editorRef:CnEditor|null = null;
+  let editorRef: CnEditor | null = null;
 
   onCleanup(() => {
     if (editorRef instanceof CnEditor) {
@@ -23,7 +23,8 @@ export const CyanEditor: Component<CnEditorProps> = (props) => {
     if (r instanceof CnEditor) {
       editorRef = r;
       editorRef.addEventListener('input', handleEditorInput);
-    }});
+    }
+  });
 
   function handleEditorInput(e: Event) {
     const content = (e as CustomEvent<{ value: string }>).detail.value;
@@ -32,7 +33,7 @@ export const CyanEditor: Component<CnEditorProps> = (props) => {
 
   return (
     <div class="grow">
-      <cn-editor content={props.content} ref={editorRef}/>
+      <cn-editor content={props.content} ref={editorRef} />
     </div>
   );
 };
