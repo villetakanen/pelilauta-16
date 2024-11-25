@@ -35,8 +35,9 @@ const site = parseSite(
 const page = pageKey || site.homepage || site.key;
 const title = `${site.name}`;
 const noun = systemToNoun(site.system);
+const image = site.avatarURL || site.posterURL || site.backgroundURL;
 ---
-<PageWithTray title={title} description={site.description} noun={noun}>
+<PageWithTray title={title} description={site.description} noun={noun} image={image}>
   <SiteTray slot="app-tray" site={site}/>
   <PageApp site={site} pageKey={page}/>
   <SitePoster site={site}/>
