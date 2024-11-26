@@ -12,14 +12,7 @@ import {
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { logError, logWarn } from '@utils/logHelpers';
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'src/firebase/client';
 import { updateSite } from '.';
 
@@ -84,7 +77,7 @@ export async function updatePage(
     }
   }
 }
-
+/*
 export async function addPage(
   siteKey: string,
   page: Partial<Page>,
@@ -119,7 +112,7 @@ export async function addPage(
   await updatePageRefs(newPage);
 
   return key;
-}
+}*/
 
 async function updatePageRefs(page: Page) {
   const siteDoc = await getDoc(doc(db, SITES_COLLECTION_NAME, page.siteKey));
