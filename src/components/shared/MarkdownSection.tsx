@@ -1,4 +1,3 @@
-
 import { type Component, createEffect, createSignal } from 'solid-js';
 
 export const MarkdownSection: Component<{ content?: string }> = (props) => {
