@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import { type Component, createEffect, createSignal } from 'solid-js';
 
 export const MarkdownSnippetSection: Component<{
@@ -9,6 +8,7 @@ export const MarkdownSnippetSection: Component<{
 
   createEffect(async () => {
     const l = props.length || 220;
+    const { marked } = await import('marked');
 
     // We want to stop at the first newline after the length
     const newlineIndex = props.content.indexOf('\n', l) || props.content.length;
