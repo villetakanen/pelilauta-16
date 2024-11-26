@@ -21,8 +21,9 @@ if (siteResponse.status === 404) {
 const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
 const homePageKey = site.homepage || site.key;
 const noun = systemToNoun(site.system);
+const image = site.avatarURL || site.posterURL || site.backgroundURL;
 ---
-<PageWithTray title={site.name} noun={noun}>
+<PageWithTray title={site.name} noun={noun} description={site.description} image={image}>
   <SiteTray slot="app-tray" site={site}/>
   <PageApp site={site} pageKey={homePageKey}/>
   <SitePoster site={site}/>

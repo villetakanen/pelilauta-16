@@ -10,6 +10,7 @@ noun: 'monsters'
 - Added poster slot on the layout with a side tray.
 - Copy paste to editor fixed in page editor.
 - Copy paste to editor fixed in thread editor.
+- Restored onboarding card for new users.
 
 ### 16.2.0
 - Cyan design system updates for mobile use.

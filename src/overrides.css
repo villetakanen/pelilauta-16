@@ -375,3 +375,20 @@ h3 img.icon {
 
   aspect-ratio: 1 / 1;
 }
+.color-box-1 {
+  background: linear-gradient(
+    -45deg in hsl,
+    var(--chroma-surface-90),
+    var(--chroma-primary-80)
+  );
+}
+cn-card p:last-of-type {
+  margin-bottom: 0;
+}
+.secondary {
+  --color-heading-2: color-mix(
+    in hsl,
+    var(--chroma-primary-10),
+    transparent 10%
+  );
+}

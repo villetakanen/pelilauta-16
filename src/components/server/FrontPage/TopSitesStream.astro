@@ -1,4 +1,5 @@
 ---
+import { OnboardingCard } from '@client/FrontPage/OnboardingCard';
 import { type Site, parseSite } from '@schemas/SiteSchema';
 import SiteCard from '@server/ui/SiteCard.astro';
 import { t } from '@utils/i18n';
@@ -12,6 +13,7 @@ const sites = (sitesJSON as Array<Site>).map((site) =>
 );
 ---
 <div class="flex flex-col column-s">
+    <div><OnboardingCard client:only="solid-js"/></div>
     {sites.map((site) => (
       site && <SiteCard site={site}/>
     ))}

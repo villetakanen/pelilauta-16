@@ -23,11 +23,12 @@ const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
 );
 const site = parseSite(toClientEntry(siteData), siteKey);
 const title = `${site.name} – ${t('site:toc.title')}`;
+const image = site.avatarURL || site.posterURL || site.backgroundURL;
 ---
 <PageWithTray
   title={title}
   description={site.description}
-  image={site.backgroundURL}
+  image={image}
 >
   <SiteTray slot="app-tray" site={site}/>
   <div class="content-columns">
