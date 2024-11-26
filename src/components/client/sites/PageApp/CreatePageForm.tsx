@@ -2,10 +2,10 @@
  * This is a solid-js powered form for creating a new wikipage.
  */
 import { WithAuth } from '@client/shared/WithAuth';
+import { addPage } from '@firebase/client/site/addPage';
 import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { addPage } from '@stores/SitesApp/pagesStore';
 import { $uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
@@ -33,7 +33,8 @@ export const CreatePageForm: Component<CreatePageFormProps> = (props) => {
 
     const newPage = createPage(toMekanismiURI(name), props.site.key);
     newPage.name = name;
-    newPage.markdownContent = '\n';
+    newPage.markdownContent = `# ${name}\n\n`;
+    newPage.owners = [uid()];
     // If customPageKeys is enabled, we need to check if the slug is already in use
     // Otherwise, we can just generate a slug at creation time
     const proposedSlug = props.site.customPageKeys

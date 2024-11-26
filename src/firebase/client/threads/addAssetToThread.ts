@@ -1,7 +1,7 @@
 import { logError } from '@utils/logHelpers';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-import { storage } from '..';
+import { app } from '..';
 
 /**
  * Adds an asset to the given Thread in Firebase Storage.
@@ -23,6 +23,9 @@ export async function addAssetToThread(
   if (!file.type.startsWith('image/')) {
     throw new Error('Invalid file type, only images are allowed for threads');
   }
+
+  const { getStorage } = await import('firebase/storage');
+  const storage = getStorage(app);
 
   const uniqueFilename = `${uuidv4()}-${file.name}`; // Generate a unique filename
   const storagePath = `Threads/${threadKey}/${uniqueFilename}`; // The path to store the file in Firebase Storage

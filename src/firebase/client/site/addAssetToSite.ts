@@ -9,7 +9,7 @@ import { logError } from '@utils/logHelpers';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-import { db, storage } from '..';
+import { app, db } from '..';
 
 /**
  * Adds an asset to the given site in Firebase Storage.
@@ -25,6 +25,8 @@ async function addAssetToStorage(
 ): Promise<{ downloadURL: string; storagePath: string }> {
   const uniqueFilename = `${uuidv4()}-${file.name}`; // Generate a unique filename
   const storagePath = `Sites/${site.key}/${uniqueFilename}`; // The path to store the file in Firebase Storage
+  const { getStorage } = await import('firebase/storage');
+  const storage = getStorage(app);
   const siteAssetsRef = ref(storage, storagePath);
 
   try {
