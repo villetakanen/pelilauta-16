@@ -3,7 +3,7 @@ import { $uid } from '@stores/sessionStore';
 import { logError } from '@utils/logHelpers';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { deleteObject, listAll, ref } from 'firebase/storage';
-import { db, storage } from '..';
+import { app, db } from '..';
 
 /**
  * A Sites assets are stored in firebase storage `/Sites/{site.key}/`.
@@ -14,6 +14,8 @@ import { db, storage } from '..';
  * @param site [Site] The site to delete assets for
  */
 async function deleteAssets(site: Site) {
+  const { getStorage } = await import('firebase/storage');
+  const storage = getStorage(app);
   const siteAssetsRef = ref(storage, `Sites/${site.key}/`);
 
   try {
