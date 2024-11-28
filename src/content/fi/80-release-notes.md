@@ -12,6 +12,7 @@ noun: 'monsters'
 - Copy paste to editor fixed in thread editor.
 - Restored onboarding card for new users.
 - Client side `marked` is now imported dynamically to reduce bundle size.
+- Site and Site Page social share and searchability improvements.
 
 ### 16.2.0
 - Cyan design system updates for mobile use.

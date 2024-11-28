@@ -1,9 +1,8 @@
 ---
 import { CreateMissingPageSection } from '@client/SiteApp/CreateMissingPageSection';
 import { PageFabs } from '@client/sites/PageApp/PageFabs';
-import { createPage, parsePage } from '@schemas/PageSchema';
+import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { toClientEntry } from '@utils/client/entryUtils';
 import PageArticleFooter from './PageArticleFooter.astro';
 import PageArticleHeader from './PageArticleHeader.astro';
 import PageSidebar from './PageSidebar.astro';
@@ -11,30 +10,24 @@ import PageSidebar from './PageSidebar.astro';
 /** SSR Site app */
 
 interface Props {
-  pageKey: string;
+  page?: Page;
   site: Site;
+  pageKey: string;
 }
-const { site, pageKey } = Astro.props as Props;
-const origin = new URL(Astro.request.url).origin;
-
-// Fetch page data from the api
-const pageResponse = await fetch(
-  `${origin}/api/sites/${site.key}/pages/${pageKey}.json`,
-);
-
-const exists = pageResponse.status !== 404;
-const page = exists
-  ? parsePage(toClientEntry(await pageResponse.json()), pageKey, site.key)
-  : createPage(pageKey, site.key);
+const { site, page, pageKey } = Astro.props as Props;
 
 const elevation = site.posterURL ? 'surface' : 'elevation-1';
+const exists = page !== undefined;
 ---
 <div class="content-columns">
   { exists ? <article class={`column-l ${elevation} p-2`}>
     <PageArticleHeader page={page} site={site}/>
-    <div set:html={page.htmlContent}></div>
+    <div style="min-height: 70dvh" set:html={page.htmlContent}></div>
     <PageArticleFooter page={page} site={site}/>
-  </article> :
+  </article> 
+  <PageSidebar site={site} />
+  <PageFabs page={page} site={site} client:only="solid-js"/>
+  :
   <article class="column-l elevation-1 p-2">
     <div class="flex">
         <cn-icon noun="monsters" xlarge />
@@ -42,8 +35,6 @@ const elevation = site.posterURL ? 'surface' : 'elevation-1';
       </div>
       
       <CreateMissingPageSection site={site} pageKey={pageKey} client:only="solid-js"/>
-
-  </article>}
-  <PageSidebar site={site} />
-  <PageFabs pageKey={pageKey} site={site} client:only="solid-js"/>
+  </article>
+  }
 </div>
