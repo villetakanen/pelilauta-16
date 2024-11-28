@@ -1,4 +1,5 @@
 ---
+import { parsePage } from '@schemas/PageSchema';
 import { parseSite } from '@schemas/SiteSchema';
 import PageApp from '@server/SiteApp/PageApp.astro';
 import SitePoster from '@server/SiteApp/SitePoster.astro';
@@ -20,11 +21,18 @@ if (siteResponse.status === 404) {
 
 const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
 const homePageKey = site.homepage || site.key;
+
+// Fetch page data from the api
+const pageResponse = await fetch(
+  `${origin}/api/sites/${siteKey}/pages/${homePageKey}.json`,
+);
+const page = parsePage(toClientEntry(await pageResponse.json()), homePageKey);
+
 const noun = systemToNoun(site.system);
 const image = site.avatarURL || site.posterURL || site.backgroundURL;
 ---
 <PageWithTray title={site.name} noun={noun} description={site.description} image={image}>
   <SiteTray slot="app-tray" site={site}/>
-  <PageApp site={site} pageKey={homePageKey}/>
+  <PageApp site={site} pageKey={homePageKey} page={page}/>
   <SitePoster site={site}/>
 </PageWithTray>
