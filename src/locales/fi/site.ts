@@ -1,4 +1,5 @@
 import type { Locale } from '@utils/i18n';
+import { from } from 'solid-js';
 
 export const site: Locale = {
   assets: {
@@ -84,6 +85,12 @@ export const site: Locale = {
       title: 'Tuo ja vie',
       description:
         'Voit viedä koko sivuston sisällön markdown-muodossa zip-tiedostona. Sivujen metadata tallennetaan markdown frontmatter -muotoon.',
+    },
+    import: {
+      title: 'Tuo',
+      description:
+        'Voit tuoda sivuston sisällön markdown-muodossa. Ohjeita frontmatter-metadatasta löytyy dokumentaatiosta {link}.',
+      fromFolder: 'Tuo kansio',
     },
   },
   deletePage: {

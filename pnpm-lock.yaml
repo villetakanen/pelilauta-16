@@ -47,6 +47,9 @@ importers:
       firebase-admin:
         specifier: ^12.7.0
         version: 12.7.0
+      front-matter:
+        specifier: ^4.0.2
+        version: 4.0.2
       jszip:
         specifier: ^3.10.1
         version: 3.10.1
@@ -2998,6 +3001,9 @@ packages:
     resolution: {integrity: sha512-95MFT5qipMvUiesmuvGP1BI4hh5XWCzyTapiNJ/k8JBQda7rPy7UCWYItz2uZEdTgGNy1eInjzlL9Wx1O9fedg==}
     engines: {node: '>=0.8.0'}
     deprecated: 'Please upgrade to latest, formidable@v2 or formidable@v3! Check these notes: https://bit.ly/2ZEqIau'
+
+  front-matter@4.0.2:
+    resolution: {integrity: sha512-I8ZuJ/qG92NWX8i5x1Y8qyj3vizhXS31OxjKDu3LKP+7/qBgfIKValiZIEwoVoJKUHlhWtYrktkxV1XsX+pPlg==}
 
   fs-extra@9.1.0:
     resolution: {integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==}
@@ -8964,6 +8970,10 @@ snapshots:
     optional: true
 
   formidable@1.0.17: {}
+
+  front-matter@4.0.2:
+    dependencies:
+      js-yaml: 3.14.1
 
   fs-extra@9.1.0:
     dependencies:

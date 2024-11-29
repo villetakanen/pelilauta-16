@@ -1,0 +1,18 @@
+---
+import { ImportFolder as IFolder } from '@client/SiteApp/import/ImportFolder';
+import ModalPage from '@layouts/ModalPage.astro';
+import { parseSite } from '@schemas/SiteSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { t } from '@utils/i18n';
+
+const { siteKey } = Astro.params;
+const origin = new URL(Astro.request.url).origin;
+// Fetch site data from the api
+const siteData = await fetch(`${origin}/api/sites/${siteKey}`).then((res) =>
+  res.json(),
+);
+const site = parseSite(toClientEntry(siteData), siteKey);
+---
+<ModalPage title={`${site.name} – ${t('site:toc.import.fromFolder')}`}>
+  <IFolder site={site} client:only="solid-js"/>
+</ModalPage>

@@ -47,5 +47,5 @@ export function subscribeToAccount(uid: string) {
 
 export const unsubscribeFromAccount = () => {
   $account.set(null);
-  unsubscribe();
+  unsubscribe?.();
 };

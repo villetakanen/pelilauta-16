@@ -28,13 +28,23 @@ export const ImportExportTool = (props: ImportExportToolProps) => {
   }
 
   return visible() ? (
-    <section>
-      <h4>{t('site:toc.importExport.title')}</h4>
-      <p class="downscaled">{t('site:toc.importExport.description')}</p>
-      <button class="text" onClick={exportSite} type="button">
-        <cn-icon noun="arrow-down" />
-        <span>{t('actions:export.asZippedFolder')}</span>
-      </button>
-    </section>
+    <>
+      <section class="surface p-2">
+        <h4>{t('site:toc.importExport.title')}</h4>
+        <p class="downscaled">{t('site:toc.importExport.description')}</p>
+        <button class="text" onClick={exportSite} type="button">
+          <cn-icon noun="arrow-down" />
+          <span>{t('actions:export.asZippedFolder')}</span>
+        </button>
+      </section>
+      <section class="surface p-2 mt-2">
+        <h4>{t('site:toc.import.title')}</h4>
+        <p class="downscaled">{t('site:toc.import.description')}</p>
+        <a href={`/sites/${site.key}/import-folder`} class="text button">
+          <cn-icon noun="arrow-up" />
+          <span>{t('site:toc.import.fromFolder')}</span>
+        </a>
+      </section>
+    </>
   ) : null;
 };
