@@ -4,9 +4,6 @@ import {
   parseSite,
 } from '@schemas/SiteSchema';
 import { $uid } from '@stores/sessionStore';
-import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
-import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '..';
 
 /**
  * Creates a new site in the database, returns the key of the new site
@@ -15,7 +12,9 @@ import { db } from '..';
  * @returns string - the key of the new site
  */
 export async function createSite(site: Partial<Site>): Promise<string> {
-  //logDebug('firebase/client/createSite', site);
+  const { getFirestore, doc, getDoc, setDoc, addDoc, collection } =
+    await import('firebase/firestore');
+  const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
 
   // Get the current user's uid
   const uid = $uid.get();
@@ -32,7 +31,7 @@ export async function createSite(site: Partial<Site>): Promise<string> {
 
   // If the site has a key, try to create the site with that given key
   if (site.key) {
-    const siteRef = doc(db, SITES_COLLECTION_NAME, site.key);
+    const siteRef = doc(getFirestore(), SITES_COLLECTION_NAME, site.key);
     const siteDoc = await getDoc(siteRef);
     if (siteDoc.exists()) {
       throw new Error(`Site with key ${site.key} already exists`);
@@ -42,6 +41,9 @@ export async function createSite(site: Partial<Site>): Promise<string> {
     return site.key;
   }
   //logDebug('createSite', 'Creating site with automatic key', siteData);
-  const { id } = await addDoc(collection(db, SITES_COLLECTION_NAME), siteData);
+  const { id } = await addDoc(
+    collection(getFirestore(), SITES_COLLECTION_NAME),
+    siteData,
+  );
   return id;
 }

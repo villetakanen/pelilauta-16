@@ -3,7 +3,7 @@ name: 'Features'
 noun: 'veil-advance'
 ---
 
-## 16.0.0 Features
+## 16.3.0 Features
 
 New features and improvements:
 * No new end user features, this version is a tech stack update
@@ -68,3 +68,11 @@ New features and improvements:
 | *Danger zone*                  | done     | Open with a button |
 | *Danger zone: delete account*  | done     | Button to delete account |
 | *Danger zone: verify function* | done     | Verify account deletion field |
+
+## Sites
+
+### Create Site
+
+| Feature                      | Status   | Description  |
+| ---------------------------- | -------- | ------------ |
+| *Create site view*           | done     | Form with title, system, description, and visibility fields |

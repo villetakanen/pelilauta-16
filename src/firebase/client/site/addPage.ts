@@ -67,5 +67,7 @@ export async function addPage(
     siteKey,
   );
 
+  logDebug('addPage', 'Page added to firestore', key);
+
   return key;
 }
