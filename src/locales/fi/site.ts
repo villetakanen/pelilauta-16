@@ -1,5 +1,4 @@
 import type { Locale } from '@utils/i18n';
-import { from } from 'solid-js';
 
 export const site: Locale = {
   assets: {

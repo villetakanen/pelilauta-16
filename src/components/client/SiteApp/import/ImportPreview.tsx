@@ -13,17 +13,18 @@ interface ImportPreviewProps {
 }
 
 export const ImportPreview: Component<ImportPreviewProps> = (props) => {
-  const { site, pageRefs } = props;
-
   function exists(pageRef: PageRef) {
-    return site.pageRefs?.find((ref) => ref.key === pageRef.key) !== undefined;
+    return (
+      props.site.pageRefs?.find((ref) => ref.key === pageRef.key) !== undefined
+    );
   }
 
   return (
-    <section class="surface p-2">
+    <section class="surface p-2 column-l">
       <h4>Import Preview</h4>
       <p class="downscaled">
-        The following pages will be created or updated in the site.
+        The following {props.pageRefs.length} pages will be created or updated
+        in the site.
       </p>
       <table class="full-width">
         <thead>
@@ -34,11 +35,11 @@ export const ImportPreview: Component<ImportPreviewProps> = (props) => {
           </tr>
         </thead>
         <tbody>
-          <For each={pageRefs}>
+          <For each={props.pageRefs}>
             {(pageRef) => (
               <tr>
                 <td>
-                  <code>{`/sites/${site.key}/${pageRef.key}`}</code>
+                  <code>{`/sites/${props.site.key}/${pageRef.key}`}</code>
                 </td>
                 <td>{pageRef.name}</td>
                 <td>{exists(pageRef) ? 'update' : 'create'}</td>

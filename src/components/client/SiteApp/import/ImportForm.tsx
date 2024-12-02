@@ -7,17 +7,17 @@
 import { type Page, parsePage } from '@schemas/PageSchema';
 import type { PageRef, Site } from '@schemas/SiteSchema';
 import { logDebug } from '@utils/logHelpers';
+import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { toDate } from '@utils/schemaHelpers';
 import { type Component, createSignal } from 'solid-js';
 
 interface ImportFolderProps {
   site: Site;
-  newPageRefs: PageRef[];
+  pageRefs: PageRef[];
   setPageRefs: (pageRefs: PageRef[]) => void;
 }
 
 export const ImportForm: Component<ImportFolderProps> = (props) => {
-  const { site, newPageRefs, setPageRefs } = props;
   const [newPages, setNewPages] = createSignal<Page[]>([]);
   const hasPages = () => newPages().length > 0;
 
@@ -34,22 +34,26 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
       const fm = await import('front-matter');
       const { attributes, body } = fm.default(text);
       const pageAttrs: Partial<Page> = attributes as Partial<Page>;
-      const page = parsePage({
-        key: pageAttrs.key || '',
-        name: pageAttrs.name || '',
-        markdownContent: body,
-        tags: pageAttrs.tags || [],
-        createdAt: pageAttrs.createdAt
-          ? new Date(pageAttrs.createdAt)
-          : new Date(),
-        updatedAt: pageAttrs.updatedAt
-          ? new Date(pageAttrs.updatedAt)
-          : new Date(),
-        owners: pageAttrs.owners || [],
-        category: pageAttrs.category || '',
-      });
+      logDebug('ImportForm.parseMarkdownFile', pageAttrs.name);
+      const page = parsePage(
+        {
+          siteKey: props.site.key || '',
+          name: pageAttrs.name || '',
+          markdownContent: body,
+          tags: pageAttrs.tags || [],
+          createdAt: pageAttrs.createdAt
+            ? new Date(pageAttrs.createdAt)
+            : new Date(),
+          updatedAt: pageAttrs.updatedAt
+            ? new Date(pageAttrs.updatedAt)
+            : new Date(),
+          owners: pageAttrs.owners || [],
+          category: pageAttrs.category || '',
+        },
+        toMekanismiURI(pageAttrs.name || ''),
+      );
       setNewPages([...newPages(), page]);
-      logDebug('ImportForm.parseMarkdownFile', page.name);
+      logDebug('ImportForm.parseMarkdownFile', page.key, newPages().length);
       const pageRef: PageRef = {
         key: page.key,
         name: page.name,
@@ -57,7 +61,8 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
         author: page.owners[0],
         category: page.category || '',
       };
-      setPageRefs([...newPageRefs, pageRef]);
+      props.setPageRefs([...props.pageRefs, pageRef]);
+      logDebug('ImportForm.parseMarkdownFile', pageRef, props.pageRefs.length);
     };
     reader.readAsText(file);
   }
@@ -65,7 +70,7 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
   function handleFilesChanged(event: Event) {
     const target = event.target as HTMLInputElement;
     const files = target.files;
-    logDebug('ImportForm.handleFilesChanged', files);
+    // logDebug('ImportForm.handleFilesChanged', files);
 
     // Check if the file is a markdown file, if so handle it as a page.
     if (files) {
@@ -78,13 +83,16 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="file"
-        id="fileInput"
-        name="files[]"
-        multiple
-        onChange={handleFilesChanged}
-      />
+      <label>
+        Select markdown files to import: {props.pageRefs.length}
+        <input
+          type="file"
+          id="fileInput"
+          name="files[]"
+          multiple
+          onChange={handleFilesChanged}
+        />
+      </label>
       <button class="button" type="submit" disabled={!hasPages()}>
         Import
       </button>
