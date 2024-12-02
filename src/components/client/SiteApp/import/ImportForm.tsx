@@ -12,7 +12,6 @@ import type { PageRef, Site } from '@schemas/SiteSchema';
 import { $uid } from '@stores/sessionStore';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { toDate } from '@utils/schemaHelpers';
 import { type Component, createSignal } from 'solid-js';
@@ -67,7 +66,6 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
       const fm = await import('front-matter');
       const { attributes, body } = fm.default(text);
       const pageAttrs: Partial<Page> = attributes as Partial<Page>;
-      logDebug('ImportForm.parseMarkdownFile', pageAttrs.name);
       const page = parsePage(
         {
           siteKey: props.site.key || '',
@@ -86,7 +84,6 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
         toMekanismiURI(pageAttrs.name || ''),
       );
       setNewPages([...newPages(), page]);
-      logDebug('ImportForm.parseMarkdownFile', page.key, newPages().length);
       const pageRef: PageRef = {
         key: page.key,
         name: page.name,
@@ -95,7 +92,6 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
         category: page.category || '',
       };
       props.setPageRefs([...props.pageRefs, pageRef]);
-      logDebug('ImportForm.parseMarkdownFile', pageRef, props.pageRefs.length);
     };
     reader.readAsText(file);
   }
