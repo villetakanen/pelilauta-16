@@ -11,6 +11,15 @@ export const site: Locale = {
   contents: {
     title: 'Sivut',
   },
+  import: {
+    preview: {
+      title: 'Esikatselu',
+      description: 'Tuodaan {count} sivua',
+      action: 'Toiminto',
+      overwrite: 'Korvaa vanha',
+      create: 'Luo uusi',
+    },
+  },
   settings: {
     title: 'Asetukset',
     meta: {

@@ -5,6 +5,7 @@
  */
 
 import type { PageRef, Site } from '@schemas/SiteSchema';
+import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
 
 interface ImportPreviewProps {
@@ -21,33 +22,42 @@ export const ImportPreview: Component<ImportPreviewProps> = (props) => {
 
   return (
     <section class="surface p-2 column-l">
-      <h4>Import Preview</h4>
+      <h4>{t('site:import.preview.title')}</h4>
       <p class="downscaled">
-        The following {props.pageRefs.length} pages will be created or updated
-        in the site.
+        {t('site:import.preview.description', { count: props.pageRefs.length })}
       </p>
-      <table class="full-width">
-        <thead>
-          <tr>
-            <th>Path</th>
-            <th>Title</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <For each={props.pageRefs}>
-            {(pageRef) => (
-              <tr>
-                <td>
-                  <code>{`/sites/${props.site.key}/${pageRef.key}`}</code>
-                </td>
-                <td>{pageRef.name}</td>
-                <td>{exists(pageRef) ? 'update' : 'create'}</td>
-              </tr>
-            )}
-          </For>
-        </tbody>
-      </table>
+      {props.pageRefs.length > 0 && (
+        <table class="full-width">
+          <thead>
+            <tr>
+              <th>{t('entries:site.key')}</th>
+              <th>{t('entries:site.name')}</th>
+              <th>{t('site:import.preview.action')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <For each={props.pageRefs}>
+              {(pageRef) => (
+                <tr>
+                  <td>
+                    <code>{`/sites/${props.site.key}/${pageRef.key}`}</code>
+                  </td>
+                  <td>{pageRef.name}</td>
+                  <td>
+                    {exists(pageRef) ? (
+                      <span class="notify">
+                        {t('site:import.preview.overwrite')}
+                      </span>
+                    ) : (
+                      t('site:import.preview.create')
+                    )}
+                  </td>
+                </tr>
+              )}
+            </For>
+          </tbody>
+        </table>
+      )}
     </section>
   );
 };
