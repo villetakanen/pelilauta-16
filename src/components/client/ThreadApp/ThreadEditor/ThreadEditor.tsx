@@ -1,4 +1,5 @@
 import { CyanEditor } from '@client/shared/CyanEditor';
+import { WithAuth } from '@client/shared/WithAuth';
 import { WithLoader } from '@client/shared/WithLoader';
 import { addThread } from '@firebase/client/threads/addThread';
 import { useStore } from '@nanostores/solid';
@@ -90,30 +91,32 @@ export const ThreadEditor: Component<{
   }
 
   return (
-    <WithLoader loading={suspend()}>
-      <form onsubmit={send}>
-        <div class="content-editor">
-          <ThreadEditorTopBar
-            title={title()}
-            setTitle={setTitle}
-            channel={topic()}
-            setChannel={setTopic}
-            filesUploaded={filesUploaded}
-          />
-          <CyanEditor value={markdownContent()} onInput={handleEditorInput} />
-          {tags().length > 0 && <TagsPreview tags={tags()} />}
-          {files().length && <ImagesPreviewSection files={files()} />}
-          <div class="toolbar">
-            <button type="reset" class="text">
-              {t('actions:cancel')}
-            </button>
-            <button type="submit">
-              <cn-icon noun="send" />
-              <span>{t('actions:send')}</span>
-            </button>
+    <WithAuth allow={!!uid()}>
+      <WithLoader loading={suspend()}>
+        <form onsubmit={send}>
+          <div class="content-editor">
+            <ThreadEditorTopBar
+              title={title()}
+              setTitle={setTitle}
+              channel={topic()}
+              setChannel={setTopic}
+              filesUploaded={filesUploaded}
+            />
+            <CyanEditor value={markdownContent()} onInput={handleEditorInput} />
+            {tags().length > 0 && <TagsPreview tags={tags()} />}
+            {files().length && <ImagesPreviewSection files={files()} />}
+            <div class="toolbar">
+              <button type="reset" class="text">
+                {t('actions:cancel')}
+              </button>
+              <button type="submit">
+                <cn-icon noun="send" />
+                <span>{t('actions:send')}</span>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-    </WithLoader>
+        </form>
+      </WithLoader>
+    </WithAuth>
   );
 };

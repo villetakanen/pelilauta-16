@@ -26,8 +26,8 @@ New features and improvements:
 | *Channel page create action* | done     | Visible to authenticated, links to create thread route, presets channel to current |
 | *Create thread view*         | done     | Form with title, content, and tags fields |
 | *Create thread: title*       | done     | Required, max 30 characters |
-| *Field: Content              | done     | WYSIWYG editor |
-| *Field: Content, Paste to*   | BUG      | Paste from clipboard to thread content field |
+| *Field: Content*             | done     | Markdown editor |
+| *Field: Content, Paste to*   | done     | Paste from clipboard to thread content field |
 | *Field: Name*                | BUG      | Required, max 30 characters |
 
 #### Edit Thread

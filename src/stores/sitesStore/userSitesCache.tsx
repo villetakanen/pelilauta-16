@@ -6,7 +6,7 @@ import {
 } from '@schemas/SiteSchema';
 import { $uid } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { type Atom, type WritableAtom, onMount } from 'nanostores';
+import { type WritableAtom, onMount } from 'nanostores';
 
 /**
  * A nanostore for caching the user's sites.
