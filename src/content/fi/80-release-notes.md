@@ -5,7 +5,7 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.2.x (ongoing)
+### 16.3.0
 - Moved overrides back to the Cyan design system.
 - Added poster slot on the layout with a side tray.
 - Copy paste to editor fixed in page editor.
@@ -13,6 +13,8 @@ noun: 'monsters'
 - Restored onboarding card for new users.
 - Client side `marked` is now imported dynamically to reduce bundle size.
 - Site and Site Page social share and searchability improvements.
+- Import one or more pages from markdown files to a site [Read more](/docs/fi/11-imports)
+- Personal site-library cached to local storage for faster loading.
 
 ### 16.2.0
 - Cyan design system updates for mobile use.
