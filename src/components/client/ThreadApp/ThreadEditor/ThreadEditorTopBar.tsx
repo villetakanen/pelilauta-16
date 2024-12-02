@@ -40,6 +40,7 @@ export const ThreadEditorTopBar: Component<ThreadEditorTopBarProps> = (
         <label class="grow">
           {t('entries:thread.title')}
           <input
+            required
             name="title"
             type="text"
             value={props.title}

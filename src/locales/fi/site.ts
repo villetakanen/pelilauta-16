@@ -11,6 +11,15 @@ export const site: Locale = {
   contents: {
     title: 'Sivut',
   },
+  import: {
+    preview: {
+      title: 'Esikatselu',
+      description: 'Tuodaan {count} sivua',
+      action: 'Toiminto',
+      overwrite: 'Korvaa vanha',
+      create: 'Luo uusi',
+    },
+  },
   settings: {
     title: 'Asetukset',
     meta: {
@@ -84,6 +93,12 @@ export const site: Locale = {
       title: 'Tuo ja vie',
       description:
         'Voit viedä koko sivuston sisällön markdown-muodossa zip-tiedostona. Sivujen metadata tallennetaan markdown frontmatter -muotoon.',
+    },
+    import: {
+      title: 'Tuo',
+      description:
+        'Voit tuoda sivuston sisällön markdown-muodossa. Ohjeita frontmatter-metadatasta löytyy dokumentaatiosta {link}.',
+      fromFolder: 'Tuo kansio',
     },
   },
   deletePage: {

@@ -39,5 +39,5 @@ export function subscribeToProfile(uid: string) {
 }
 export function unsubscribeFromProfile() {
   $profile.set(null);
-  unsubscribe();
+  unsubscribe?.();
 }

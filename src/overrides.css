@@ -392,3 +392,13 @@ cn-card p:last-of-type {
     transparent 10%
   );
 }
+.full-width {
+  width: 100%;
+}
+.astro-code {
+  padding: var(--cn-grid);
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}

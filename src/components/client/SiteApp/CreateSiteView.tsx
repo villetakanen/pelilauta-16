@@ -1,15 +1,15 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import { WithAuth } from '@client/shared/WithAuth';
+import { addPage } from '@firebase/client/site/addPage';
 import { createSite } from '@firebase/client/site/createSite';
 import { useStore } from '@nanostores/solid';
-import { PAGES_COLLECTION_NAME } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
-import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
+import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { generateFrontPage } from '@utils/siteUtils';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import {
   type Component,
   createEffect,
@@ -81,14 +81,6 @@ export const CreateSiteView: Component = () => {
           customPageKeys: usePlainTextURL(),
           homepage: key,
           owners: [uid()],
-          pageRefs: [
-            {
-              key: key,
-              name: t('site:frontPage'),
-              author: uid(),
-              flowTime: Date.now(),
-            },
-          ],
           key,
         },
         key,
@@ -96,23 +88,14 @@ export const CreateSiteView: Component = () => {
 
       const siteKey = await createSite(site);
 
-      const frontPage = generateFrontPage(site);
-
-      // Save the front page to the database
-      await setDoc(
-        doc(
-          db,
-          SITES_COLLECTION_NAME,
-          siteKey,
-          PAGES_COLLECTION_NAME,
-          frontPage.key,
-        ),
-        toFirestoreEntry(frontPage),
-      );
+      const frontPage = generateFrontPage(site, uid());
+      // Save the front page
+      addPage(siteKey, frontPage, frontPage.key);
 
       // Redirect to the new site
-      window.location.href = `/sites/${siteKey}`;
+      // window.location.href = `/sites/${siteKey}`;
     } catch (e) {
+      pushSnack(t('site:create.snacks.errorCreatingSite'));
       logError(e);
     }
   }
