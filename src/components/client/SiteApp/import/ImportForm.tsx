@@ -4,8 +4,14 @@
  * Child of import/ImportFolder.tsx
  */
 
+import { addPage } from '@firebase/client/site/addPage';
+import { updateSite } from '@firebase/client/site/updateSite';
+import { useStore } from '@nanostores/solid';
 import { type Page, parsePage } from '@schemas/PageSchema';
 import type { PageRef, Site } from '@schemas/SiteSchema';
+import { $uid } from '@stores/sessionStore';
+import { pushSessionSnack } from '@utils/client/snackUtils';
+import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { toDate } from '@utils/schemaHelpers';
@@ -20,9 +26,36 @@ interface ImportFolderProps {
 export const ImportForm: Component<ImportFolderProps> = (props) => {
   const [newPages, setNewPages] = createSignal<Page[]>([]);
   const hasPages = () => newPages().length > 0;
+  const uid = useStore($uid);
 
-  function handleSubmit(event: Event) {
+  async function handleSubmit(event: Event) {
     event.preventDefault();
+    const pages = newPages();
+    const pageRefs = props.pageRefs;
+
+    // Add the pages to the site.
+    for (const page of pages) {
+      await addPage(props.site.key, page, page.key);
+    }
+
+    // Merge the new pageRefs with the existing pageRefs.
+    const newPageRefs: PageRef[] = props.site.pageRefs
+      ? [...props.site.pageRefs]
+      : [];
+    for (const pageRef of pageRefs) {
+      const index = newPageRefs.findIndex((pr) => pr.key === pageRef.key);
+      if (index === -1) {
+        newPageRefs.push(pageRef);
+      } else {
+        newPageRefs[index] = pageRef;
+      }
+    }
+    await updateSite({ key: props.site.key, pageRefs: newPageRefs });
+
+    pushSessionSnack(t('site:import.importedPages', { count: pages.length }));
+
+    // Navigate to ToC
+    window.location.href = `/sites/${props.site.key}/toc`;
   }
 
   function parseMarkdownFile(file: File) {
@@ -47,7 +80,7 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
           updatedAt: pageAttrs.updatedAt
             ? new Date(pageAttrs.updatedAt)
             : new Date(),
-          owners: pageAttrs.owners || [],
+          owners: [uid()],
           category: pageAttrs.category || '',
         },
         toMekanismiURI(pageAttrs.name || ''),
@@ -58,7 +91,7 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
         key: page.key,
         name: page.name,
         flowTime: toDate(page.updatedAt).getTime(),
-        author: page.owners[0],
+        author: uid(),
         category: page.category || '',
       };
       props.setPageRefs([...props.pageRefs, pageRef]);
