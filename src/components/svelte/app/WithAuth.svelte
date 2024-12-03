@@ -12,7 +12,9 @@ const { allow, children, message }: Props = $props();
 </script>
 
 {#if allow}
+<div>
   {@render children?.()}
+</div>
 {:else}
   <div class="content-columns">
     <article>

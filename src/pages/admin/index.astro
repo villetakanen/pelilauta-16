@@ -1,6 +1,7 @@
 ---
 import { ForumAdminApp } from '@client/admin/ForumAdminApp';
-import Page from '@layouts/Page.astro';
+import AdminTray from '@svelte/admin/AdminTray.svelte';
+import PageWithTray from '@layouts/PageWithTray.astro';
 
 // This feature is hidden in the production env with a feature flag
 // SECRET_FEATURE_FLAG_Admin_tools
@@ -12,6 +13,12 @@ if (!visible) {
   return Astro.redirect('/');
 }
 ---
-<Page title="Admin" description="Admin tools for pelilauta">
- { visible ? <ForumAdminApp client:only="solid-js"/> : <div>Feature Disabled</div> }
-</Page>
+<PageWithTray title="Admin" description="Admin tools for pelilauta">
+  <div slot="app-tray">
+    <AdminTray client:only="svelte"/> 
+   </div>
+ { visible ? (
+
+ <ForumAdminApp client:only="solid-js"/>
+ ): <div>Feature Disabled</div> }
+</PageWithTray>
