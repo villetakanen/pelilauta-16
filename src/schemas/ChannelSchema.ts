@@ -7,6 +7,7 @@ export const ChannelSchema = z.object({
   slug: z.string(),
   threadCount: z.number().default(0),
   category: z.string().optional(),
+  flowTime: z.number().optional(),
 });
 
 export type Channel = z.infer<typeof ChannelSchema>;
@@ -17,5 +18,6 @@ export function parseChannel(c: Partial<Channel>) {
     description: c.description || '',
     icon: c.icon || 'discussion',
     category: c.category || 'Pelilauta',
+    flowTime: c.flowTime || 0,
   });
 }

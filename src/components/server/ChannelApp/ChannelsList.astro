@@ -1,0 +1,41 @@
+---
+import type { Channel } from '@schemas/ChannelSchema';
+import ChannelInfoRow from '@svelte/channels/ChannelInfoRow.svelte';
+
+/**
+ * Takes in Channels[] and prints a section for each category
+ * */
+interface Props {
+  channels: Channel[];
+}
+
+const { channels } = Astro.props;
+
+function categories(): string[] {
+  return Array.from(
+    new Set(channels.map((channel: Channel) => channel.category)),
+  ) as string[];
+}
+
+function inCategory(cat: string) {
+  return channels.filter((channel: Channel) => channel.category === cat);
+}
+---
+<div class="content-columns">
+  <div class="column-l">
+    {
+        categories().map((cat: string) => (
+            <div class="surface p-2 border-radius mb-2">
+            <h3>{cat}</h3>
+            {
+                inCategory(cat).map((channel: Channel) => (
+                  <ChannelInfoRow channel={channel} client:load />   
+                ))
+                
+            }
+            
+            </div>
+        ))
+    }
+  </div>
+</div>

@@ -1,0 +1,41 @@
+---
+import Page from '@layouts/Page.astro';
+import { type Channel, parseChannel } from '@schemas/ChannelSchema';
+import ChannelList from '@server/ChannelApp/ChannelsList.astro';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
+import { t } from '@utils/i18n';
+
+const title = `${t('app:shortname')} - ${t('threads:forum.title')}`;
+const description = t('threads:forum.description');
+
+// Lets fetch the channels from the API
+const origin = new URL(Astro.request.url).origin;
+// Fetch site data from the api
+const channelsResponse = await fetch(`${origin}/api/meta/channels.json`);
+const channelsData = await channelsResponse.json();
+/*
+ [{
+    "description": "Pelilautaan liittyvät keskustelut, palaute, viat jne.",
+    "icon": "fox",
+    "name": "Pelilauta",
+    "slug": "pelilauta",
+    "threadCount": 1,
+    "category": "Meta"
+  },]
+*/
+const channels = channelsData.map((channel: Partial<Channel>) =>
+  parseChannel(channel),
+);
+---
+<Page title={title} description={description}>
+  <ChannelList channels={channels} />
+
+  <BackgroundPoster
+    slot="app-background-poster"
+    src="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-1.webp"
+    md="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-1-960.webp"
+  />
+  <p class="text-caption text-center" style="opacity:0.44" slot="app-footer-credits">
+    Taustakuva © Juno Viinikka (<a href="https://linktr.ee/junowski">https://linktr.ee/junowski</a>)
+  </p>
+</Page>
