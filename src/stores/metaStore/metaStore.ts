@@ -16,6 +16,7 @@ export const $appMeta = persistentAtom<AppMeta>(
     },
   },
 );
+export const appMeta = $appMeta;
 
 onMount($appMeta, () => {
   fetchAppMeta();
