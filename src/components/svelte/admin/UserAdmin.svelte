@@ -3,9 +3,19 @@ import { getAllAccounts } from '@firebase/client/admin/getAllAccounts';
 import { appMeta } from '@stores/metaStore/metaStore';
 import { uid } from '@stores/sessionStore';
 import WithAuth from '@svelte/app/WithAuth.svelte';
+import User from './User.svelte';
 
 $: allow = $appMeta.admins.includes($uid);
 </script>
+
+<style>
+.user-grid {
+  display: grid;
+  grid-template-columns: 4fr 4fr 1fr 1fr;
+  gap: var(--cn-grid);
+  align-items: center;
+}
+</style>
 
 <WithAuth {allow}>
   <div class="content-columns">
@@ -14,13 +24,17 @@ $: allow = $appMeta.admins.includes($uid);
       {#await getAllAccounts()}
         <cn-loader></cn-loader>
       {:then accounts}
+      <div class="user-grid">
+        <div class="elevation-1 p-2">NICK</div>
+        <div class="elevation-1 p-2">LAST LOGIN</div>
+        <div class="elevation-1 p-2">A</div>
+        <div class="elevation-1 p-2">FROZEN</div>
         {#each accounts as account}
-          <div>
-            <p>{account.uid}</p>
-          </div>
+          <User {account} />  
         {/each}
+        </div>
         {:catch error}
-            <p>{error.message}</p>
+          <p>{error.message}</p>
         {/await}
     </article>
   </div>

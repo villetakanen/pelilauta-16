@@ -12,6 +12,7 @@ export const AccountSchema = z.object({
   showAdminTools: z.string().optional(), // true or false, admin tools check admin privileges,
   language: z.string().optional(),
   // and this is used only for the UX of the App
+  frozen: z.boolean().optional(),
 });
 
 export type Account = z.infer<typeof AccountSchema>;

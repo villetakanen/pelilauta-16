@@ -18,5 +18,9 @@ export async function getAllAccounts() {
     accounts.push(parseAccount(doc.data(), doc.id));
   }
 
+  accounts.sort(
+    (a, b) => (b.lastLogin?.getTime() || 0) - (a?.lastLogin?.getTime() || 0),
+  );
+
   return accounts;
 }
