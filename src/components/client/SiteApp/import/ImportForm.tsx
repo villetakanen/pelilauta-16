@@ -10,8 +10,9 @@ import { useStore } from '@nanostores/solid';
 import { type Page, parsePage } from '@schemas/PageSchema';
 import type { PageRef, Site } from '@schemas/SiteSchema';
 import { $uid } from '@stores/sessionStore';
-import { pushSessionSnack } from '@utils/client/snackUtils';
+import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
+import { logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { toDate } from '@utils/schemaHelpers';
 import { type Component, createSignal } from 'solid-js';
@@ -26,15 +27,25 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
   const [newPages, setNewPages] = createSignal<Page[]>([]);
   const hasPages = () => newPages().length > 0;
   const uid = useStore($uid);
+  const [fileCount, setFileCount] = createSignal(0);
+  const [completedCount, setCompleteFileCount] = createSignal(0);
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
     const pages = newPages();
     const pageRefs = props.pageRefs;
+    setFileCount(pages.length);
+    setCompleteFileCount(0);
 
     // Add the pages to the site.
     for (const page of pages) {
-      await addPage(props.site.key, page, page.key);
+      try {
+        await addPage(props.site.key, page, page.key);
+      } catch (error) {
+        logError('ImportForm.handleSubmit', error);
+        pushSnack(t('site:import.errorImportingPage', { name: page.name }));
+      }
+      setCompleteFileCount(completedCount() + 1);
     }
 
     // Merge the new pageRefs with the existing pageRefs.
@@ -113,7 +124,10 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Select markdown files to import: {props.pageRefs.length}
+        {t('site:import.massImport.description', {
+          complete: completedCount(),
+          count: fileCount(),
+        })}
         <input
           type="file"
           id="fileInput"
@@ -123,7 +137,7 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
         />
       </label>
       <button class="button" type="submit" disabled={!hasPages()}>
-        Import
+        {t('actions:import')}
       </button>
     </form>
   );

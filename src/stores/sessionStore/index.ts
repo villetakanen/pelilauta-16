@@ -22,6 +22,7 @@ export const $theme = computed(
   $account,
   (account) => account?.lightMode || 'dark',
 );
+export const uid = $uid;
 
 // Session loading state - used to determine if the session is active
 type LoadingStateValue = 'initial' | 'loading' | 'active';

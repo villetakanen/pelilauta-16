@@ -11,7 +11,8 @@
       "@schemas/*": ["src/schemas/*"],
       "@layouts/*": ["src/layouts/*"],
       "@stores/*": ["src/stores/*"],
-      "@firebase/*": ["src/firebase/*"]
+      "@firebase/*": ["src/firebase/*"],
+      "@svelte/*": ["src/components/svelte/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"

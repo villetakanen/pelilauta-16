@@ -35,6 +35,7 @@ export const $profiles = persistentAtom<Record<string, PublicProfile>>(
     },
   },
 );
+export const profiles = $profiles;
 
 const $loading = atom<string[]>([]);
 
@@ -100,6 +101,49 @@ async function fetchProfile(key: string) {
     });
   }
   $loading.set($loading.get().filter((k) => k !== key));
+}
+/**
+ * Directly fetch the profile entry from the cache, or
+ * fetch it from the server if it is not available.
+ * @param key the uid of the profile
+ */
+export async function fetchProfileEntry(key: string): Promise<PublicProfile> {
+  const profile = $profiles.get()[key];
+  if (profile) {
+    return profile;
+  }
+
+  const publicProfileDoc = await getDoc(doc(db, 'profiles', key));
+
+  if (publicProfileDoc.exists()) {
+    const profile = PublicProfileSchema.parse({
+      ...publicProfileDoc.data(),
+      key,
+      username:
+        publicProfileDoc.data().username || toFid(publicProfileDoc.data().nick),
+    });
+    profiles.set({
+      ...profiles.get(),
+      [key]: profile,
+    });
+    return profile;
+  }
+
+  const anon = createEmptyPublicProfile(key);
+  profiles.set({
+    ...profiles.get(),
+    [key]: anon,
+  });
+
+  return anon;
+}
+
+function createEmptyPublicProfile(key: string): PublicProfile {
+  return {
+    key,
+    nick: t('app:meta.anonymous'),
+    username: t('app:meta.anonymous'),
+  };
 }
 
 export async function fetchAllProfiles() {

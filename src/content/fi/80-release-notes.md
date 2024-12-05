@@ -5,6 +5,12 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.4.0
+- Added support for svelte based components in the layout.
+- Fixed latest login and enrollment page functionality.
+- Added admin page for managing users (not available in the public version).
+- Added feature for mass-imports of markdown files to a site.
+
 ### 16.3.0
 - Moved overrides back to the Cyan design system.
 - Added poster slot on the layout with a side tray.

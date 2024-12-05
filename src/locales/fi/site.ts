@@ -19,6 +19,9 @@ export const site: Locale = {
       overwrite: 'Korvaa vanha',
       create: 'Luo uusi',
     },
+    massImport: {
+      description: 'Tuodaan {complete} / {count} sivua',
+    },
   },
   settings: {
     title: 'Asetukset',
@@ -31,6 +34,7 @@ export const site: Locale = {
     },
   },
   snacks: {
+    siteCreated: 'Sivusto {name} luotu',
     siteDeleted: 'Sivusto {name} poistettu',
     errorDeletingSite: 'Virhe poistettaessa sivustoa',
   },
