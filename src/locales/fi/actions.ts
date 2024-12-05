@@ -18,6 +18,7 @@ export const actions: Locale = {
     asZippedFolder: 'Vie zip-tiedostona',
   },
   fork: 'Luo lanka',
+  import: 'Tuo',
   login: 'Kirjaudu sisään',
   logout: 'Kirjaudu ulos',
   send: 'Lähetä',
