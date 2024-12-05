@@ -31,6 +31,7 @@ export const site: Locale = {
     },
   },
   snacks: {
+    siteCreated: 'Sivusto {name} luotu',
     siteDeleted: 'Sivusto {name} poistettu',
     errorDeletingSite: 'Virhe poistettaessa sivustoa',
   },

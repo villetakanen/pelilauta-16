@@ -4,7 +4,7 @@ import { addPage } from '@firebase/client/site/addPage';
 import { createSite } from '@firebase/client/site/createSite';
 import { useStore } from '@nanostores/solid';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
-import { pushSnack } from '@utils/client/snackUtils';
+import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
@@ -93,7 +93,8 @@ export const CreateSiteView: Component = () => {
       addPage(siteKey, frontPage, frontPage.key);
 
       // Redirect to the new site
-      // window.location.href = `/sites/${siteKey}`;
+      pushSessionSnack(t('site:snacks.siteCreated'), { name: site.name });
+      window.location.href = `/sites/${siteKey}`;
     } catch (e) {
       pushSnack(t('site:create.snacks.errorCreatingSite'));
       logError(e);
