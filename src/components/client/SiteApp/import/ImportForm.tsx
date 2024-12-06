@@ -4,7 +4,9 @@
  * Child of import/ImportFolder.tsx
  */
 
+import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import { addPage } from '@firebase/client/site/addPage';
+import { setPage } from '@firebase/client/site/setPage';
 import { updateSite } from '@firebase/client/site/updateSite';
 import { useStore } from '@nanostores/solid';
 import { type Page, parsePage } from '@schemas/PageSchema';
@@ -29,6 +31,7 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
   const uid = useStore($uid);
   const [fileCount, setFileCount] = createSignal(0);
   const [completedCount, setCompleteFileCount] = createSignal(0);
+  const [overwrite, setOverwrite] = createSignal(false);
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
@@ -40,7 +43,15 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
     // Add the pages to the site.
     for (const page of pages) {
       try {
-        await addPage(props.site.key, page, page.key);
+        if (props.site.pageRefs && overwrite()) {
+          if (props.site.pageRefs.some((pr) => pr.key === page.key)) {
+            await setPage(props.site.key, page, page.key);
+          } else {
+            await addPage(props.site.key, page, page.key);
+          }
+        } else {
+          await addPage(props.site.key, page, page.key);
+        }
       } catch (error) {
         logError('ImportForm.handleSubmit', error);
         pushSnack(t('site:import.errorImportingPage', { name: page.name }));
@@ -136,6 +147,13 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
           onChange={handleFilesChanged}
         />
       </label>
+      <cn-toggle-button
+        label={t('site:import.preview.overwrite')}
+        pressed={overwrite()}
+        onChange={(event: Event) =>
+          setOverwrite((event.target as CyanToggleButton).pressed)
+        }
+      />
       <button class="button" type="submit" disabled={!hasPages()}>
         {t('actions:import')}
       </button>
