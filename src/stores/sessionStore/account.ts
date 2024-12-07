@@ -4,7 +4,7 @@ import {
   type Account,
   parseAccount,
 } from '@schemas/AccountSchema';
-import { logWarn } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import { atom, computed } from 'nanostores';
 
 /**
@@ -17,6 +17,8 @@ export const $account = persistentAtom<Account | null>(
   {
     encode: JSON.stringify,
     decode: (data) => {
+      if (!data || data === 'null') return null;
+      logDebug('AccountStore', 'decode', 'Decoding account data', data);
       const object = parseAccount(JSON.parse(data));
       return object;
     },

@@ -5,6 +5,7 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import { rewriteWikiLinks } from '@utils/server/contentHelpers';
 import { renderAssetMarkup } from '@utils/server/renderAssetMarkup';
 import { renderDice } from '@utils/server/renderDice';
+import { renderProfileTags } from '@utils/server/renderProfileTags';
 import { renderTags } from '@utils/server/renderTags';
 import type { APIContext } from 'astro';
 import { marked } from 'marked';
@@ -50,7 +51,12 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
     // custom markdown extensions
     if (page.markdownContent)
       page.htmlContent = rewriteWikiLinks(
-        await marked(renderTags(page.markdownContent, url.origin) || ''),
+        await marked(
+          renderProfileTags(
+            renderTags(page.markdownContent, url.origin),
+            url.origin,
+          ) || '',
+        ),
         page.siteKey,
         url.origin,
       );
