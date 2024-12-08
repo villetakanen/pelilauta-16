@@ -9,6 +9,8 @@ export const meta: Locale = {
     quick: 'The Quick',
     mekanismi: 'Mekanismi',
     pbta: 'PBTA',
+    hood: 'Hood',
+    pathfinder: 'Pathfinder',
   },
   licenses: {
     none: '',
