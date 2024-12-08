@@ -7,4 +7,5 @@ export const systemToNounMapping: Record<string, string> = {
   mekanismi: 'mekanismi',
   pbta: 'pbta',
   hood: 'hood',
+  pathfinder: 'pathfinder',
 };

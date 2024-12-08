@@ -2,6 +2,7 @@ import { serverDB } from '@firebase/server';
 import { PAGES_COLLECTION_NAME, parsePage } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { addSiteToWikilinks } from '@utils/server/addSiteToWikilinks';
 import { rewriteWikiLinks } from '@utils/server/contentHelpers';
 import { renderAssetMarkup } from '@utils/server/renderAssetMarkup';
 import { renderDice } from '@utils/server/renderDice';
@@ -50,16 +51,22 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
     // F.ex. support for attach:file.jpg style asset links, or other
     // custom markdown extensions
     if (page.markdownContent)
-      page.htmlContent = rewriteWikiLinks(
+      page.htmlContent = addSiteToWikilinks(
         await marked(
           renderProfileTags(
             renderTags(page.markdownContent, url.origin),
             url.origin,
           ) || '',
         ),
-        page.siteKey,
+        siteKey,
         url.origin,
       );
+
+    page.htmlContent = rewriteWikiLinks(
+      page.htmlContent || '',
+      siteKey,
+      url.origin,
+    );
 
     page.htmlContent = renderDice(
       renderAssetMarkup(page.htmlContent || '', site, url.origin),
