@@ -410,3 +410,20 @@ hr {
   margin-left: calc(var(--cn-gap) * -1);
   margin-right: calc(var(--cn-gap) * -1);
 }
+
+/* Light mode overrides */
+@media (prefers-color-scheme: light) {
+  body {
+    --color-heading-1: var(--chroma-surface-60);
+    --color-heading-2: var(--chroma-surface-70);
+    --color-link: var(--chroma-surface-80);
+    --color-secondary: var(--chroma-primary-70);
+    --color-on-secondary: var(--chroma-primary-10);
+  }
+  a.cta {
+    color: var(--chroma-primary-10);
+  }
+  h3 {
+    text-shadow: white 0 0 16px;
+  }
+}
