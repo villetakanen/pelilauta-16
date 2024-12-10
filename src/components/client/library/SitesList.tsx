@@ -18,8 +18,12 @@ export const SitesList: Component = () => {
   return (
     <>
       <div class="content-columns">
-        <article class="column-l">
+        <article class="column-l flex justify-space-between">
           <h4>{t('library:sites.title')}</h4>
+          <a href="/sites" class="button">
+            <cn-icon noun="mekanismi" small />
+            <span class="sm-hidden">{t('site:siteList.title')}</span>
+          </a>
         </article>
       </div>
       <div class="content-cards">
