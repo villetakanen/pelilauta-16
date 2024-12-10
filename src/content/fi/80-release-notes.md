@@ -5,6 +5,12 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.4.x (ongoing)
+- Cross-linked personal and public sites.
+- Cyan updates for light mode, headings
+- Entroll fixes for a non-returning user
+- Mass-import supports overwriting existing pages
+
 ### 16.4.0
 - Added support for svelte based components in the layout.
 - Fixed latest login and enrollment page functionality.

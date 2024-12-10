@@ -1,5 +1,6 @@
 ---
 import { type Site, parseSite } from '@schemas/SiteSchema';
+import MySitesButton from '@svelte/sites/MySitesButton.svelte';
 import { t } from '@utils/i18n';
 import SiteListItem from './SiteListItem.astro';
 
@@ -12,7 +13,11 @@ const sites = (sitesJSON as Array<Site>).map((site) =>
 );
 ---
 <div class="column-l">
+  <div class="flex justify-space-between align-center">
     <h2>{t('site:siteList.title')}</h2>
+    <MySitesButton client:only="svelte"/>
+
+  </div>
     
         {sites && sites.map((site) => (
             <SiteListItem site={site} />
