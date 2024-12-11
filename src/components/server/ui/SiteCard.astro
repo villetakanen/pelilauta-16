@@ -1,6 +1,6 @@
 ---
-import { SiteOwnerToken } from '@client/sites/SiteOwnerToken';
 import type { Site } from '@schemas/SiteSchema';
+import SiteOwnerToken from '@svelte/sites/SiteOwnerToken.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 import { systemToNoun } from '@utils/schemaHelpers';
 
@@ -19,7 +19,7 @@ const { site } = Astro.props;
   <p>{site.description}</p>
 
   <div slot="actions" class="toolbar">
-    <SiteOwnerToken {...site} client:only="solid-js"/>
+    <SiteOwnerToken {site} client:only="svelte"/>
     <div class="grow"></div>
     <p>{toDisplayString(site.flowTime)}</p>
   </div>

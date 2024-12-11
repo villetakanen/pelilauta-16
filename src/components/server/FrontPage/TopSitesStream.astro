@@ -6,7 +6,7 @@ import { t } from '@utils/i18n';
 
 const origin = Astro.url.origin;
 
-const siteListResponse = await fetch(`${origin}/api/sites?limit=3`);
+const siteListResponse = await fetch(`${origin}/api/sites?limit=5`);
 const sitesJSON = await siteListResponse.json();
 const sites = (sitesJSON as Array<Site>).map((site) =>
   parseSite(site, site.key),
