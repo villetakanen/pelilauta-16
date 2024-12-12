@@ -311,12 +311,11 @@ p cn-dice {
   #cn-background-poster::before {
     background: linear-gradient(
       180deg in hsl,
-      transparent 70%,
+      color-mix(in hsl, var(--chroma-primary-50), transparent 90%) 10%,
+      color-mix(in hsl, var(--chroma-surface-40), transparent 80%) 30%,
+      color-mix(in hsl, var(--chroma-primary-90), transparent 70%) 60%,
       var(--color-primary)
     );
-  }
-  body:has(#cn-background-poster) nav.rail {
-    background: var(--chroma-surface-10);
   }
 }
 dialog {
@@ -412,18 +411,15 @@ hr {
 }
 
 /* Light mode overrides */
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) and (min-width: 621px) {
   body {
-    --color-heading-1: var(--chroma-surface-60);
-    --color-heading-2: var(--chroma-surface-70);
+    --color-heading-1: var(--chroma-surface-80);
+    --color-heading-2: var(--chroma-surface-80);
     --color-link: var(--chroma-surface-80);
     --color-secondary: var(--chroma-primary-70);
     --color-on-secondary: var(--chroma-primary-10);
   }
   a.cta {
     color: var(--chroma-primary-10);
-  }
-  h3 {
-    text-shadow: white 0 0 16px;
   }
 }
