@@ -45,16 +45,26 @@ export const CreatePageForm: Component<CreatePageFormProps> = (props) => {
     window.location.href = `/sites/${props.site.key}/${slug}`;
   };
 
+  function isMissing() {
+    return (props.name?.length || 0) > 0;
+  }
+
   return (
     <div class="content-columns">
       <WithAuth allow={allow()}>
         <form onSubmit={handleSubmit}>
+          <h2>{t('site:create.page.title')}</h2>
+          {isMissing() && (
+            <p>
+              <i>{t('site:create.page.missing', { name: `${props.name}` })}</i>
+            </p>
+          )}
           <label>
             {t('entries:page.name')}
             <input type="text" name="name" value={`${props.name}`} />
           </label>
           <div class="toolbar justify-end">
-            <button type="button" onClick={cancel}>
+            <button type="button" class="text" onClick={cancel}>
               {t('actions:cancel')}
             </button>
             <button type="submit">

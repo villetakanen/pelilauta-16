@@ -1,11 +1,9 @@
-import { MediaSelectDialog } from '@client/media/MediaSelectDialog';
 import { useStore } from '@nanostores/solid';
 import { t } from '@utils/i18n';
-import { type Component, createSignal } from 'solid-js';
+import type { Component } from 'solid-js';
 import { $profile } from 'src/stores/sessionStore';
 
 export const AvatarButton: Component = () => {
-  const [mediaDialogOpen, setMediaDialogOpen] = createSignal(false);
   const profile = useStore($profile);
 
   function closeOnClick(e: Event) {
@@ -15,7 +13,6 @@ export const AvatarButton: Component = () => {
 
   function onLibrariesClick() {
     // open media dialog
-    setMediaDialogOpen(true);
   }
 
   return (
@@ -32,7 +29,6 @@ export const AvatarButton: Component = () => {
           </p>
         </nav>
       </div>
-      <MediaSelectDialog open={mediaDialogOpen()} />
     </>
   );
 };
