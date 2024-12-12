@@ -47,6 +47,10 @@ export const site: Locale = {
   },
   create: {
     title: 'Luo sivusto',
+    page: {
+      title: 'Luo sivu',
+      missing: 'Sivua {name} ei vielä ole olemassa, voit luoda sen alta.',
+    },
   },
   dangerZone: {
     title: 'Poista sivusto',

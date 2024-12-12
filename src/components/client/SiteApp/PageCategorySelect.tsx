@@ -28,7 +28,14 @@ export const PageCategorySelect = (props: PageCategorySelectProps) => {
       >
         <option value="">{t('entries:page.defaults.category')}</option>
         <For each={site.pageCategories}>
-          {(category) => <option value={category.slug}>{category.name}</option>}
+          {(category) => (
+            <option
+              selected={category.slug === pageCategory}
+              value={category.slug}
+            >
+              {category.name}
+            </option>
+          )}
         </For>
       </select>
     </label>
