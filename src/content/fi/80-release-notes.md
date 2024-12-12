@@ -13,6 +13,8 @@ noun: 'monsters'
 - Fixed 404 wikipage functionality (opens create a new page view for owners and editors of a site)
 - Created a new `page` view uses correct button type for canceling the page creation
 - Page editor no longer "forgets" the page category when loading the form
+- Light mode contrast and usability overrides polish
+- Syndicated blog post header links correctly to the original post
 
 ### 16.4.0
 - Added support for svelte based components in the layout.
