@@ -112,4 +112,7 @@ export const site: Locale = {
   deletePage: {
     info: 'Olet poistamassa sivua {name}. Toimintoa ei voi peruuttaa.',
   },
+  latestChanges: {
+    title: 'Muutokset',
+  },
 };
