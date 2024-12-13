@@ -5,9 +5,9 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.4.x (ongoing)
+### 16.5.0
 - Cross-linked personal and public sites.
-- Cyan updates for light mode, headings
+- Cyan updates for light mode, headings, cards, icons and notifications.
 - Entroll fixes for a non-returning user
 - Mass-import supports overwriting existing pages
 - Fixed 404 wikipage functionality (opens create a new page view for owners and editors of a site)
@@ -15,6 +15,7 @@ noun: 'monsters'
 - Page editor no longer "forgets" the page category when loading the form
 - Light mode contrast and usability overrides polish
 - Syndicated blog post header links correctly to the original post
+- Added latest-changes section for the site sidebar
 
 ### 16.4.0
 - Added support for svelte based components in the layout.
