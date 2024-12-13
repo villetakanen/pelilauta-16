@@ -1,3 +1,4 @@
+import LatestChanges from '@server/SiteApp/LatestChanges.astro';
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {
@@ -112,4 +113,7 @@ export const site: Locale = {
   deletePage: {
     info: 'Olet poistamassa sivua {name}. Toimintoa ei voi peruuttaa.',
   },
+  latestChanges: {
+    title: 'Muutokset',
+  }
 };
