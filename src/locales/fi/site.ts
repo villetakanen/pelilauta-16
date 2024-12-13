@@ -1,4 +1,3 @@
-import LatestChanges from '@server/SiteApp/LatestChanges.astro';
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {
