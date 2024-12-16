@@ -40,10 +40,15 @@ const testSite = {
   createdAt: FieldValue.serverTimestamp(),
   updatedAt: FieldValue.serverTimestamp(),
   flowTime: FieldValue.serverTimestamp(),
-  owners: ['e2e-test-owner'],
+  owners: ['e2e-test-owner', 'JatmZFE8X9coxETMz2sUs5YW1r22'],
   homepage: 'front-page',
   hidden: true,
   sortOrder: 'name',
+  pageCategories: [
+    { slug: 'alpha', name: 'Alpha' },
+    { slug: 'beta', name: 'Beta' },
+    { slug: 'omega', name: 'Omega' },
+  ],
 };
 serverDB.collection('sites').doc(testSite.key).set(testSite);
 console.log('Test site created:', testSite.key);

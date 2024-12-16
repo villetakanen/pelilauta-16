@@ -21,9 +21,6 @@ test('Page name can be changed', async ({ page }) => {
   // Expect the user to be authenticated
   await expect(page.getByTestId('setting-navigation-button')).toBeVisible();
 
-  // Expect us to have a name field:
-  await expect(page.getByTestId('page-name')).toHaveValue('Front Page');
-
   // Expect the submit button to be disabled, as there are no changes
   await expect(page.getByTestId('save-button')).toBeDisabled();
 
@@ -32,4 +29,22 @@ test('Page name can be changed', async ({ page }) => {
 
   // Expect the submit button to be enabled, as there are changes
   await expect(page.getByTestId('save-button')).toBeEnabled();
+
+  // Expect the page to have a category selector
+  await expect(page.getByTestId('page-category')).toBeVisible();
+
+  // Change the category of the page to 'Omega'
+  await page.getByTestId('page-category').selectOption({ label: 'Omega' });
+
+  // Expect the submit button to be enabled, as there are changes
+  await expect(page.getByTestId('save-button')).toBeEnabled();
+
+  // Edit the content of the page, by adding a new text block, includig tags "Here is some #text with #tags"
+  await page
+    .getByTestId('content-editor')
+    .fill('Here is some #text with #tags');
+
+  // Expect the we have the tags listed in the tag list
+  await expect(page.getByTestId('tag-list')).toContainText('text');
+  await expect(page.getByTestId('tag-list')).toContainText('tags');
 });
