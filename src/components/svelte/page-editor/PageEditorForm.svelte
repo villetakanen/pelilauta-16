@@ -1,25 +1,24 @@
 <script lang="ts">
-
+import type { Page } from '@schemas/PageSchema';
+import type { Site } from '@schemas/SiteSchema';
 /**
  * This _client side_ component is used to render the form for editing a page.
- * 
+ *
  * Fields supported
  * - title (textfield)
  * - page-category (select, if categories are available)
  * - content (cn-editor)
  * - tags (auto-generated from content)
  * - insert an asset from the site media library
- * 
+ *
  * Actions supported
  * - Delete page
  * - Cancel
  * - Save
  */
-import WithAuth from "@svelte/app/WithAuth.svelte";
-import type { Page } from "@schemas/PageSchema";
-import type { Site } from "@schemas/SiteSchema";
-import { t } from "@utils/i18n";
-import { logDebug } from "@utils/logHelpers";
+import WithAuth from '@svelte/app/WithAuth.svelte';
+import { t } from '@utils/i18n';
+import { logDebug } from '@utils/logHelpers';
 
 interface Props {
   site: Site;
@@ -34,7 +33,6 @@ function handleSubmission(event: Event) {
   const data = Object.fromEntries(formData.entries());
   logDebug('Form data', data);
 }
-
 </script>
 
 <WithAuth allow={true}>
