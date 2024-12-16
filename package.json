@@ -10,7 +10,7 @@
     "astro": "astro",
     "test": "vitest",
     "check": "npx @biomejs/biome check --write .",
-    "test:e2e": "playwright test",
+    "test:e2e": "node e2e/init-test-db.js && playwright test",
     "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
   },
   "dependencies": {

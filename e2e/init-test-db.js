@@ -6,11 +6,8 @@
  */
 
 import { config } from 'dotenv';
-import { type ServiceAccount, cert, initializeApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
-import { PAGES_COLLECTION_NAME, type Page } from '../src/schemas/PageSchema';
-import { SITES_COLLECTION_NAME, type Site } from '../src/schemas/SiteSchema';
-import { toFirestoreEntry } from '../src/utils/client/toFirestoreEntry';
+import { cert, initializeApp } from 'firebase-admin/app';
+import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 
 config({
   path: '.env.development',
@@ -30,43 +27,44 @@ const serviceAccount = {
 };
 
 const serverApp = initializeApp({
-  credential: cert(serviceAccount as ServiceAccount),
+  credential: cert(serviceAccount),
   databaseURL: process.env.PUBLIC_databaseURL,
 });
 
 export const serverDB = getFirestore(serverApp);
 
 // Create a test site
-const testSite: Site = {
+const testSite = {
   key: 'e2e-test-site',
   name: 'The E2E Test Site',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  flowTime: new Date().getTime(),
+  createdAt: FieldValue.serverTimestamp(),
+  updatedAt: FieldValue.serverTimestamp(),
+  flowTime: FieldValue.serverTimestamp(),
   owners: ['e2e-test-owner'],
+  homepage: 'front-page',
   hidden: true,
   sortOrder: 'name',
 };
 serverDB
-  .collection(SITES_COLLECTION_NAME)
+  .collection('sites')
   .doc(testSite.key)
-  .set(toFirestoreEntry(testSite));
+  .set(testSite);
 console.log('Test site created:', testSite.key);
 
 // Create a test site front page
-const testSiteFrontPage: Page = {
+const testSiteFrontPage = {
   key: 'front-page',
   siteKey: testSite.key,
   name: 'Front Page',
-  flowTime: new Date().getTime(),
+  createdAt: FieldValue.serverTimestamp(),
   owners: ['e2e-test-owner'],
 };
 serverDB
-  .collection(SITES_COLLECTION_NAME)
+  .collection('sites')
   .doc(testSite.key)
-  .collection(PAGES_COLLECTION_NAME)
+  .collection('pages')
   .doc(testSiteFrontPage.key)
-  .set(toFirestoreEntry(testSiteFrontPage));
+  .set(testSiteFrontPage);
 console.log('Test site front page created:', testSiteFrontPage.key);
 
 console.log('Database initialization complete, fire away!');
