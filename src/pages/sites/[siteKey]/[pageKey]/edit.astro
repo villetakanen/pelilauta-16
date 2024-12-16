@@ -1,5 +1,5 @@
 ---
-import { PageEditor } from '@client/SiteApp/PageEditor';
+import PageEditorForm from '@svelte/page-editor/PageEditorForm.svelte';
 import ModalPage from '@layouts/ModalPage.astro';
 import { parsePage } from '@schemas/PageSchema';
 import { parseSite } from '@schemas/SiteSchema';
@@ -33,5 +33,5 @@ const pageData = await fetch(
 const page = parsePage(toClientEntry(pageData), pageKey, site.key);
 ---
 <ModalPage title={t('site:editor.title')}>
-  <PageEditor site={site} page={page} client:only="solid-js"/>
+  <PageEditorForm site={site} page={page} client:only="svelte"/>
 </ModalPage>

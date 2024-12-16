@@ -49,6 +49,7 @@
     "@types/node": "^22.10.2",
     "@types/turndown": "^5.0.5",
     "@types/uuid": "^10.0.0",
+    "dotenv": "^16.4.7",
     "lefthook": "^1.9.2",
     "rollup-plugin-visualizer": "^5.12.0",
     "vite-tsconfig-paths": "^4.3.2",
