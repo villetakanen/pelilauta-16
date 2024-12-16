@@ -29,25 +29,3 @@ const initApp = () => {
 
 export const serverApp = activeApps.length === 0 ? initApp() : activeApps[0];
 export const serverDB = getFirestore(serverApp);
-// //logDebug('serverDB', serverDB);
-
-/*import type { ServiceAccount } from 'firebase-admin';
-import admin from 'firebase-admin';
-import { cert, initializeApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
-import serverPrincipal from 'server_principal.json';
-
-const serviceAccount = {
- 
-}
-
-
-if (!admin.apps.length) {
-  initializeApp({
-    credential: cert(serverPrincipal as ServiceAccount),
-    databaseURL: import.meta.env.PUBLIC_databaseURL,
-  });
-}
-
-export const serverApp = admin.app(); // Reuse existing instance
-export const serverDB = getFirestore(serverApp);*/

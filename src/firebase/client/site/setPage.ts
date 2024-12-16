@@ -1,7 +1,6 @@
 import { PAGES_COLLECTION_NAME, type Page } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
-import { logDebug } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { db } from '..';
 import { addPageRef } from './addPageRef';
@@ -13,7 +12,6 @@ async function setPageToFirestore(
 ) {
   const { setDoc, doc } = await import('firebase/firestore');
   const fsPage = toFirestoreEntry(page);
-  logDebug('addPageToFirestore', fsPage);
   await setDoc(
     doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, key),
     fsPage,
@@ -43,8 +41,5 @@ export async function setPage(
     },
     siteKey,
   );
-
-  logDebug('addPage', 'Page added to firestore', key);
-
   return key;
 }

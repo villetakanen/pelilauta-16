@@ -15,7 +15,7 @@ export function addSiteToWikilinks(
   }
 
   // Match any <a> tags where href does not contain / or : (protocol)
-  return content.replace(/<a href="([^\/].*?)"/g, (match, link) => {
+  return content.replace(/<a href="([^\/].*?)"/g, (_match, link) => {
     const newLink = `<a href="${baseUrl}/sites/${currentSite}/${link}"`;
     return newLink;
   });

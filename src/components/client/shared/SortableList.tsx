@@ -1,5 +1,5 @@
 import { type CnListItem, CnSortableList } from '@11thdeg/cyan-next';
-import { type Component, For, createEffect, onMount } from 'solid-js';
+import { type Component, For, onMount } from 'solid-js';
 
 interface Props {
   items: CnListItem[];
@@ -21,10 +21,6 @@ export const SortableList: Component<Props> = (props) => {
         );
       });
     }
-  });
-
-  createEffect(() => {
-    //logDebug('SortableList items changed', props.items);
   });
 
   return (

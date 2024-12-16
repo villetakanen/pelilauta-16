@@ -36,7 +36,6 @@ export async function createSite(site: Partial<Site>): Promise<string> {
     if (siteDoc.exists()) {
       throw new Error(`Site with key ${site.key} already exists`);
     }
-    //logDebug('createSite', 'Creating site with custom key', siteData);
     await setDoc(siteRef, siteData);
     return site.key;
   }

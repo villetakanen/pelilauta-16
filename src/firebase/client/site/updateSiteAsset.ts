@@ -14,8 +14,6 @@ export async function updateSiteAsset(site: Site, asset: Partial<Asset>) {
   const assets = [...site.assets];
   const index = assets.findIndex((a) => a.storagePath === asset.storagePath);
 
-  //logDebug('Updating site asset', asset, assets[index]);
-
   if (index === -1) {
     throw new Error('Asset does not exist in site');
   }
@@ -27,8 +25,6 @@ export async function updateSiteAsset(site: Site, asset: Partial<Asset>) {
   update.license = asset.license ?? update.license;
 
   assets[index] = update;
-
-  //logDebug('Updating site asset', assets[index]);
 
   await updateDoc(doc(db, SITES_COLLECTION_NAME, site.key), {
     assets: assets,
