@@ -25,6 +25,11 @@ interface Props {
   page: Page;
 }
 const { site, page }: Props = $props();
+let hasChanges = $state(false);
+
+function handleChange(event: Event) {
+  hasChanges = true;
+}
 
 function handleSubmission(event: Event) {
   event.preventDefault();
@@ -46,6 +51,8 @@ function handleSubmission(event: Event) {
           name="name"
           required
           maxlength="42"
+          data-testid="page-name"
+          oninput={handleChange}
         />
       </label>
     </section>
@@ -53,7 +60,7 @@ function handleSubmission(event: Event) {
       <a href={`/site/${site.key}/page/${page.key}/delete`} class="button text">
         {t('actions:delete')}
       </a>
-      <button type="submit" class="button cta">
+      <button type="submit" class="button cta" data-testid="save-button" disabled={!hasChanges}>
         {t('actions:save')}
       </button>
     </section>

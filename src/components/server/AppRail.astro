@@ -1,8 +1,8 @@
 ---
 import { InboxRailButton } from '@client/SocialApp/InboxRailButton';
 import { AdminNavigationButton } from '@client/navigation/AdminNavigationButton';
+import SettingNavigationButton from '@svelte/app/SettingNavigationButton.svelte';
 import { t } from 'src/utils/i18n';
-import { ProfileButton } from '../client/navigation/ProfileButton';
 const currentPath = Astro.url.pathname;
 
 type RailItem = {
@@ -54,7 +54,5 @@ const rail: Array<RailItem> = [
       label={t('navigation:docs')}
       checked={currentPath.startsWith('/docs')}
     />
-  <div class="profile_button">
-    <ProfileButton client:only="solid-js" />
-   </div>
+  <SettingNavigationButton client:only="svelte"/>
 </nav>

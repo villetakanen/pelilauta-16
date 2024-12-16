@@ -14,7 +14,11 @@ export const FrontPageFabs: Component = () => {
     <>
       {!anonymous() && (
         <Portal mount={document.querySelector('#fab-tray') || document.body}>
-          <a href="/create/thread" class="fab">
+          <a
+            href="/create/thread"
+            class="fab"
+            data-testid="createDiscussionFab"
+          >
             <cn-icon noun="send" small />
             <span class="sm-hidden">{t('actions:create.thread')}</span>
           </a>

@@ -7,7 +7,7 @@
 
 import { config } from 'dotenv';
 import { cert, initializeApp } from 'firebase-admin/app';
-import { getFirestore, FieldValue } from 'firebase-admin/firestore';
+import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 
 config({
   path: '.env.development',
@@ -45,10 +45,7 @@ const testSite = {
   hidden: true,
   sortOrder: 'name',
 };
-serverDB
-  .collection('sites')
-  .doc(testSite.key)
-  .set(testSite);
+serverDB.collection('sites').doc(testSite.key).set(testSite);
 console.log('Test site created:', testSite.key);
 
 // Create a test site front page
