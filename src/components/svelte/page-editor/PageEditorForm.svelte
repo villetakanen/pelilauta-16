@@ -3,8 +3,10 @@ import type { CnEditor } from '@11thdeg/cyan-next';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import WithAuth from '@svelte/app/WithAuth.svelte';
+import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
+
 import { onMount } from 'svelte';
 
 /**
@@ -31,15 +33,10 @@ const { site, page }: Props = $props();
 
 let hasChanges = $state(false);
 let editorValue = $state(page.markdownContent);
+let tags = $state<string[]>(page.tags || []);
 
 function handleChange(event: Event) {
   logDebug('Field changed', event);
-  hasChanges = true;
-}
-
-function handleContentChange(event: CustomEvent<string>) {
-  logDebug('Content changed', event.detail);
-  editorValue = event.detail;
   hasChanges = true;
 }
 
@@ -47,16 +44,19 @@ function handleSubmission(event: Event) {
   event.preventDefault();
   const form = event.target as HTMLFormElement;
   const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
+  const data: Partial<Page> = Object.fromEntries(formData.entries());
+  data.markdownContent = editorValue;
+  data.tags = tags;
   logDebug('Form data', data);
 }
 
 onMount(() => {
   const editorElement = document.getElementById('page-editor');
   if (editorElement as CnEditor) {
-    editorElement?.addEventListener('change', (e: Event) => {
+    editorElement?.addEventListener('input', (e: Event) => {
       const customEvent = e as CustomEvent<string>;
       editorValue = (customEvent.target as CnEditor).value;
+      tags = extractTags(editorValue);
       hasChanges = true;
     });
   }
@@ -89,31 +89,33 @@ onMount(() => {
         </select>
       </label>
       {/if}
+
     </section>
     <section class="grow">
       <cn-editor
         id="page-editor"
         value={editorValue}
-        onchange={(e: CustomEvent) => console.log(e.detail)}
+        placeholder={t('entries:page.markdownContent')}
       ></cn-editor>
     </section>
 
-    {editorValue}
-
-    {#if page.tags && page.tags.length > 0}
-    <section class="tags">
-      <p>{t('entries:page.tags')}</p>
-      <ul>
-        {#each page.tags as tag}
+    {#if tags && tags.length > 0}
+    <section class="tags py-1 elevation-1">
+      <ul class="tag-list">
+        {#each tags as tag}
           <li>{tag}</li>
         {/each}
       </ul>
     </section>
     {/if}
 
-    <section class="toolbar justify-between">
-      <a href={`/site/${site.key}/page/${page.key}/delete`} class="button text">
+    <section class="toolbar">
+      <a href={`/site/${site.key}/${page.key}/delete`} class="button text">
         {t('actions:delete')}
+      </a>
+      <div class="grow"></div>
+      <a href={`/site/${site.key}/${page.key}`} class="button text">
+        {t('actions:cancel')}
       </a>
       <button type="submit" class="button cta" data-testid="save-button" disabled={!hasChanges}>
         {t('actions:save')}

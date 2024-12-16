@@ -8,7 +8,10 @@ export function toDisplayString(date: Date | number | undefined): string {
  * @param content
  */
 export function extractTags(content: string): string[] {
-  return content.match(/#[a-zA-Z0-9äöüÄÖÜ]+/g) || [];
+  const tags = content.match(/#[a-zA-Z0-9äöüÄÖÜ]+/g);
+  // we want to only 1 tag per tag
+  const raw = tags ? [...new Set(tags)] : [];
+  return raw.map((tag) => tag.replace('#', ''));
 }
 
 /**

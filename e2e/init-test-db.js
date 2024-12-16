@@ -49,6 +49,15 @@ const testSite = {
     { slug: 'beta', name: 'Beta' },
     { slug: 'omega', name: 'Omega' },
   ],
+  pageRefs: [
+    {
+      key: 'front-page',
+      name: 'Front Page',
+      author: 'e2e-test-owner',
+      category: 'alpha',
+      flowTime: 0,
+    },
+  ],
 };
 serverDB.collection('sites').doc(testSite.key).set(testSite);
 console.log('Test site created:', testSite.key);
@@ -59,7 +68,10 @@ const testSiteFrontPage = {
   siteKey: testSite.key,
   name: 'Front Page',
   createdAt: FieldValue.serverTimestamp(),
+  markdownContent: "# Welcome to the E2E Test Site!\n\n here's the front page",
   owners: ['e2e-test-owner'],
+  category: 'alpha',
+  tags: ['e2e', 'test'],
 };
 serverDB
   .collection('sites')

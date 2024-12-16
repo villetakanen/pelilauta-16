@@ -54,6 +54,7 @@ export const entries: Locale = {
   page: {
     name: 'Sivun nimi',
     category: 'Luokka',
+    markdownContent: 'Markdonwn',
     defaults: {
       name: '[Sivun nimi]',
       category: '-',

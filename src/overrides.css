@@ -423,3 +423,22 @@ hr {
     color: var(--chroma-primary-10);
   }
 }
+
+ul.tag-list {
+  display: flex;
+  gap: var(--cn-grid);
+  flex-wrap: wrap;
+  width: 100%;
+}
+ul.tag-list li {
+  background: var(--color-secondary);
+  border-radius: var(--cn-border-radius);
+  padding: 0 var(--cn-grid) 0 var(--cn-gap);
+  margin: 0;
+  position: relative;
+}
+ul.tag-list li:before {
+  content: "#";
+  margin-left: -4px;
+  color: var(--color-on-secondary);
+}

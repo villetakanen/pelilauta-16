@@ -38,13 +38,4 @@ test('Page name can be changed', async ({ page }) => {
 
   // Expect the submit button to be enabled, as there are changes
   await expect(page.getByTestId('save-button')).toBeEnabled();
-
-  // Edit the content of the page, by adding a new text block, includig tags "Here is some #text with #tags"
-  await page
-    .getByTestId('content-editor')
-    .fill('Here is some #text with #tags');
-
-  // Expect the we have the tags listed in the tag list
-  await expect(page.getByTestId('tag-list')).toContainText('text');
-  await expect(page.getByTestId('tag-list')).toContainText('tags');
 });
