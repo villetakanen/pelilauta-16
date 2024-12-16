@@ -77,42 +77,6 @@ export async function updatePage(
     }
   }
 }
-/*
-export async function addPage(
-  siteKey: string,
-  page: Partial<Page>,
-  slug?: string,
-) {
-  const fsPage = toFirestoreEntry(page, { silent: true });
-
-  let key = slug || '';
-  if (slug) {
-    const existingPage = $pages.get().find((p) => p.key === slug);
-
-    if (existingPage) {
-      logError('createPage', 'slug already exists');
-      throw new Error(`Page slug ${slug} already exists`);
-    }
-
-    await setDoc(
-      doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, slug),
-      fsPage,
-    );
-  } else {
-    const newPageRef = await addDoc(
-      collection(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME),
-      fsPage,
-    );
-    key = newPageRef.id;
-  }
-
-  fsPage.key = key;
-  const newPage = parsePage(toClientEntry(fsPage), key, siteKey);
-  patchToPages(newPage);
-  await updatePageRefs(newPage);
-
-  return key;
-}*/
 
 async function updatePageRefs(page: Page) {
   const siteDoc = await getDoc(doc(db, SITES_COLLECTION_NAME, page.siteKey));
