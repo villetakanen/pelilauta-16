@@ -11,6 +11,7 @@ noun: 'monsters'
 - Page-editor supports the tags functionality, and live-higlights the tags in the page content.
 - Page-editor updates the Site.pageRef on save as expected.
 - Page-editor auto-migrates pre-markdown content on page load.
+- Page view tags now link to tag listing pages.
 
 ### 16.5.0
 - Cross-linked personal and public sites.
