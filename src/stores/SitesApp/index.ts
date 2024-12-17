@@ -6,13 +6,8 @@ import {
   emptySite,
   parseSite,
 } from '@schemas/SiteSchema';
-import { logWarn } from '@utils/logHelpers';
-import {
-  doc,
-  onSnapshot,
-  serverTimestamp,
-  updateDoc,
-} from 'firebase/firestore';
+import { logDebug, logWarn } from '@utils/logHelpers';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { atom, computed } from 'nanostores';
 import { db } from 'src/firebase/client';
 
@@ -86,9 +81,10 @@ async function subscribeToSite(key: string) {
 }
 
 export async function updateSite(site: Partial<Site>, key: string) {
-  const update = {
-    ...site,
-    updatedAt: serverTimestamp(),
-  };
+  const { toFirestoreEntryUpdate } = await import(
+    '@utils/client/toFirestoreEntry'
+  );
+  const update = toFirestoreEntryUpdate(site);
+  logDebug('activeSiteStore', 'updateSite', key, update);
   await updateDoc(doc(db, SITES_COLLECTION_NAME, key), update);
 }

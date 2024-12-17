@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "16.5.0",
+  "version": "16.5.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,7 +10,7 @@
     "astro": "astro",
     "test": "vitest",
     "check": "npx @biomejs/biome check --write .",
-    "test:e2e": "playwright test",
+    "test:e2e": "node e2e/init-test-db.js && playwright test",
     "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
   },
   "dependencies": {
@@ -49,6 +49,7 @@
     "@types/node": "^22.10.2",
     "@types/turndown": "^5.0.5",
     "@types/uuid": "^10.0.0",
+    "dotenv": "^16.4.7",
     "lefthook": "^1.9.2",
     "rollup-plugin-visualizer": "^5.12.0",
     "vite-tsconfig-paths": "^4.3.2",

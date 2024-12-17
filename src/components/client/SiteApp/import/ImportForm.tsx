@@ -83,7 +83,6 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
     const reader = new FileReader();
     reader.onload = async (event) => {
       const text = event.target?.result as string;
-      // logDebug('ImportForm.parseMarkdownFile', text);
       // Parse the markdown file into a Page object.
       const fm = await import('front-matter');
       const { attributes, body } = fm.default(text);
@@ -121,7 +120,6 @@ export const ImportForm: Component<ImportFolderProps> = (props) => {
   function handleFilesChanged(event: Event) {
     const target = event.target as HTMLInputElement;
     const files = target.files;
-    // logDebug('ImportForm.handleFilesChanged', files);
 
     // Check if the file is a markdown file, if so handle it as a page.
     if (files) {
