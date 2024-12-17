@@ -51,12 +51,10 @@ export const Discussion: Component<DiscussionProps> = (props) => {
     const subscriber = $subscriber.get();
     if (!subscriber) {
       // no subscriber, no need to mark as seen
-      //logDebug('No subscriber, not marking thread as seen', props.thread.key);
       return;
     }
     const seenTime = subscriber.seenEntities[props.thread.key] || 0;
     if (seenTime < props.thread.flowTime) {
-      //logDebug('Marking thread as seen', props.thread.key);
       markEntrySeen(props.thread.key, props.thread.flowTime);
     }
   }

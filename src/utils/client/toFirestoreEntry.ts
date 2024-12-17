@@ -38,3 +38,11 @@ export function toFirestoreEntry(
     author: entry.owners ? [0] : '-',
   };
 }
+
+export function toFirestoreEntryUpdate(entry: Partial<Entry>) {
+  return {
+    ...entry,
+    updatedAt: serverTimestamp(),
+    flowTime: serverTimestamp(),
+  };
+}

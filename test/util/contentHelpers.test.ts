@@ -16,5 +16,9 @@ test('extractTags returns empty array if no tags', () => {
 });
 
 test('extractTags returns tags from content', () => {
-  expect(extractTags('#tag1 #täg2')).toEqual(['#tag1', '#täg2']);
+  expect(extractTags('#tag1 #täg2')).toEqual(['tag1', 'täg2']);
+});
+
+test('extractTags removes duplicates', () => {
+  expect(extractTags('#tag1 #tag1')).toEqual(['tag1']);
 });

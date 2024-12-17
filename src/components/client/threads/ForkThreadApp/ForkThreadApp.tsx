@@ -54,8 +54,6 @@ export const ForkThreadApp: Component<Props> = (props) => {
       quoteRef: `${props.reply.threadKey}/${props.reply.key}`,
     });
 
-    //logDebug('ForkThreadApp', 'Creating thread', thread);
-
     try {
       const cleaned = toFirestoreEntry(thread);
       const key = (

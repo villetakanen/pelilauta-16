@@ -10,11 +10,19 @@ interface Props {
 
 const { page, site } = Astro.props as Props;
 ---
+<ul class="tag-list p-0 m-0 shrink">
+  {page.tags?.map((tag) => (
+    <li class="tag">
+      <a href={`/tags/${tag}`}>{tag}</a>
+    </li>
+  ))}
+</ul>
 <footer class="downscaled flex justify-space-between border-t mt-2">
     <p class="m-0 p-0">
       <a href={`/sites/${site.key}`}>{site.name}</a> /
       <a href={`/sites/${site.key}/${page.key}`}>{page.name}</a>
     </p>
+    
     <p class="m-0 p-0">
       <a href={`/sites/${site.key}/${page.key}/history`}>
         {(page.revisionHistory?.length || 0) + 1}

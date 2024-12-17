@@ -63,7 +63,6 @@ export const SiteTocRegenSection: Component<{ site: Site }> = (props) => {
         flowTime: toDate(pageDoc.data().flowTime).getTime(),
       };
       refs.push(ref);
-      //logDebug(`Page reference for ${pageDoc.id} added to the list.`, ref);
     }
 
     if (!refs.length)

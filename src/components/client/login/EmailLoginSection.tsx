@@ -30,9 +30,6 @@ export const EmailLoginSection: Component = () => {
 
       await signInWithEmailLink(auth, email, window.location.href);
 
-      // If we later want to initiate server side session, it should be done here
-      //logDebug('User signed in with email link:', userCredential);
-
       // Clear email from storage.
       window.localStorage.removeItem('emailForSignIn');
 
@@ -47,8 +44,6 @@ export const EmailLoginSection: Component = () => {
     e.preventDefault();
     setSuspend(true);
     try {
-      //logDebug('Sending sign-in link to email:', email());
-      //logDebug('Action code settings:', actionCodeSettings);
       window.localStorage.setItem('emailForSignIn', email());
       await sendSignInLinkToEmail(auth, email(), actionCodeSettings);
       // Inform the user to check their email

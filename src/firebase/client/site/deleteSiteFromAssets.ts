@@ -40,7 +40,6 @@ export async function deleteSiteAsset(site: Site, storagePath: string) {
 
     if (assetIndex > -1) {
       // Remove the asset from the array's index
-      //logDebug('Deleting asset from site:', storagePath, assetIndex);
       assets.splice(assetIndex, 1);
       await updateDoc(siteRef, {
         assets: assets,
