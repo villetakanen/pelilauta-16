@@ -3,11 +3,12 @@ import type { CnEditor } from '@11thdeg/cyan-next';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import WithAuth from '@svelte/app/WithAuth.svelte';
+import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
-
+import { logError } from '@utils/logHelpers';
 import { onMount } from 'svelte';
+import { submitPageUpdate } from './submitPageUpdate';
 
 /**
  * This _client side_ component is used to render the form for editing a page.
@@ -36,18 +37,24 @@ let editorValue = $state(page.markdownContent);
 let tags = $state<string[]>(page.tags || []);
 
 function handleChange(event: Event) {
-  logDebug('Field changed', event);
   hasChanges = true;
 }
 
-function handleSubmission(event: Event) {
+async function handleSubmission(event: Event) {
   event.preventDefault();
   const form = event.target as HTMLFormElement;
   const formData = new FormData(form);
-  const data: Partial<Page> = Object.fromEntries(formData.entries());
-  data.markdownContent = editorValue;
-  data.tags = tags;
-  logDebug('Form data', data);
+  const changes: Partial<Page> = Object.fromEntries(formData.entries());
+  changes.markdownContent = editorValue;
+  changes.tags = tags;
+  try {
+    await submitPageUpdate(page, changes);
+    pushSessionSnack(t('snacks:pageUpdated'));
+    window.location.href = `/sites/${site.key}/${page.key}`;
+  } catch (error) {
+    pushSnack(t('snacks:pageUpdateError'));
+    logError('Error updating page', error);
+  }
 }
 
 onMount(() => {
@@ -91,6 +98,7 @@ onMount(() => {
       {/if}
 
     </section>
+
     <section class="grow">
       <cn-editor
         id="page-editor"

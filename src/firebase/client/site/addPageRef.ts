@@ -9,7 +9,6 @@ import { logDebug } from '@utils/logHelpers';
 import { db } from '..';
 
 export async function addPageRef(pageRef: PageRef, siteKey: string) {
-  logDebug('addPageRef', pageRef, siteKey);
   // Get the siteDoc and Site from the firestore
   const { getDoc, doc } = await import('firebase/firestore');
   const siteDoc = await getDoc(doc(db, SITES_COLLECTION_NAME, siteKey));
@@ -19,13 +18,14 @@ export async function addPageRef(pageRef: PageRef, siteKey: string) {
   // Clone the pageRefs array and add the new pageRef
   const refs: PageRef[] = site.pageRefs ? [...site.pageRefs] : [];
 
-  // Check if this slug exists in the pageRefs, if it does, throw an error
-  if (refs.find((ref) => ref.key === pageRef.key)) {
-    throw new Error('addPageRef: PageRef already exists');
+  // Check if this slug exists in the pageRefs, if it does, replace it
+  const existingIndex = refs.findIndex((ref) => ref.key === pageRef.key);
+  if (existingIndex !== -1) {
+    refs[existingIndex] = pageRef;
+  } else {
+    // Add the new pageRef to the refs
+    refs.push(pageRef);
   }
-
-  // Add the new pageRef to the refs
-  refs.push(pageRef);
 
   // Update the site with the new pageRefs
   await updateSite({ pageRefs: refs }, siteKey);
