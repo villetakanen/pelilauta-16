@@ -27,7 +27,7 @@ export async function updatePage(
     {
       key: pageKey,
       name: pageData.name,
-      category: pageData.category,
+      category: pageData.category || '-',
       flowTime: toDate(pageData.flowTime).getTime(),
       author: pageData.owners[0] || '-',
     },

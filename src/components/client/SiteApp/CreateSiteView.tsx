@@ -93,7 +93,7 @@ export const CreateSiteView: Component = () => {
       addPage(siteKey, frontPage, frontPage.key);
 
       // Redirect to the new site
-      pushSessionSnack(t('site:snacks.siteCreated'), { name: site.name });
+      pushSessionSnack(t('site:snacks.siteCreated'), { siteName: site.name });
       window.location.href = `/sites/${siteKey}`;
     } catch (e) {
       pushSnack(t('site:create.snacks.errorCreatingSite'));

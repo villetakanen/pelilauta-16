@@ -34,9 +34,11 @@ export const site: Locale = {
     },
   },
   snacks: {
-    siteCreated: 'Sivusto {name} luotu',
+    siteCreated: 'Sivusto {siteName} luotu',
     siteDeleted: 'Sivusto {name} poistettu',
     errorDeletingSite: 'Virhe poistettaessa sivustoa',
+    pageCreated: 'Sivu luotu',
+    pageUpdated: 'Sivun muutokset tallennettu',
   },
   tray: {
     actions: {

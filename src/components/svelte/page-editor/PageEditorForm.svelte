@@ -49,7 +49,7 @@ async function handleSubmission(event: Event) {
   changes.tags = tags;
   try {
     await submitPageUpdate(page, changes);
-    pushSessionSnack(t('snacks:pageUpdated'));
+    pushSessionSnack(t('site:snacks.pageUpdated'));
     window.location.href = `/sites/${site.key}/${page.key}`;
   } catch (error) {
     pushSnack(t('snacks:pageUpdateError'));

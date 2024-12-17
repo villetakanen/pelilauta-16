@@ -5,7 +5,6 @@ import {
 } from '@schemas/SiteSchema';
 import { updateSite } from '@stores/SitesApp';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { logDebug } from '@utils/logHelpers';
 import { db } from '..';
 
 export async function addPageRef(pageRef: PageRef, siteKey: string) {
