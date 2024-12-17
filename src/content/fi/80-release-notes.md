@@ -6,7 +6,7 @@ noun: 'monsters'
 ## Version 16
 
 ### 16.5.x (current)
-- Moved the Page-editor svelte.
+- Moved the Page-editor over to Svelte.
 - Page-editor category selector is now hidden, if the site does not use categories.
 - Page-editor supports the tags functionality, and live-higlights the tags in the page content.
 - Page-editor updates the Site.pageRef on save as expected.
