@@ -2,6 +2,7 @@
 import type { CnEditor } from '@11thdeg/cyan-next';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
+import { uid } from '@stores/sessionStore';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';
@@ -35,9 +36,19 @@ const { site, page }: Props = $props();
 let hasChanges = $state(false);
 let editorValue = $state(page.markdownContent);
 let tags = $state<string[]>(page.tags || []);
+let contentMigrated = $state(false);
 
 function handleChange(event: Event) {
   hasChanges = true;
+}
+
+async function migrateLegacyContent() {
+  const { convertToMarkdown } = await import('./migrateContent');
+  const md = page.htmlContent
+    ? convertToMarkdown(page.htmlContent)
+    : page.content || '';
+  if (md) contentMigrated = true;
+  editorValue = md;
 }
 
 async function handleSubmission(event: Event) {
@@ -47,6 +58,7 @@ async function handleSubmission(event: Event) {
   const changes: Partial<Page> = Object.fromEntries(formData.entries());
   changes.markdownContent = editorValue;
   changes.tags = tags;
+  changes.owners = page.owners || [uid];
   try {
     await submitPageUpdate(page, changes);
     pushSessionSnack(t('site:snacks.pageUpdated'));
@@ -58,6 +70,7 @@ async function handleSubmission(event: Event) {
 }
 
 onMount(() => {
+  if (!page.markdownContent) migrateLegacyContent();
   const editorElement = document.getElementById('page-editor');
   if (editorElement as CnEditor) {
     editorElement?.addEventListener('input', (e: Event) => {
@@ -99,6 +112,13 @@ onMount(() => {
 
     </section>
 
+    {#if contentMigrated}
+      <div class="alert warning flex flex-row items-center px-1">
+        <cn-icon noun="info"></cn-icon>
+        <p>{t('site:page.editor.contentMigrateWarning')}</p>
+      </div>
+    {/if}
+
     <section class="grow">
       <cn-editor
         id="page-editor"
@@ -118,7 +138,7 @@ onMount(() => {
     {/if}
 
     <section class="toolbar">
-      <a href={`/site/${site.key}/${page.key}/delete`} class="button text">
+      <a href={`/sites/${site.key}/${page.key}/delete`} class="button text">
         {t('actions:delete')}
       </a>
       <div class="grow"></div>

@@ -29,7 +29,7 @@ export async function updatePage(
       name: pageData.name,
       category: pageData.category || '-',
       flowTime: toDate(pageData.flowTime).getTime(),
-      author: pageData.owners[0] || '-',
+      author: pageData.owners?.[0] || '-',
     },
     siteKey,
   );
