@@ -23,4 +23,4 @@ const fi = defineCollection({
     description: z.string().optional(),
   }),
 });
-export default fi;
+export const collections = { fi };

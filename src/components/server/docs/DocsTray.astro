@@ -12,7 +12,7 @@ const allComponents = await getCollection('fi');
   {
     allComponents.map(p => (
       <li>
-        <a href={'/docs/fi/' + p.slug}>
+        <a href={'/docs/fi/' + p.id}>
           {p.data.noun && <cn-icon noun={p.data.noun} small></cn-icon>}
           {p.data.shortname || p.data.name}</a>
       </li>
