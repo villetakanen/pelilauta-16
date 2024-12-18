@@ -22,6 +22,7 @@ export const entries: Locale = {
     description: 'Kuvaus',
     system: 'Peli, järjestelmä tai luokittelu',
     homePage: 'Etusivu',
+    flowTime: 'Muutettu',
     sortOrder: 'Sivujen järjestys',
     sortOrders: {
       name: 'Aakkosjärjestyksessä',
