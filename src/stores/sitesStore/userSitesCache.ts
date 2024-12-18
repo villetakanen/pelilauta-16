@@ -22,6 +22,7 @@ export const $sitesCache: WritableAtom<Site[]> = persistentAtom(
     },
   },
 );
+export const userSites = $sitesCache;
 
 onMount($sitesCache, () => {
   const uid = $uid.get();

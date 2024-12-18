@@ -13,6 +13,8 @@ noun: 'monsters'
 - Page-editor auto-migrates pre-markdown content on page load.
 - Page view tags now link to tag listing pages.
 - Astro 5 upgrade.
+- Users site listing orders by flow-time by default.
+- Users site listing can be ordered by flow-time, and name.
 
 ### 16.5.0
 - Cross-linked personal and public sites.

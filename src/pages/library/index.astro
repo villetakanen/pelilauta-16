@@ -1,7 +1,7 @@
 ---
 import { SiteFabs } from '@client/library/SiteFabs';
-import { SitesList } from '@client/library/SitesList';
 import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
+import UserSitesList from '@svelte/site-library/UserSitesList.svelte';
 import { t } from '@utils/i18n';
 // import LibraryTray from 'src/components/server/library/LibraryTray.astro';
 import Page from 'src/layouts/Page.astro';
@@ -12,7 +12,7 @@ const description = t('library:description');
 ---
 
 <Page title={title} description={description} shortTitle={shortTitle}>
-  <SitesList client:only="solid-js" />
+  <UserSitesList client:only="svelte" />
   <SiteFabs slot="fab-tray" client:only="solid-js"/>
   <BackgroundPoster
       slot="app-background-poster"
