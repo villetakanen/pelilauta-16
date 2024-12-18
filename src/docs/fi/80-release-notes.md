@@ -12,6 +12,7 @@ noun: 'monsters'
 - Page-editor updates the Site.pageRef on save as expected.
 - Page-editor auto-migrates pre-markdown content on page load.
 - Page view tags now link to tag listing pages.
+- Astro 5 upgrade.
 
 ### 16.5.0
 - Cross-linked personal and public sites.

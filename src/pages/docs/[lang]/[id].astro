@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
 import { t } from '@utils/i18n';
 import p from 'package.json';
 import DocsTray from 'src/components/server/docs/DocsTray.astro';
@@ -9,16 +10,15 @@ export const prerender = true;
 export async function getStaticPaths() {
   const components = await getCollection('fi');
 
-  return components.map((entry) => ({
-    params: { lang: 'fi', slug: entry.slug },
-    props: { entry },
+  return components.map((post) => ({
+    params: { lang: 'fi', id: post.id },
+    props: { post },
   }));
 }
-const { entry } = Astro.props;
-console.log(entry);
-const { Content } = await entry.render();
+const { post } = Astro.props;
+const { Content } = await render(post);
 ---
-<PageWithTray title={entry.data.shortname || entry.data.name}>
+<PageWithTray title={post.data.shortname || post.data.name}>
   <script is:inline>
    // If screen widht is more than 1024, add aria-expanded=true to the tray button (cn-tray-button)
     if (window.innerWidth > 1024) {
@@ -28,7 +28,7 @@ const { Content } = await entry.render();
   <DocsTray slot="app-tray" />
   <div class="content-columns">
     <div class="column-l">
-        <h1>{entry.data.name}</h1>
+        <h1>{post.data.name}</h1>
        <Content />
     </div>
     <div class="column-s">
