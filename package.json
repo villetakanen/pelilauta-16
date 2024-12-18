@@ -14,7 +14,7 @@
     "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-beta.37",
+    "@11thdeg/cyan-next": "1.0.0-beta.38",
     "@astrojs/check": "^0.9.4",
     "@astrojs/rss": "^4.0.10",
     "@astrojs/solid-js": "^5.0.0",
