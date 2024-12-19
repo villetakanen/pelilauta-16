@@ -1,10 +1,15 @@
-import { PAGES_COLLECTION_NAME, type Page } from '@schemas/PageSchema';
+import {
+  PAGES_COLLECTION_NAME,
+  type Page,
+  parsePage,
+} from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { logDebug, logError } from '@utils/logHelpers';
-import { toDate } from '@utils/schemaHelpers';
 import { db } from '..';
-import { addPageRef } from './addPageRef';
+import { updatePageRef } from './updatePageRef';
+import { updatePageTags } from './updatePageTags';
 
 async function addPageToFirestore(
   siteKey: string,
@@ -54,20 +59,14 @@ export async function addPage(
   const pageDoc = await getDoc(
     doc(db, SITES_COLLECTION_NAME, siteKey, PAGES_COLLECTION_NAME, key),
   );
-  const { name, flowTime, category, owners } = pageDoc.data() as Page;
 
-  await addPageRef(
-    {
-      key,
-      name,
-      flowTime: toDate(flowTime).getTime(),
-      category: category || '-',
-      author: owners[0] || '-',
-    },
-    siteKey,
+  const updatedPage = parsePage(
+    toClientEntry(pageDoc.data() as Record<string, unknown>),
+    key,
   );
 
-  logDebug('addPage', 'Page added to firestore', key);
+  await updatePageRef(updatedPage);
+  await updatePageTags(updatedPage);
 
   return key;
 }

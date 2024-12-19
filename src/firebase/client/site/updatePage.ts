@@ -1,6 +1,7 @@
-import type { Page } from '@schemas/PageSchema';
-import { toDate } from '@utils/schemaHelpers';
-import { addPageRef } from './addPageRef';
+import { type Page, parsePage } from '@schemas/PageSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { updatePageRef } from './updatePageRef';
+import { updatePageTags } from './updatePageTags';
 
 export async function updatePage(
   siteKey: string,
@@ -20,17 +21,12 @@ export async function updatePage(
   const pageDoc = await getDoc(pageRef);
   if (!pageDoc.exists()) throw new Error('updatePage: Page not found');
 
-  const pageData = pageDoc.data();
-
   // Then we need to update the page references
-  await addPageRef(
-    {
-      key: pageKey,
-      name: pageData.name,
-      category: pageData.category || '-',
-      flowTime: toDate(pageData.flowTime).getTime(),
-      author: pageData.owners?.[0] || '-',
-    },
-    siteKey,
+  const updatedPage = parsePage(
+    toClientEntry(pageDoc.data() as Record<string, unknown>),
+    pageKey,
   );
+
+  await updatePageRef(updatedPage);
+  await updatePageTags(updatedPage);
 }
