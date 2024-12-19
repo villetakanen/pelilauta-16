@@ -8,6 +8,7 @@ import { navigation } from './navigation';
 import { settings } from './settings';
 import { site } from './site';
 import { social } from './social';
+import { tag } from './tag';
 import { threads } from './threads';
 
 export const fi: Locale = {
@@ -64,4 +65,5 @@ export const fi: Locale = {
   site,
   social,
   threads,
+  tag,
 };

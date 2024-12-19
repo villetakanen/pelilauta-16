@@ -18,8 +18,9 @@ async function setTags(page: Page) {
 
   const tagData = TagSchema.parse({
     key: `${page.siteKey}/${page.key}`,
+    title: page.name,
     type: 'page',
-    author: page.owners[0],
+    author: page.owners[0] || '',
     tags: page.tags,
     flowTime: page.flowTime,
   });

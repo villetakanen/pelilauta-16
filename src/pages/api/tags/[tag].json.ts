@@ -1,4 +1,9 @@
 import { serverDB } from '@firebase/server';
+import {
+  TAG_FIRESTORE_COLLECTION,
+  type Tag,
+  TagSchema,
+} from '@schemas/TagSchema';
 import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { toDate } from '@utils/schemaHelpers';
 import type { APIContext } from 'astro';
@@ -11,17 +16,12 @@ type Thread = {
   author: string;
 };
 
-type TagData = {
-  tag: string;
-  threads: Thread[];
-};
-
 /**
  * Fetches 20 first of the threads from the firestore, that have the given tag
  *
  * @param tag [string] The tag to search for
  * @returns [Thread[]] An array of threads that have the given tag
- */
+ * /
 async function fetchThreads(tag: string) {
   const docs = serverDB
     .collection(THREADS_COLLECTION_NAME)
@@ -44,24 +44,30 @@ async function fetchThreads(tag: string) {
   }
 
   return threadData;
-}
+} */
 
 export async function GET({ params }: APIContext): Promise<Response> {
   const { tag } = params;
 
-  const response: TagData = {
-    tag: tag as string,
-    threads: [],
-  };
+  const docs = await serverDB
+    .collection(TAG_FIRESTORE_COLLECTION)
+    .where('tags', 'array-contains', tag)
+    .get();
 
-  // First we need to fetch all the threads that have the tag
-  response.threads = await fetchThreads(tag as string);
+  const response = {
+    entries: new Array<Tag>(),
+  };
+  for (const doc of docs.docs) {
+    console.log(doc);
+    const data = doc.data();
+    response.entries.push(TagSchema.parse(data));
+  }
 
   // The same should be done for the other entries with tags, but
   // for now, we will just return the threads with the tag
 
-  if (response.threads.length === 0) {
-    return new Response('No threads found', { status: 404 });
+  if (response.entries.length === 0) {
+    return new Response('No tags found', { status: 404 });
   }
 
   return new Response(JSON.stringify(response), {

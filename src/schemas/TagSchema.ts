@@ -14,9 +14,11 @@ import { z } from 'zod';
 export const TAG_FIRESTORE_COLLECTION = 'tags';
 
 export const TagSchema = z.object({
+  title: z.string(),
   type: z.enum(['thread', 'page']),
   key: z.string(),
   tags: z.array(z.string()),
+  author: z.string(),
   flowTime: z.number().int().positive(),
 });
 

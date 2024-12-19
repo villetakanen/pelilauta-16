@@ -1,7 +1,7 @@
 ---
-import { ProfileLink } from '@client/shared/ProfileLink';
 import Page from '@layouts/Page.astro';
-import { toDisplayString } from '@utils/contentHelpers';
+import type { Tag } from '@schemas/TagSchema';
+import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import { t } from '@utils/i18n';
 
 const { tag } = Astro.params;
@@ -9,14 +9,6 @@ const { tag } = Astro.params;
 if (!tag) {
   return Astro.redirect('/404');
 }
-
-type Thread = {
-  title: string;
-  key: string;
-  tags: string[];
-  flowTime: number;
-  author: string;
-};
 
 const origin = new URL(Astro.request.url).origin;
 
@@ -28,19 +20,29 @@ if (tagResponse.status === 404) {
 }
 
 const tagData = await tagResponse.json();
-const threads = tagData.threads as Thread[];
+const entries = tagData.entries as Tag[];
+
+function parseUrl(tag: Tag) {
+  if (tag.type === 'page') {
+    return `/sites/${tag.key}`;
+  }
+  return `/threads/${tag.key}`;
+}
 ---
+
 <Page title={`#${tag}`} description="A list of threads with this tag">
   <div class="content-columns">
     <article>
-      <h2 class="downscaled">{t('entries:thread.meta.entryNamePlural')}</h2>
+      <h2>{t('tag:title', {tag: tag})}</h2>
 
       <ul>
-        {threads.map((thread) => (
-        <li>
-            <a href={`/threads/${thread.key}`}>{thread.title}</a><br />
-            <ProfileLink uid={thread.author} client:only="solid-js" />
-            {toDisplayString(thread.flowTime)}
+        {entries.map((entry) => (
+        <li class="flex items-center">
+          { entry.type === 'page' ? <cn-icon noun="card" small/> : <cn-icon name="discussion" small/> }
+          <span>
+            <a href={parseUrl(entry)}>{entry.title}</a>
+          </span>
+          <ProfileLink uid={entry.author} client:only="svelte"/>
         </li>
         ))}
       </ul>
