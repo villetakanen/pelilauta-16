@@ -1,3 +1,9 @@
 [submodule "public/myrrys-proprietary"]
 	path = public/myrrys-proprietary
 	url = https://github.com/villetakanen/myrrys-proprietary.git
+[submodule "cn-editor"]
+	path = cn-editor
+	url = https://github.com/villetakanen/cn-editor.git
+[submodule "cn-dice"]
+	path = cn-dice
+	url = https://github.com/villetakanen/cn-dice.git
