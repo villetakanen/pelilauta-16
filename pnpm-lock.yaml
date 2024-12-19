@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@11thdeg/cyan-next':
-        specifier: 1.0.0-beta.38
-        version: 1.0.0-beta.38
+        specifier: 1.0.0-rc.1
+        version: 1.0.0-rc.1
       '@astrojs/check':
         specifier: ^0.9.4
         version: 0.9.4(typescript@5.7.2)
@@ -56,6 +56,9 @@ importers:
       jszip:
         specifier: ^3.10.1
         version: 3.10.1
+      lit:
+        specifier: ^3.2.1
+        version: 3.2.1
       marked:
         specifier: ^15.0.3
         version: 15.0.3
@@ -129,8 +132,8 @@ importers:
 
 packages:
 
-  '@11thdeg/cyan-next@1.0.0-beta.38':
-    resolution: {integrity: sha512-c2oGCaMaPsv5+zq4YOrbQ4a8w1MQkRrOU7dHAg90s6SwvIXB0tnFMSNiZ5s/gtDfvSc5A0nJ06hCVVig2m4G3w==}
+  '@11thdeg/cyan-next@1.0.0-rc.1':
+    resolution: {integrity: sha512-LwkvZBAtJ0j4nHQce6uwhoDJZcYzj3XdqzaG3xyVS9ZAwfyxhWeDkApqleIWUAGgZut/dFqbXnyvmZ13mY5l4g==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -3756,11 +3759,20 @@ packages:
   lit-element@4.0.6:
     resolution: {integrity: sha512-U4sdJ3CSQip7sLGZ/uJskO5hGiqtlpxndsLr6mt3IQIjheg93UKYeGQjWMRql1s/cXNOaRrCzC2FQwjIwSUqkg==}
 
+  lit-element@4.1.1:
+    resolution: {integrity: sha512-HO9Tkkh34QkTeUmEdNYhMT8hzLid7YlMlATSi1q4q17HE5d9mrrEHJ/o8O2D0cMi182zK1F3v7x0PWFjrhXFew==}
+
   lit-html@3.1.4:
     resolution: {integrity: sha512-yKKO2uVv7zYFHlWMfZmqc+4hkmSbFp8jgjdZY9vvR9jr4J8fH6FUMXhr+ljfELgmjpvlF7Z1SJ5n5/Jeqtc9YA==}
 
+  lit-html@3.2.1:
+    resolution: {integrity: sha512-qI/3lziaPMSKsrwlxH/xMgikhQ0EGOX2ICU73Bi/YHFvz2j/yMCIrw4+puF2IpQ4+upd3EWbvnHM9+PnJn48YA==}
+
   lit@3.1.4:
     resolution: {integrity: sha512-q6qKnKXHy2g1kjBaNfcoLlgbI3+aSOZ9Q4tiGa9bGYXq5RBXxkVTqTIVmP2VWMp29L4GyvCFm8ZQ2o56eUAMyA==}
+
+  lit@3.2.1:
+    resolution: {integrity: sha512-1BBa1E/z0O9ye5fZprPtdqnc0BFzxIxTTOO/tQFmyC/hj1O3jL4TfmLBw0WEwjAokdLwpclkvGgDJwTIh0/22w==}
 
   load-yaml-file@0.2.0:
     resolution: {integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==}
@@ -5619,7 +5631,7 @@ packages:
 
 snapshots:
 
-  '@11thdeg/cyan-next@1.0.0-beta.38':
+  '@11thdeg/cyan-next@1.0.0-rc.1':
     dependencies:
       '@types/node': 20.14.9
       lit: 3.1.4
@@ -9785,7 +9797,17 @@ snapshots:
       '@lit/reactive-element': 2.0.4
       lit-html: 3.1.4
 
+  lit-element@4.1.1:
+    dependencies:
+      '@lit-labs/ssr-dom-shim': 1.2.0
+      '@lit/reactive-element': 2.0.4
+      lit-html: 3.2.1
+
   lit-html@3.1.4:
+    dependencies:
+      '@types/trusted-types': 2.0.7
+
+  lit-html@3.2.1:
     dependencies:
       '@types/trusted-types': 2.0.7
 
@@ -9794,6 +9816,12 @@ snapshots:
       '@lit/reactive-element': 2.0.4
       lit-element: 4.0.6
       lit-html: 3.1.4
+
+  lit@3.2.1:
+    dependencies:
+      '@lit/reactive-element': 2.0.4
+      lit-element: 4.1.1
+      lit-html: 3.2.1
 
   load-yaml-file@0.2.0:
     dependencies:

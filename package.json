@@ -14,7 +14,7 @@
     "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-beta.38",
+    "@11thdeg/cyan-next": "1.0.0-rc.1",
     "@astrojs/check": "^0.9.4",
     "@astrojs/rss": "^4.0.10",
     "@astrojs/solid-js": "^5.0.0",
@@ -30,6 +30,7 @@
     "firebase-admin": "^12.7.0",
     "front-matter": "^4.0.2",
     "jszip": "^3.10.1",
+    "lit": "^3.2.1",
     "marked": "^15.0.3",
     "nanostores": "^0.11.3",
     "rss-parser": "^3.13.0",

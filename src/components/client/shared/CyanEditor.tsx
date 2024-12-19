@@ -1,4 +1,4 @@
-import { CnEditor } from '@11thdeg/cyan-next';
+import { CnEditor } from '../../../../cn-editor/src/cn-editor';
 import { type Component, onCleanup, onMount } from 'solid-js';
 
 interface CnEditorProps {
