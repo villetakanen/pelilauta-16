@@ -1,5 +1,5 @@
-import { CnEditor } from '../../../../cn-editor/src/cn-editor';
 import { type Component, onCleanup, onMount } from 'solid-js';
+import { CnEditor } from '../../../../cn-editor/src/cn-editor';
 
 interface CnEditorProps {
   value: string;
