@@ -5,7 +5,7 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.5.x (current)
+### 16.6.0 (current)
 - Moved the Page-editor over to Svelte.
 - Page-editor category selector is now hidden, if the site does not use categories.
 - Page-editor supports the tags functionality, and live-higlights the tags in the page content.
@@ -15,6 +15,8 @@ noun: 'monsters'
 - Astro 5 upgrade.
 - Users site listing orders by flow-time by default.
 - Users site listing can be ordered by flow-time, and name.
+- Tag support for wiki pages.
+- Tag listing pages for wiki pages.
 
 ### 16.5.0
 - Cross-linked personal and public sites.
