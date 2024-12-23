@@ -29,7 +29,6 @@ export function rewriteWikiLinks(
   if (!currentSite || !baseUrl) {
     throw new Error('currentSite and baseUrl are required');
   }
-  logDebug('Rewriting wiki links', { currentSite, baseUrl });
 
   // Match all []() links
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
