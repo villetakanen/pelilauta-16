@@ -4,11 +4,9 @@ import {
   type Tag,
   TagSchema,
 } from '@schemas/TagSchema';
-import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
-import { toDate } from '@utils/schemaHelpers';
 import type { APIContext } from 'astro';
 
-type Thread = {
+/* type Thread = {
   title: string;
   key: string;
   tags: string[];

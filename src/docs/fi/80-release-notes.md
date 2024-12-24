@@ -5,7 +5,11 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.6.0 (current)
+### 16.6.x (current)
+- CnEditor uses native events and bubbling for better performance.
+- Page editor no longer crashes when saving a page with tags.
+
+### 16.6.0
 - Moved the Page-editor over to Svelte.
 - Page-editor category selector is now hidden, if the site does not use categories.
 - Page-editor supports the tags functionality, and live-higlights the tags in the page content.

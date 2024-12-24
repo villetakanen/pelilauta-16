@@ -1,5 +1,4 @@
 <script lang="ts">
-import type { CnEditor } from '@11thdeg/cyan-next';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
@@ -8,6 +7,7 @@ import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
+import type { CnEditor } from 'cn-editor/src/cn-editor';
 import { onMount } from 'svelte';
 import { submitPageUpdate } from './submitPageUpdate';
 
@@ -51,6 +51,12 @@ async function migrateLegacyContent() {
   editorValue = md;
 }
 
+onMount(() => {
+  if (!page.markdownContent && (page.content || page.htmlContent)) {
+    migrateLegacyContent();
+  }
+});
+
 async function handleSubmission(event: Event) {
   event.preventDefault();
   const form = event.target as HTMLFormElement;
@@ -69,18 +75,11 @@ async function handleSubmission(event: Event) {
   }
 }
 
-onMount(() => {
-  if (!page.markdownContent) migrateLegacyContent();
-  const editorElement = document.getElementById('page-editor');
-  if (editorElement as CnEditor) {
-    editorElement?.addEventListener('input', (e: Event) => {
-      const customEvent = e as CustomEvent<string>;
-      editorValue = (customEvent.target as CnEditor).value;
-      tags = extractTags(editorValue);
-      hasChanges = true;
-    });
-  }
-});
+function handleEditorChange(event: Event) {
+  hasChanges = true;
+  editorValue = (event.target as CnEditor).value;
+  tags = extractTags(editorValue || '');
+}
 </script>
 
 <WithAuth allow={true}>
@@ -123,17 +122,17 @@ onMount(() => {
       <cn-editor
         id="page-editor"
         value={editorValue}
+        oninput={handleEditorChange}
+        onchange={handleEditorChange}
         placeholder={t('entries:page.markdownContent')}
       ></cn-editor>
     </section>
 
     {#if tags && tags.length > 0}
-    <section class="tags py-1 elevation-1">
-      <ul class="tag-list">
+    <section class="tags py-1 elevation-1 flex">
         {#each tags as tag}
-          <li>{tag}</li>
+          <span class="cn-tag">{tag}</span>
         {/each}
-      </ul>
     </section>
     {/if}
 
@@ -142,7 +141,7 @@ onMount(() => {
         {t('actions:delete')}
       </a>
       <div class="grow"></div>
-      <a href={`/site/${site.key}/${page.key}`} class="button text">
+      <a href={`/sites/${site.key}/${page.key}`} class="button text">
         {t('actions:cancel')}
       </a>
       <button type="submit" class="button cta" data-testid="save-button" disabled={!hasChanges}>
