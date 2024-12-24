@@ -1,5 +1,7 @@
 import { type Page, parsePage } from '@schemas/PageSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { logDebug } from '@utils/logHelpers';
+import { site } from 'src/locales/fi/site';
 import { updatePageRef } from './updatePageRef';
 import { updatePageTags } from './updatePageTags';
 
@@ -18,6 +20,8 @@ export async function updatePage(
   const pageRef = doc(db, 'sites', siteKey, 'pages', pageKey);
   await updateDoc(pageRef, toFirestoreEntry(changes));
 
+  logDebug('Page updated', { siteKey, pageKey, changes });
+
   const pageDoc = await getDoc(pageRef);
   if (!pageDoc.exists()) throw new Error('updatePage: Page not found');
 
@@ -25,8 +29,14 @@ export async function updatePage(
   const updatedPage = parsePage(
     toClientEntry(pageDoc.data() as Record<string, unknown>),
     pageKey,
+    siteKey,
   );
 
   await updatePageRef(updatedPage);
+
+  logDebug('Page references updated', { siteKey, pageKey });
+
   await updatePageTags(updatedPage);
+
+  logDebug('Page tags updated', { siteKey, pageKey });
 }

@@ -7,9 +7,9 @@ import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
+import type { CnEditor } from 'cn-editor/src/cn-editor';
+import { onMount } from 'svelte';
 import { submitPageUpdate } from './submitPageUpdate';
-  import type { CnEditor } from 'cn-editor/src/cn-editor';
-  import { onMount } from 'svelte';
 
 /**
  * This _client side_ component is used to render the form for editing a page.
@@ -80,7 +80,6 @@ function handleEditorChange(event: Event) {
   editorValue = (event.target as CnEditor).value;
   tags = extractTags(editorValue || '');
 }
-
 </script>
 
 <WithAuth allow={true}>
