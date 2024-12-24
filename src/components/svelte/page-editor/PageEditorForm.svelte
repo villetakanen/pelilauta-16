@@ -9,6 +9,7 @@ import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import { submitPageUpdate } from './submitPageUpdate';
   import type { CnEditor } from 'cn-editor/src/cn-editor';
+  import { onMount } from 'svelte';
 
 /**
  * This _client side_ component is used to render the form for editing a page.
@@ -49,6 +50,12 @@ async function migrateLegacyContent() {
   if (md) contentMigrated = true;
   editorValue = md;
 }
+
+onMount(() => {
+  if (!page.markdownContent && (page.content || page.htmlContent)) {
+    migrateLegacyContent();
+  }
+});
 
 async function handleSubmission(event: Event) {
   event.preventDefault();
