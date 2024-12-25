@@ -21,7 +21,7 @@ export async function GET(): Promise<Response> {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
-      // 'Cache-Control': 's-maxage=60, stale-while-revalidate',
+      'Cache-Control': 's-maxage=60, stale-while-revalidate',
     },
   });
 }

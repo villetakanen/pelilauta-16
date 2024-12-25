@@ -1,15 +1,26 @@
 ---
-import { ThreadEditor } from '@client/ThreadApp/ThreadEditor/ThreadEditor';
 import ModalPage from '@layouts/ModalPage.astro';
+import { type Channel, ChannelSchema } from '@schemas/ChannelSchema';
+import ThreadEditorForm from '@svelte/thread-editor/ThreadEditorForm.svelte';
 import { t } from '@utils/i18n';
 
 const title = `${t('app:shortname')} – ${t('actions:create.thread')}`;
 const shortTitle = t('actions:create.thread');
 const channel = Astro.url.searchParams.get('channel') || undefined;
+
+// Fetch channels from the server
+const channelsResponse = await fetch(
+  `${Astro.url.origin}/api/meta/channels.json`,
+);
+const channelsData = await channelsResponse.json();
+const channels = channelsData.map((channel: Partial<Channel>) =>
+  ChannelSchema.parse(channel),
+);
 ---
 
 <ModalPage title={title} shortTitle={shortTitle}>
-  <ThreadEditor
+  <ThreadEditorForm
     topic={channel}
-    client:only="solid-js"/>
+    channels={channels}
+    client:only="svelte"/>
 </ModalPage>
