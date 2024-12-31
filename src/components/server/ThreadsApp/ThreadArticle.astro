@@ -1,5 +1,4 @@
 ---
-import { ImagesSection } from '@client/ThreadApp/ImagesSection';
 import type { Thread } from '@schemas/ThreadSchema';
 import { marked } from 'marked';
 
@@ -19,7 +18,7 @@ const figures =
   <h1 class="downscaled">
     {thread.title}
   </h1>
-  { figures.length > 0 && <ImagesSection figures={figures} /> }
+  { figures.length > 0 && <cn-lightbox images={JSON.stringify(figures)}></cn-lightbox> }
   <section set:html={htmlContent} />
   { thread.tags && thread.tags.length > 0 &&
     <div class="tags">
