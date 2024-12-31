@@ -7,6 +7,7 @@ import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import { onMount } from 'svelte';
+import { submitThreadUpdate } from './submitThreadUpdate';
 
 interface Props {
   thread?: Thread;
@@ -17,7 +18,9 @@ interface Props {
 const { thread, channelKey, channels }: Props = $props();
 let saving = $state(false);
 let files = $state<File[]>([]);
-const previews = $derived(files.map((file) => ({src: URL.createObjectURL(file), caption: file.name })));
+const previews = $derived(
+  files.map((file) => ({ src: URL.createObjectURL(file), caption: file.name })),
+);
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
@@ -34,8 +37,28 @@ async function handleSubmit(event: Event) {
   let targetKey = thread?.key || '-';
   targetKey = targetKey.replace(/[^a-zA-Z0-9-]/g, '');
 
-  saving = false;
-  // window.location.href = `/threads/${targetKey}`;
+  try {
+    const slug = await submitThreadUpdate(
+      {
+        key: targetKey,
+        title: title,
+        markdownContent: content,
+        channel: channelKey,
+        images: previews.map((preview) => ({
+          url: preview.src,
+          alt: preview.caption,
+        })),
+      },
+      $uid,
+    );
+
+    saving = false;
+    window.location.href = `/threads/${slug}`;
+  } catch (error) {
+    logError('Error saving thread', error);
+    pushSnack(t('threads:editor.error.save'));
+    saving = false;
+  }
 }
 
 onMount(() => {
