@@ -19,6 +19,13 @@
     }
   },
   "files": {
-    "ignore": ["node_modules/*", "dist/*", ".astro/*", ".vercel/*", "**/*.cjs"]
+    "ignore": [
+      "node_modules/*",
+      "dist/*",
+      ".astro/*",
+      ".vercel/*",
+      "**/*.cjs",
+      "cn-lightbox/*"
+    ]
   }
 }
