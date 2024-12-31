@@ -17,6 +17,7 @@ interface Props {
 const { thread, channelKey, channels }: Props = $props();
 let saving = $state(false);
 let files = $state<File[]>([]);
+const previews = $derived(files.map((file) => ({src: URL.createObjectURL(file), caption: file.name })));
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
@@ -63,62 +64,53 @@ onMount(() => {
       />
     </label>
     <label>
-        {t('entries:thread.channel')}
-        <select
-          name="channel"
-        >
-          {#each channels as channel}
-            <option value={channel.slug}
-              selected={!!channelKey && channel.slug === channelKey}
-              >{channel.name}</option>
-          {/each}
-        </select>
-      </label>
-      <AddFilesButton
-        accept="image/*"
-        multiple={true}
-        addFiles={(newFiles: File[]) => {
-          files = [...files, ...newFiles];
-        }}
-        disabled={saving}
-      />
+      {t('entries:thread.channel')}
+      <select
+        name="channel"
+      >
+        {#each channels as channel}
+          <option value={channel.slug}
+            selected={!!channelKey && channel.slug === channelKey}
+          >{channel.name}</option>
+        {/each}
+      </select>
+    </label>
+    <AddFilesButton
+      accept="image/*"
+      multiple={true}
+      addFiles={(newFiles: File[]) => {
+        files = [...files, ...newFiles];
+      }}
+      disabled={saving}
+    />
   </section>
   {#if files.length > 0}
-    <section class="file-list">
-        {#each files as file}
-            <div class="file">
-                <span>{file.name}</span>
-                <button
-                type="button"
-                onclick={() => {
-                    files = files.filter((f) => f !== file);
-                }}
-                >
-                {t('actions:remove')}
-                </button>
-            </div>
-            {/each}
+    <section style="container: images / inline-size; width: min(420px,90vw); margin: 0 auto; margin-bottom: var(--cn-gap)">
+      <cn-lightbox images={previews}></cn-lightbox>
     </section>
+  {/if}
+  <section class="grow">
+    <cn-editor
+      value={thread?.markdownContent || ''}
+      name="markdownContent"
+      disabled={saving}
+      placeholder={t('entries:thread.placeholders.content')}
+    ></cn-editor>
+  </section>
+
+  <section class="toolbar">
+    {#if thread?.key}
+      <button type="button" disabled={saving} class="text">
+        {t('actions:delete')}
+      </button>
     {/if}
-        
-
-        <div class="form-group">
-            <label for="content">Content</label>
-            <textarea
-                id="content"
-                placeholder="Thread content"
-                disabled={saving}
-            ></textarea>
-        </div>
-
-      
-        <div class="actions">
-            <button type="button" disabled={saving}>
-                Cancel
-            </button>
-            <button type="submit" disabled={saving}>
-                {saving ? 'Saving...' : thread?.key ? 'Update Thread' : 'Create Thread'}
-            </button>
-        </div>
-    </form>
+    <button type="button" disabled={saving} class="text">
+      {t('actions:cancel')}
+    </button>
+    <div class="grow"></div>
+    <button type="submit" disabled={saving}>
+      {t('actions:save')}
+    </button>
+  </section>
+</form>
 
