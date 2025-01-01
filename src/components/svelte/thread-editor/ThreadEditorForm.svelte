@@ -4,8 +4,10 @@ import type { Thread } from '@schemas/ThreadSchema';
 import { uid } from '@stores/sessionStore';
 import AddFilesButton from '@svelte/app/AddFilesButton.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
+import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
+import type { CnEditor } from 'cn-editor/src/cn-editor';
 import { onMount } from 'svelte';
 import { submitThreadUpdate } from './submitThreadUpdate';
 
@@ -21,37 +23,17 @@ let files = $state<File[]>([]);
 const previews = $derived(
   files.map((file) => ({ src: URL.createObjectURL(file), caption: file.name })),
 );
+let tags = $state<string[]>(thread?.tags || []);
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
-  const { title, content } = event.target as HTMLFormElement;
-  if (!$uid) {
-    logError('Trying to create a thread without a valid session');
-    return;
-  }
-  if (!title.trim() || !content.trim()) {
-    pushSnack(t('threads:editor.error.titleContentRequired'));
-    return;
+  if (thread?.key) {
+    throw new Error('Editing existing threads is not supported yet');
   }
   saving = true;
-  let targetKey = thread?.key || '-';
-  targetKey = targetKey.replace(/[^a-zA-Z0-9-]/g, '');
-
+  const data = new FormData(event.target as HTMLFormElement);
   try {
-    const slug = await submitThreadUpdate(
-      {
-        key: targetKey,
-        title: title,
-        markdownContent: content,
-        channel: channelKey,
-        images: previews.map((preview) => ({
-          url: preview.src,
-          alt: preview.caption,
-        })),
-      },
-      $uid,
-    );
-
+    const slug = await submitThreadUpdate(data, $uid, tags, files);
     saving = false;
     window.location.href = `/threads/${slug}`;
   } catch (error) {
@@ -59,6 +41,12 @@ async function handleSubmit(event: Event) {
     pushSnack(t('threads:editor.error.save'));
     saving = false;
   }
+}
+
+async function handleContentChange(event: InputEvent) {
+  const editor = event.target as CnEditor;
+  const content = editor.value;
+  tags = extractTags(content);
 }
 
 onMount(() => {
@@ -117,9 +105,18 @@ onMount(() => {
       value={thread?.markdownContent || ''}
       name="markdownContent"
       disabled={saving}
+      oninput={handleContentChange}
       placeholder={t('entries:thread.placeholders.content')}
     ></cn-editor>
   </section>
+
+  {#if tags.length > 0}
+    <section class="flex elevation-1 p-1">
+      {#each tags as tag}
+        <span class="cn-tag">{tag}</span>
+      {/each}
+    </section>
+  {/if}
 
   <section class="toolbar">
     {#if thread?.key}

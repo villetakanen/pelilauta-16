@@ -1,25 +1,32 @@
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
 
-export async function submitThreadUpdate(data: Partial<Thread>, uid: string) {
-  const { serverTimestamp, addDoc, collection, getFirestore, getDoc, doc } =
-    await import('firebase/firestore');
+export async function submitThreadUpdate(
+  data: FormData,
+  uid: string,
+  tags: string[],
+  files: File[],
+) {
+  const { addThread } = await import('@firebase/client/threads/addThread');
 
-  const update = {
-    ...data,
-    owners: [uid],
-    author: uid,
-    updatedAt: serverTimestamp(),
-    createdAt: serverTimestamp(),
-  };
+  const title = data.get('title') as string;
+  const markdownContent = data.get('markdownContent') as string;
+  const channel = data.get('channel') as string;
 
-  if (data.key) {
-    throw new Error('Thread update functionality not implemented yet');
+  if (!title || !markdownContent || !channel) {
+    throw new Error('Missing minimum required fields');
   }
 
-  const { id } = await addDoc(
-    collection(getFirestore(), THREADS_COLLECTION_NAME),
-    update,
-  );
+  const thread: Partial<Thread> = {
+    title,
+    markdownContent,
+    channel,
+    owners: [uid],
+    author: uid,
+  };
 
-  return id;
+  if (tags.length > 0) {
+    thread.tags = tags;
+  }
+
+  return await addThread(thread, files, uid);
 }
