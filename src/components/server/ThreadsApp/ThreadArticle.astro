@@ -6,7 +6,9 @@ interface Props {
   thread: Thread;
 }
 const { thread } = Astro.props;
-const htmlContent = await markdownToHTML(thread.markdownContent || thread.content || '');
+const htmlContent = await markdownToHTML(
+  thread.markdownContent || thread.content || '',
+);
 
 const figures =
   thread.images?.map((image) => ({
