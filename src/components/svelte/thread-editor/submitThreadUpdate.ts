@@ -1,4 +1,4 @@
-import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
+import type { Thread } from '@schemas/ThreadSchema';
 
 export async function submitThreadUpdate(
   data: FormData,

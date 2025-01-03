@@ -3,11 +3,13 @@ import {
   THREADS_COLLECTION_NAME,
   type Thread,
   createThread,
+  parseThread,
 } from '@schemas/ThreadSchema';
 import { markEntrySeen } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logError, logWarn } from '@utils/logHelpers';
 import { addAssetToThread } from './addAssetToThread';
+import { updateThreadTags } from './updateThreadTags';
 
 async function increaseThreadCount(channel: string) {
   const { doc, getFirestore, getDoc, updateDoc } = await import(
@@ -56,9 +58,8 @@ export async function addThread(
   files: File[],
   uid: string,
 ): Promise<string> {
-  const { updateDoc, addDoc, collection, getFirestore, doc } = await import(
-    'firebase/firestore'
-  );
+  const { updateDoc, addDoc, collection, getFirestore, doc, getDoc } =
+    await import('firebase/firestore');
   const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
 
   // Create a new thread object from the partial thread data
@@ -98,8 +99,22 @@ export async function addThread(
     images,
   });
 
+  // Update collateral data
   thread.channel && (await increaseThreadCount(thread.channel));
 
+  const dbThreadDoc = await getDoc(
+    doc(getFirestore(), THREADS_COLLECTION_NAME, docRef.id),
+  );
+  const dbThread = parseThread(
+    toClientEntry(dbThreadDoc.data() as Partial<Thread>),
+    docRef.id,
+  );
+
+  thread.tags && (await updateThreadTags(dbThread));
+
+  // Mark the thread as seen, so the user doesn't see it as new
+  // @TODO: this should be done in the app logic by the client side
+  // component, not here
   await markEntrySeen(docRef.id, Date.now());
 
   return docRef.id;

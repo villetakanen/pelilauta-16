@@ -5,9 +5,14 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.6.x (current)
+### 16.7.0 (2024-01-03)
 - CnEditor uses native events and bubbling for better performance.
 - Page editor no longer crashes when saving a page with tags.
+- Thread editor moved to Svelte.
+- Thread editor supports tags and live-highlights them in the content.
+- Tag listing page supports both wiki and thread tags.
+- CnLightbox addon is used for images in Thread editor and viewer.
+- \[BUG]: Thread editor does not load or save changes to an existing threads. This is intentional, as the old functionality was not working - so disabling edits let us release the new editor, without loss of (working as intented) functionality.
 
 ### 16.6.0
 - Moved the Page-editor over to Svelte.
