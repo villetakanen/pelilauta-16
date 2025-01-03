@@ -19,6 +19,7 @@ interface Props {
 
 const { thread, channelKey, channels }: Props = $props();
 let saving = $state(false);
+let changed = $state(false);
 let files = $state<File[]>([]);
 const previews = $derived(
   files.map((file) => ({ src: URL.createObjectURL(file), caption: file.name })),
@@ -42,11 +43,17 @@ async function handleSubmit(event: Event) {
     saving = false;
   }
 }
+async function handleChange() {
+  if (!changed) {
+    changed = true;
+  }
+}
 
 async function handleContentChange(event: InputEvent) {
   const editor = event.target as CnEditor;
   const content = editor.value;
   tags = extractTags(content);
+  handleChange();
 }
 
 onMount(() => {
@@ -72,12 +79,14 @@ onMount(() => {
         name="title"
         disabled={saving}
         placeholder={t('entries:thread.placeholders.title')}
+        onchange={handleChange}
       />
     </label>
     <label>
       {t('entries:thread.channel')}
       <select
         name="channel"
+        onchange={handleChange}
       >
         {#each channels as channel}
           <option value={channel.slug}
@@ -91,6 +100,7 @@ onMount(() => {
       multiple={true}
       addFiles={(newFiles: File[]) => {
         files = [...files, ...newFiles];
+        changed = true;
       }}
       disabled={saving}
     />
@@ -128,8 +138,9 @@ onMount(() => {
       {t('actions:cancel')}
     </button>
     <div class="grow"></div>
-    <button type="submit" disabled={saving}>
-      {t('actions:save')}
+    <button type="submit" disabled={saving || !changed} data-testid="send-thread-button">
+      <cn-icon noun="send"></cn-icon>
+      <span>{t('actions:send')}</span>
     </button>
   </section>
 </form>
