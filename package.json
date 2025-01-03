@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "16.7.1",
+  "version": "16.7.2",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -32,6 +32,7 @@
     "jszip": "^3.10.1",
     "lit": "^3.2.1",
     "marked": "^15.0.4",
+    "marked-footnote": "^1.2.4",
     "nanostores": "^0.11.3",
     "rss-parser": "^3.13.0",
     "solid-js": "^1.9.3",

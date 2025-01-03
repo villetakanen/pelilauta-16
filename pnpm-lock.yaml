@@ -62,6 +62,9 @@ importers:
       marked:
         specifier: ^15.0.4
         version: 15.0.4
+      marked-footnote:
+        specifier: ^1.2.4
+        version: 1.2.4(marked@15.0.4)
       nanostores:
         specifier: ^0.11.3
         version: 0.11.3
@@ -3876,6 +3879,11 @@ packages:
 
   markdown-table@3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
+
+  marked-footnote@1.2.4:
+    resolution: {integrity: sha512-DB2Kl+wFh6YwZd70qABMY6WUkG1UuyqoNTFoDfGyG79Pz24neYtLBkB+45a7o72V7gkfvbC3CGzIYFobxfMT1Q==}
+    peerDependencies:
+      marked: '>=7.0.0'
 
   marked@15.0.4:
     resolution: {integrity: sha512-TCHvDqmb3ZJ4PWG7VEGVgtefA5/euFmsIhxtD0XsBxI39gUSKL81mIRFdt0AiNQozUahd4ke98ZdirExd/vSEw==}
@@ -9837,6 +9845,10 @@ snapshots:
   map-obj@4.3.0: {}
 
   markdown-table@3.0.3: {}
+
+  marked-footnote@1.2.4(marked@15.0.4):
+    dependencies:
+      marked: 15.0.4
 
   marked@15.0.4: {}
 
