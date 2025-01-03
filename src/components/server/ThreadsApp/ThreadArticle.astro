@@ -6,7 +6,7 @@ interface Props {
   thread: Thread;
 }
 const { thread } = Astro.props;
-const htmlContent = marked(thread.markdownContent || '');
+const htmlContent = marked(thread.markdownContent || thread.content || '');
 
 const figures =
   thread.images?.map((image) => ({
