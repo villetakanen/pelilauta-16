@@ -7,3 +7,6 @@
 [submodule "cn-dice"]
 	path = cn-dice
 	url = https://github.com/villetakanen/cn-dice.git
+[submodule "cn-lightbox"]
+	path = cn-lightbox
+	url = https://github.com/villetakanen/cn-lightbox.git

@@ -1,5 +1,6 @@
 import { serverDB } from '@firebase/server';
 import { type Channel, parseChannel } from '@schemas/ChannelSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
 
 export async function GET(): Promise<Response> {
   const channels = new Array<Channel>();
@@ -14,14 +15,14 @@ export async function GET(): Promise<Response> {
   }
 
   for (const channel of channelsArray) {
-    channels.push(parseChannel(channel));
+    channels.push(parseChannel(toClientEntry(channel)));
   }
 
   return new Response(JSON.stringify(channels), {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
-      // 'Cache-Control': 's-maxage=60, stale-while-revalidate',
+      'Cache-Control': 's-maxage=60, stale-while-revalidate',
     },
   });
 }

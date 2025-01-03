@@ -1,7 +1,6 @@
 import { type Page, parsePage } from '@schemas/PageSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
-import { site } from 'src/locales/fi/site';
 import { updatePageRef } from './updatePageRef';
 import { updatePageTags } from './updatePageTags';
 
