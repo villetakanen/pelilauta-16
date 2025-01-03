@@ -83,7 +83,9 @@ export const ReplyBubble: Component<Props> = (props) => {
             </p>
           </div>
         )}
-        <MarkdownSection content={`${props.reply.markdownContent}`} />
+        <MarkdownSection
+          content={`${props.reply.markdownContent || props.reply.content}`}
+        />
       </cn-bubble>
       {fromCurrentUser() && (
         <div class="sm-hidden">

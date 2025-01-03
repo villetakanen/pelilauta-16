@@ -5,6 +5,9 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.7.x (ongoing)
+- Legacy thread and reply content is now rendered in thread view.
+
 ### 16.7.0 (2024-01-03)
 - CnEditor uses native events and bubbling for better performance.
 - Page editor no longer crashes when saving a page with tags.

@@ -14,6 +14,7 @@ export const ContentEntrySchema = EntrySchema.extend({
   tags: z.array(z.string()).optional(),
   markdownContent: z.string().optional(),
   htmlContent: z.string().optional(),
+  content: z.string().optional(), // Legacy content field
   images: z.array(z.string()).optional(),
   owners: z.array(z.string()),
 });
