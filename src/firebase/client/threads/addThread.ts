@@ -5,9 +5,9 @@ import {
   createThread,
 } from '@schemas/ThreadSchema';
 import { markEntrySeen } from '@stores/sessionStore';
+import { toClientEntry } from '@utils/client/entryUtils';
 import { logError, logWarn } from '@utils/logHelpers';
 import { addAssetToThread } from './addAssetToThread';
-import { toClientEntry } from '@utils/client/entryUtils';
 
 async function increaseThreadCount(channel: string) {
   const { doc, getFirestore, getDoc, updateDoc } = await import(
