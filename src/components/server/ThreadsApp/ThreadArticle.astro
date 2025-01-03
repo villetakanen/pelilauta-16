@@ -1,12 +1,14 @@
 ---
 import type { Thread } from '@schemas/ThreadSchema';
-import { marked } from 'marked';
+import { markdownToHTML } from '@utils/marked';
 
 interface Props {
   thread: Thread;
 }
 const { thread } = Astro.props;
-const htmlContent = marked(thread.markdownContent || thread.content || '');
+const htmlContent = await markdownToHTML(
+  thread.markdownContent || thread.content || '',
+);
 
 const figures =
   thread.images?.map((image) => ({
