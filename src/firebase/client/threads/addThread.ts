@@ -1,14 +1,48 @@
+import { type Channel, parseChannel } from '@schemas/ChannelSchema';
 import {
   THREADS_COLLECTION_NAME,
   type Thread,
   createThread,
 } from '@schemas/ThreadSchema';
 import { markEntrySeen } from '@stores/sessionStore';
-import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
-import { logError } from '@utils/logHelpers';
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
-import { db } from '..';
+import { logError, logWarn } from '@utils/logHelpers';
 import { addAssetToThread } from './addAssetToThread';
+import { toClientEntry } from '@utils/client/entryUtils';
+
+async function increaseThreadCount(channel: string) {
+  const { doc, getFirestore, getDoc, updateDoc } = await import(
+    'firebase/firestore'
+  );
+  const channelsRef = doc(getFirestore(), 'meta', 'threads');
+  const channelsDoc = await getDoc(channelsRef);
+
+  if (!channelsDoc.exists()) {
+    logWarn('No channels found in DB, cannot increase thread count');
+    return;
+  }
+
+  const channels = new Array<Channel>();
+  const channelsArray = channelsDoc.data()?.topics;
+
+  for (const channel of channelsArray) {
+    channels.push(parseChannel(toClientEntry(channel)));
+  }
+
+  const channelIndex = channels.findIndex((c) => c.slug === channel);
+  if (channelIndex === -1) {
+    logWarn('Channel not found in DB, cannot increase thread count');
+    return;
+  }
+
+  const channelEntry = channels[channelIndex];
+  channelEntry.threadCount += 1;
+
+  channelsArray[channelIndex] = channelEntry;
+
+  await updateDoc(channelsRef, {
+    topics: channelsArray,
+  });
+}
 
 /**
  * Adds a new thread to the firestore database.
@@ -22,6 +56,11 @@ export async function addThread(
   files: File[],
   uid: string,
 ): Promise<string> {
+  const { updateDoc, addDoc, collection, getFirestore, doc } = await import(
+    'firebase/firestore'
+  );
+  const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
+
   // Create a new thread object from the partial thread data
   const threadEntry = createThread(thread);
 
@@ -32,7 +71,10 @@ export async function addThread(
   const entry = toFirestoreEntry(threadEntry);
 
   // Add the thread to the firestore database
-  const docRef = await addDoc(collection(db, THREADS_COLLECTION_NAME), entry);
+  const docRef = await addDoc(
+    collection(getFirestore(), THREADS_COLLECTION_NAME),
+    entry,
+  );
 
   const images = new Array<{ url: string; alt: string }>();
   // Check if there are any files to upload
@@ -52,9 +94,11 @@ export async function addThread(
   }
 
   // Update the thread with the uploaded images
-  await updateDoc(doc(db, THREADS_COLLECTION_NAME, docRef.id), {
+  await updateDoc(doc(getFirestore(), THREADS_COLLECTION_NAME, docRef.id), {
     images,
   });
+
+  thread.channel && (await increaseThreadCount(thread.channel));
 
   await markEntrySeen(docRef.id, Date.now());
 

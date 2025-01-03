@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { authenticate } from './authenticate-e2e';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:4321/');
-  /*await expect(page.locator('a[href="/settings"]')).toBeVisible();
-  await page.locator('#createDiscussionFab').click();
-  await page.getByPlaceholder('Otsikko').click();
-  await page.getByPlaceholder('Otsikko').fill('Testikeskustelu');
-  await expect(page.getByPlaceholder('Otsikko')).toHaveValue('Testikeskustelu');*/
+  await authenticate(page);
+  await page.goto('http://localhost:4321/create/thread');
+  
+  // Expect the save button to exist, and be disabled
+  await expect(page.getByTestId('send-button')).toBeDisabled();
 });
