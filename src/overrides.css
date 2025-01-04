@@ -448,3 +448,8 @@ ul.tag-list li:before {
 .list-type-none li::before {
   content: none;
 }
+.o-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--cn-grid);
+}

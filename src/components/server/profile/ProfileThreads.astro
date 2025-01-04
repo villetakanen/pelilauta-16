@@ -1,5 +1,6 @@
 ---
 import type { Thread } from '@schemas/ThreadSchema';
+import ThreadCard from '@server/FrontPage/ThreadCard.astro';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
@@ -32,23 +33,12 @@ try {
   <h2>{t('profile:threadList.title')}</h2>
 
   { threads.length > 0 ? (
-    <ul class="list-type-none m-0 p-0">
+    <div class="flex">
       {threads.map((thread) => (
-        <li class="m-0 p-0">
-          <a href={`/threads/${thread.key}`}
-            class="flex hoverable align-center px-1 flex-no-wrap">
-            <cn-icon noun={topicToNoun(thread.channel)} class="no-shrink"/>
-            <h4 class="downscaled m-0 grow">
-              {thread.title}
-            </h4>
-            <p>
-              {toDisplayString(thread.flowTime)}
-            </p>
-          </a>
-        </li>
-        ))}
-    </ul>
+       <ThreadCard thread={thread} />
+      ))}
+    </div>
     ) : (
         <p>{t('profile:threadList.empty')}</p>
     )}
-</article>`;
+</article>

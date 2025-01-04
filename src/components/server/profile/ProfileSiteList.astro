@@ -1,5 +1,6 @@
 ---
 import { type Site, parseSite } from '@schemas/SiteSchema';
+import SiteCard from '@server/ui/SiteCard.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
@@ -27,25 +28,14 @@ try {
   logError('ProfileSiteList failed to fetch the users public sites', error);
 }
 ---
-<article>
+<article class="column-s">
   <h2>{t('profile:siteList.title')}</h2>
   { sites.length > 0 ? (
-    <ul class="list-type-none m-0 p-0">
+    <div class="flex flex-col">
       {sites.map((site) => (
-        <li class="m-0 p-0">
-          <a href={`/sites/${site.key}`}
-            class="flex hoverable align-center px-1 flex-no-wrap">
-            <cn-icon noun={systemToNoun(site.system)} />
-            <h4 class="downscaled m-0 grow">
-              {site.name}
-            </h4>
-            <p>
-              {toDisplayString(site.flowTime)}
-            </p>
-          </a>
-        </li>
+        <SiteCard site={site} />
       ))}
-    </ul>
+    </div>
     ) : (
         <p>{t('profile:siteList.empty')}</p>
     )}
