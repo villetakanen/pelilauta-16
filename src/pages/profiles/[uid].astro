@@ -1,10 +1,26 @@
 ---
-import { ProfileApp } from '@client/ProfileApp/ProfileApp';
 import Page from '@layouts/Page.astro';
+import { parseProfile } from '@schemas/ProfileSchema';
+import ProfileApp from '@server/profile/ProfileApp.astro';
+import { toClientEntry } from '@utils/client/entryUtils';
 
 const { uid } = Astro.params;
-const profileKey = uid || ''; // This should not happen, but just in case
+
+if (!uid) {
+  return Astro.redirect('/404');
+}
+
+// Fetch Profile data from the api
+const origin = new URL(Astro.request.url).origin;
+const profileRequest = await fetch(`${origin}/api/profiles/${uid}.json`);
+
+if (profileRequest.status === 404) {
+  return Astro.redirect('/404');
+}
+
+const profileResponse = await profileRequest.json();
+const profile = parseProfile(toClientEntry(profileResponse), uid);
 ---
 <Page>
-  <ProfileApp uid={profileKey} client:only="solid-js"/>
+  <ProfileApp profile={profile} />
 </Page>

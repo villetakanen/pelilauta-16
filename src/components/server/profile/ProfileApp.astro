@@ -1,0 +1,20 @@
+---
+import type { Profile } from '@schemas/ProfileSchema';
+import ProfileArticle from './ProfileArticle.astro';
+
+/* A SSR page for a user's profile.
+ *
+ * The page will display:
+ * - The user's profile section
+ * - up to 11 of the user's most recent posts
+ * - up to 11 of the user's most recently updated _public_ sites/games
+ */
+
+interface Props {
+  profile: Profile;
+}
+const { profile } = Astro.props;
+---
+<div class="content-columns">
+    <ProfileArticle profile={profile} />
+</div>
