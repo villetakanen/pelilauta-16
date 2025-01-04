@@ -5,7 +5,7 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.7.x (ongoing)
+### 16.8.0
 - Legacy thread and reply content is now rendered in thread view.
 - Footnotes are now used GFM style, and are rendered in the page view.
 - ProfileApp moved to SSR Astro component, reduntant profile info styling removed.
