@@ -442,3 +442,9 @@ ul.tag-list li:before {
   margin-left: -4px;
   color: var(--color-on-secondary);
 }
+.list-type-none {
+  list-style-type: none;
+}
+.list-type-none li::before {
+  content: none;
+}

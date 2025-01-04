@@ -1,0 +1,54 @@
+---
+import type { Thread } from '@schemas/ThreadSchema';
+import { topicToNoun } from '@stores/ThreadsApp/topics';
+import { toDisplayString } from '@utils/contentHelpers';
+import { t } from '@utils/i18n';
+import { logError } from '@utils/logHelpers';
+
+interface Props {
+  uid: string;
+}
+
+const { uid } = Astro.params;
+const origin = new URL(Astro.request.url).origin;
+const threadsRequest = await fetch(
+  `${origin}/api/threads.json?uid=${uid}&limit=11`,
+);
+
+const threads = new Array<Thread>();
+
+try {
+  if (threadsRequest.status === 200) {
+    const threadsResponse = await threadsRequest.json();
+    for (const thread of threadsResponse) {
+      threads.push(thread as Thread);
+    }
+  }
+} catch (error) {
+  logError('ProfileThreads failed to fetch the users threads', error);
+}
+---
+<article>
+  <h2>{t('profile:threadList.title')}</h2>
+
+  { threads.length > 0 ? (
+    <ul class="list-type-none m-0 p-0">
+      {threads.map((thread) => (
+        <li class="m-0 p-0">
+          <a href={`/threads/${thread.key}`}
+            class="flex hoverable align-center px-1 flex-no-wrap">
+            <cn-icon noun={topicToNoun(thread.channel)} class="no-shrink"/>
+            <h4 class="downscaled m-0 grow">
+              {thread.title}
+            </h4>
+            <p>
+              {toDisplayString(thread.flowTime)}
+            </p>
+          </a>
+        </li>
+        ))}
+    </ul>
+    ) : (
+        <p>{t('profile:threadList.empty')}</p>
+    )}
+</article>`;

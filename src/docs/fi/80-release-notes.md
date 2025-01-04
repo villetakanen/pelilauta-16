@@ -9,6 +9,8 @@ noun: 'monsters'
 - Legacy thread and reply content is now rendered in thread view.
 - Footnotes are now used GFM style, and are rendered in the page view.
 - ProfileApp moved to SSR Astro component, reduntant profile info styling removed.
+- ProfileApp shows the user's latest sites
+- ProfileApp shows the user's latest posts
 
 ### 16.7.0 (2024-01-03)
 - CnEditor uses native events and bubbling for better performance.

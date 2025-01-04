@@ -9,7 +9,7 @@ const { uid }: Props = $props();
 {#await fetchProfileEntry(uid)}
     <cn-loader inline></cn-loader>
 {:then profile}
-  <a href="/profile/{profile.key}">{profile.nick}</a>
+  <a href="/profiles/{profile.key}">{profile.nick}</a>
 {:catch error}
   <p>{error.message}</p>
 {/await}

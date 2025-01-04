@@ -8,13 +8,17 @@ export async function GET({ request }: APIContext) {
 
   const searchParams = getAstroQueryParams(request);
 
-  const sitesCollection = searchParams.limit
+  const queryWithLimit = searchParams.limit
     ? serverDB
         .collection('sites')
         .where('hidden', '==', false)
         .limit(Number.parseInt(searchParams.limit))
         .orderBy('flowTime', 'desc')
     : serverDB.collection('sites').where('hidden', '==', false);
+
+  const sitesCollection = searchParams.uid
+    ? queryWithLimit.where('owners', 'array-contains', searchParams.uid)
+    : queryWithLimit;
 
   const sites = await sitesCollection.get();
 

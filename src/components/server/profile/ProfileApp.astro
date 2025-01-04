@@ -1,6 +1,8 @@
 ---
 import type { Profile } from '@schemas/ProfileSchema';
 import ProfileArticle from './ProfileArticle.astro';
+import ProfileSiteList from './ProfileSiteList.astro';
+import ProfileThreads from './ProfileThreads.astro';
 
 /* A SSR page for a user's profile.
  *
@@ -16,5 +18,7 @@ interface Props {
 const { profile } = Astro.props;
 ---
 <div class="content-columns">
-    <ProfileArticle profile={profile} />
+  <ProfileArticle profile={profile} />
+  <ProfileSiteList uid={profile.key} />
+  <ProfileThreads uid={profile.key} />
 </div>
