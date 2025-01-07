@@ -3,6 +3,7 @@ import type { Account } from '@schemas/AccountSchema';
 import { appMeta } from '@stores/metaStore/metaStore';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
+  import { logDebug } from '@utils/logHelpers';
 
 interface Props {
   account: Account;
@@ -12,7 +13,10 @@ const adminStatus = $derived(() => $appMeta.admins.includes(account.uid));
 const frozenStatus = $derived(() => account.frozen);
 </script>
 
-<p class="m-0 p-2"><ProfileLink uid={account.uid} /></p>
+<p class="m-0 p-2">
+  <ProfileLink uid={account.uid} /><br>
+  <span class="text-caption">{account.uid}</span>
+</p>
 <p class="m-0 p-2">{toDisplayString(account.lastLogin)}</p>
 
   {#if adminStatus()}
@@ -25,5 +29,9 @@ const frozenStatus = $derived(() => account.frozen);
   <cn-toggle-button
     disabled={adminStatus()}
     value={frozenStatus()}
+    onChange={() => {
+      account.frozen = !account.frozen;
+      logDebug('UserAdmin', 'frozenStatus', account.frozen);
+    }}
   ></cn-toggle-button>
 

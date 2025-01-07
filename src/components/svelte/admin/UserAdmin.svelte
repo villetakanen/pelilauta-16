@@ -11,7 +11,7 @@ $: allow = $appMeta.admins.includes($uid);
 <style>
 .user-grid {
   display: grid;
-  grid-template-columns: 4fr 4fr 1fr 1fr;
+  grid-template-columns: 6fr 2fr 1fr 1fr;
   gap: var(--cn-grid);
   align-items: center;
 }
