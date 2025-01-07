@@ -1,0 +1,42 @@
+---
+import { type Site, parseSite } from '@schemas/SiteSchema';
+import SiteCard from '@server/ui/SiteCard.astro';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { toDisplayString } from '@utils/contentHelpers';
+import { t } from '@utils/i18n';
+import { logError } from '@utils/logHelpers';
+import { systemToNoun } from '@utils/schemaHelpers';
+
+interface Props {
+  uid: string;
+}
+
+const { uid } = Astro.params;
+const origin = new URL(Astro.request.url).origin;
+const siteListRequest = await fetch(`${origin}/api/sites?uid=${uid}`);
+
+const sites = new Array<Site>();
+
+try {
+  if (siteListRequest.status === 200) {
+    const siteListResponse = await siteListRequest.json();
+    for (const site of siteListResponse) {
+      sites.push(parseSite(toClientEntry(site), site.key));
+    }
+  }
+} catch (error) {
+  logError('ProfileSiteList failed to fetch the users public sites', error);
+}
+---
+<article class="column-s">
+  <h2>{t('profile:siteList.title')}</h2>
+  { sites.length > 0 ? (
+    <div class="flex flex-col">
+      {sites.map((site) => (
+        <SiteCard site={site} />
+      ))}
+    </div>
+    ) : (
+        <p>{t('profile:siteList.empty')}</p>
+    )}
+</article>

@@ -5,6 +5,7 @@ import { library } from './library';
 import { login } from './login';
 import { meta } from './meta';
 import { navigation } from './navigation';
+import { profile } from './profile';
 import { settings } from './settings';
 import { site } from './site';
 import { social } from './social';
@@ -66,4 +67,5 @@ export const fi: Locale = {
   social,
   threads,
   tag,
+  profile,
 };

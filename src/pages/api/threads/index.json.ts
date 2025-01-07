@@ -12,7 +12,7 @@ import { serverDB } from 'src/firebase/server';
 export async function GET({ request }: APIContext) {
   const publicThreads = new Array<Thread>();
 
-  const { startAt, channel, limit } = getAstroQueryParams(request);
+  const { startAt, channel, limit, uid } = getAstroQueryParams(request);
 
   // Base query for all public threads
   const allPublicThreadsCollection = serverDB
@@ -35,11 +35,15 @@ export async function GET({ request }: APIContext) {
     ? channelThreads.where('flowTime', '<', startTimeTimestamp)
     : channelThreads;
 
+  const uidFilter = uid
+    ? currentPageStart.where('author', '==', uid)
+    : currentPageStart;
+
   // We allow limit up to 11 threads
   const limitValue = limit ? Math.min(Number(limit), 11) : 11;
 
   // Get the threads
-  const threads = await currentPageStart.limit(limitValue).get();
+  const threads = await uidFilter.limit(limitValue).get();
 
   // Convert the threads to client format
   for (const threadDoc of threads.docs) {
