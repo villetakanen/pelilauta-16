@@ -1,18 +1,19 @@
-import { ACCOUNTS_COLLECTION_NAME } from '@schemas/AccountSchema';
-import { parseProfile, type Profile, PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
-import { toClientEntry } from '@utils/client/entryUtils';
 import { persistentAtom } from '@nanostores/persistent';
+import { ACCOUNTS_COLLECTION_NAME } from '@schemas/AccountSchema';
+import {
+  PROFILES_COLLECTION_NAME,
+  type Profile,
+  parseProfile,
+} from '@schemas/ProfileSchema';
+import { toClientEntry } from '@utils/client/entryUtils';
 
-
-export const activeProfiles = persistentAtom<Profile[]>(
-  'active-profiles',
-  [], {
+export const activeProfiles = persistentAtom<Profile[]>('active-profiles', [], {
   encode: JSON.stringify,
   decode: (data) => {
     const object = JSON.parse(data);
     return object;
   },
-}); 
+});
 
 function profileCached(uid: string) {
   return activeProfiles.get().find((p) => p.key === uid);
@@ -31,18 +32,19 @@ function patchProfile(profile: Profile) {
 
 /**
  * Fetches all active accounts, and their respective profiles.
- * 
+ *
  * Profiles are stored in the local-store, and not re-fetched if they already exist.
  */
 export async function fetchActiveProfiles() {
-  const { getFirestore, collection, query, getDocs, where, doc, getDoc } = await import('firebase/firestore');
+  const { getFirestore, collection, query, getDocs, where, doc, getDoc } =
+    await import('firebase/firestore');
 
   // Date.now() - 15 days
   const fifteenDaysAgo = Date.now() - 15 * 24 * 60 * 60 * 1000;
 
   const q = query(
     collection(getFirestore(), ACCOUNTS_COLLECTION_NAME),
-    where('lastLogin' , '>', new Date(fifteenDaysAgo)),
+    where('lastLogin', '>', new Date(fifteenDaysAgo)),
   );
   const activeAccounts = await getDocs(q);
 
@@ -51,7 +53,7 @@ export async function fetchActiveProfiles() {
       continue;
     }
     const uid = accountDoc.id;
-   
+
     // check if profiles store already has the profile
     if (!profileCached(uid)) {
       const profileRef = doc(getFirestore(), PROFILES_COLLECTION_NAME, uid);

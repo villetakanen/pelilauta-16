@@ -1,7 +1,10 @@
 <script lang="ts">
-import { onMount } from "svelte";
-import { fetchActiveProfiles, activeProfiles } from "@stores/activeProfilesStore";
-  import { uid } from "@stores/sessionStore";
+import {
+  activeProfiles,
+  fetchActiveProfiles,
+} from '@stores/activeProfilesStore';
+import { uid } from '@stores/sessionStore';
+import { onMount } from 'svelte';
 
 interface Props {
   value: string;
@@ -14,14 +17,13 @@ const { value, onchange }: Props = $props();
  * A Wrapper for <select> that provides a list of (active) users to select from.
  */
 onMount(() => {
-  console.log("UserSelect mounted");
+  console.log('UserSelect mounted');
   fetchActiveProfiles();
 });
 
 const profiles = $derived.by(() => {
   return [...$activeProfiles].sort((a, b) => a.nick.localeCompare(b.nick));
-})
-
+});
 </script>
 
 <select

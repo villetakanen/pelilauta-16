@@ -1,10 +1,9 @@
 ---
-import { SiteMembersApp } from '@client/SitesApp/SiteMembersApp/SiteMembersApp';
-import SiteOwnersTool from '@svelte/sites/SiteOwnersTool.svelte';
 import ModalPage from '@layouts/ModalPage.astro';
-import { t } from '@utils/i18n';
 import { parseSite } from '@schemas/SiteSchema';
+import SiteOwnersTool from '@svelte/sites/SiteOwnersTool.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { t } from '@utils/i18n';
 
 const { siteKey: siteKeyParam } = Astro.params;
 const siteKey = siteKeyParam || 'mekanismi'; // This should not happen, but just in case
@@ -18,7 +17,6 @@ if (siteResponse.status === 404) {
 }
 
 const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
-
 ---
 <ModalPage title={t('site:members.title')}>
   <div class="content-columns">
