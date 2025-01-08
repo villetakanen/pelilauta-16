@@ -1,10 +1,10 @@
 <script lang="ts">
+import { setFrozen } from '@firebase/client/account/setFrozen';
 import type { Account } from '@schemas/AccountSchema';
 import { appMeta } from '@stores/metaStore/metaStore';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 import { logDebug } from '@utils/logHelpers';
-import { setFrozen } from '@firebase/client/account/setFrozen';
 
 interface Props {
   account: Account;
@@ -14,14 +14,11 @@ const adminStatus = $derived(() => $appMeta.admins.includes(account.uid));
 const frozenStatus = $derived(() => account.frozen);
 
 const toggleFrozen = async () => {
-
-
   account.frozen = !account.frozen;
   logDebug('UserAdmin', 'frozenStatus', account.frozen);
 
   await setFrozen(account.frozen, account.uid);
 };
-
 </script>
 
 <p class="m-0 p-2">
