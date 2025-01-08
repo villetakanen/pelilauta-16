@@ -7,6 +7,7 @@ noun: 'monsters'
 
 ### 16.8.x (ongoing)
 - Restored admin functionality for freezing users.
+- Active users widget added to the front page.
 
 ### 16.8.0 (2024-01-07)
 - Legacy thread and reply content is now rendered in thread view.

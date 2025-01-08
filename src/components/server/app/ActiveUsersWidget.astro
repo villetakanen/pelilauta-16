@@ -1,0 +1,18 @@
+---
+import AvatarLink from '@svelte/app/AvatarLink.svelte';
+import { t } from '@utils/i18n';
+
+const { origin } = Astro.url;
+const activeUidsRequest = await fetch(`${origin}/api/accounts/active.json`);
+const activeUids = (await activeUidsRequest.json()) as string[];
+
+if (activeUids.length > 11) {
+  activeUids.length = 11;
+}
+---
+<h4>{t('app:footer.activeUsers.title')}</h4>
+<div class="flex flex-wrap" style="gap: 0;">
+{activeUids.map((uid: string) => (
+  <AvatarLink uid={uid} client:only="svelte"/>
+))}
+</div>

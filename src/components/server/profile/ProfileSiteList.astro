@@ -2,10 +2,8 @@
 import { type Site, parseSite } from '@schemas/SiteSchema';
 import SiteCard from '@server/ui/SiteCard.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
-import { systemToNoun } from '@utils/schemaHelpers';
 
 interface Props {
   uid: string;
