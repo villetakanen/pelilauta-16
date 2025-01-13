@@ -14,7 +14,7 @@ import { glob } from 'astro/loaders';
  * }),
  *});
  */
-const fi = defineCollection({
+const docs = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/docs/fi' }),
   schema: z.object({
     name: z.string(),
@@ -23,4 +23,4 @@ const fi = defineCollection({
     description: z.string().optional(),
   }),
 });
-export const collections = { fi };
+export const collections = { docs };
