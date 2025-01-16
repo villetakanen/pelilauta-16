@@ -4,13 +4,15 @@ export const prerender = true;
 import { getCollection } from 'astro:content';
 import { t } from '@utils/i18n';
 
-const allComponents = await getCollection('fi');
+const allComponents = await getCollection('docs');
 ---
 
 <h3 class="cn-tray-title">{t('app:docs.title')}</h3>
 <ul>
   {
-    allComponents.map(p => (
+    allComponents.sort(
+      (a, b) => a.id.localeCompare(b.id)
+    ).map(p => (
       <li>
         <a href={'/docs/fi/' + p.id}>
           {p.data.noun && <cn-icon noun={p.data.noun} small></cn-icon>}

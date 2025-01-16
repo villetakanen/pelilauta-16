@@ -21,6 +21,7 @@ const serviceAccount = {
 
 const initApp = () => {
   logWarn('Initializing the Firebase Server App');
+  console.log('serviceAccount:', serviceAccount);
   return initializeApp({
     credential: cert(serviceAccount as ServiceAccount),
     databaseURL: import.meta.env.PUBLIC_databaseURL,

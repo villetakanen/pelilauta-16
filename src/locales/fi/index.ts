@@ -39,6 +39,9 @@ export const fi: Locale = {
       links: {
         title: 'Roolipelit verkossa',
       },
+      activeUsers: {
+        title: 'Aktiivisena',
+      },
     },
     settings: {
       title: 'Asetukset',

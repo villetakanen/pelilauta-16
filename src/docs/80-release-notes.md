@@ -5,6 +5,11 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.9.0 (2024-01-13)
+- Restored admin functionality for freezing users.
+- Active users widget added to the front page.
+- Docs disabled temporarily
+
 ### 16.8.0 (2024-01-07)
 - Legacy thread and reply content is now rendered in thread view.
 - Footnotes are now used GFM style, and are rendered in the page view.
