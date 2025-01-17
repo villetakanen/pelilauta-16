@@ -14,7 +14,7 @@ const allComponents = await getCollection('docs');
       (a, b) => a.id.localeCompare(b.id)
     ).map(p => (
       <li>
-        <a href={'/docs/fi/' + p.id}>
+        <a href={'/docs/' + p.id}>
           {p.data.noun && <cn-icon noun={p.data.noun} small></cn-icon>}
           {p.data.shortname || p.data.name}</a>
       </li>

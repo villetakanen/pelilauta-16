@@ -31,11 +31,11 @@ const currentPath = Astro.url.pathname;
   <InboxRailButton client:only="solid-js"/>
   <div class="grow"></div>
   <AdminNavigationButton client:only="solid-js"/>
-  <!--a href="/docs/01-index">
+  <a href="/docs/01-index">
     <cn-navigation-icon
       noun="design"
       label={t('navigation:docs')}
       checked={currentPath.startsWith('/docs')}
-    /-->
+    />
   <SettingNavigationButton client:only="svelte"/>
 </nav>
