@@ -33,3 +33,10 @@ test('wikilinks with / are converted to markdown links', () => {
     '<a href="https://example.com/sites/vampyyrien-vankina/eräs-toinen-saitti">Vampyyrien vankina / Eräs toinen saitti</a>';
   expect(rewriteWikiLinks(content, currentSite, baseUrl)).toBe(expected);
 });
+test('https links are not converted to markdown links', () => {
+  const content = '[https://example.com]';
+  const currentSite = 'test-site';
+  const baseUrl = 'https://example.com';
+  const expected = '<a href="https://example.com">https://example.com</a>';
+  expect(rewriteWikiLinks(content, currentSite, baseUrl)).toBe(expected);
+});
