@@ -1,18 +1,19 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import PageWithTray from '@layouts/PageWithTray.astro';
 import DocsTray from '@server/docs/DocsTray.astro';
-export const prerender = true;
-// 1. Generate a new path for every collection entry
-export async function getStaticPaths() {
-  const posts = await getCollection('docs');
-  return posts.map((post) => ({
-    params: { id: post.id },
-    props: { post },
-  }));
-}
+
 // 2. For your template, you can get the entry directly from the prop
-const { post } = Astro.props;
+const { id } = Astro.params;
+const post = await getEntry('docs', `${id}`);
+
+if (!post) {
+  return {
+    status: 404,
+    error: new Error('Post not found'),
+  };
+}
+
 const { Content } = await render(post);
 ---
 <PageWithTray>
@@ -20,7 +21,7 @@ const { Content } = await render(post);
   <div class="content-columns">
     <article class="column-l">
       <h1>{post.data.name}</h1>
-      <Content />
+      <Content/>
     </article>
   </div>
 </PageWithTray>
