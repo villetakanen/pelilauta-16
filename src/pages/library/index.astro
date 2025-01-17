@@ -1,17 +1,18 @@
 ---
 import { SiteFabs } from '@client/library/SiteFabs';
+import PageWithTray from '@layouts/PageWithTray.astro';
+import LibraryTray from '@server/library/LibraryTray.astro';
 import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import UserSitesList from '@svelte/site-library/UserSitesList.svelte';
 import { t } from '@utils/i18n';
-// import LibraryTray from 'src/components/server/library/LibraryTray.astro';
-import Page from 'src/layouts/Page.astro';
 
 const title = `${t('app:shortname')} – ${t('library:title')}`;
 const shortTitle = t('library:title');
 const description = t('library:description');
 ---
 
-<Page title={title} description={description} shortTitle={shortTitle}>
+<PageWithTray title={title} description={description} shortTitle={shortTitle}>
+  <LibraryTray slot="app-tray" />
   <UserSitesList client:only="svelte" />
   <SiteFabs slot="fab-tray" client:only="solid-js"/>
   <BackgroundPoster
@@ -22,4 +23,4 @@ const description = t('library:description');
     <p class="text-caption text-center" style="opacity:0.44" slot="app-footer-credits">
       Taustakuva © Juno Viinikka (<a href="https://linktr.ee/junowski">https://linktr.ee/junowski</a>)
     </p>
-</Page>
+</PageWithTray>

@@ -63,6 +63,11 @@ function toDashCase(text: string) {
 }
 
 function rewriteUrl(linkTarget: string, currentSite: string, baseUrl: string) {
+  //if the linkTarget contains a protocol, return it as is
+  if (linkTarget.match(/^https?:\/\//)) {
+    return linkTarget;
+  }
+
   //if the linkTarget has a /, it's a link to another site, otherwise it's a
   // link to the current site
   logDebug('Rewriting link', { linkTarget, currentSite, baseUrl });

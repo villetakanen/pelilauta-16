@@ -5,6 +5,10 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.9.x (ongoing)
+- FIX: links with protocol are no longer treated as wikilinks.
+- FIX: Library shows public sites link in the tray
+
 ### 16.9.0 (2024-01-13)
 - Restored admin functionality for freezing users.
 - Active users widget added to the front page.
