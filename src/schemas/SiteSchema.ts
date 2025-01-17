@@ -57,6 +57,8 @@ export const SiteSchema = EntrySchema.extend({
   customPageKeys: z.boolean().optional(),
   pageRefs: z.array(PageRefSchema).optional(),
   pageCategories: z.array(CategoryRefSchema).optional(),
+  // Settings
+  usePlayers: z.boolean().optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;

@@ -28,8 +28,6 @@ async function dropOwner(ownerUid: string) {
 
 async function addOwner(event: Event) {
   event.preventDefault();
-  const form = event.target as HTMLFormElement;
-  const formData = new FormData(form);
 
   if (owners.includes(selectedUid)) {
     return;
@@ -52,7 +50,7 @@ function setSelectedUid(e: Event) {
 
 <h2>{t('site:owners.title')}</h2>
 
-<p>{t('site:owners.description')}</p>
+<p class="downscaled">{t('site:owners.description')}</p>
 
 {#each owners as owner}
   <div class="toolbar">
@@ -71,6 +69,7 @@ function setSelectedUid(e: Event) {
 
 <form onsubmit={addOwner} class="toolbar">
   <UserSelect
+    label={t('site:owners.add')}
     value={selectedUid}
     onchange={setSelectedUid}
   />

@@ -2,6 +2,7 @@
 import ModalPage from '@layouts/ModalPage.astro';
 import { parseSite } from '@schemas/SiteSchema';
 import SiteOwnersTool from '@svelte/sites/SiteOwnersTool.svelte';
+import SitePlayersTool from '@svelte/sites/SitePlayersTool.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 
@@ -22,6 +23,9 @@ const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
   <div class="content-columns">
     <article>
       <SiteOwnersTool site={site} client:only="svelte" />
+    </article>
+    <article>
+      <SitePlayersTool site={site} client:only="svelte" />
     </article>
   </div>
 </ModalPage>
