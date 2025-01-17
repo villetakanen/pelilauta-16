@@ -51,15 +51,11 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
     // F.ex. support for attach:file.jpg style asset links, or other
     // custom markdown extensions
     if (page.markdownContent)
-      page.htmlContent = addSiteToWikilinks(
-        await marked(
-          renderProfileTags(
-            renderTags(page.markdownContent, url.origin),
-            url.origin,
-          ) || '',
-        ),
-        siteKey,
-        url.origin,
+      page.htmlContent = await marked(
+        renderProfileTags(
+          renderTags(page.markdownContent, url.origin),
+          url.origin,
+        ) || '',
       );
 
     page.htmlContent = rewriteWikiLinks(
