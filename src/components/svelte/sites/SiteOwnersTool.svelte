@@ -20,6 +20,9 @@ async function addOwner(event: Event) {
   if (!$site || $site.owners.includes(selectedUid)) {
     return;
   }
+  if (selectedUid === '-') {
+    return;
+  }
   const newOwners = [...$site.owners, selectedUid];
   await update({ owners: newOwners });
 }
@@ -56,7 +59,9 @@ function setSelectedUid(e: Event) {
     value={selectedUid}
     onchange={setSelectedUid}
   />
-  <button type="submit" class="no-shrink">{t('actions:add')}</button>
+  <button type="submit" class="no-shrink"
+    disabled={$site.owners.includes(selectedUid) || selectedUid === '-'}
+  >{t('actions:add')}</button>
 </form>
 </div>
 {/if}

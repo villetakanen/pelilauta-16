@@ -1,5 +1,7 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
+import { uid } from '@stores/sessionStore';
+import WithAuth from '@svelte/app/WithAuth.svelte';
 import SiteOwnersTool from './SiteOwnersTool.svelte';
 import SitePlayersTool from './SitePlayersTool.svelte';
 import { site } from './siteStore';
@@ -15,7 +17,10 @@ const { site: initialSite }: Props = $props();
 $site = initialSite;
 </script>
 
-<div class="content-columns">
-  <SiteOwnersTool />
-  <SitePlayersTool />
-</div>
+<WithAuth allow={$site?.owners.includes($uid)}>
+  <div class="content-columns">
+    <SiteOwnersTool />
+    <SitePlayersTool />
+  </div>
+</WithAuth>
+

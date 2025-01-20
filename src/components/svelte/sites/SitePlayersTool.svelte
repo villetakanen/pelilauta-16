@@ -18,7 +18,12 @@ const listedPlayers = $derived.by(() => {
 
 function addPlayer(event: Event) {
   event.preventDefault();
-  if (!$site || !selectedUid || $site.players?.includes(selectedUid)) {
+  if (
+    !$site ||
+    !selectedUid ||
+    selectedUid === '-' ||
+    $site.players?.includes(selectedUid)
+  ) {
     return;
   }
   const newPlayers = $site.players
@@ -28,10 +33,11 @@ function addPlayer(event: Event) {
 }
 
 function dropPlayer(playerUid: string) {
-  if (!$site || !playerUid || !$site.players?.includes(selectedUid)) {
+  if (!$site || !playerUid) {
+    logDebug('dropPlayer fails', playerUid);
     return;
   }
-  const newPlayers = $site.players.filter((id) => id !== playerUid);
+  const newPlayers = $site.players?.filter((id) => id !== playerUid) ?? [];
   update({ players: newPlayers });
 }
 
@@ -82,7 +88,9 @@ function setUsePlayers(e: Event) {
     value={selectedUid}
     onchange={setSelectedUid}
   />
-  <button type="submit">{t('actions:add')}</button>
+  <button 
+    disabled={$site.players?.includes(selectedUid) || selectedUid === '-'}
+    type="submit">{t('actions:add')}</button>
 </form>
 
 {/if}
