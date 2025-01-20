@@ -23,6 +23,9 @@ export const site: Locale = {
       description: 'Tuodaan {complete} / {count} sivua',
     },
   },
+  members: {
+    title: 'Jäsenet',
+  },
   settings: {
     title: 'Asetukset',
     meta: {

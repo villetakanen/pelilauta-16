@@ -1,47 +1,38 @@
 <script lang="ts">
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
-import { updateSite } from '@firebase/client/site/updateSite';
-import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import UserSelect from '@svelte/app/UserSelect.svelte';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
+import { site, update } from './siteStore';
 
-/**
- * This is a svelte port of the SiteMembersApp solid-js component.
- */
-interface Props {
-  site: Site;
-}
-const { site }: Props = $props();
-let players = $state(site.players);
 let selectedUid = $state('-');
-let usePlayers = $state(site.usePlayers ?? false);
+let usePlayers = $state($site?.usePlayers ?? false);
+const listedPlayers = $derived.by(() => {
+  // Return all players, who are not in the owners list
+  return (
+    $site?.players?.filter((player) => !$site.owners?.includes(player)) ?? []
+  );
+});
 
 function addPlayer(event: Event) {
   event.preventDefault();
-
-  if (players?.includes(selectedUid)) {
+  if (!$site || !selectedUid || $site.players?.includes(selectedUid)) {
     return;
   }
-  const newPlayers = players ? [...players, selectedUid] : [selectedUid];
-  const newSite = { ...site, players: newPlayers };
-
-  updateSite(newSite, true);
-  players = newPlayers;
+  const newPlayers = $site.players
+    ? [...$site.players, selectedUid]
+    : [selectedUid];
+  update({ players: newPlayers });
 }
 
 function dropPlayer(playerUid: string) {
-  if (!players) {
-    // nothing to do
+  if (!$site || !playerUid || !$site.players?.includes(selectedUid)) {
     return;
   }
-  const newPlayers = players.filter((id) => id !== playerUid);
-  const newSite = { ...site, players: newPlayers };
-
-  updateSite(newSite, true);
-  players = newPlayers;
+  const newPlayers = $site.players.filter((id) => id !== playerUid);
+  update({ players: newPlayers });
 }
 
 function setSelectedUid(e: Event) {
@@ -51,32 +42,31 @@ function setSelectedUid(e: Event) {
 function setUsePlayers(e: Event) {
   logDebug('setUsePlayers', (e.target as CyanToggleButton).pressed);
   usePlayers = (e.target as CyanToggleButton).pressed;
-  const newSite = { ...site, usePlayers };
-  updateSite(newSite, true);
+  update({ usePlayers });
 }
 </script>
 
-<h2>{t('site:players.title')}</h2>
+<div>
+  <h2>{t('site:players.title')}</h2>
+  <p class="downscaled">{t('site:players.description')}</p>
 
-<p class="downscaled">{t('site:players.description')}</p>
+  <cn-toggle-button
+    label={t('site:players.usePlayers')}
+    pressed={usePlayers}
+    onchange={setUsePlayers}
+  ></cn-toggle-button>
 
-<cn-toggle-button
-  label={t('site:players.usePlayers')}
-  pressed={usePlayers}
-  onchange={setUsePlayers}
-></cn-toggle-button>
+{#if $site && $site.usePlayers}
+{#if $site.players?.length}
 
-{#if usePlayers}
-{#if players?.length}
-
-{#each players as owner}
+{#each listedPlayers as player}
   <div class="toolbar">
-    <ProfileLink uid={owner} />
+    <ProfileLink uid={player} />
     <button
       aria-label={t('actions:remove')}
       type="button"
-      disabled={$uid === owner}
-      onclick={() => dropPlayer(owner)}>
+      disabled={$uid === player}
+      onclick={() => dropPlayer(player)}>
       <cn-icon noun="delete"></cn-icon>
     </button>
   </div>
@@ -87,6 +77,7 @@ function setUsePlayers(e: Event) {
 
 <form onsubmit={addPlayer} class="toolbar">
   <UserSelect
+    omit={[...$site.owners, ...$site.players ?? []]}
     label={t('site:players.add')}
     value={selectedUid}
     onchange={setSelectedUid}
@@ -95,3 +86,4 @@ function setUsePlayers(e: Event) {
 </form>
 
 {/if}
+</div>
