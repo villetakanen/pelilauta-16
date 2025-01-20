@@ -1,6 +1,5 @@
 ---
 import { CreateMissingPageSection } from '@client/SiteApp/CreateMissingPageSection';
-import { PageFabs } from '@client/sites/PageApp/PageFabs';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import PageArticleFooter from './PageArticleFooter.astro';
@@ -26,14 +25,12 @@ const exists = page !== undefined;
     <PageArticleFooter page={page} site={site}/>
   </article> 
   <PageSidebar site={site} />
-  <PageFabs page={page} site={site} client:only="solid-js"/>
   :
   <article class="column-l elevation-1 p-2">
     <div class="flex">
         <cn-icon noun="monsters" xlarge />
         <h1>404</h1>
       </div>
-      
       <CreateMissingPageSection site={site} pageKey={pageKey} client:only="solid-js"/>
   </article>
   }
