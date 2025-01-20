@@ -8,6 +8,7 @@ noun: 'monsters'
 ### 16.9.x (ongoing)
 - FIX: links with protocol are no longer treated as wikilinks.
 - FIX: Library shows public sites link in the tray
+- FEAT: Added players -functionality to the Sites. Players can create, edit and destroy pages.
 
 ### 16.9.0 (2024-01-13)
 - Restored admin functionality for freezing users.
