@@ -23,6 +23,9 @@ export const site: Locale = {
       description: 'Tuodaan {complete} / {count} sivua',
     },
   },
+  members: {
+    title: 'Jäsenet',
+  },
   settings: {
     title: 'Asetukset',
     meta: {
@@ -75,9 +78,18 @@ export const site: Locale = {
     },
   },
   frontPage: 'Etusivu',
-  members: {
+  owners: {
     title: 'Omistajat',
+    description:
+      'Sivuston omistajat voivat muokata sivuston asetuksia, sisältöä, käyttöoikeuksia ja ulkoasua.',
     add: 'Lisää omistaja',
+  },
+  players: {
+    title: 'Pelaajat',
+    description:
+      'Sivustolle voidaan lisätä myös jäseniä, kuten pelaajia - joiden oikeudet ovat rajatummat. Oletuksena pelaaja voi vain muokata ja luoda sivuja.',
+    add: 'Lisää pelaaja',
+    usePlayers: 'Pelaajat -toiminto',
   },
   siteList: {
     title: 'Julkiset sivustot',

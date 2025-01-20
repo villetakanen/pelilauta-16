@@ -4,14 +4,17 @@ import {
   fetchActiveProfiles,
 } from '@stores/activeProfilesStore';
 import { uid } from '@stores/sessionStore';
+import { t } from '@utils/i18n';
 import { onMount } from 'svelte';
 
 interface Props {
   value: string;
+  label?: string;
+  omit?: string[];
   onchange: (e: Event) => void;
 }
 
-const { value, onchange }: Props = $props();
+const { value, onchange, label, omit }: Props = $props();
 
 /**
  * A Wrapper for <select> that provides a list of (active) users to select from.
@@ -25,16 +28,17 @@ const profiles = $derived.by(() => {
   return [...$activeProfiles].sort((a, b) => a.nick.localeCompare(b.nick));
 });
 </script>
-
-<select
-  class="grow"
+<label style="width: 100%;">
+  {label ?? t('actions:select.user')}
+  <select
+    style="width: 100%"
   {value}
   {onchange}
 >
   <option value="-" selected> – </option>
 {#each profiles as profile}
-  {#if profile.key !== $uid}
+  {#if profile.key !== $uid && (!omit || !omit.includes(profile.key))}
     <option value={profile.key}>{profile.nick}</option>
   {/if}
 {/each}
-</select>
+</label>

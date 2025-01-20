@@ -1,48 +1,30 @@
 <script lang="ts">
-import { SITES_COLLECTION_NAME, type Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import UserSelect from '@svelte/app/UserSelect.svelte';
 import { t } from '@utils/i18n';
+import { site, update } from './siteStore';
 
-/**
- * This is a svelte port of the SiteMembersApp solid-js component.
- */
-interface Props {
-  site: Site;
-}
-const { site }: Props = $props();
-let owners = $state(site.owners);
 let selectedUid = $state('-');
 
 async function dropOwner(ownerUid: string) {
-  const newOwners = owners.filter((id) => id !== ownerUid);
-
-  const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
-
-  await updateDoc(doc(getFirestore(), SITES_COLLECTION_NAME, site.key), {
-    owners: newOwners,
-  });
-  owners = newOwners;
+  if (!$site || !$site.owners.includes(ownerUid)) {
+    return;
+  }
+  const newOwners = $site.owners.filter((id) => id !== ownerUid);
+  await update({ owners: newOwners });
 }
 
 async function addOwner(event: Event) {
   event.preventDefault();
-  const form = event.target as HTMLFormElement;
-  const formData = new FormData(form);
-
-  if (owners.includes(selectedUid)) {
+  if (!$site || $site.owners.includes(selectedUid)) {
     return;
   }
-
-  const newOwners = [...owners, selectedUid];
-
-  const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
-
-  await updateDoc(doc(getFirestore(), SITES_COLLECTION_NAME, site.key), {
-    owners: newOwners,
-  });
-  owners = newOwners;
+  if (selectedUid === '-') {
+    return;
+  }
+  const newOwners = [...$site.owners, selectedUid];
+  await update({ owners: newOwners });
 }
 
 function setSelectedUid(e: Event) {
@@ -50,11 +32,12 @@ function setSelectedUid(e: Event) {
 }
 </script>
 
-<h2>{t('site:owners.title')}</h2>
-
-<p>{t('site:owners.description')}</p>
-
-{#each owners as owner}
+{#if $site }
+<div>
+  <h2>{t('site:owners.title')}</h2>
+  <p class="downscaled">{t('site:owners.description')}</p>
+  
+  {#each $site.owners as owner}
   <div class="toolbar">
     <ProfileLink uid={owner} />
     <button
@@ -71,8 +54,14 @@ function setSelectedUid(e: Event) {
 
 <form onsubmit={addOwner} class="toolbar">
   <UserSelect
+    omit={$site.owners}
+    label={t('site:owners.add')}
     value={selectedUid}
     onchange={setSelectedUid}
   />
-  <button type="submit">{t('actions:add')}</button>
+  <button type="submit" class="no-shrink"
+    disabled={$site.owners.includes(selectedUid) || selectedUid === '-'}
+  >{t('actions:add')}</button>
 </form>
+</div>
+{/if}

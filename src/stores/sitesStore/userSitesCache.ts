@@ -49,5 +49,20 @@ async function refreshSites() {
     return parseSite(toClientEntry(doc.data()), doc.id);
   });
 
+  // get sites the user is an player of
+  const playerSiteDocs = await getDocs(
+    query(
+      collection(getFirestore(), SITES_COLLECTION_NAME),
+      where('players', 'array-contains', $uid.get()),
+    ),
+  );
+
+  for (const doc of playerSiteDocs.docs) {
+    const site = parseSite(toClientEntry(doc.data()), doc.id);
+    if (!sitesArray.find((s) => s.key === site.key)) {
+      sitesArray.push(site);
+    }
+  }
+
   $sitesCache.set(sitesArray);
 }
