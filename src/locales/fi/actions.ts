@@ -7,6 +7,7 @@ export const actions: Locale = {
     page: 'Luo sivu',
     thread: 'Uusi keskustelu',
     site: 'Uusi sivusto',
+    clock: 'Uusi kello',
   },
   choose: 'Valitse',
   confirm: {

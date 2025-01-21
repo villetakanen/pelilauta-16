@@ -48,6 +48,7 @@ export const site: Locale = {
       homepage: 'Etusivu',
       toc: 'Hakemisto',
       assets: 'Lataukset',
+      clocks: 'Kellot',
     },
   },
   create: {
