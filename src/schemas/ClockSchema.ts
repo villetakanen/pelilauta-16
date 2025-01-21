@@ -14,6 +14,8 @@
 import { z } from 'zod';
 import { ContentEntrySchema } from './ContentEntry';
 
+export const CLOCKS_COLLECTION_NAME = 'clocks';
+
 export const ClockSchema = ContentEntrySchema.extend({
   ticks: z.array(z.number()),
   label: z.string(),

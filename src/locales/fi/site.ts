@@ -11,6 +11,12 @@ export const site: Locale = {
   contents: {
     title: 'Sivut',
   },
+  clocks: {
+    create: {
+      preview: 'Esikatselu',
+      default: 'Kello',
+    },
+  },
   import: {
     preview: {
       title: 'Esikatselu',

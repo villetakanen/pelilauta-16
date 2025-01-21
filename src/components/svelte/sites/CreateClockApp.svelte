@@ -1,7 +1,16 @@
 <script lang="ts">
 import { parseClock } from '@schemas/ClockSchema';
+import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
+import { logError } from '@utils/logHelpers';
+import { addClocktoSite } from 'src/firebase/client/site/addClockToSite';
+
+interface Props {
+  site: Site;
+}
+const { site } = $props();
+
 /**
  * A Simple form to create a new clock
  *
@@ -11,6 +20,13 @@ import { t } from '@utils/i18n';
 
 function handleSubmit(event: Event) {
   event.preventDefault();
+
+  try {
+    addClocktoSite(site.key, clock);
+    window.location.href = `/sites/${site.key}/clocks`;
+  } catch (error) {
+    logError(error);
+  }
 }
 function addTick() {
   clock.ticks.push(1);
@@ -23,43 +39,93 @@ function decreaseTick(i: number) {
 }
 const clock = $state(
   parseClock({
-    ticks: [2, 2, 1],
+    ticks: [1, 1],
     owners: [$uid],
-    label: 'New Clock',
+    label: t('site:clocks.create.default'),
   }),
 );
 </script>
 
 <div class="content-columns">
-  <section>
-    <cn-story-clock name={clock.label} value="0">
-      {#each clock.ticks as tick}
-        <cn-tick size={tick}></cn-tick>
-      {/each}
-    </cn-story-clock>
-    <p>{clock.label}</p>
+  <section class="border border-radius p-2 column-s">
+    <h4>{t('site:clocks.create.preview')}</h4>
+    <div class="flex align-center flex-no-wrap">
+      <cn-story-clock name={clock.label} value="0">
+        {#each clock.ticks as tick}
+          <cn-tick size={tick}></cn-tick>
+        {/each}
+      </cn-story-clock>
+      <p>{clock.label}</p>
+    </div>
   </section>
 
   <form onsubmit={handleSubmit}>
-    <h4>TICKS</h4>
+    <label>
+      {t('entries:clock.label')}
+      <input
+        type="text" bind:value={clock.label}
+        placeholder={t('site:clocks.create.label')} 
+      />
+    </label>
+    <h4>{t('entries:clock.ticks')}</h4>
 
+    <div class="grid tick-grid">
+      <span>{t('entries:clock.tickIndex')}</span>
+      <span>{t('entries:clock.tickSize')}</span>
+      <span>
+        <cn-icon noun="add" small></cn-icon>
+      </span>
+      <span>
+        <cn-icon noun="reduce" small></cn-icon>
+      </span>
+      <span>
+        <cn-icon noun="delete" small></cn-icon>
+      </span>
+    
     {#each clock.ticks as tick, i}
-      <p>{tick}, {i} 
+      <span>{i + 1}</span>
+      <span>{tick}</span>
         <button type="button" class="text" onclick={() => increaseTick(i)}
             aria-label={t('actions:increase.tick')}>
           <cn-icon noun="add" small></cn-icon>
         </button>
         <button type="button" class="text" onclick={() => decreaseTick(i)}
             aria-label={t('actions:decrease.tick')}>
-          <cn-icon noun="subtract" small></cn-icon>
+          <cn-icon noun="reduce" small></cn-icon>
         </button>
-      </p>
+        <button type="button" class="text" onclick={() => clock.ticks.splice(i, 1)}
+            aria-label={t('actions:delete.tick')}>
+          <cn-icon noun="delete" small></cn-icon>
+        </button>
     {/each}
+    </div>
 
     <hr>
-    <button onclick={addTick}>
+    <div class="toolbar justify-end">
+    <button onclick={addTick} class="text" type="button">
         <cn-icon noun="add" small></cn-icon>
         <span>{t('actions:create.tick')}</span>
     </button>
+  </div>
+
+
+  <div class="toolbar">
+  <button type="submit">
+    <cn-icon noun="clock"></cn-icon>
+    <span>{t('actions:save')}</span></button>
+    </div>
   </form>
 </div>
+
+<style>
+.tick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr calc(var(--cn-icon-size) + 4px) calc(var(--cn-icon-size) + 4px) calc(var(--cn-icon-size) + 4px);
+  gap: 0.5rem;
+}
+.tick-grid span:nth-child(3),
+.tick-grid span:nth-child(4),
+.tick-grid span:nth-child(5) {
+  justify-self: center;
+}
+</style>
