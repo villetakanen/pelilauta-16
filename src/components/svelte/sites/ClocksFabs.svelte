@@ -11,17 +11,16 @@ const { site }: Props = $props();
 
 const visible = $derived.by(() => {
   if (site.owners.includes($uid)) return true;
-  if (site.players.includes($uid)) return true;
   return false;
 });
 </script>
-    
-    {#if visible}
-      <a
-        href={`/sites/${site.key}/create/clock`}
-        class="fab"
-      >
-        <cn-icon noun="add" small></cn-icon>
-        <span class="sm-hidden">{t('actions:create.clock')}</span>
-      </a>
-    {/if}
+
+{#if visible}
+  <a
+    href={`/sites/${site.key}/create/clock`}
+    class="fab"
+  >
+    <cn-icon noun="add" small></cn-icon>
+    <span class="sm-hidden">{t('actions:create.clock')}</span>
+  </a>
+{/if}

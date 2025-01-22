@@ -1,5 +1,3 @@
-import { logDebug } from '@utils/logHelpers';
-
 /**
  * Rewrite wiki links in the content to point to the correct location. This happens after
  * the content has been rendered to HTML from markdown, and these links were not rewritten.
@@ -70,7 +68,7 @@ function rewriteUrl(linkTarget: string, currentSite: string, baseUrl: string) {
 
   //if the linkTarget has a /, it's a link to another site, otherwise it's a
   // link to the current site
-  logDebug('Rewriting link', { linkTarget, currentSite, baseUrl });
+  // logDebug('Rewriting link', { linkTarget, currentSite, baseUrl });
   if (linkTarget.includes('/')) {
     const [site, path] = linkTarget.split('/');
     return `${baseUrl}/sites/${toDashCase(site)}/${toDashCase(path)}`;

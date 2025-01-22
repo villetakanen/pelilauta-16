@@ -1,6 +1,7 @@
 ---
 import PageWithTray from '@layouts/PageWithTray.astro';
 import { parseSite } from '@schemas/SiteSchema';
+import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import ClocksApp from '@svelte/sites/ClocksApp.svelte';
 import ClocksFabs from '@svelte/sites/ClocksFabs.svelte';
@@ -39,4 +40,5 @@ if (!site) {
   <SiteTray slot="app-tray" site={site}/>
   <ClocksApp site={site} client:only="svelte"/>
   <ClocksFabs site={site} client:only="svelte" slot="fab-tray"/>
+  <SitePoster site={site}/>
 </PageWithTray>

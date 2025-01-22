@@ -1,15 +1,15 @@
 <script lang="ts">
+import { addClocktoSite } from '@firebase/client/site/addClockToSite';
 import { parseClock } from '@schemas/ClockSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
-import { logDebug, logError } from '@utils/logHelpers';
-import { addClocktoSite } from 'src/firebase/client/site/addClockToSite';
+import { logError } from '@utils/logHelpers';
 
 interface Props {
   site: Site;
 }
-const { site } = $props();
+const { site }: Props = $props();
 
 /**
  * A Simple form to create a new clock
@@ -23,10 +23,8 @@ async function handleSubmit(event: Event) {
 
   try {
     const c = { ...clock };
-    logDebug('Creating clock', c);
-    const key = await addClocktoSite(site.key, { ...clock });
-    // window.location.href = `/sites/${site.key}/clocks`;
-    logDebug('Clock created', site.key, key);
+    await addClocktoSite(site.key, { ...clock });
+    window.location.href = `/sites/${site.key}/clocks`;
   } catch (error) {
     logError(error);
   }

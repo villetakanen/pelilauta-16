@@ -69,7 +69,6 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
       sortOrder: orderBy(),
       pageCategories: categories(),
     });
-    //logDebug('Saved categories', categories());
     window.location.reload();
   }
 

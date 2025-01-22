@@ -6,7 +6,7 @@ import {
   emptySite,
   parseSite,
 } from '@schemas/SiteSchema';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { atom, computed } from 'nanostores';
 import { db } from 'src/firebase/client';
@@ -85,6 +85,5 @@ export async function updateSite(site: Partial<Site>, key: string) {
     '@utils/client/toFirestoreEntry'
   );
   const update = toFirestoreEntryUpdate(site);
-  logDebug('activeSiteStore', 'updateSite', key, update);
   await updateDoc(doc(db, SITES_COLLECTION_NAME, key), update);
 }

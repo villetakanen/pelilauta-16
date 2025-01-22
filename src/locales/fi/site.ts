@@ -12,10 +12,12 @@ export const site: Locale = {
     title: 'Sivut',
   },
   clocks: {
+    title: 'Kellot',
     create: {
       preview: 'Esikatselu',
       default: 'Kello',
     },
+    empty: 'Ei kelloja',
   },
   import: {
     preview: {
