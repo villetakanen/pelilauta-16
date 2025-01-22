@@ -3,7 +3,7 @@ import { parseClock } from '@schemas/ClockSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
 import { t } from '@utils/i18n';
-import { logError } from '@utils/logHelpers';
+import { logDebug, logError } from '@utils/logHelpers';
 import { addClocktoSite } from 'src/firebase/client/site/addClockToSite';
 
 interface Props {
@@ -18,12 +18,15 @@ const { site } = $props();
  * and then check if it's unique before submitting the form
  */
 
-function handleSubmit(event: Event) {
+async function handleSubmit(event: Event) {
   event.preventDefault();
 
   try {
-    addClocktoSite(site.key, clock);
-    window.location.href = `/sites/${site.key}/clocks`;
+    const c = { ...clock };
+    logDebug('Creating clock', c);
+    const key = await addClocktoSite(site.key, { ...clock });
+    // window.location.href = `/sites/${site.key}/clocks`;
+    logDebug('Clock created', site.key, key);
   } catch (error) {
     logError(error);
   }
