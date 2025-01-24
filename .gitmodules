@@ -10,3 +10,6 @@
 [submodule "cn-lightbox"]
 	path = cn-lightbox
 	url = https://github.com/villetakanen/cn-lightbox.git
+[submodule "cn-story-clock"]
+	path = cn-story-clock
+	url = https://github.com/villetakanen/cn-story-clock.git

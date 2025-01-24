@@ -5,7 +5,13 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.9.x (ongoing)
+### 16.11.0 (2024-01-24)
+- FEAT: Added PbtA story clocks feature to sites. Only GM's can create, destroy or update clocks.
+- FEAT: Added real-time updates to Clocks for everyone on the Clocks page.
+- FIX: moved site actions from solid-js to svelte
+- FIX: various locale issues in the sites and the library pages
+
+### 16.10.0 (2024-01-20)
 - FIX: links with protocol are no longer treated as wikilinks.
 - FIX: Library shows public sites link in the tray
 - FEAT: Added players -functionality to the Sites. Players can create, edit and destroy pages.

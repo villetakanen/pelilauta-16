@@ -11,6 +11,14 @@ export const site: Locale = {
   contents: {
     title: 'Sivut',
   },
+  clocks: {
+    title: 'Kellot',
+    create: {
+      preview: 'Esikatselu',
+      default: 'Kello',
+    },
+    empty: 'Ei kelloja',
+  },
   import: {
     preview: {
       title: 'Esikatselu',
@@ -48,6 +56,7 @@ export const site: Locale = {
       homepage: 'Etusivu',
       toc: 'Hakemisto',
       assets: 'Lataukset',
+      clocks: 'Kellot',
     },
   },
   create: {

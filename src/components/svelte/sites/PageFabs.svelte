@@ -12,7 +12,7 @@ const { site, pageKey }: Props = $props();
 
 const visible = $derived.by(() => {
   if (site.owners.includes($uid)) return true;
-  if (site.players.includes($uid)) return true;
+  if (site.players?.includes($uid)) return true;
   return false;
 });
 </script>

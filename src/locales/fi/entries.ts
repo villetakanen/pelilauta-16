@@ -61,4 +61,10 @@ export const entries: Locale = {
       category: '-',
     },
   },
+  clock: {
+    label: 'Kellon otsake',
+    tickIndex: 'Askel',
+    tickSize: 'Koko',
+    ticks: 'Askeleet',
+  },
 };

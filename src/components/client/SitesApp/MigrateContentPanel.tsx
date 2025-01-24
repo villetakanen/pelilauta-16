@@ -17,7 +17,6 @@ export const MigrateContentPanel: Component<{
   const show = createMemo(() => owners().includes(uid()));
 
   function migrateContents() {
-    //logDebug('migration', 'migrating contents');
     const turndownService = new TurndownService();
     const markdownContent = turndownService.turndown(props.htmlContent);
     updatePage(

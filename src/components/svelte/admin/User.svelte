@@ -4,7 +4,6 @@ import type { Account } from '@schemas/AccountSchema';
 import { appMeta } from '@stores/metaStore/metaStore';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
-import { logDebug } from '@utils/logHelpers';
 
 interface Props {
   account: Account;
@@ -15,8 +14,6 @@ const frozenStatus = $derived(() => account.frozen);
 
 const toggleFrozen = async () => {
   account.frozen = !account.frozen;
-  logDebug('UserAdmin', 'frozenStatus', account.frozen);
-
   await setFrozen(account.frozen, account.uid);
 };
 </script>

@@ -4,7 +4,6 @@ import { uid } from '@stores/sessionStore';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import UserSelect from '@svelte/app/UserSelect.svelte';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { site, update } from './siteStore';
 
 let selectedUid = $state('-');
@@ -34,7 +33,6 @@ function addPlayer(event: Event) {
 
 function dropPlayer(playerUid: string) {
   if (!$site || !playerUid) {
-    logDebug('dropPlayer fails', playerUid);
     return;
   }
   const newPlayers = $site.players?.filter((id) => id !== playerUid) ?? [];
@@ -46,7 +44,6 @@ function setSelectedUid(e: Event) {
 }
 
 function setUsePlayers(e: Event) {
-  logDebug('setUsePlayers', (e.target as CyanToggleButton).pressed);
   usePlayers = (e.target as CyanToggleButton).pressed;
   update({ usePlayers });
 }

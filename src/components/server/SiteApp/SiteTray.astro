@@ -1,6 +1,6 @@
 ---
-import { SiteAdminActions } from '@client/SitesApp/SiteAdminActions';
 import type { Site } from '@schemas/SiteSchema';
+import SiteAdminActions from '@svelte/sites/SiteAdminActions.svelte';
 import { t } from '@utils/i18n';
 import { systemToNoun } from '@utils/schemaHelpers';
 
@@ -35,6 +35,11 @@ const actions: Array<SiteTrayAction> = [
     noun: 'books',
   },
   {
+    label: t('site:tray.actions.clocks'),
+    href: `/sites/${site.key}/clocks`,
+    noun: 'clock',
+  },
+  {
     label: t('site:tray.actions.assets'),
     href: `/sites/${site.key}/assets`,
     noun: 'assets',
@@ -60,6 +65,6 @@ const actions: Array<SiteTrayAction> = [
   <div class="grow"></div>
 
   <div class="tray-bottom-tools border-t ">
-    <SiteAdminActions site={site} client:only="solid-js"/>
+    <SiteAdminActions site={site} client:only="svelte"/>
   </div>
 </div>
