@@ -5,6 +5,9 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.11.x (Ongoing)
+- CYAN / FIX: Modal app-bar left padding fixed to 1 grid unit. (the app-bar had extra 1 grid margin on the left side to allow elevation-background spacing)
+
 ### 16.11.0 (2024-01-24)
 - FEAT: Added PbtA story clocks feature to sites. Only GM's can create, destroy or update clocks.
 - FEAT: Added real-time updates to Clocks for everyone on the Clocks page.
