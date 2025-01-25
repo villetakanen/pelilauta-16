@@ -1,5 +1,6 @@
 ---
 import type { Site } from '@schemas/SiteSchema';
+import OptionalAppLinks from '@svelte/sites/OptionalAppLinks.svelte';
 import SiteAdminActions from '@svelte/sites/SiteAdminActions.svelte';
 import { t } from '@utils/i18n';
 import { systemToNoun } from '@utils/schemaHelpers';
@@ -35,11 +36,6 @@ const actions: Array<SiteTrayAction> = [
     noun: 'books',
   },
   {
-    label: t('site:tray.actions.clocks'),
-    href: `/sites/${site.key}/clocks`,
-    noun: 'clock',
-  },
-  {
     label: t('site:tray.actions.assets'),
     href: `/sites/${site.key}/assets`,
     noun: 'assets',
@@ -61,6 +57,8 @@ const actions: Array<SiteTrayAction> = [
       ))}
     </ul>
   </nav>
+
+  <OptionalAppLinks site={site} />
 
   <div class="grow"></div>
 
