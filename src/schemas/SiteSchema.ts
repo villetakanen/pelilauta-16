@@ -60,6 +60,7 @@ export const SiteSchema = EntrySchema.extend({
   // Options
   usePlayers: z.boolean().optional(),
   useClocks: z.boolean().optional(),
+  useHandouts: z.boolean().optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;

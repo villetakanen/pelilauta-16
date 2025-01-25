@@ -34,6 +34,13 @@ export const site: Locale = {
   members: {
     title: 'Jäsenet',
   },
+  options: {
+    title: 'Työkalut',
+    description:
+      'Pelilauta / Mekanismi sisältää joukon pelinjohtamisen ja pelaamisen avuksi tarkoitettuja työkaluja. Voit ottaa työkalut käyttöön alla olevilla painikkeilla.',
+    useClocks: 'Kellot',
+    useHandouts: 'Salaisuudet',
+  },
   settings: {
     title: 'Asetukset',
     meta: {

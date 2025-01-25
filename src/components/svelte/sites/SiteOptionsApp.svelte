@@ -10,14 +10,16 @@ interface Props {
 const { site: initialSite }: Props = $props();
 $site = initialSite;
 
-async function setOption(option: 'useClocks', value: boolean) {
+async function setOption(option: 'useClocks' | 'useHandouts', value: boolean) {
   update({ [option]: value });
 }
 </script>
 
 <div class="content-columns">
   <article>
-    <h4>{t('site:options.title')}</h4>
+    <h2>{t('site:options.title')}</h2>
+
+    <p class="downscaled">{t('site:options.description')}</p>
 
     <cn-toggle-button 
       label={t('site:options.useClocks')}
@@ -25,8 +27,12 @@ async function setOption(option: 'useClocks', value: boolean) {
       onchange={(e: Event) => setOption('useClocks', (e.target as CyanToggleButton).pressed)}
     ></cn-toggle-button>
 
-    <p>useClocks : { $site.useClocks }</p>
+    <cn-toggle-button 
+      disabled
+      label={t('site:options.useHandouts')}
+      pressed={$site.useHandouts || undefined}
+      onchange={(e: Event) => setOption('useHandouts', (e.target as CyanToggleButton).pressed)}
+    ></cn-toggle-button>
 
-    <p>usePlayers : { $site.usePlayers }</p>
   </article>
 </div>
