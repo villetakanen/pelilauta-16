@@ -58,7 +58,7 @@ const actions: Array<SiteTrayAction> = [
     </ul>
   </nav>
 
-  <OptionalAppLinks site={site} />
+  <OptionalAppLinks site={site} client:only="svelte"/>
 
   <div class="grow"></div>
 
