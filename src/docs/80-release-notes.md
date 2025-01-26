@@ -11,6 +11,8 @@ noun: 'monsters'
 - CYAN / FIX: Toggle buttons have accessible Light mode and Dark mode theming.
 - FIX: Clocks-tool can now be disabled or enabled in Site Options page.
 - FIX: Added a Site Options page for site Settings cleanup (some of the settings will moved to the Site Options page for clarity).
+- FIX: Optional site features rendered client side (as they subscribe to Firestore real time updates).
+- FIX: Docs page link in the footer now works.
 
 ### 16.11.0 (2024-01-24)
 - FEAT: Added PbtA story clocks feature to sites. Only GM's can create, destroy or update clocks.
