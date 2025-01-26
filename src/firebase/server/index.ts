@@ -1,9 +1,10 @@
 // import { logWarn } from '@utils/logHelpers';
 import type { ServiceAccount } from 'firebase-admin';
+import admin from 'firebase-admin';
 import { cert, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
-const activeApps = getApps();
+// const activeApps = getApps();
 const serviceAccount = {
   type: 'service_account',
   project_id: import.meta.env.PUBLIC_projectId,
@@ -20,6 +21,9 @@ const serviceAccount = {
 };
 
 const initApp = () => {
+  if (admin.apps.length > 0) {
+    return admin.apps[0] as admin.app.App;
+  }
   // logWarn('Initializing the Firebase Server App');
   return initializeApp({
     credential: cert(serviceAccount as ServiceAccount),
@@ -27,5 +31,5 @@ const initApp = () => {
   });
 };
 
-export const serverApp = activeApps.length === 0 ? initApp() : activeApps[0];
+export const serverApp = initApp(); // activeApps.length === 0 ? initApp() : activeApps[0];
 export const serverDB = getFirestore(serverApp);
