@@ -1,9 +1,9 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
+import { site } from '../../../stores/site';
+import { clocks, loading } from '../../../stores/site/clocksStore';
 import StoryClock from './Clock.svelte';
-import { clocks, loading } from './clocksStore';
-import { site } from './siteStore';
 
 interface Props {
   site: Site;

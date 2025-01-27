@@ -6,7 +6,7 @@ import {
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { atom, onMount } from 'nanostores';
-import { site } from './siteStore';
+import { site } from '.';
 
 export const clocks = atom<Clock[]>([]);
 export const loading = atom<boolean>(true);

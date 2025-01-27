@@ -4,6 +4,7 @@ import { parseSite } from '@schemas/SiteSchema';
 import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
 import HandoutsApp from '@svelte/sites/HandoutsApp.svelte';
+import HandoutsFabs from '@svelte/sites/HandoutsFabs.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 
@@ -38,6 +39,8 @@ if (!site) {
   shortTitle={site.name}>
   
   <HandoutsApp site={site} client:only="svelte"/>
+  <HandoutsFabs site={site} client:only="svelte" slot="fab-tray"/>
+
   <SitePoster site={site} />
   <SiteTray site={site} slot="app-tray"/>
 

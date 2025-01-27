@@ -3,7 +3,7 @@ import { uid } from '@stores/sessionStore';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import UserSelect from '@svelte/app/UserSelect.svelte';
 import { t } from '@utils/i18n';
-import { site, update } from './siteStore';
+import { site, update } from '../../../stores/site';
 
 let selectedUid = $state('-');
 

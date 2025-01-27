@@ -21,6 +21,8 @@ export const site: Locale = {
   },
   handouts: {
     title: 'Salaisuudet',
+    description:
+      'Sivustolle lisätty jaettu materiaali, joka on rajattu. Kukin dokumentti tällä listalla näkyy vain sivuston omistajille.',
   },
   import: {
     preview: {

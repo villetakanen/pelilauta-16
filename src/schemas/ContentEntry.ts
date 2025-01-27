@@ -29,7 +29,7 @@ export function contentEntryFrom(
 ): ContentEntry {
   return ContentEntrySchema.parse({
     ...data,
-    key,
+    key: data.key || key,
     flowTime: data.flowTime || Date.now(),
     owners: data.owners || [],
     markdownContent: data.markdownContent || '',
