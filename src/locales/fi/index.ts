@@ -17,6 +17,8 @@ export const fi: Locale = {
     forbidden: {
       title: 'Hups!',
       message: 'Tämä sivu vaatii kirjautumisen pelilaudalle.',
+      membersOnly:
+        'Tämä sivu on vain sivuston jäsenille. Ole yhteydessä sivuston omistajiin saadaksesi lisätietoja.',
     },
     title: 'Pelilauta 2 - Versio 16',
     shortname: 'Pelilauta 2',
