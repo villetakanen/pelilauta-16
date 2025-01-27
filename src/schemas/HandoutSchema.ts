@@ -1,6 +1,10 @@
 import { z } from 'zod';
 import { ContentEntrySchema, contentEntryFrom } from './ContentEntry';
 
+// Note: store path to handouts is
+// SITES_COLLECTION_NAME/{site.key}/HANDOUTS_COLLECTION_NAME/{handout.key}
+export const HANDOUTS_COLLECTION_NAME = 'handouts';
+
 export const HandoutSchema = ContentEntrySchema.extend({
   title: z.string(),
   siteKey: z.string(),

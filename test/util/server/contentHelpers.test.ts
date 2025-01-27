@@ -40,3 +40,18 @@ test('https links are not converted to markdown links', () => {
   const expected = '<a href="https://example.com">https://example.com</a>';
   expect(rewriteWikiLinks(content, currentSite, baseUrl)).toBe(expected);
 });
+test('in-site links are converted, with site path included', () => {
+  const content = '[Peli I](pelii)';
+  const currentSite = 'rotriv';
+  const baseUrl = 'https://example.com';
+  const expected =
+    '<a href="https://example.com/sites/rotriv/pelii">Peli I</a>';
+  expect(rewriteWikiLinks(content, currentSite, baseUrl)).toBe(expected);
+});
+test('outside links are not converted to markdown links', () => {
+  const content = '[Peli I](https://example.com)';
+  const currentSite = 'rotriv';
+  const baseUrl = 'https://another.com';
+  const expected = '<a href="https://example.com">Peli I</a>';
+  expect(rewriteWikiLinks(content, currentSite, baseUrl)).toBe(expected);
+});

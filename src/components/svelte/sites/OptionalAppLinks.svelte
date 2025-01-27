@@ -20,9 +20,9 @@ $site = initialSite;
       </a>
     </li>
   {/if}
-  {#if $site.useHandouts}
+  {#if false && $site?.useHandouts /* feature hidden */}
     <li>
-      <a href={`/sites/${$site.key}/handouts`} class="tray-button">
+      <a href={`/sites/${$site?.key}/handouts`} class="tray-button">
         <cn-icon noun="books" xsmall></cn-icon>
         <span>{t('site:handouts.title')}</span>
       </a>

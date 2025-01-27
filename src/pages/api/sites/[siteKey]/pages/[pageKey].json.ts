@@ -49,19 +49,16 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
     //
     // F.ex. support for attach:file.jpg style asset links, or other
     // custom markdown extensions
-    if (page.markdownContent)
-      page.htmlContent = await marked(
-        renderProfileTags(
-          renderTags(page.markdownContent, url.origin),
-          url.origin,
-        ) || '',
+    if (page.markdownContent) {
+      const c = rewriteWikiLinks(
+        page.markdownContent || '',
+        siteKey,
+        url.origin,
       );
-
-    page.htmlContent = rewriteWikiLinks(
-      page.htmlContent || '',
-      siteKey,
-      url.origin,
-    );
+      page.htmlContent = await marked(
+        renderProfileTags(renderTags(c, url.origin), url.origin) || '',
+      );
+    }
 
     page.htmlContent = renderDice(
       renderAssetMarkup(page.htmlContent || '', site, url.origin),
