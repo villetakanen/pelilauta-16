@@ -5,6 +5,18 @@
     },
     {
       "path": "../public/myrrys-proprietary"
+    },
+    {
+      "path": "../cn-story-clock"
+    },
+    {
+      "path": "../cn-lightbox"
+    },
+    {
+      "path": "../cn-dice"
+    },
+    {
+      "path": "../cn-editor"
     }
   ],
   "settings": {}

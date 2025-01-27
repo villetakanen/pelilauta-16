@@ -28,7 +28,6 @@ async function setOption(option: 'useClocks' | 'useHandouts', value: boolean) {
     ></cn-toggle-button>
 
     <cn-toggle-button 
-      disabled
       label={t('site:options.useHandouts')}
       pressed={$site.useHandouts || undefined}
       onchange={(e: Event) => setOption('useHandouts', (e.target as CyanToggleButton).pressed)}

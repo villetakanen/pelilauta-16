@@ -22,3 +22,19 @@ export const ContentEntrySchema = EntrySchema.extend({
 export type Entry = z.infer<typeof EntrySchema>;
 
 export type ContentEntry = z.infer<typeof ContentEntrySchema>;
+
+export function contentEntryFrom(
+  data: Partial<ContentEntry>,
+  key = '',
+): ContentEntry {
+  return ContentEntrySchema.parse({
+    ...data,
+    key,
+    flowTime: data.flowTime || Date.now(),
+    owners: data.owners || [],
+    markdownContent: data.markdownContent || '',
+    htmlContent: data.htmlContent || '',
+    content: data.content || '',
+    images: data.images || [],
+  });
+}

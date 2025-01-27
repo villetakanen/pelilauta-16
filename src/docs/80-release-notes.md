@@ -13,6 +13,7 @@ noun: 'monsters'
 - FIX: Added a Site Options page for site Settings cleanup (some of the settings will moved to the Site Options page for clarity).
 - FIX: Optional site features rendered client side (as they subscribe to Firestore real time updates).
 - FIX: Docs page link in the footer now works.
+- FIX: In-site wikilinks work even if the in-site link is in markdown-style `[link](page)` -> `/sites/[site]/[page]`.
 
 ### 16.11.0 (2024-01-24)
 - FEAT: Added PbtA story clocks feature to sites. Only GM's can create, destroy or update clocks.

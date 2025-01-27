@@ -1,0 +1,44 @@
+---
+import PageWithTray from '@layouts/PageWithTray.astro';
+import { parseSite } from '@schemas/SiteSchema';
+import SitePoster from '@server/SiteApp/SitePoster.astro';
+import SiteTray from '@server/SiteApp/SiteTray.astro';
+import HandoutsApp from '@svelte/sites/HandoutsApp.svelte';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { t } from '@utils/i18n';
+
+interface Props {
+  siteKey: string;
+}
+const { siteKey } = Astro.params;
+
+// if no siteKey is provided, redirect to 404
+if (!siteKey) {
+  return Astro.redirect('/404');
+}
+
+// Fetch site data from the api
+const siteResponse = await fetch(`${Astro.url.origin}/api/sites/${siteKey}`);
+if (siteResponse.status === 404) {
+  return Astro.redirect('/404');
+}
+const siteData = await siteResponse.json();
+const site = parseSite(toClientEntry(siteData), siteKey);
+const title = `${site.name} – ${t('site:handouts.title')}`;
+const image = site.avatarURL || site.posterURL || site.backgroundURL;
+
+if (!site) {
+  return Astro.redirect('/404');
+}
+---
+<PageWithTray
+  title={title}
+  image={image} 
+  noun="books" 
+  shortTitle={site.name}>
+  
+  <HandoutsApp site={site} client:only="svelte"/>
+  <SitePoster site={site} />
+  <SiteTray site={site} slot="app-tray"/>
+
+</PageWithTray>
