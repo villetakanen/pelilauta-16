@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
+import MembersOnly from './MembersOnly.svelte';
 import { site } from './siteStore';
 
 interface Props {
@@ -11,11 +12,13 @@ $site = initialSite;
 </script>
 
 <div class="content-columns">
-  <article class="border-radius p-2 surface">
-    <h1>{t('app:forbidden.title')}</h1>
-    <div class="flex justify-center">
-      <cn-icon noun="monsters" xlarge></cn-icon>
-    </div>
-    <p>{t('app:forbidden.membersOnly')}</p>
-  </article>
+  <MembersOnly site={$site}>
+    <article class="column-l">
+      <h2>{t('site:handouts.title')}</h2>
+      <p>{t('site:handouts.description')}</p>
+      <div class="debug">
+        <pre>{JSON.stringify($site, null, 2)}</pre>
+      </div>
+    </article>
+  </MembersOnly>
 </div>
