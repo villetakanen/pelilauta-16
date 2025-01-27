@@ -19,6 +19,9 @@ export const site: Locale = {
     },
     empty: 'Ei kelloja',
   },
+  handouts: {
+    title: 'Salaisuudet',
+  },
   import: {
     preview: {
       title: 'Esikatselu',

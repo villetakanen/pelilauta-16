@@ -20,6 +20,14 @@ $site = initialSite;
       </a>
     </li>
   {/if}
+  {#if $site.useHandouts}
+    <li>
+      <a href={`/sites/${$site.key}/handouts`} class="tray-button">
+        <cn-icon noun="books" xsmall></cn-icon>
+        <span>{t('site:handouts.title')}</span>
+      </a>
+    </li>
+  {/if}
   </ul>
 </nav>
           
