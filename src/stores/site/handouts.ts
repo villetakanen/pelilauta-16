@@ -6,6 +6,7 @@ import {
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { logDebug } from '@utils/logHelpers';
 import { atom, onMount } from 'nanostores';
 import { site } from '.';
@@ -23,13 +24,13 @@ onMount(handouts, () => {
 });
 
 async function subscribe(key: string) {
-  handouts.set([
+  /*handouts.set([
     handoutFrom({
       title: 'Esimerkkijuttu',
       key: '1',
       siteKey: key,
     }),
-  ]);
+  ]);*/
 
   const { getFirestore, collection, onSnapshot, query, where } = await import(
     'firebase/firestore'
@@ -92,4 +93,24 @@ function mergeHandouts(
   }
 
   return merged;
+}
+
+export async function update(handout: Partial<Handout>) {
+  if (!handout.siteKey || !handout.key) {
+    return;
+  }
+
+  const entry = toFirestoreEntry(handout);
+
+  const { updateDoc, getFirestore, doc } = await import('firebase/firestore');
+  await updateDoc(
+    doc(
+      getFirestore(),
+      SITES_COLLECTION_NAME,
+      handout.siteKey,
+      HANDOUTS_COLLECTION_NAME,
+      handout.key,
+    ),
+    entry,
+  );
 }

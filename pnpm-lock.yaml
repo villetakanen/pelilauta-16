@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@11thdeg/cyan-next':
-        specifier: 1.0.2
-        version: 1.0.2
+        specifier: 1.0.3
+        version: 1.0.3
       '@astrojs/check':
         specifier: ^0.9.4
         version: 0.9.4(typescript@5.7.3)
@@ -22,10 +22,10 @@ importers:
         version: 5.0.1(@types/node@22.10.10)(jiti@2.4.2)(solid-js@1.9.3)(terser@5.34.1)(yaml@2.5.0)
       '@astrojs/svelte':
         specifier: ^7.0.4
-        version: 7.0.4(@types/node@22.10.10)(astro@5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(jiti@2.4.2)(svelte@5.19.3)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
+        version: 7.0.4(@types/node@22.10.10)(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(jiti@2.4.2)(svelte@5.19.3)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
       '@astrojs/vercel':
         specifier: ^8.0.4
-        version: 8.0.4(astro@5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)
+        version: 8.0.4(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)
       '@nanostores/persistent':
         specifier: ^0.10.2
         version: 0.10.2(nanostores@0.11.3)
@@ -39,8 +39,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1(svelte@5.19.3)
       astro:
-        specifier: ^5.1.9
-        version: 5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
+        specifier: ^5.1.10
+        version: 5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -138,8 +138,8 @@ importers:
 
 packages:
 
-  '@11thdeg/cyan-next@1.0.2':
-    resolution: {integrity: sha512-gtsad9KMTOutVaEkBwQ49cEs8USZmDiJBL9BT+mrVaEl2RawKcaD2h/R5mShWCBXCwuemMMNYTx8m2XAT+itsA==}
+  '@11thdeg/cyan-next@1.0.3':
+    resolution: {integrity: sha512-H9wPRcOrZAjFVoFmcQhyCBcEHWZtE1w+/9ooVgt5EthvLidZ5MunLfZ16jfet27Iwn1FvnVgrmIAx4w97lCNwA==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -2237,8 +2237,8 @@ packages:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
     engines: {node: '>=12'}
 
-  astro@5.1.9:
-    resolution: {integrity: sha512-QB3MH7Ul3gEvmHXEfvPkGpTZyyB/TBKQbm0kTHpo0BTEB7BvaY+wrcWiGEJBVDpVdEAKY9fM3zrJ0c7hZSXVlw==}
+  astro@5.1.10:
+    resolution: {integrity: sha512-qFu4jC7BRlhwHgk9Pa1sTQWw60zYWlriNTt6bMGMKkPxCd4Dd84fGn+NjbrJ/JeKwF7YXX0gY1saDF/RS6TMVA==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -5572,7 +5572,7 @@ packages:
 
 snapshots:
 
-  '@11thdeg/cyan-next@1.0.2':
+  '@11thdeg/cyan-next@1.0.3':
     dependencies:
       '@types/node': 20.14.9
       lit: 3.2.1
@@ -5682,10 +5682,10 @@ snapshots:
       - tsx
       - yaml
 
-  '@astrojs/svelte@7.0.4(@types/node@22.10.10)(astro@5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(jiti@2.4.2)(svelte@5.19.3)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)':
+  '@astrojs/svelte@7.0.4(@types/node@22.10.10)(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(jiti@2.4.2)(svelte@5.19.3)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.19.3)(vite@6.0.11(@types/node@22.10.10)(jiti@2.4.2)(terser@5.34.1)(yaml@2.5.0))
-      astro: 5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
+      astro: 5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
       svelte: 5.19.3
       svelte2tsx: 0.7.34(svelte@5.19.3)(typescript@5.7.3)
       typescript: 5.7.3
@@ -5716,13 +5716,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/vercel@8.0.4(astro@5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)':
+  '@astrojs/vercel@8.0.4(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)':
     dependencies:
       '@astrojs/internal-helpers': 0.4.2
       '@vercel/analytics': 1.4.1(svelte@5.19.3)
       '@vercel/edge': 1.2.1
       '@vercel/nft': 0.29.0(rollup@2.79.2)
-      astro: 5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
+      astro: 5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
       esbuild: 0.24.2
       fast-glob: 3.3.3
     transitivePeerDependencies:
@@ -7972,7 +7972,7 @@ snapshots:
 
   assertion-error@2.0.1: {}
 
-  astro@5.1.9(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0):
+  astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.4.2

@@ -2,8 +2,11 @@
 import type { Handout } from '@schemas/HandoutSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/sessionStore';
+import { update } from '@stores/site/handouts';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { t } from '@utils/i18n';
+import { logDebug } from '@utils/logHelpers';
+import type { CnEditor } from 'cn-editor/src/cn-editor';
 
 interface Props {
   handout: Handout;
@@ -11,31 +14,60 @@ interface Props {
 }
 
 const { site, handout }: Props = $props();
+let title = $state(handout.title);
+let markdownContent = $state(handout.markdownContent);
+const changed = $derived.by(() => {
+  return handout.title !== title || handout.markdownContent !== markdownContent;
+});
 
 const visible = $derived.by(() => {
   if (site.owners.includes($uid)) return true;
   return false;
 });
+
+function titleChanged(e: Event) {
+  title = (e.target as HTMLInputElement).value;
+}
+function markdownContentChanged(e: Event) {
+  logDebug('markdownContentChanged', (e.target as CnEditor).value);
+  markdownContent = (e.target as CnEditor).value;
+}
+
+async function handleSubmit(e: Event) {
+  e.preventDefault();
+  if (!changed) return;
+
+  await update({
+    ...handout,
+    title,
+    markdownContent,
+  });
+}
 </script>
+
 <WithAuth allow={visible}>
-  <form class="content-editor">
-    <label>
+  <form class="content-editor" onsubmit={handleSubmit}>
+
+    <div class="toolbar">
+      <label class="grow">
         {t('entries:handout.title')}
-      <input type="text" value={handout.title} />
-    </label>
-    <div class="grow">
-      <label for="markdown-editor">
-        {t('entries:handout.markdownContent')}
-        <cn-editor id="markdown-editor"></cn-editor>
+        <input type="text" value={handout.title}  onchange={titleChanged}/>
       </label>
     </div>
+    
+    <cn-editor
+      value={handout.markdownContent}
+      onchange={markdownContentChanged}
+    ></cn-editor>
+
     <div class="toolbar justify-end">
       <a href={`/sites/${site.key}/handouts/${handout.key}`} class="text button">
         {t('actions:cancel')}
       </a>
-        <button type="submit" class="button" disabled>
-            {t('actions:save')}
-        </button>
+      <button type="submit" class="button" disabled={!changed}>
+        {t('actions:save')}
+      </button>
     </div>
+
   </form>
 </WithAuth>

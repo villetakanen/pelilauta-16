@@ -22,7 +22,7 @@ export const site: Locale = {
   handouts: {
     title: 'Salaisuudet',
     description:
-      'Sivustolle lisätty jaettu materiaali, joka on rajattu. Kukin dokumentti tällä listalla näkyy vain sivuston omistajille.',
+      'Sivustolle lisätty jaettu materiaali, joka on rajattu. Tämä listaus näkyy vain omistajille, mutta itse salaisuudet ovat jaettavissa suoralla linkillä muille.',
     create: {
       title: 'Luo salaisuus',
     },
