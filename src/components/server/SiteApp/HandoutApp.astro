@@ -1,0 +1,15 @@
+---
+import type { Handout } from '@schemas/HandoutSchema';
+
+interface Props {
+  handout: Handout;
+}
+
+const { handout } = Astro.props as Props;
+---
+<div class="content-columns">
+  <article class="column-l elevation-1 p-2">
+    <h1>{handout.title}</h1>
+    <div set:html={handout.htmlContent}></div>
+  </article>
+</div>

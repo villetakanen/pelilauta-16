@@ -3,6 +3,7 @@ import { HANDOUTS_COLLECTION_NAME, handoutFrom } from '@schemas/HandoutSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import type { APIContext } from 'astro';
+import { marked } from 'marked';
 
 export async function GET({ params, url }: APIContext): Promise<Response> {
   const { siteKey, handoutKey } = params;
@@ -25,6 +26,9 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
 
   try {
     const handout = handoutFrom(toClientEntry(data), handoutKey, siteKey);
+
+    handout.htmlContent = await marked(handout.markdownContent || '... \n');
+
     return new Response(JSON.stringify(handout), {
       status: 200,
       headers: {
