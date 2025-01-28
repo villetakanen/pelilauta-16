@@ -11,7 +11,7 @@ import { toDisplayString } from '@utils/contentHelpers';
     <ul>
       {#each $handouts as handout}
         <li>
-          <a href={handout.key}>{handout.title}</a> - {toDisplayString(handout.flowTime)}
+          <a href={`/sites/${handout.siteKey}/handouts/${handout.key}`}>{handout.title}</a> - {toDisplayString(handout.flowTime)}
         </li>
         {/each}
     </ul>

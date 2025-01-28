@@ -9,7 +9,7 @@ export const actions: Locale = {
     site: 'Uusi sivusto',
     clock: 'Uusi kello',
     tick: 'Uusi tikki',
-    handout: 'Uusi salaisuus',
+    handout: 'Luo salaisuus',
   },
   choose: 'Valitse',
   confirm: {

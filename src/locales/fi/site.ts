@@ -23,6 +23,9 @@ export const site: Locale = {
     title: 'Salaisuudet',
     description:
       'Sivustolle lisätty jaettu materiaali, joka on rajattu. Kukin dokumentti tällä listalla näkyy vain sivuston omistajille.',
+    create: {
+      title: 'Luo salaisuus',
+    },
   },
   import: {
     preview: {
