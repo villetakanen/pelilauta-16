@@ -7,23 +7,32 @@ import {
 import { logDebug, logWarn } from '@utils/logHelpers';
 import { atom, computed } from 'nanostores';
 
-/**
- * The nanostores atom that holds the current user Account data.
- *
- */
-export const $account = persistentAtom<Account | null>(
-  'session-account',
-  null,
-  {
-    encode: JSON.stringify,
-    decode: (data) => {
-      if (!data || data === 'null') return null;
-      logDebug('AccountStore', 'decode', 'Decoding account data', data);
-      const object = parseAccount(JSON.parse(data));
-      return object;
-    },
+// *** Primary session stores ******************************************
+
+// The nanostores persisten atom that holds the current user Account data.
+export const account = persistentAtom<Account | null>('session-account', null, {
+  encode: JSON.stringify,
+  decode: (data) => {
+    if (!data || data === 'null') return null;
+    logDebug('AccountStore', 'decode', 'Decoding account data', data);
+    const object = parseAccount(JSON.parse(data));
+    return object;
   },
-);
+});
+// Legacy support for solid components
+export const $account = account;
+
+// *** Computed stores *************************************************
+
+// Helper for the EULA acceptance state
+export const requiresEula = computed(account, (account) => {
+  if (accountNotFound.get()) return true;
+  if (!account) return false;
+  return !account.eulaAccepted;
+});
+
+// *** REFACTORED UP TO HERE *******************************************
+
 const accountNotFound = atom(false);
 
 export const $requiresEula = computed($account, (account) => {

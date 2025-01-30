@@ -1,18 +1,11 @@
 import { useStore } from '@nanostores/solid';
-import {
-  $active,
-  $isAnonymous,
-  $requiresEula,
-  $subscriber,
-  $uid,
-} from '@stores/session';
+import { $active, $isAnonymous, $subscriber, $uid } from '@stores/session';
 import { $account } from '@stores/session/account';
 import type { Component } from 'solid-js';
 
 export const DebugSection: Component = () => {
   const active = useStore($active);
   const uid = useStore($uid);
-  const eulaAccepted = useStore($requiresEula);
   const anonymous = useStore($isAnonymous);
   const account = useStore($account);
 
@@ -38,8 +31,6 @@ export const DebugSection: Component = () => {
 
         <div>isAnonymous:</div>
         <div>{`${anonymous()}`}</div>
-        <div>requiresEula:</div>
-        <div>{`${eulaAccepted()}`}</div>
       </section>
     </div>
   );

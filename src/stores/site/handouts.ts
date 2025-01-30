@@ -32,7 +32,7 @@ async function subscribe(key: string) {
     }),
   ]);*/
 
-  const { getFirestore, collection, onSnapshot, query, where } = await import(
+  const { getFirestore, collection, onSnapshot } = await import(
     'firebase/firestore'
   );
 

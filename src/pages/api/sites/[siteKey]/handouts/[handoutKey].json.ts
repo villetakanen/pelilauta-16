@@ -5,7 +5,7 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import type { APIContext } from 'astro';
 import { marked } from 'marked';
 
-export async function GET({ params, url }: APIContext): Promise<Response> {
+export async function GET({ params }: APIContext): Promise<Response> {
   const { siteKey, handoutKey } = params;
 
   if (!siteKey || !handoutKey) {
