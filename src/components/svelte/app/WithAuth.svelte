@@ -1,5 +1,5 @@
 <script lang="ts">
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Snippet } from 'svelte';
 

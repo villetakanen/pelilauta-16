@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
+import { $isAnonymous } from '@stores/session';
 import type { Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { $isAnonymous } from 'src/stores/sessionStore';
 import { CreateThreadFab } from './CreateThreadFab';
 
 interface FrontPageFabsProps {

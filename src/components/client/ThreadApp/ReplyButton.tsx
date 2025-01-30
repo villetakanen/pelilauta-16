@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 /**
  * A Solid-js component that renders a button that opens a dialog to reply to a thread.

@@ -11,7 +11,7 @@ import { updateSite } from '@firebase/client/site/updateSite';
 import { useStore } from '@nanostores/solid';
 import { type Page, parsePage } from '@schemas/PageSchema';
 import type { PageRef, Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';

@@ -12,7 +12,7 @@ import {
   type SiteSortOrder,
 } from '@schemas/SiteSchema';
 import type { CategoryRef } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { doc, updateDoc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';

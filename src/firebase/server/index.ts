@@ -1,7 +1,7 @@
 // import { logWarn } from '@utils/logHelpers';
 import type { ServiceAccount } from 'firebase-admin';
 import admin from 'firebase-admin';
-import { cert, getApps, initializeApp } from 'firebase-admin/app';
+import { cert, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
 // const activeApps = getApps();

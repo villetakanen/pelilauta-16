@@ -7,7 +7,7 @@ import {
   SITES_COLLECTION_NAME,
   type Site,
 } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';

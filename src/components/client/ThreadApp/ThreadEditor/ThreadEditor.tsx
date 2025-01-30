@@ -5,7 +5,7 @@ import { addThread } from '@firebase/client/threads/addThread';
 import { useStore } from '@nanostores/solid';
 import { fetchThread } from '@stores/ThreadsApp';
 import { updateThread } from '@stores/ThreadsApp/updateThread';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';

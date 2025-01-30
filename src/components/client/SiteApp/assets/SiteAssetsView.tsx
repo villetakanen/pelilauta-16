@@ -16,7 +16,7 @@ import {
   createSite,
   parseSite,
 } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import { doc, onSnapshot } from 'firebase/firestore';

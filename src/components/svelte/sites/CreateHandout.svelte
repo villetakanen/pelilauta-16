@@ -1,7 +1,7 @@
 <script lang="ts">
 import { HANDOUTS_COLLECTION_NAME, handoutFrom } from '@schemas/HandoutSchema';
 import { SITES_COLLECTION_NAME, type Site } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import { pushSnack } from '@utils/client/snackUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { t } from '@utils/i18n';

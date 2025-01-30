@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/solid';
 import type { Thread } from '@schemas/ThreadSchema';
-import { $subscriber, $uid } from '@stores/sessionStore';
+import { $subscriber, $uid } from '@stores/session';
 import { type Component, createEffect } from 'solid-js';
 
 interface CardSubscriberProps {

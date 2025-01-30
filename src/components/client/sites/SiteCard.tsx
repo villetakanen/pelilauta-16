@@ -1,9 +1,9 @@
 import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
+import { $uid } from '@stores/session';
 import { toDisplayString } from '@utils/contentHelpers';
 import { systemToNoun } from '@utils/schemaHelpers';
 import { type Component, createMemo } from 'solid-js';
-import { $uid } from 'src/stores/sessionStore';
 
 export const SiteCard: Component<Site> = (props) => {
   const uid = useStore($uid);

@@ -1,4 +1,6 @@
 ---
+import EulaDialog from '@svelte/eula/EulaDialog.svelte';
+import EulaContent from 'src/docs/03-eula.md';
 /**
  * All the scripts and elements that should be included in the very end of the document
  */
@@ -20,3 +22,7 @@ window.addEventListener('load', () => {
 <div id="base-tail">
   <slot />
 </div>
+
+<EulaDialog client:only="svelte">
+  <EulaContent />
+</EulaDialog>

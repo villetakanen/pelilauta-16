@@ -3,7 +3,7 @@ import {
   type Site,
   parseSite,
 } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 
 /**
  * Creates a new site in the database, returns the key of the new site

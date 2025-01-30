@@ -1,6 +1,6 @@
 <script lang="ts">
 import { appMeta } from '@stores/metaStore/metaStore';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 
 $: visible = $appMeta.admins.includes($uid);

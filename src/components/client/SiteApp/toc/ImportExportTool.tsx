@@ -7,7 +7,7 @@
 import { createSiteExport } from '@firebase/client/site/createSiteExport';
 import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { saveAs } from 'file-saver';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-import { uid } from '@stores/sessionStore';
-import { profile } from '@stores/sessionStore/profile';
+import { uid } from '@stores/session';
+import { profile } from '@stores/session/profile';
 import { t } from '@utils/i18n';
 </script>
 {#if $uid}

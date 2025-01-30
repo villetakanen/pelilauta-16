@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/solid';
+import { $isAnonymous } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { $isAnonymous } from 'src/stores/sessionStore';
 
 /**
  * Fabs available for the site owners and players

@@ -1,9 +1,9 @@
 import { WithAuth } from '@client/shared/WithAuth';
 import { useStore } from '@nanostores/solid';
 import { ProfileCard } from '@shared/ProfileCard';
+import { $profile, $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { $profile, $uid } from 'src/stores/sessionStore';
 import { AuthzSection } from './AuthzSection';
 import { ProfileSection } from './ProfileSection';
 import { PublicProfileTool } from './PublicProfileTool';

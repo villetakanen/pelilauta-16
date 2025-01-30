@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
+import { $profile, $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { $profile, $uid } from 'src/stores/sessionStore';
 
 export const ProfileButton: Component = () => {
   const uid = useStore($uid);

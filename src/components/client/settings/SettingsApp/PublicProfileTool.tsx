@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
+import { $profile } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import { $profile } from 'src/stores/sessionStore';
 
 import { updateProfile } from '@firebase/client/profile/updateProfile';
 import { AvatarButton } from './AvatarButton';

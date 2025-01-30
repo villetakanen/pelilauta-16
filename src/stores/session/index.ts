@@ -5,15 +5,45 @@ import { computed, onMount } from 'nanostores';
 import { auth } from 'src/firebase/client';
 import {
   $account,
-  $requiresEula,
   subscribeToAccount,
   unsubscribeFromAccount,
 } from './account';
 import { subscribeToProfile, unsubscribeFromProfile } from './profile';
 import { initSubscriberStore } from './subscriber';
 
-// The active user's UID - stored in localStorage for session persistence
-export const $uid = persistentAtom<string>('session-uid', '');
+// *** Primary session stores ******************************************
+
+export type SessionState = 'initial' | 'loading' | 'active';
+// Session state - used to determine if the session is active for UX purposes
+export const sessionState = persistentAtom<SessionState>(
+  'session-state',
+  'initial',
+);
+// Legacy support for solid components
+export const $loadingState = sessionState;
+
+// Active user's UID, stored in localStorage for session persistence
+export const uid = persistentAtom<string>('session-uid', '');
+// Legacy support for solid components
+export const $uid = uid;
+
+// *** Computed stores ******************************************
+
+// Helper for the session state
+export const active = computed(sessionState, (state) => state === 'active');
+// Legacy support for solid components
+export const $active = active;
+
+// Helper to identify anonymous session for UX purposes
+export const anonymous = computed([$active, $uid], (active, uid) => {
+  if (!active) return false;
+  return !uid;
+});
+// Legacy support for solid components
+export const $isAnonymous = anonymous;
+
+// *** REFACTORED UP TO HERE ******************************************
+
 export const $locale = computed(
   $account,
   (account) => account?.language || 'fi',
@@ -22,28 +52,7 @@ export const $theme = computed(
   $account,
   (account) => account?.lightMode || 'dark',
 );
-export const uid = $uid;
 
-// Session loading state - used to determine if the session is active
-type LoadingStateValue = 'initial' | 'loading' | 'active';
-const $loadingState = persistentAtom<LoadingStateValue>(
-  'session_loadingState',
-  'initial',
-);
-
-// Computed helper for the loading state
-export const $active = computed($loadingState, (state) => state === 'active');
-
-// Computed helper for the anonymous session state
-export const $isAnonymous = computed([$active, $uid], (active, uid) => {
-  // We do not know if the user is anonymous while loading, assuming no
-  if (!active) return false;
-
-  // An anonymous user has no uid
-  return !uid;
-});
-
-export { $requiresEula };
 export { $profile, $profileMissing } from './profile';
 
 // We need to listen to Firebase auth state changes if any of the components

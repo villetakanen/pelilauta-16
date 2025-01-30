@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { t } from '@utils/i18n';
 import type { Snippet } from 'svelte';

@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/solid';
 import { $site } from '@stores/SitesApp';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
-import { $uid } from 'src/stores/sessionStore';
 
 export const SiteSettingsButton: Component = () => {
   const site = useStore($site);

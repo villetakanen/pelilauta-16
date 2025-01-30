@@ -6,7 +6,7 @@
 
 import { useStore } from '@nanostores/solid';
 import { isAdmin } from '@stores/metaStore/metaStore';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 
 export const AdminNavigationButton = () => {
   const uid = useStore($uid);

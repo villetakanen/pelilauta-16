@@ -3,7 +3,7 @@ import {
   activeProfiles,
   fetchActiveProfiles,
 } from '@stores/activeProfilesStore';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { onMount } from 'svelte';
 

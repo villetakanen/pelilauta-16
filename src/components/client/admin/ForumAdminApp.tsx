@@ -7,7 +7,7 @@ import { db } from '@firebase/client';
 import { useStore } from '@nanostores/solid';
 import { type Channel, parseChannel } from '@schemas/ChannelSchema';
 import { isAdmin } from '@stores/metaStore/metaStore';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { type Component, For, createSignal, onMount } from 'solid-js';
 import { ForumAdminChannelItem } from './ForumAdminChannelItem';

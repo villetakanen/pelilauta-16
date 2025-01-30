@@ -6,7 +6,7 @@ import {
   parseReply,
 } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
-import { $subscriber, $uid, markEntrySeen } from '@stores/sessionStore';
+import { $subscriber, $uid, markEntrySeen } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';

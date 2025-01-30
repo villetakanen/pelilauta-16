@@ -1,5 +1,5 @@
 <script lang="ts">
-import { uid } from '@stores/sessionStore/';
+import { uid } from '@stores/session/';
 import { userSites } from '@stores/sitesStore/userSitesCache';
 import { t } from '@utils/i18n.ts';
 import { onMount } from 'svelte';

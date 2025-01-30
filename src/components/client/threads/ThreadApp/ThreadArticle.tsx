@@ -1,5 +1,5 @@
 import type { Thread } from '@schemas/ThreadSchema';
-import { markEntrySeen } from '@stores/sessionStore';
+import { markEntrySeen } from '@stores/session';
 import { type Component, createMemo, onMount } from 'solid-js';
 import { MarkdownSection } from 'src/components/shared/MarkdownSection';
 import { ImagesSection } from './ImagesSection';

@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/solid';
 import { $owners } from '@stores/SitesApp';
 import { updatePage } from '@stores/SitesApp/pagesStore';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 import TurndownService from 'turndown';

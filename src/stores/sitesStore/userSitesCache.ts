@@ -4,7 +4,7 @@ import {
   type Site,
   parseSite,
 } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { type WritableAtom, onMount } from 'nanostores';
 

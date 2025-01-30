@@ -1,7 +1,7 @@
 <script lang="ts">
 import { getAllAccounts } from '@firebase/client/admin/getAllAccounts';
 import { appMeta } from '@stores/metaStore/metaStore';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import User from './User.svelte';
 

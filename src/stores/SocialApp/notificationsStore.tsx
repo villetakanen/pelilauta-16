@@ -4,7 +4,7 @@ import {
   type Notification,
   ParseNotification,
 } from '@schemas/NotificationSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { logWarn } from '@utils/logHelpers';
 import {
   collection,
