@@ -5,8 +5,8 @@ import { uid } from '@stores/sessionStore';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
-import { clocks } from './clocksStore';
-import { site } from './siteStore';
+import { site } from '../../../stores/site';
+import { clocks } from '../../../stores/site/clocksStore';
 
 interface Props {
   site: Site;

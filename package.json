@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "16.11.4",
+  "version": "16.12.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -14,7 +14,7 @@
     "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.2",
+    "@11thdeg/cyan-next": "1.0.3",
     "@astrojs/check": "^0.9.4",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/solid-js": "^5.0.1",
@@ -24,7 +24,7 @@
     "@nanostores/solid": "^0.5.0",
     "@solid-primitives/event-dispatcher": "^0.0.107",
     "@vercel/analytics": "^1.4.1",
-    "astro": "^5.1.9",
+    "astro": "^5.1.10",
     "file-saver": "^2.0.5",
     "firebase": "^11.1.0",
     "firebase-admin": "^13.0.2",

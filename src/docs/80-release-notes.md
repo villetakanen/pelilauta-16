@@ -5,7 +5,7 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.11.x (Ongoing)
+### 16.12.0 (2024-01-28)
 - CYAN / FIX: Modal app-bar left padding fixed to 1 grid unit. (the app-bar had extra 1 grid margin on the left side to allow elevation-background spacing)
 - CYAN / FIX: Disabled Toggle buttons are now visible.
 - CYAN / FIX: Toggle buttons have accessible Light mode and Dark mode theming.
@@ -14,6 +14,11 @@ noun: 'monsters'
 - FIX: Optional site features rendered client side (as they subscribe to Firestore real time updates).
 - FIX: Docs page link in the footer now works.
 - FIX: In-site wikilinks work even if the in-site link is in markdown-style `[link](page)` -> `/sites/[site]/[page]`.
+- FEAT: Added Handouts/Secrets feature to sites. Only GM's can create, destroy or update handouts.
+- FEAT: Added real-time updates to Handouts for everyone on the Handouts page.
+- FEAT: Handout editor
+- FEAT: Handout page view, visible to anyone with the direct link.
+- CYAN / FIX: `content-editor` layout class now properly supports using `toolbar` class children and `cn-editor` elements as children.
 
 ### 16.11.0 (2024-01-24)
 - FEAT: Added PbtA story clocks feature to sites. Only GM's can create, destroy or update clocks.

@@ -9,6 +9,9 @@ export const entries: Locale = {
     showAdminTools: 'Näytä admin-työkalut',
     language: 'Kieli',
   },
+  handout: {
+    title: 'Otsikko',
+  },
   profile: {
     key: 'Tunniste',
     nick: 'Nick',

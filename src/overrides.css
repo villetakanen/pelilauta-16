@@ -82,9 +82,6 @@ astro-slot {
   margin: 0;
   padding: 0;
 }
-.toolbar label:first-child {
-  margin-left: calc(var(--cn-grid) * -1);
-}
 .toolbar label {
   margin-bottom: 0;
 }
@@ -465,4 +462,8 @@ ul.tag-list li:before {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.view-patch {
+  min-height: 60dvh;
 }

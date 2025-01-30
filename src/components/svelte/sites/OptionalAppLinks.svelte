@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
-import { site } from './siteStore';
+import { site } from '../../../stores/site';
 
 interface Props {
   site: Site;
@@ -20,7 +20,7 @@ $site = initialSite;
       </a>
     </li>
   {/if}
-  {#if false && $site?.useHandouts /* feature hidden */}
+  {#if $site.useHandouts }
     <li>
       <a href={`/sites/${$site?.key}/handouts`} class="tray-button">
         <cn-icon noun="books" xsmall></cn-icon>

@@ -2,8 +2,8 @@
 import type { Clock } from '@schemas/ClockSchema';
 import { uid } from '@stores/sessionStore';
 import type { CnStoryClock } from 'cn-story-clock/src';
-import { updateClock } from './clocksStore';
-import { site } from './siteStore';
+import { site } from '../../../stores/site';
+import { updateClock } from '../../../stores/site/clocksStore';
 
 interface Props {
   clock: Clock;
