@@ -4,7 +4,7 @@ import {
   handoutFrom,
 } from '@schemas/HandoutSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { logDebug } from '@utils/logHelpers';

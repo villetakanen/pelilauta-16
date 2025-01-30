@@ -1,5 +1,5 @@
 import { SITES_COLLECTION_NAME, type Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { logError } from '@utils/logHelpers';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { deleteObject, listAll, ref } from 'firebase/storage';

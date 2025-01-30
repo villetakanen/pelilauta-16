@@ -6,8 +6,8 @@
 
 import { useStore } from '@nanostores/solid';
 import type { Thread } from '@schemas/ThreadSchema';
+import { $profile, $uid } from '@stores/session';
 import { type Component, createMemo } from 'solid-js';
-import { $profile, $uid } from 'src/stores/sessionStore';
 import { loveThread, unloveThread } from 'src/stores/threadsStore/reactions';
 
 export const ThreadLikeButton: Component<{ thread?: Thread }> = (props) => {

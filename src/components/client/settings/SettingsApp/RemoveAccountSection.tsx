@@ -1,10 +1,10 @@
 import { useStore } from '@nanostores/solid';
+import { $uid, logout } from '@stores/session';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';
 import { db } from 'src/firebase/client';
-import { $uid, logout } from 'src/stores/sessionStore';
 
 export const RemoveAccountSection: Component = () => {
   const [showVerify, setShowVerify] = createSignal(false);

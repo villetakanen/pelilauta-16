@@ -2,7 +2,7 @@
 import { addClocktoSite } from '@firebase/client/site/addClockToSite';
 import { parseClock } from '@schemas/ClockSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 

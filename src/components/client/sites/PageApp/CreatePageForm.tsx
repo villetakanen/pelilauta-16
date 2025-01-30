@@ -6,7 +6,7 @@ import { addPage } from '@firebase/client/site/addPage';
 import { useStore } from '@nanostores/solid';
 import { createPage } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import type { Component } from 'solid-js';

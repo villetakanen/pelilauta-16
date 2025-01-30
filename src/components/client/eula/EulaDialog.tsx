@@ -3,6 +3,7 @@ import { updateAccount } from '@firebase/client/account/updateAccount';
 import { createProfile } from '@firebase/client/profile/createProfile';
 import { useStore } from '@nanostores/solid';
 import type { Account } from '@schemas/AccountSchema';
+import { $profile, $requiresEula, $uid, logout } from '@stores/session';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
@@ -10,7 +11,6 @@ import { type Component, type JSX, createEffect, createSignal } from 'solid-js';
 import { auth } from 'src/firebase/client';
 import { generateUsername } from 'src/firebase/client/generateUsername';
 import type { Profile } from 'src/schemas/ProfileSchema';
-import { $profile, $requiresEula, $uid, logout } from 'src/stores/sessionStore';
 import { ProfileCreationCard } from './ProfileCreationCard';
 
 type DialogProps<P = Record<string, unknown>> = P & { children?: JSX.Element };

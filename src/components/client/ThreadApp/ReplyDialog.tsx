@@ -14,7 +14,7 @@ import { type Reply, createReply } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { createEventDispatcher } from '@solid-primitives/event-dispatcher';
 import { addReply } from '@stores/ThreadsApp/discussion';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
 import { doc, increment, serverTimestamp, updateDoc } from 'firebase/firestore';

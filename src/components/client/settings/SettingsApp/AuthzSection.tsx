@@ -1,10 +1,10 @@
 import { updateProfile } from '@firebase/client/profile/updateProfile';
 import { useStore } from '@nanostores/solid';
+import { $profile } from '@stores/session';
 import { t } from '@utils/i18n';
 import { onAuthStateChanged } from 'firebase/auth';
 import { type Component, createSignal, onMount } from 'solid-js';
 import { auth } from 'src/firebase/client';
-import { $profile } from 'src/stores/sessionStore';
 
 export const AuthzSection: Component = () => {
   const [uid, setUid] = createSignal<string | null>(null);

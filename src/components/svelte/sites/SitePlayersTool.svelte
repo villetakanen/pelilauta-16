@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import UserSelect from '@svelte/app/UserSelect.svelte';
 import { t } from '@utils/i18n';

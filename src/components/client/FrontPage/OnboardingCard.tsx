@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/solid';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 

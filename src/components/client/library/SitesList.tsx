@@ -1,6 +1,6 @@
 import { SiteCard } from '@client/sites/SiteCard';
 import { useStore } from '@nanostores/solid';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { $sitesCache } from '@stores/sitesStore/userSitesCache';
 import { t } from '@utils/i18n';
 import { type Component, For, createEffect } from 'solid-js';

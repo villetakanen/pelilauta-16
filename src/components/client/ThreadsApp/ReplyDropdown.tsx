@@ -4,7 +4,7 @@
 
 import { useStore } from '@nanostores/solid';
 import type { Reply } from '@schemas/ReplySchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 
 import { type Component, createMemo } from 'solid-js';

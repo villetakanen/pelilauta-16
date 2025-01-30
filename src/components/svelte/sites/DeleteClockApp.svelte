@@ -1,7 +1,7 @@
 <script lang="ts">
 import { deleteClock } from '@firebase/client/site/deleteClock';
 import type { Site } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';

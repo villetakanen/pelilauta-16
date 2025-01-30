@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';

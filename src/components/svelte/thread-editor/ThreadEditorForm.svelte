@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Channel } from '@schemas/ChannelSchema';
 import type { Thread } from '@schemas/ThreadSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import AddFilesButton from '@svelte/app/AddFilesButton.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';

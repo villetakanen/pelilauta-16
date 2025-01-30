@@ -4,6 +4,7 @@ import { addPage } from '@firebase/client/site/addPage';
 import { createSite } from '@firebase/client/site/createSite';
 import { useStore } from '@nanostores/solid';
 import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
+import { $uid } from '@stores/session';
 import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
@@ -17,7 +18,6 @@ import {
   createSignal,
 } from 'solid-js';
 import { db } from 'src/firebase/client';
-import { $uid } from 'src/stores/sessionStore';
 import { SiteSystemSelect } from './SiteSystemSelect';
 
 export const CreateSiteView: Component = () => {

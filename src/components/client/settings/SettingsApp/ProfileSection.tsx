@@ -1,13 +1,7 @@
 import { useStore } from '@nanostores/solid';
+import { $locale, $profile, $theme, $uid, logout } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
-import {
-  $locale,
-  $profile,
-  $theme,
-  $uid,
-  logout,
-} from 'src/stores/sessionStore';
 import { RemoveAccountSection } from './RemoveAccountSection';
 
 export const ProfileSection: Component = () => {

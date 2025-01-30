@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/solid';
-import { $isAnonymous } from '@stores/sessionStore';
+import { $isAnonymous } from '@stores/session';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';
 

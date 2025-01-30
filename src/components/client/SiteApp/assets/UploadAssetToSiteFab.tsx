@@ -1,7 +1,7 @@
 import { addAssetToSite } from '@firebase/client/site/addAssetToSite';
 import { useStore } from '@nanostores/solid';
 import type { Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { resizeImage } from '@utils/client/resizeImage';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';

@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Handout } from '@schemas/HandoutSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 import { update } from '@stores/site/handouts';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { t } from '@utils/i18n';

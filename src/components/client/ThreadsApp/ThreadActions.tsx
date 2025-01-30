@@ -6,7 +6,7 @@
 
 import { useStore } from '@nanostores/solid';
 import type { Thread } from '@schemas/ThreadSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import type { Component } from 'solid-js';
 
 export const ThreadActions: Component<{ thread?: Thread }> = (props) => {

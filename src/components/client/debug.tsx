@@ -1,13 +1,13 @@
 import { useStore } from '@nanostores/solid';
-import { $account } from '@stores/sessionStore/account';
-import type { Component } from 'solid-js';
 import {
   $active,
   $isAnonymous,
   $requiresEula,
   $subscriber,
   $uid,
-} from 'src/stores/sessionStore';
+} from '@stores/session';
+import { $account } from '@stores/session/account';
+import type { Component } from 'solid-js';
 
 export const DebugSection: Component = () => {
   const active = useStore($active);

@@ -6,7 +6,7 @@ import { deletePage } from '@firebase/client/site/deletePage';
 import { useStore } from '@nanostores/solid';
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import type { Component } from 'solid-js';

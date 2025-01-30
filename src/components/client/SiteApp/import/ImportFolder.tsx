@@ -6,7 +6,7 @@
 import { WithAuth } from '@client/shared/WithAuth';
 import { useStore } from '@nanostores/solid';
 import type { PageRef, Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { type Component, createSignal } from 'solid-js';
 import { ImportForm } from './ImportForm';
 import { ImportPreview } from './ImportPreview';

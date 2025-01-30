@@ -5,7 +5,7 @@ import {
   createThread,
   parseThread,
 } from '@schemas/ThreadSchema';
-import { markEntrySeen } from '@stores/sessionStore';
+import { markEntrySeen } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logError, logWarn } from '@utils/logHelpers';
 import { addAssetToThread } from './addAssetToThread';

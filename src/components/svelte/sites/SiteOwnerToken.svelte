@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
-import { uid } from '@stores/sessionStore';
+import { uid } from '@stores/session';
 
 interface Props {
   site: Site;

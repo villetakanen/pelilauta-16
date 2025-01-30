@@ -18,7 +18,7 @@ import {
   createThread,
 } from '@schemas/ThreadSchema';
 import { $topics } from '@stores/ThreadsApp/topics';
-import { $uid, markEntrySeen } from '@stores/sessionStore';
+import { $uid, markEntrySeen } from '@stores/session';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { t } from '@utils/i18n';

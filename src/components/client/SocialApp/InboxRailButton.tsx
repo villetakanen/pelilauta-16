@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/solid';
 import { $notifications } from '@stores/SocialApp/notificationsStore';
-import { $uid } from '@stores/sessionStore';
+import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { type Component, createMemo } from 'solid-js';
 
