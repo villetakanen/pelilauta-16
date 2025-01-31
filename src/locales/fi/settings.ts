@@ -13,6 +13,9 @@ export const settings: Locale = {
       confirm: 'Kirjoita alle "olen aivan varma" jatkaaksesi ',
     },
   },
+  preview: {
+    title: 'Esikatselu',
+  },
   publicprofile: {
     title: 'Yleiset',
     legend: 'Profiilin julkiset tiedot',
