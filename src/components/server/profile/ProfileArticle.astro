@@ -1,18 +1,10 @@
 ---
 import type { Profile } from '@schemas/ProfileSchema';
+import ProfileSection from '@shared/ProfileSection.svelte';
 
 interface Props {
   profile: Profile;
 }
 const { profile } = Astro.props;
 ---
-<article class="column-s flex" style="flex-direction: column;">
-  <cn-avatar src={profile.avatarURL} alt={profile.nick} style="align-self: center"/>
-  <p style="align-self:center; text-align: center;" class="m-0">
-    <strong>{ profile.nick }</strong><br>
-    { profile.username }
-  </p>
-  <p class="small">
-    { profile.bio }
-  </p>
-</article>
+<ProfileSection {profile} />

@@ -1,6 +1,7 @@
 ---
 import { DebugSection } from '@client/debug';
 import { SettingsApp } from '@client/settings/SettingsApp/SettingsApp';
+import SettingsAppT from '@svelte/settings/SettingsApp.svelte';
 import { t } from '@utils/i18n';
 import Page from 'src/layouts/Page.astro';
 
@@ -12,8 +13,9 @@ const description = t('settings:description');
 const debug = import.meta.env.SECRET_FEATURE_FLAG_DEBUG === 'true';
 ---
 <Page title={title} description={description}>
-  <main>
+  <SettingsAppT client:only="svelte"/>
+
     <SettingsApp client:only="solid-js"/>
     { debug && <div class="content-columns"><DebugSection client:only="solid-js"/></div> }
-  </main>
+
 </Page>

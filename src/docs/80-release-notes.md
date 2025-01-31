@@ -7,6 +7,7 @@ noun: 'monsters'
 
 ### 16.12.x (ongoing)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.
+- FIX: Profile picture can be uploaded again. The upload was broken due to CYAN design system updates.
 
 ### 16.12.0 (2024-01-30)
 - CYAN / FIX: Modal app-bar left padding fixed to 1 grid unit. (the app-bar had extra 1 grid margin on the left side to allow elevation-background spacing)
