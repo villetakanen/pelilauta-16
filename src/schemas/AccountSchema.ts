@@ -33,7 +33,7 @@ export function parseAccount(
     updatedAt: data.updatedAt ? toDate(data.updatedAt) : new Date(),
     uid: uid || data.uid,
     showadminTools: data.showAdminTools ? data.showAdminTools : 'false',
-    eulaAccepted: data.eulaAccepted ? data.eulaAccepted : false,
+    eulaAccepted: data.eulaAccepted ? !!data.eulaAccepted : false,
     language: data.language ? data.language : 'fi',
   });
 }

@@ -14,9 +14,7 @@ if (!visible) {
 }
 ---
 <PageWithTray title="Admin" description="Admin tools for pelilauta">
-  <div slot="app-tray">
-    <AdminTray client:only="svelte"/> 
-   </div>
+  <AdminTray client:only="svelte" showLocalTools={visible} slot="app-tray"/> 
  { visible ? (
  <ForumAdminApp client:only="solid-js"/>
  ): <div>Feature Disabled</div> }

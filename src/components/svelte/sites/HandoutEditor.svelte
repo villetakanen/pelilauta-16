@@ -42,6 +42,8 @@ async function handleSubmit(e: Event) {
     title,
     markdownContent,
   });
+
+  window.location.href = `/sites/${site.key}/handouts/${handout.key}`;
 }
 </script>
 
