@@ -2,7 +2,7 @@
 import { updateProfile } from '@firebase/client/profile/updateProfile';
 import { uploadAvatar } from '@firebase/client/profile/uploadAvatar';
 import type { Profile } from '@schemas/ProfileSchema';
-import { uid } from '@stores/session';
+import { logout, uid } from '@stores/session';
 import { resizeImage } from '@utils/client/resizeImage';
 import { t } from '@utils/i18n';
 
@@ -56,13 +56,32 @@ async function handleSubmit(event: Event) {
     await updateProfile({ bio }, $uid);
   }
 }
-function setBio(event: InputEvent) {
+function setBio(event: Event) {
   bio = (event.target as HTMLTextAreaElement).value;
+}
+async function logoutAction() {
+  await logout();
+  window.location.href = '/logout';
 }
 </script>
 
 <article>
   <h3>{t('settings:profile.title')}</h3>
+
+  <h4 class="downscaled mb-0">
+    {t('entries:profile.uid')}
+  </h4>
+  <p class="mt-0">{ $uid }</p>
+
+  <h4 class="downscaled mb-0">
+    {t('entries:profile.username')}
+  </h4>
+  <p class="mt-0">{ profile.username }</p>
+
+  <h4 class="downscaled mb-0">
+    {t('settings:profile.edit.title')}
+  </h4>
+
   <form onsubmit={handleSubmit} class="flex flex-col">
   <label for="avatar-file-input">{t('entries:profile.avatar')}
   <input type="file" accept="image/*" style="display: none;" id="avatar-file-input"
@@ -86,12 +105,16 @@ function setBio(event: InputEvent) {
     >{profile.bio}</textarea>
   </label>
 
-  <div class="toolbar justify-end">
+    <div class="toolbar justify-end">
+      <button type="submit" disabled={!changes}>
+        {t('actions:save')}
+      </button>
+    </div>
 
-  <button type="submit" disabled={!changes}>
-    {t('actions:save')}
-  </button>
 
-</div>
+    <p class="downscaled low-emphasis">
+      {t('settings:profile.info')}
+    </p>
   </form>
+
 </article>

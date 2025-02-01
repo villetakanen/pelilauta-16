@@ -1,16 +1,22 @@
 import type { Locale } from '@utils/i18n';
 
 export const settings: Locale = {
+  actions: {
+    title: 'Toiminnot',
+  },
   personal: {
     title: 'Omat tiedot',
   },
   profile: {
     title: 'Profiili',
-    info: 'Pelilauta tallentaa seuraavat tiedot tietokantaansa. Tiedot näkyvät sovelluksen valvojille, ja ne voivat näkyä sovelluksen käyttäjlle.',
+    info: 'Ylläolevat profiilitiedot tallennetaan pelilaudan tietokantaan. Ne näkyvät pelilaudan käyttäjille ja vierailijoille.',
     dangerZone: {
       title: 'Vaaravyöhyke',
       info: 'Seuraavat toiminnot poistavat tilisi ja profiilisi tiedot tietokannasta. Tämä toimintoa ei voi peruuttaa.',
       confirm: 'Kirjoita alle "olen aivan varma" jatkaaksesi ',
+    },
+    edit: {
+      title: 'Muokkaa profiilia',
     },
   },
   preview: {
