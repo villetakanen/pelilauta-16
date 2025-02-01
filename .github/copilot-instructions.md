@@ -1,7 +1,7 @@
 # Copilot instructions
 
-We are creating a role playing games community site with Astro, Lit and Solid-js. The application
-will be deployed to Vercel using Github integration.
+We are creating a role playing games community site with Astro, Lit and Svelte. The application
+will be deployed to Vercel using a Github integration.
 
 ## SSR with Astro
 
@@ -23,7 +23,7 @@ Most of the client side interactivity is now done with Svelte. We use the same n
 state management as the previous Solid-js components. Switch over to svelte is done for lit-element and performance
 reasons.
 
-Svelte uses typescript and we want to model the componets as
+Svelte uses runes mode, typescript and we want to model the componets as
 ```
 <script lang="ts">
 
@@ -42,9 +42,13 @@ const { propName, ... }: Props = $props;
 [html ...]
 ```
 
+## TyopeScript
+
+We use shorhands for library paths. E.g. `import SectionComponent from '@svelte/app/SectionComponent.svelte'`
+
 ## Lit
 
-The Lit components, for now, are installed via NPM, and are not modified directly here.
+The Lit components, for now, are installed via NPM or Git Submodules. 
 
 ## Google Firebase
 
@@ -53,4 +57,4 @@ storage methods should always be imported dynamically on the client side, for co
 
 ## Biome
 
-Biome is used for linting and formatting. We are using the default settings.
+Biome is used for linting and formatting. We are using the default settings, with 2 spaces as intentation.

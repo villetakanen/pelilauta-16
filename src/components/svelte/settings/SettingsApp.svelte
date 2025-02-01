@@ -10,6 +10,7 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { onMount } from 'svelte';
+import Actions from './Actions.svelte';
 import ProfileTool from './ProfileTool.svelte';
 
 let profile: Profile | null = $state(null);
@@ -39,11 +40,12 @@ async function subscribe() {
 
 <div class="content-columns">
   {#if profile}
-    <div>
+    <div class="column-s">
       <h3>{t('settings:preview.title')}</h3>
       <ProfileSection {profile} />
     </div>
     <ProfileTool {profile} />
+    <Actions />
   {:else}
     <div>
       <cn-loader></cn-loader>

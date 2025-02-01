@@ -13,7 +13,7 @@ export const entries: Locale = {
     title: 'Otsikko',
   },
   profile: {
-    key: 'Tunniste',
+    uid: 'Tunniste',
     nick: 'Nick',
     avatar: 'Avatar',
     bio: 'Kuvaus',
