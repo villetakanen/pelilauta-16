@@ -5,9 +5,6 @@ import {
 } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logError } from '@utils/logHelpers';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { deleteObject, getStorage, ref } from 'firebase/storage';
-import { db } from '..';
 
 /**
  * Deletes a specific asset from Firebase Storage and updates the site's document in Firestore.
@@ -16,9 +13,13 @@ import { db } from '..';
  * @param storagePath [string] The storage path of the asset to delete.
  */
 export async function deleteSiteAsset(site: Site, storagePath: string) {
+  const { getFirestore, doc, getDoc, updateDoc } = await import(
+    'firebase/firestore'
+  );
+  const { deleteObject, getStorage, ref } = await import('firebase/storage');
   const storage = getStorage();
   const assetRef = ref(storage, storagePath); // Reference to the asset in Storage
-  const siteRef = doc(db, SITES_COLLECTION_NAME, site.key);
+  const siteRef = doc(getFirestore(), SITES_COLLECTION_NAME, site.key);
 
   const siteDoc = await getDoc(siteRef);
   if (siteDoc.exists()) {

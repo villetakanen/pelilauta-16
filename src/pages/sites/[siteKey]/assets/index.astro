@@ -1,8 +1,9 @@
 ---
-import { SiteAssetsView } from '@client/SiteApp/assets/SiteAssetsView';
+import { UploadAssetToSiteFab } from '@client/SiteApp/assets/UploadAssetToSiteFab';
 import { parseSite } from '@schemas/SiteSchema';
 import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
+import AssetList from '@svelte/sites/AssetList.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
@@ -31,6 +32,7 @@ const title = `${site.name} – ${t('site:assets.title')}`;
   image={site.backgroundURL}
 >
   <SiteTray slot="app-tray" site={site}/>
-  <SiteAssetsView siteKey={site.key} client:only="solid-js" />
+  <AssetList site={site} client:only="svelte"/>
+  <UploadAssetToSiteFab site={site} client:only="solid-js" slot="fab-tray"/>
   <SitePoster site={site}/>
 </PageWithTray>
