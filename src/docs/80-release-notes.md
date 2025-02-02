@@ -11,6 +11,9 @@ noun: 'monsters'
 - FIX: Settings actions and profile fields refactored to Svelte comps. Fixed erroneous default values for fields.
 - FIX: Site activity feed for triage purposes now visible in Admin UI
 - FIX: Saving a handout opens the handout page view, as expected.
+- FIX: Site assets view works even if the asset names are hilariously long.
+- FIX: Site assets view works with SSR site data
+- FIX: Site assets view ported to Svelte
 
 ### 16.12.0 (2024-01-30)
 - CYAN / FIX: Modal app-bar left padding fixed to 1 grid unit. (the app-bar had extra 1 grid margin on the left side to allow elevation-background spacing)
