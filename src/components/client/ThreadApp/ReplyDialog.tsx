@@ -68,8 +68,6 @@ export const ReplyDialog: Component<Props> = (props) => {
     e.preventDefault();
     e.stopPropagation();
 
-    //logDebug('ReplyForm', 'send', e);
-
     const reply = createReply({
       markdownContent: message() || '',
       owners: [uid()],

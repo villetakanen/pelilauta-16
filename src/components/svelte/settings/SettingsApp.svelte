@@ -8,7 +8,6 @@ import ProfileSection from '@shared/ProfileSection.svelte';
 import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import { onMount } from 'svelte';
 import Actions from './Actions.svelte';
 import ProfileTool from './ProfileTool.svelte';
@@ -16,7 +15,6 @@ import ProfileTool from './ProfileTool.svelte';
 let profile: Profile | null = $state(null);
 
 onMount(() => {
-  logDebug('SettingsApp mounted', { uid: $uid });
   if ($uid === null) {
     window.location.href = '/login';
   }
@@ -24,11 +22,9 @@ onMount(() => {
 });
 
 async function subscribe() {
-  logDebug('SettingsApp subscribe', { uid: $uid });
   const { onSnapshot, doc, getFirestore } = await import('firebase/firestore');
 
   onSnapshot(doc(getFirestore(), PROFILES_COLLECTION_NAME, $uid), (doc) => {
-    logDebug('SettingsApp onSnapshot', { doc: doc.data() });
     if (!doc.exists()) {
       return;
     }

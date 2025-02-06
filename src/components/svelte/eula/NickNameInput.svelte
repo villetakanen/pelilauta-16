@@ -1,6 +1,5 @@
 <script lang="ts">
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 
 interface NickNameInputProps {
   nick: string;
@@ -20,8 +19,6 @@ async function onBlur(event: Event) {
   // This component is mounted with a auto-generated nickname, which
   // may be taken, so we need to check for duplicates
   const hasDuplicate = await checkForDuplicate(nick);
-
-  logDebug('Checking for duplicate nick', nick, hasDuplicate);
 
   if (!hasDuplicate) {
     setNick(nick);

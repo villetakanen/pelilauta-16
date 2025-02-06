@@ -9,7 +9,8 @@ import { requiresEula } from '@stores/session/account';
 import { profile } from '@stores/session/profile';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
+import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { toFid } from '@utils/toFid';
 import { type Snippet, onMount } from 'svelte';
 import NickNameInput from './NickNameInput.svelte';
@@ -31,24 +32,24 @@ const handle = $derived.by(() => {
   return '–';
 });
 
-logDebug('EulaDialog loaded');
-
 onMount(() => {
   const d = document.getElementById('eula-dialog');
   if (d) dialog = d as HTMLDialogElement;
-  logDebug('EulaDialog mounted', dialog);
-  getAvatarUrl();
+  getUserInfo();
 });
 
 $effect(() => {
   $requiresEula && dialog.showModal();
 });
 
-async function getAvatarUrl() {
+async function getUserInfo() {
   const { getAuth } = await import('firebase/auth');
   const user = getAuth().currentUser;
   if (!user) return;
   avararUrl = user.photoURL || '';
+  const dpn = user.displayName;
+  const username = dpn ?? user.email?.split('@')[0];
+  nick = toMekanismiURI(username || '');
 }
 
 async function handleSubmit(e: Event) {
@@ -84,8 +85,10 @@ async function handleSubmit(e: Event) {
   dialog?.close();
 }
 
-function handleCancel(e?: Event) {
+async function handleCancel(e?: Event) {
   e?.preventDefault();
+  const { signOut, getAuth } = await import('firebase/auth');
+  await signOut(getAuth());
   dialog.close();
 }
 

@@ -12,7 +12,6 @@ export const DangerZoneSection: Component<{ site: Site }> = (props) => {
     e.preventDefault();
 
     if (deleteConfirm() !== deleteConfirmPhrase) {
-      //logDebug('Delete confirm phrase does not match');
       return;
     }
     try {
@@ -20,7 +19,6 @@ export const DangerZoneSection: Component<{ site: Site }> = (props) => {
       pushSessionSnack('site:snacks.siteDeleted', { name: props.site.name });
       window.location.href = '/library';
     } catch (error) {
-      //logDebug('Error deleting site', error);
       pushSnack('site:snacks.errorDeletingSite');
     }
   }

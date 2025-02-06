@@ -5,7 +5,7 @@ import { uid } from '@stores/session';
 import { pushSnack } from '@utils/client/snackUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 import { t } from '@utils/i18n';
-import { logDebug, logError } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 
 interface Props {
   site: Site;
@@ -24,7 +24,6 @@ async function handleSubmit(event: Event) {
     const { getFirestore, addDoc, collection } = await import(
       'firebase/firestore'
     );
-    logDebug('Creating handout', title, site.key);
     const handout = handoutFrom({ title, owners: [$uid] }, '');
     const entry = toFirestoreEntry(handout);
 

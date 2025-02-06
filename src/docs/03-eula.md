@@ -2,8 +2,6 @@
 name: 'Käyttöehdot'
 noun: 'fox'
 ---
-### Pelilaudan käyttöehdot
-
 **Rekisteröityessäsi saat tilin ja profiilin.** 
 - Tilisi tiedot ovat vain sinun ja hallinnon nähtävillä. 
 - Profiilisi ja julkaisusi ovat kaikkien käyttäjien nähtävillä.
