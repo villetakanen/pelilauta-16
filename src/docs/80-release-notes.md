@@ -14,6 +14,7 @@ noun: 'monsters'
 - FIX: Site assets view works even if the asset names are hilariously long.
 - FIX: Site assets view works with SSR site data
 - FIX: Site assets view ported to Svelte
+- FIX: missing page link with umlauts in the title is now correctly url-encoded.
 
 ### 16.12.0 (2024-01-30)
 - CYAN / FIX: Modal app-bar left padding fixed to 1 grid unit. (the app-bar had extra 1 grid margin on the left side to allow elevation-background spacing)
