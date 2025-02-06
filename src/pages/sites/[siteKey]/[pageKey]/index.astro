@@ -30,7 +30,9 @@ if (siteResponse.status === 404) {
   return Astro.redirect('/404');
 }
 if (pageResponse.status === 404) {
-  return Astro.redirect(`/sites/${siteKey}/create/page?name=${pageKey}`);
+  return Astro.redirect(
+    `/sites/${siteKey}/create/page?name=${encodeURIComponent(pageKey)}`,
+  );
 }
 
 const site = parseSite(
