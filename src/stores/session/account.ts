@@ -4,7 +4,7 @@ import {
   type Account,
   parseAccount,
 } from '@schemas/AccountSchema';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
 import { atom, computed } from 'nanostores';
 
 // *** Primary session stores ******************************************
@@ -14,27 +14,25 @@ export const account = persistentAtom<Account | null>('session-account', null, {
   encode: JSON.stringify,
   decode: (data) => {
     if (!data || data === 'null') return null;
-    logDebug('AccountStore', 'decode', 'Decoding account data', data);
     const object = parseAccount(JSON.parse(data));
     return object;
   },
 });
+const accountNotFound = atom(false);
+
 // Legacy support for solid components
 export const $account = account;
 
 // *** Computed stores *************************************************
 
 // Helper for the EULA acceptance state
-export const requiresEula = computed(account, (account) => {
-  if (accountNotFound.get()) return true;
-  if (!account) return false;
-  return !account.eulaAccepted;
+export const requiresEula = computed([account, accountNotFound], (acc, anf) => {
+  if (anf) return true;
+  if (!acc) return false;
+  return !acc.eulaAccepted;
 });
 
 // *** REFACTORED UP TO HERE *******************************************
-
-const accountNotFound = atom(false);
-
 export const $requiresEula = computed($account, (account) => {
   if (accountNotFound.get()) return true;
   if (!account) return false;

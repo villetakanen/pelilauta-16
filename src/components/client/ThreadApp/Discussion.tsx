@@ -97,7 +97,6 @@ export const Discussion: Component<DiscussionProps> = (props) => {
       patchedDiscussion.push(reply);
     }
     patchedDiscussion.sort((a, b) => a.flowTime - b.flowTime);
-    //logDebug('patching to discussion, lenght is ', patchedDiscussion.length);
     setDiscussion(patchedDiscussion);
   }
 
@@ -107,7 +106,6 @@ export const Discussion: Component<DiscussionProps> = (props) => {
   }
 
   function handleQuote(e: Event) {
-    //logDebug('Quote', 'handleQuote 2', e);
     e.preventDefault();
     e.stopPropagation();
 

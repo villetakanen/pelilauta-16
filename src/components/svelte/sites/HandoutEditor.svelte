@@ -5,7 +5,6 @@ import { uid } from '@stores/session';
 import { update } from '@stores/site/handouts';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { t } from '@utils/i18n';
-import { logDebug } from '@utils/logHelpers';
 import type { CnEditor } from 'cn-editor/src/cn-editor';
 
 interface Props {
@@ -29,7 +28,6 @@ function titleChanged(e: Event) {
   title = (e.target as HTMLInputElement).value;
 }
 function markdownContentChanged(e: Event) {
-  logDebug('markdownContentChanged', (e.target as CnEditor).value);
   markdownContent = (e.target as CnEditor).value;
 }
 
