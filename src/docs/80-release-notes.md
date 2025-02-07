@@ -16,6 +16,9 @@ noun: 'monsters'
 - FIX: Site assets view ported to Svelte
 - FIX: missing page link with umlauts in the title is now correctly url-encoded.
 - FIX: Enroll dialog opens as expected when a new user logs in via email link.
+- FIX: RecentChanges section elevated to an independent section on a site page.
+- FIX: Sidebar can be hidden from a site (defaults to visible on legacy sites).
+- FIX: Recent changes section can be hidden from a site (defaults to hidden on legacy sites).
 
 ### 16.12.0 (2024-01-30)
 - CYAN / FIX: Modal app-bar left padding fixed to 1 grid unit. (the app-bar had extra 1 grid margin on the left side to allow elevation-background spacing)

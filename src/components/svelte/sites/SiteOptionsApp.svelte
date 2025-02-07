@@ -10,7 +10,10 @@ interface Props {
 const { site: initialSite }: Props = $props();
 $site = initialSite;
 
-async function setOption(option: 'useClocks' | 'useHandouts', value: boolean) {
+async function setOption(
+  option: 'useClocks' | 'useHandouts' | 'useRecentChanges' | 'useSidebar',
+  value: boolean,
+) {
   update({ [option]: value });
 }
 </script>
@@ -31,6 +34,18 @@ async function setOption(option: 'useClocks' | 'useHandouts', value: boolean) {
       label={t('site:options.useHandouts')}
       pressed={$site.useHandouts || undefined}
       onchange={(e: Event) => setOption('useHandouts', (e.target as CyanToggleButton).pressed)}
+    ></cn-toggle-button>
+
+    <cn-toggle-button 
+      label={t('site:options.useRecentChanges')}
+      pressed={$site.useRecentChanges || undefined}
+      onchange={(e: Event) => setOption('useRecentChanges', (e.target as CyanToggleButton).pressed)}
+    ></cn-toggle-button>
+
+    <cn-toggle-button 
+      label={t('site:options.useSidebar')}
+      pressed={$site.useSidebar || undefined}
+      onchange={(e: Event) => setOption('useSidebar', (e.target as CyanToggleButton).pressed)}
     ></cn-toggle-button>
 
   </article>

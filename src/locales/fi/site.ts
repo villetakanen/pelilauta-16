@@ -47,7 +47,9 @@ export const site: Locale = {
     description:
       'Pelilauta / Mekanismi sisältää joukon pelinjohtamisen ja pelaamisen avuksi tarkoitettuja työkaluja. Voit ottaa työkalut käyttöön alla olevilla painikkeilla.',
     useClocks: 'Kellot',
-    useHandouts: 'Salaisuudet (tulossa)',
+    useHandouts: 'Salaisuudet',
+    useRecentChanges: 'Viimeisimmät muutokset -paneeli',
+    useSidebar: 'Sivupalkki (Mekanismi SideBar)',
   },
   settings: {
     title: 'Asetukset',
