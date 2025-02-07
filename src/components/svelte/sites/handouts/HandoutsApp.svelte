@@ -3,7 +3,7 @@ import type { Site } from '@schemas/SiteSchema';
 import { site } from '@stores/site';
 import { t } from '@utils/i18n';
 import HandoutList from './HandoutList.svelte';
-import MembersOnly from './MembersOnly.svelte';
+import MembersOnly from '../MembersOnly.svelte';
 
 interface Props {
   site: Site;
