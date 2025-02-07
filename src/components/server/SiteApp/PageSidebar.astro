@@ -8,6 +8,7 @@ interface Props {
 const { site } = Astro.props as Props;
 const withPosterCSS = site.posterURL ? 'surface p-2' : 'p-1';
 ---
+{site.useSidebar && (
 <article class={`column-s ${withPosterCSS}`}>
   <h3 class="downscaled">{site.name}</h3>
   {site.posterURL && (
@@ -16,3 +17,4 @@ const withPosterCSS = site.posterURL ? 'surface p-2' : 'p-1';
   {site.description && <p>{site.description}</p>}
   <SiteTocSection site={site} />
 </article>
+)}

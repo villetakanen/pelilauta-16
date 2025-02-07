@@ -62,7 +62,7 @@ export const SiteSchema = EntrySchema.extend({
   useClocks: z.boolean().optional(),
   useHandouts: z.boolean().optional(),
   useRecentChanges: z.boolean().optional(),
-  useSidebar: z.boolean().optional(),
+  useSidebar: z.boolean().optional(), // Defaults to true if unset
 });
 
 export type Site = z.infer<typeof SiteSchema>;
@@ -105,6 +105,8 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
       sortOrder,
       customPageKeys,
       key,
+      // useSidebar defaults to true if unset
+      useSidebar: data.useSidebar !== false,
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {

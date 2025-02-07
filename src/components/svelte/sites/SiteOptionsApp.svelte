@@ -37,14 +37,12 @@ async function setOption(
     ></cn-toggle-button>
 
     <cn-toggle-button 
-      disabled
       label={t('site:options.useRecentChanges')}
       pressed={$site.useRecentChanges || undefined}
       onchange={(e: Event) => setOption('useRecentChanges', (e.target as CyanToggleButton).pressed)}
     ></cn-toggle-button>
 
     <cn-toggle-button 
-      disabled
       label={t('site:options.useSidebar')}
       pressed={$site.useSidebar || undefined}
       onchange={(e: Event) => setOption('useSidebar', (e.target as CyanToggleButton).pressed)}
