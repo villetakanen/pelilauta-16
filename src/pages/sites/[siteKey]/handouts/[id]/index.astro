@@ -36,7 +36,7 @@ const handout = handoutFrom(
 );
 ---
 <PageWithTray title={handout.title} description={site.description} noun="books" image={site.avatarURL}>
-  <HandoutApp handout={handout} />
+  <HandoutApp handout={handout} site={site}/>
   <HandoutFabs handout={handout} site={site} slot="fab-tray" client:only="svelte"/>
   <SiteTray slot="app-tray" site={site}/>
   <SitePoster site={site}/>
