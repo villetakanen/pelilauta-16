@@ -7,7 +7,7 @@ import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import { atom, onMount } from 'nanostores';
 import { site } from '.';
 
@@ -97,6 +97,7 @@ function mergeHandouts(
 
 export async function update(handout: Partial<Handout>) {
   if (!handout.siteKey || !handout.key) {
+    logWarn('Tried to update a handout without a siteKey or a key');
     return;
   }
 
