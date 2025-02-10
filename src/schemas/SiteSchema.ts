@@ -63,6 +63,7 @@ export const SiteSchema = EntrySchema.extend({
   useHandouts: z.boolean().optional(),
   useRecentChanges: z.boolean().optional(),
   useSidebar: z.boolean().optional(), // Defaults to true if unset
+  usePlainTextURLs: z.boolean().optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;
@@ -107,6 +108,9 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
       key,
       // useSidebar defaults to true if unset
       useSidebar: data.useSidebar !== false,
+      // customPageKeys is the legacy field for usePlainTextUrls, but inverted - use it's value
+      // if usePlainTextUrls is not set
+      usePlainTextUrls: data.usePlainTextURLs || !customPageKeys,
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
@@ -134,6 +138,7 @@ export function createSite(template?: Partial<Site>): Site {
     // Default values for new sites
     system: template?.system || 'homebrew',
     sortOrder: template?.sortOrder || 'name',
-    customPageKeys: template?.customPageKeys || false,
+    customPageKeys: template?.customPageKeys || !template?.usePlainTextURLs,
+    usePlainTextURLs: template?.usePlainTextURLs || false,
   };
 }

@@ -467,3 +467,7 @@ ul.tag-list li:before {
 .view-patch {
   min-height: 60dvh;
 }
+input[data-error] {
+  border-color: var(--color-alert);
+  background-color: color-mix(in hsl, var(--color-alert), transparent 66%);
+}

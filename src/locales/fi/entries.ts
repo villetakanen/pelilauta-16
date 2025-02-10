@@ -38,6 +38,10 @@ export const entries: Locale = {
     backgroundURL: 'Taustakuva',
     hidden: 'Piilotettu sivusto',
     customPageKeys: 'Luettavat osoitteet',
+    placeholders: {
+      name: 'Sivuston tai pelin nimi',
+      description: 'Sivuston kuvaus. Kopioidaan kotisivun tekstiksi.',
+    },
   },
   thread: {
     title: 'Otsikko',

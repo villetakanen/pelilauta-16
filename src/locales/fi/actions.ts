@@ -27,6 +27,9 @@ export const actions: Locale = {
   send: 'Lähetä',
   save: 'Tallenna',
   showMore: 'Näytä lisää',
+  show: {
+    options: 'Näytä lisäasetukset',
+  },
   readMore: 'Lue lisää',
   submit: 'Lähetä',
   title: 'Toiminnot',
