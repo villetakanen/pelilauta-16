@@ -5,7 +5,10 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.12.x (ongoing)
+### 16.13.x (ongoing)
+- FIX: front page fabs moved over to svelte
+
+### 16.13.0 (2025-02-10)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.
 - FIX: Profile picture can be uploaded again. The upload was broken due to CYAN design system updates.
 - FIX: Settings actions and profile fields refactored to Svelte comps. Fixed erroneous default values for fields.
@@ -20,7 +23,7 @@ noun: 'monsters'
 - FIX: Sidebar can be hidden from a site (defaults to visible on legacy sites).
 - FIX: Recent changes section can be hidden from a site (defaults to hidden on legacy sites).
 
-### 16.12.0 (2024-01-30)
+### 16.12.0 (2025-01-30)
 - CYAN / FIX: Modal app-bar left padding fixed to 1 grid unit. (the app-bar had extra 1 grid margin on the left side to allow elevation-background spacing)
 - CYAN / FIX: Disabled Toggle buttons are now visible.
 - CYAN / FIX: Toggle buttons have accessible Light mode and Dark mode theming.
@@ -35,30 +38,30 @@ noun: 'monsters'
 - FEAT: Handout page view, visible to anyone with the direct link.
 - CYAN / FIX: `content-editor` layout class now properly supports using `toolbar` class children and `cn-editor` elements as children.
 
-### 16.11.0 (2024-01-24)
+### 16.11.0 (2025-01-24)
 - FEAT: Added PbtA story clocks feature to sites. Only GM's can create, destroy or update clocks.
 - FEAT: Added real-time updates to Clocks for everyone on the Clocks page.
 - FIX: moved site actions from solid-js to svelte
 - FIX: various locale issues in the sites and the library pages
 
-### 16.10.0 (2024-01-20)
+### 16.10.0 (2025-01-20)
 - FIX: links with protocol are no longer treated as wikilinks.
 - FIX: Library shows public sites link in the tray
 - FEAT: Added players -functionality to the Sites. Players can create, edit and destroy pages.
 
-### 16.9.0 (2024-01-13)
+### 16.9.0 (2025-01-13)
 - Restored admin functionality for freezing users.
 - Active users widget added to the front page.
 - <strike>Docs disabled temporarily</strike>
 
-### 16.8.0 (2024-01-07)
+### 16.8.0 (2025-01-07)
 - Legacy thread and reply content is now rendered in thread view.
 - Footnotes are now used GFM style, and are rendered in the page view.
 - ProfileApp moved to SSR Astro component, reduntant profile info styling removed.
 - ProfileApp shows the user's latest sites
 - ProfileApp shows the user's latest posts
 
-### 16.7.0 (2024-01-03)
+### 16.7.0 (2025-01-03)
 - CnEditor uses native events and bubbling for better performance.
 - Page editor no longer crashes when saving a page with tags.
 - Thread editor moved to Svelte.

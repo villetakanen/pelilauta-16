@@ -1,10 +1,9 @@
 ---
-import { FrontPageFabs } from '@client/FrontPage/FrontPageFabs';
-import { DebugSection } from '@client/debug';
 import SyndicateStream from '@server/FrontPage/SyndicateStream/SyndicateStream.astro';
 import TopSitesStream from '@server/FrontPage/TopSitesStream.astro';
 import TopThreadsStream from '@server/FrontPage/TopThreadsStream.astro';
 import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
+import FrontpageFabs from '@svelte/frontpage/FrontpageFabs.svelte';
 import Page from 'src/layouts/Page.astro';
 
 // Set a short cache time for the front page
@@ -18,15 +17,8 @@ Astro.response.headers.set(
       <TopThreadsStream/>
       <SyndicateStream />
       <TopSitesStream />
-
-      {import.meta.env.SECRET_FEATURE_FLAG_DEBUG === 'true' && ( 
-      <article>
-        <h2><cn-icon large noun="fox" />DEBUG</h2>
-        <DebugSection client:only="solid-js"/>
-      </article> 
-      )}
     </div>
-    <FrontPageFabs client:only="solid-js"/>
+    <FrontpageFabs client:only="svelte" slot="fab-tray"/>
     <BackgroundPoster
       slot="app-background-poster"
       src="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-1.webp"
