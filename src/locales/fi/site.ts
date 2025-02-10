@@ -26,6 +26,12 @@ export const site: Locale = {
     create: {
       title: 'Luo salaisuus',
     },
+    metadata: {
+      title: 'Lukijat',
+    },
+    add: {
+      reader: 'Lisää lukija',
+    },
   },
   import: {
     preview: {
