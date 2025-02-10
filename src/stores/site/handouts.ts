@@ -7,7 +7,8 @@ import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logWarn } from '@utils/logHelpers';
+import { where } from 'firebase/firestore';
 import { atom, onMount } from 'nanostores';
 import { site } from '.';
 
@@ -32,7 +33,7 @@ async function subscribe(key: string) {
     }),
   ]);*/
 
-  const { getFirestore, collection, onSnapshot } = await import(
+  const { getFirestore, collection, onSnapshot, query } = await import(
     'firebase/firestore'
   );
 
@@ -67,7 +68,34 @@ async function subscribe(key: string) {
     );
   } else {
     // We need to get the handouts that the user is in the readers ACL of the handout
-    logDebug('User specific handouts not implemented yet');
+    const q = query(
+      collection(
+        getFirestore(),
+        SITES_COLLECTION_NAME,
+        key,
+        HANDOUTS_COLLECTION_NAME,
+      ),
+      where('readers', 'array-contains', uid.get()),
+    );
+    onSnapshot(q, (snapshot) => {
+      const newHandouts = new Array<Handout>();
+
+      for (const change of snapshot.docChanges()) {
+        if (change.type === 'removed') {
+          handouts.set([
+            ...handouts
+              .get()
+              .filter((handout) => handout.key !== change.doc.id),
+          ]);
+          continue;
+        }
+        newHandouts.push(
+          handoutFrom(toClientEntry(change.doc.data()), change.doc.id, key),
+        );
+      }
+
+      handouts.set(mergeHandouts(handouts.get(), newHandouts));
+    });
   }
 }
 

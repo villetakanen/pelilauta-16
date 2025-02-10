@@ -4,7 +4,9 @@ import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import { site } from '@stores/site';
 import { update } from '@stores/site/handouts';
+import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import UserSelect from '@svelte/app/UserSelect.svelte';
+import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 
@@ -38,15 +40,31 @@ function onUserSelect(e: Event) {
   newReader = target.value;
 }
 
-async function onSubmit(e: Event) {
-  e.preventDefault();
-  logDebug('HandoutMeta.onSubmit', newReader);
-  const r = new Set(handout.readers ?? []);
-  r.add(newReader);
+async function dropReader(reader: string) {
+  const r = new Set(readers);
+  r.delete(reader);
   await update({
     ...handout,
     readers: Array.from(r),
   });
+  readers = Array.from(r);
+}
+
+async function onSubmit(e: Event) {
+  e.preventDefault();
+  logDebug('HandoutMeta.onSubmit', newReader);
+  const r = new Set(readers);
+  r.add(newReader);
+  try {
+    await update({
+      ...handout,
+      readers: Array.from(r),
+    });
+  } catch (err) {
+    logDebug('HandoutMeta.onSubmit', err);
+    pushSnack(t('site:handouts.metadata.error'));
+  }
+  newReader = '';
   readers = Array.from(r);
 }
 </script>
@@ -55,21 +73,32 @@ async function onSubmit(e: Event) {
   <section class="surface p-1">
     <h3>{t('site:handouts.metadata.title')}</h3>
     {#if readers?.length }
-      <ul>
+
         {#each readers as reader}
-          <li>{reader}</li>  
+          <div class="toolbar">
+            <p class="p-0 grow">
+              <ProfileLink uid={reader} />
+            </p>
+            <button
+              aria-label={t('actions:delete')} 
+              onclick={() => dropReader(reader)}>
+              <cn-icon noun="delete"></cn-icon>
+            </button>
+          </div>  
         {/each}
-      </ul>
+
     {/if}
 
     <form onsubmit={onSubmit}>
-      <h4>{t('sites:handouts.add.reader')}</h4>
+      <hr>
       <UserSelect 
-        value=''
+        value='-'
         {omit}
         onchange={onUserSelect}
-        label={t('sites:handouts.add.reader')}/>
-      <button type="submit">{t('actions:add')}</button>
+        label={t('site:handouts.add.reader')}/>
+      <button 
+        disabled={!newReader || newReader === '-'}
+        type="submit">{t('actions:add')}</button>
     </form>
 
   </section>
