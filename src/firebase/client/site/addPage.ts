@@ -53,6 +53,7 @@ export async function addPage(
   page: Partial<Page>,
   slug?: string,
 ) {
+  logDebug('addPage', siteKey, page, slug);
   const { getDoc, doc } = await import('firebase/firestore');
   const key = await addPageToFirestore(siteKey, page, slug);
 

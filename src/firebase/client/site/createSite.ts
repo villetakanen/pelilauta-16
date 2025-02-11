@@ -4,6 +4,7 @@ import {
   parseSite,
 } from '@schemas/SiteSchema';
 import { $uid } from '@stores/session';
+import { logDebug } from '@utils/logHelpers';
 
 /**
  * Creates a new site in the database, returns the key of the new site
@@ -15,6 +16,8 @@ export async function createSite(site: Partial<Site>): Promise<string> {
   const { getFirestore, doc, getDoc, setDoc, addDoc, collection } =
     await import('firebase/firestore');
   const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
+
+  logDebug('createSite', site);
 
   // Get the current user's uid
   const uid = $uid.get();
@@ -36,6 +39,7 @@ export async function createSite(site: Partial<Site>): Promise<string> {
     if (siteDoc.exists()) {
       throw new Error(`Site with key ${site.key} already exists`);
     }
+    logDebug('createSite', 'Creating site with given key', siteData);
     await setDoc(siteRef, siteData);
     return site.key;
   }

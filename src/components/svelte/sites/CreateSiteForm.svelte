@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
-import { createSite } from '@schemas/SiteSchema';
+import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
@@ -12,20 +12,25 @@ import SystemSelect from './SystemSelect.svelte';
  * A form component used for new Site creation.
  */
 
-let key = $state('');
-let system = $state('homebrew');
+// Data states
+const siteData: Partial<Site> = $state({
+  system: 'homebrew',
+  usePlainTextURLs: true,
+  description: '',
+  hidden: false,
+  owners: [$uid],
+});
+
+// UX states
 let reservedSiteName = $state(false);
-let usePlainTextURLs = $state(true);
-let description = $state('');
 let options = $state(false);
-let hidden = $state(false);
 
 const allow = $derived.by(() => {
   return !!$uid;
 });
 
 const valid = $derived.by(() => {
-  return key.length > 3 && !reservedSiteName;
+  return siteData.key && siteData.key.length > 3 && !reservedSiteName;
 });
 
 async function onNameBlur(e: FocusEvent) {
@@ -35,7 +40,7 @@ async function onNameBlur(e: FocusEvent) {
   const proposedKey = toMekanismiURI(name);
 
   if (!proposedKey || proposedKey.length < 3) {
-    key = '';
+    siteData.key = '';
     reservedSiteName = false;
     return;
   }
@@ -44,34 +49,37 @@ async function onNameBlur(e: FocusEvent) {
   const siteResponse = await fetch(`/api/sites/${proposedKey}`);
 
   if (siteResponse.ok) {
-    key = '';
+    siteData.key = '';
     reservedSiteName = true;
     return;
   }
 
   reservedSiteName = false;
-  key = proposedKey;
+  siteData.key = proposedKey;
+  siteData.name = name;
+  siteData.homepage = proposedKey;
 }
 
 async function onsubmit(e: Event) {
   e.preventDefault();
 
-  const site = createSite({
-    key,
-    system,
-    description,
-    hidden,
-    usePlainTextURLs,
-    owners: [$uid],
-  });
-
-  const { createSite: createSiteToDB } = await import(
-    '@firebase/client/site/createSite'
-  );
+  const { createSite } = await import('@firebase/client/site/createSite');
+  const { addPage } = await import('@firebase/client/site/addPage');
 
   try {
-    const id = await createSiteToDB(site);
-    pushSessionSnack(t('site:snacks.siteCreated'), { siteName: site.name });
+    const id = await createSite(siteData);
+    await addPage(
+      id,
+      {
+        key: id,
+        siteKey: id,
+        name: siteData.name,
+        markdownContent: `#${siteData.name}\n\n${siteData.description}`,
+        owners: siteData.owners,
+      },
+      id,
+    );
+    pushSessionSnack(t('site:snacks.siteCreated'), { siteName: `${id}` });
     window.location.href = `/sites/${id}`;
   } catch (error) {
     pushSnack(t('site:create.snacks.errorCreatingSite'));
@@ -80,11 +88,11 @@ async function onsubmit(e: Event) {
 }
 
 function setSystem(s: string) {
-  system = s;
+  siteData.system = s;
 }
 
 function setDescription(e: Event) {
-  description = (e.target as HTMLTextAreaElement).value;
+  siteData.description = (e.target as HTMLTextAreaElement).value;
 }
 
 function setOptions(e: Event) {
@@ -92,11 +100,11 @@ function setOptions(e: Event) {
 }
 
 function setHidden(e: Event) {
-  hidden = (e.target as CyanToggleButton).pressed;
+  siteData.hidden = (e.target as CyanToggleButton).pressed;
 }
 
 function setUsePlainTextURLs(e: Event) {
-  usePlainTextURLs = (e.target as CyanToggleButton).pressed;
+  siteData.usePlainTextURLs = (e.target as CyanToggleButton).pressed;
 }
 </script>
 
@@ -127,7 +135,7 @@ function setUsePlainTextURLs(e: Event) {
           </p>
         {/if}
         <p class="mt-1 break-all">
-          <code class="p-1">{`https://pelilauta.social/sites/${usePlainTextURLs ? key : '[auto]'}`}</code>
+          <code class="p-1">{`https://pelilauta.social/sites/${siteData.usePlainTextURLs ? siteData.key || '...' : '[auto]'}`}</code>
         </p>
 
         <label>
@@ -139,12 +147,10 @@ function setUsePlainTextURLs(e: Event) {
             placeholder={t('entries:site.placeholders.description')}></textarea>
         </label>
 
-        <SystemSelect {system} {setSystem}/>
+        <SystemSelect system={siteData.system} {setSystem}/>
         <p class="downscaled mt-0 pt-0">
           {t('site:create.system.description')}
         </p>
-
-        
 
         <cn-toggle-button
           label={t('actions:show.options')}
@@ -156,15 +162,15 @@ function setUsePlainTextURLs(e: Event) {
         <div class="border border-radius p-1">
           <cn-toggle-button
             label={t('entries:site.hidden')}
-            pressed={hidden}
-            onChange={setHidden}></cn-toggle-button>
+            pressed={siteData.hidden}
+            onchange={setHidden}></cn-toggle-button>
           <p class="downscaled mt-0 pt-0 px-1">
             {t('site:create.hidden.description')}
           </p>
 
           <cn-toggle-button
             label={t('entries:site.customPageKeys')}
-            pressed={usePlainTextURLs}
+            pressed={siteData.usePlainTextURLs}
             onchange={setUsePlainTextURLs}></cn-toggle-button>
 
           <p class="downscaled mt-0 pt-0 px-1">
@@ -187,7 +193,7 @@ function setUsePlainTextURLs(e: Event) {
 
       </form>
       <div class="debug">
-        <pre>{JSON.stringify({ key, usePlainTextURLs, system, description, hidden }, null, 2)}</pre>
+        <pre>{JSON.stringify({ siteData }, null, 2)}</pre>
       </div>    
     </section>
   </div>
