@@ -7,6 +7,10 @@ noun: 'monsters'
 
 ### 16.13.x (ongoing)
 - FIX: front page fabs moved over to svelte
+- FIX: Site creation tool moved over to svelte
+- FIX: Added tooltips, helper text and more readable error messages to the site creation tool
+- FIX: Site creation tool no longer crashes on empty site name
+- FIX: Site creation tool hides the extra settings by default
 
 ### 16.13.0 (2025-02-10)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.
