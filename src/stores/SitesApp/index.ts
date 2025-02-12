@@ -2,9 +2,9 @@ import { persistentAtom } from '@nanostores/persistent';
 import {
   SITES_COLLECTION_NAME,
   type Site,
-  createSite as createSiteRecord,
   emptySite,
   parseSite,
+  siteFrom,
 } from '@schemas/SiteSchema';
 import { logWarn } from '@utils/logHelpers';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
@@ -17,7 +17,7 @@ export const loadingState = atom<'initial' | 'loading' | 'active'>('initial');
 export const $site = persistentAtom<Site>(
   'activeSite',
   {
-    ...createSiteRecord(),
+    ...siteFrom(emptySite),
   },
   {
     encode: JSON.stringify,

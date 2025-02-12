@@ -121,15 +121,17 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
 }
 
 /**
- * Utility for creating a new site entry. Sets default values for new sites for every field.
+ * Utility for creating a site entry from a partial data. Sets default values for new sites for every field.
  *
  * @param template
  * @returns a Site object (extends Entry)
  */
-export function createSite(template?: Partial<Site>): Site {
+export function siteFrom(template: Partial<Site>): Site {
   return {
-    key: template?.key || '',
-    flowTime: template?.flowTime || 0,
+    // A Key is required by the schema
+    key: template.key ?? '',
+    // Default values for new sites is 0
+    flowTime: template.flowTime ?? 0,
     createdAt: template?.createdAt || new Date(),
     updatedAt: template?.updatedAt || new Date(),
     name: template?.name || '',
