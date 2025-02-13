@@ -3,8 +3,8 @@ import PageWithTray from '@layouts/PageWithTray.astro';
 import { handoutFrom } from '@schemas/HandoutSchema';
 import { parseSite } from '@schemas/SiteSchema';
 import HandoutApp from '@server/SiteApp/HandoutApp.astro';
-import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import HandoutFabs from '@svelte/sites/handouts/HandoutFabs.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
 
@@ -39,5 +39,7 @@ const handout = handoutFrom(
   <HandoutApp handout={handout} site={site}/>
   <HandoutFabs handout={handout} site={site} slot="fab-tray" client:only="svelte"/>
   <SiteTray slot="app-tray" site={site}/>
-  <SitePoster site={site}/>
+  { site.backgroundURL && 
+    <BackgroundPoster src={site.backgroundURL} slot="app-background-poster"/>
+  }
 </PageWithTray>

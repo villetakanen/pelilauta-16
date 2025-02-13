@@ -2,9 +2,9 @@
 import { ImportExportTool } from '@client/SiteApp/toc/ImportExportTool';
 import { SiteTocAdmin } from '@client/SiteApp/toc/SiteTocAdmin';
 import { parseSite } from '@schemas/SiteSchema';
-import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTocSection from '@server/SiteApp/SiteTocSection.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
@@ -43,5 +43,7 @@ const image = site.avatarURL || site.posterURL || site.backgroundURL;
     </div>
     </div>
   </div>
-  <SitePoster site={site}/>
+  { site.backgroundURL && 
+    <BackgroundPoster src={site.backgroundURL} slot="app-background-poster"/>
+  }
 </PageWithTray>

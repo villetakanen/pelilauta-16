@@ -2,8 +2,8 @@
 import { parsePage } from '@schemas/PageSchema';
 import { parseSite } from '@schemas/SiteSchema';
 import PageApp from '@server/SiteApp/PageApp.astro';
-import SitePoster from '@server/SiteApp/SitePoster.astro';
 import SiteTray from '@server/SiteApp/SiteTray.astro';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import PageFabs from '@svelte/sites/PageFabs.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { systemToNoun } from '@utils/schemaHelpers';
@@ -52,5 +52,7 @@ const image = site.avatarURL || site.posterURL || site.backgroundURL;
   <SiteTray slot="app-tray" site={site}/>
   <PageApp site={site} pageKey={pageKeyFixed} page={page} />
   <PageFabs pageKey={pageKey} site={site} client:only="svelte" slot="fab-tray" />
-  <SitePoster site={site}/>
+  { site.backgroundURL && 
+    <BackgroundPoster src={site.backgroundURL} slot="app-background-poster"/>
+  }
 </PageWithTray>
