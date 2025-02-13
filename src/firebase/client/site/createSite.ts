@@ -4,6 +4,8 @@ import {
   parseSite,
 } from '@schemas/SiteSchema';
 import { $uid } from '@stores/session';
+import { logDebug } from '@utils/logHelpers';
+import { updateDoc } from 'firebase/firestore';
 
 /**
  * Creates a new site in the database, returns the key of the new site
@@ -15,6 +17,8 @@ export async function createSite(site: Partial<Site>): Promise<string> {
   const { getFirestore, doc, getDoc, setDoc, addDoc, collection } =
     await import('firebase/firestore');
   const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
+
+  logDebug('createSite', site);
 
   // Get the current user's uid
   const uid = $uid.get();
@@ -30,12 +34,13 @@ export async function createSite(site: Partial<Site>): Promise<string> {
   siteData.owners = [uid];
 
   // If the site has a key, try to create the site with that given key
-  if (site.key) {
+  if (site.key && site.usePlainTextURLs) {
     const siteRef = doc(getFirestore(), SITES_COLLECTION_NAME, site.key);
     const siteDoc = await getDoc(siteRef);
     if (siteDoc.exists()) {
       throw new Error(`Site with key ${site.key} already exists`);
     }
+    logDebug('createSite', 'Creating site with given key', siteData);
     await setDoc(siteRef, siteData);
     return site.key;
   }
@@ -44,5 +49,9 @@ export async function createSite(site: Partial<Site>): Promise<string> {
     collection(getFirestore(), SITES_COLLECTION_NAME),
     siteData,
   );
+  await updateDoc(doc(getFirestore(), SITES_COLLECTION_NAME, id), {
+    key: id,
+    homepage: id,
+  });
   return id;
 }

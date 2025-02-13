@@ -1,8 +1,11 @@
 import { expect, test } from 'vitest';
-import { SiteSchema, createSite } from '../../src/schemas/SiteSchema';
+import { SiteSchema, siteFrom } from '../../src/schemas/SiteSchema';
 
-test('createSite factory creates a site object', () => {
-  const site = createSite();
+test('siteFrom parses a site with minimal data', () => {
+  const data = {
+    key: 'a',
+  };
+  const site = siteFrom(data);
   const parsed = SiteSchema.parse(site);
   expect(parsed).toEqual(site);
 });

@@ -68,7 +68,7 @@ export const site: Locale = {
     },
   },
   snacks: {
-    siteCreated: 'Sivusto {siteName} luotu',
+    siteCreated: 'Sivusto {sitename} luotu',
     siteDeleted: 'Sivusto {name} poistettu',
     errorDeletingSite: 'Virhe poistettaessa sivustoa',
     pageCreated: 'Sivu luotu',
@@ -84,9 +84,28 @@ export const site: Locale = {
   },
   create: {
     title: 'Luo sivusto',
+    description:
+      'Voit luoda Pelilaudalle uuden sivuston pelillesi tai kampanjallesi. Sivusto luodaan alla olevaan osoitteeseen, joka muodostetaan pelin nimestä tai automaattisesti.',
+    url: 'URL',
     page: {
       title: 'Luo sivu',
       missing: 'Sivua {name} ei vielä ole olemassa, voit luoda sen alta.',
+    },
+    system: {
+      description:
+        'Pelisi tai kampanjasi luokittelu. Käytetään pelien listauksessa ja sivuston ulkoasussa.',
+    },
+    errors: {
+      reserved:
+        'Sivuston osoite on varattu. Vaihda sivuston nimeä, tai luo sivu ilman luettavia osoitteita.',
+    },
+    hidden: {
+      description:
+        'Sivuston voi piilottaa julkisista listauksista, jolloin se näkyy listauksissa vain sivuston omistajille ja pelaajille. Sivuston sivuja voi tästä huolimatta jakaa suoralla osoitteella.',
+    },
+    plaintexturls: {
+      description:
+        'Voit ottaa luettavat osoitteet pois käytöstä, jolloin pelilauta muodostaa sivustolle ja sen sivuille automaattiset osoitteet. Tämä voi olla höydyllistä jos haluat tehdä sivustosta vaikeasti löydettävän.',
     },
   },
   dangerZone: {

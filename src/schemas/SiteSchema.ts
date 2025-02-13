@@ -63,6 +63,7 @@ export const SiteSchema = EntrySchema.extend({
   useHandouts: z.boolean().optional(),
   useRecentChanges: z.boolean().optional(),
   useSidebar: z.boolean().optional(), // Defaults to true if unset
+  usePlainTextURLs: z.boolean().optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;
@@ -107,6 +108,9 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
       key,
       // useSidebar defaults to true if unset
       useSidebar: data.useSidebar !== false,
+      // customPageKeys is the legacy field for usePlainTextUrls, but inverted - use it's value
+      // if usePlainTextUrls is not set
+      usePlainTextUrls: data.usePlainTextURLs || !customPageKeys,
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
@@ -117,15 +121,17 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
 }
 
 /**
- * Utility for creating a new site entry. Sets default values for new sites for every field.
+ * Utility for creating a site entry from a partial data. Sets default values for new sites for every field.
  *
  * @param template
  * @returns a Site object (extends Entry)
  */
-export function createSite(template?: Partial<Site>): Site {
+export function siteFrom(template: Partial<Site>): Site {
   return {
-    key: template?.key || '',
-    flowTime: template?.flowTime || 0,
+    // A Key is required by the schema
+    key: template.key ?? '',
+    // Default values for new sites is 0
+    flowTime: template.flowTime ?? 0,
     createdAt: template?.createdAt || new Date(),
     updatedAt: template?.updatedAt || new Date(),
     name: template?.name || '',
@@ -134,6 +140,7 @@ export function createSite(template?: Partial<Site>): Site {
     // Default values for new sites
     system: template?.system || 'homebrew',
     sortOrder: template?.sortOrder || 'name',
-    customPageKeys: template?.customPageKeys || false,
+    customPageKeys: template?.customPageKeys || !template?.usePlainTextURLs,
+    usePlainTextURLs: template?.usePlainTextURLs || false,
   };
 }
