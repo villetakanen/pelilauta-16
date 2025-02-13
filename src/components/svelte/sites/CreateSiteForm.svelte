@@ -192,9 +192,9 @@ function setUsePlainTextURLs(e: Event) {
         </div>
 
       </form>
-      <div class="debug">
+      <!--div class="debug">
         <pre>{JSON.stringify({ siteData }, null, 2)}</pre>
-      </div>    
+      </div-->    
     </section>
   </div>
 </WithAuth>
