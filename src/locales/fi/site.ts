@@ -68,7 +68,7 @@ export const site: Locale = {
     },
   },
   snacks: {
-    siteCreated: 'Sivusto {siteName} luotu',
+    siteCreated: 'Sivusto {sitename} luotu',
     siteDeleted: 'Sivusto {name} poistettu',
     errorDeletingSite: 'Virhe poistettaessa sivustoa',
     pageCreated: 'Sivu luotu',

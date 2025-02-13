@@ -74,12 +74,12 @@ async function onsubmit(e: Event) {
         key: id,
         siteKey: id,
         name: siteData.name,
-        markdownContent: `#${siteData.name}\n\n${siteData.description}`,
+        markdownContent: `# ${siteData.name}\n\n${siteData.description}`,
         owners: siteData.owners,
       },
       id,
     );
-    pushSessionSnack(t('site:snacks.siteCreated'), { siteName: `${id}` });
+    pushSessionSnack(t('site:snacks.siteCreated'), { sitename: `${id}` });
     window.location.href = `/sites/${id}`;
   } catch (error) {
     pushSnack(t('site:create.snacks.errorCreatingSite'));
