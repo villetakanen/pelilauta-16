@@ -3,6 +3,7 @@ import '@11thdeg/cyan-next/dist/style.css'; // Import the Design System CSS
 import 'src/overrides.css'; // Import your custom CSS
 import { t } from '@utils/i18n';
 import ServiceWorker from './ServiceWorker.astro';
+import { ClientRouter } from 'astro:transitions';
 
 type Props = {
   title?: string;
@@ -54,4 +55,6 @@ const ogImage = image || `${canonicalURL.origin}/favicons/fox-ico-512.png`;
   <meta property="og:title" content={metaTitle} />
   <meta property="og:description" content={metaDescription} />
   <meta property="og:image" content={ogImage} />
+
+  <ClientRouter />
 </head>

@@ -11,6 +11,8 @@ noun: 'monsters'
 - FIX: Added tooltips, helper text and more readable error messages to the site creation tool
 - FIX: Site creation tool no longer crashes on empty site name
 - FIX: Site creation tool hides the extra settings by default
+- FIX: Site poster image is now in the correct slot, and extends beneath app-bar and app-rail.
+- FIX: added page transitions from Astro 5
 
 ### 16.13.0 (2025-02-10)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.
