@@ -1,9 +1,9 @@
 ---
 import '@11thdeg/cyan-next/dist/style.css'; // Import the Design System CSS
 import 'src/overrides.css'; // Import your custom CSS
+import { ClientRouter } from 'astro:transitions';
 import { t } from '@utils/i18n';
 import ServiceWorker from './ServiceWorker.astro';
-import { ClientRouter } from 'astro:transitions';
 
 type Props = {
   title?: string;
