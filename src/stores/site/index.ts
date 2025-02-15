@@ -5,6 +5,7 @@ import {
   parseSite,
 } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import { atom, onMount } from 'nanostores';
 
 export const site = atom<Site | null>(null);
@@ -31,6 +32,7 @@ async function subscribe(key: string) {
 export async function update(data: Partial<Site>) {
   const key = site.get()?.key;
   if (!key) {
+    logWarn('Site key is required to update the site data, aborting');
     return;
   }
   // Merge the updates with the current site data
@@ -39,5 +41,6 @@ export async function update(data: Partial<Site>) {
   // for obvious reasons.
   const updated = { ...site.get(), ...data, key };
   // Silent update of the Site Data
-  updateSite(updated, true);
+  logDebug('Updating site data', updated);
+  await updateSite(updated, true);
 }
