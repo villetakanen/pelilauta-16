@@ -2,6 +2,7 @@
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import type { Site } from '@schemas/SiteSchema';
 import { update } from '@stores/site';
+import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import SystemSelect from '../SystemSelect.svelte';
 
@@ -35,14 +36,34 @@ async function setHidden(e: Event) {
   hidden = value;
   await update({ hidden: value });
 }
-
 function reset() {
   name = site.name;
+}
+async function handleSubmit(e: Event) {
+  e.preventDefault();
+  if (!dirty) return;
+  const updates: Partial<Site> = {
+    key: site.key,
+  };
+  if (name !== site.name) {
+    updates.name = name;
+  }
+  if (description !== site.description) {
+    updates.description = description;
+  }
+  if (system !== site.system) {
+    updates.system = system;
+  }
+  await update(updates);
+  pushSnack(t('site:settings.meta.saved'));
 }
 </script>
 
 <section>
-  <form>
+  <form
+    onsubmit={handleSubmit}
+    onreset={reset}
+  >
     <h2>{t('site:settings.meta.title')}</h2>
     <fieldset>
       <label>{t('entries:site.name')}
@@ -61,7 +82,7 @@ function reset() {
           name="description"
           rows="3"
           oninput={setDescription}
-          placeholder={t('entries:site.placeholders.description')}></textarea>
+          placeholder={t('entries:site.placeholders.description')}>{description}</textarea>
       </label>
       <SystemSelect system={system} {setSystem}/>
     </fieldset>

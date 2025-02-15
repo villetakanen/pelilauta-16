@@ -13,6 +13,8 @@ noun: 'monsters'
 - FIX: Site creation tool hides the extra settings by default
 - FIX: Site poster image is now in the correct slot, and extends beneath app-bar and app-rail.
 - FIX: added page transitions from Astro 5
+- FIX: Site settings "meta" section moved over to svelte and replaced vanilla select with the system-selector component
+- FIX: Site settings "meta" section now follows the data integrity rules (eg. no empty or 2 letter site names)
 
 ### 16.13.0 (2025-02-10)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.

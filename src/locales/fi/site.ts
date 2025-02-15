@@ -60,6 +60,7 @@ export const site: Locale = {
   settings: {
     title: 'Asetukset',
     meta: {
+      extra: 'Lisäasetukset',
       title: 'Sivuston tiedot',
       configuration: 'Asetukset',
     },

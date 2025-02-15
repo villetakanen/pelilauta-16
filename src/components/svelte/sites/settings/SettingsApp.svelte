@@ -23,5 +23,4 @@ const allow = $derived.by(() => {
   <div class="content-columns">
     <SiteMetaForm site={$site}/>
   </div>
-  SVELTE SETTINGS APP: {$site.name}
 </WithAuth>
