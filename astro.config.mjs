@@ -2,7 +2,7 @@ import solidJs from '@astrojs/solid-js';
 import { defineConfig } from 'astro/config';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 
 import svelte from '@astrojs/svelte';
 

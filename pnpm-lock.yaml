@@ -24,8 +24,8 @@ importers:
         specifier: ^7.0.4
         version: 7.0.4(@types/node@22.10.10)(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(jiti@2.4.2)(svelte@5.19.3)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
       '@astrojs/vercel':
-        specifier: ^8.0.4
-        version: 8.0.4(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)
+        specifier: ^8.0.7
+        version: 8.0.7(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)
       '@nanostores/persistent':
         specifier: ^0.10.2
         version: 0.10.2(nanostores@0.11.3)
@@ -163,6 +163,9 @@ packages:
   '@astrojs/internal-helpers@0.4.2':
     resolution: {integrity: sha512-EdDWkC3JJVcpGpqJAU/5hSk2LKXyG3mNGkzGoAuyK+xoPHbaVdSuIWoN1QTnmK3N/gGfaaAfM8gO2KDCAW7S3w==}
 
+  '@astrojs/internal-helpers@0.5.1':
+    resolution: {integrity: sha512-M7rAge1n2+aOSxNvKUFa0u/KFn0W+sZy7EW91KOSERotm2Ti8qs+1K0xx3zbOxtAVrmJb5/J98eohVvvEqtNkw==}
+
   '@astrojs/language-server@2.15.0':
     resolution: {integrity: sha512-wJHSjGApm5X8Rg1GvkevoatZBfvaFizY4kCPvuSYgs3jGCobuY3KstJGKC1yNLsRJlDweHruP+J54iKn9vEKoA==}
     hasBin: true
@@ -207,8 +210,8 @@ packages:
     resolution: {integrity: sha512-wxhSKRfKugLwLlr4OFfcqovk+LIFtKwLyGPqMsv+9/ibqqnW3Gv7tBhtKEb0gAyUAC4G9BTVQeQahqnQAhd6IQ==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
 
-  '@astrojs/vercel@8.0.4':
-    resolution: {integrity: sha512-/x+bsvVgiLtIcYmlDZS23MzXkQLUdbEHh4GMJvytFNqvHPN1c2f7Dw/fY134fu7y6GP8Qi+TlegckIu5IVYg/Q==}
+  '@astrojs/vercel@8.0.7':
+    resolution: {integrity: sha512-2DPqPGZ/Et4afpJt8CAoIql2S649rzEmLBNJPHUGBysP0JklMaZ05HhQVKr+qEhZSm3NrVccxpkiIG/eLW3nPg==}
     peerDependencies:
       astro: ^5.0.0
 
@@ -2077,6 +2080,9 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  '@vercel/routing-utils@5.0.4':
+    resolution: {integrity: sha512-4ke67zkXVi2fRZdoYckABcsSkRC9CnrdadOGxoS/Bk22+ObHjGQWvUHExRSXh339anwu9YY7ZacNSGH4gUnTQA==}
+
   '@vitest/expect@2.1.8':
     resolution: {integrity: sha512-8ytZ/fFHq2g4PJVAtDX57mayemKgDR6X3Oa2Foro+EygiOJHUXhCqBAAKQYYajZpFoIfvBCF1j6R6IYRSIUFuw==}
 
@@ -2166,6 +2172,9 @@ packages:
   agent-base@7.1.1:
     resolution: {integrity: sha512-H0TSyFNDMomMNJQBn8wFV5YC/2eJ+VXECwOadZJT554xP6cODZHPX3H9QMQECxvrgiSOP1pHjy1sMWQVYJOUOA==}
     engines: {node: '>= 14'}
+
+  ajv@6.12.6:
+    resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
   ajv@8.16.0:
     resolution: {integrity: sha512-F0twR8U1ZU67JIEtekUcLkXkoO5mMMmgGD8sK/xUFzJ805jxHQl92hImFAqqXMyMYjSPOyUPAwHYhB72g5sTXw==}
@@ -3480,6 +3489,9 @@ packages:
   json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
+  json-schema-traverse@0.4.1:
+    resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
@@ -4186,6 +4198,12 @@ packages:
   path-scurry@1.11.1:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
+
+  path-to-regexp@6.1.0:
+    resolution: {integrity: sha512-h9DqehX3zZZDCEm+xbfU0ZmwCGFCAAraPJWMXJ4+v32NjZJilVg3k1TcKsRgIb8IQ/izZSaydDc1OhJCZvs2Dw==}
+
+  path-to-regexp@6.3.0:
+    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   pathe@1.1.2:
     resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
@@ -5606,6 +5624,8 @@ snapshots:
 
   '@astrojs/internal-helpers@0.4.2': {}
 
+  '@astrojs/internal-helpers@0.5.1': {}
+
   '@astrojs/language-server@2.15.0(typescript@5.7.3)':
     dependencies:
       '@astrojs/compiler': 2.10.3
@@ -5716,12 +5736,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/vercel@8.0.4(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)':
+  '@astrojs/vercel@8.0.7(astro@5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0))(rollup@2.79.2)(svelte@5.19.3)':
     dependencies:
-      '@astrojs/internal-helpers': 0.4.2
+      '@astrojs/internal-helpers': 0.5.1
       '@vercel/analytics': 1.4.1(svelte@5.19.3)
       '@vercel/edge': 1.2.1
       '@vercel/nft': 0.29.0(rollup@2.79.2)
+      '@vercel/routing-utils': 5.0.4
       astro: 5.1.10(@types/node@22.10.10)(jiti@2.4.2)(rollup@2.79.2)(terser@5.34.1)(typescript@5.7.3)(yaml@2.5.0)
       esbuild: 0.24.2
       fast-glob: 3.3.3
@@ -7778,6 +7799,13 @@ snapshots:
       - rollup
       - supports-color
 
+  '@vercel/routing-utils@5.0.4':
+    dependencies:
+      path-to-regexp: 6.1.0
+      path-to-regexp-updated: path-to-regexp@6.3.0
+    optionalDependencies:
+      ajv: 6.12.6
+
   '@vitest/expect@2.1.8':
     dependencies:
       '@vitest/spy': 2.1.8
@@ -7902,6 +7930,14 @@ snapshots:
       debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
+
+  ajv@6.12.6:
+    dependencies:
+      fast-deep-equal: 3.1.3
+      fast-json-stable-stringify: 2.1.0
+      json-schema-traverse: 0.4.1
+      uri-js: 4.4.1
+    optional: true
 
   ajv@8.16.0:
     dependencies:
@@ -9506,6 +9542,9 @@ snapshots:
 
   json-parse-even-better-errors@2.3.1: {}
 
+  json-schema-traverse@0.4.1:
+    optional: true
+
   json-schema-traverse@1.0.0: {}
 
   json-schema@0.4.0: {}
@@ -10370,6 +10409,10 @@ snapshots:
     dependencies:
       lru-cache: 10.4.3
       minipass: 7.1.2
+
+  path-to-regexp@6.1.0: {}
+
+  path-to-regexp@6.3.0: {}
 
   pathe@1.1.2: {}
 
