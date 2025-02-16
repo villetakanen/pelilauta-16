@@ -11,7 +11,12 @@ const { site: initialSite }: Props = $props();
 $site = initialSite;
 
 async function setOption(
-  option: 'useClocks' | 'useHandouts' | 'useRecentChanges' | 'useSidebar',
+  option:
+    | 'useClocks'
+    | 'useHandouts'
+    | 'useRecentChanges'
+    | 'useSidebar'
+    | 'usePlainTextURLs',
   value: boolean,
 ) {
   update({ [option]: value });
@@ -47,6 +52,14 @@ async function setOption(
       pressed={$site.useSidebar || undefined}
       onchange={(e: Event) => setOption('useSidebar', (e.target as CyanToggleButton).pressed)}
     ></cn-toggle-button>
+
+    <cn-toggle-button 
+      label={t('entries:site.customPageKeys')}
+      pressed={$site.usePlainTextURLs || undefined}
+      onchange={(e: Event) => setOption('usePlainTextURLs', (e.target as CyanToggleButton).pressed)}
+    ></cn-toggle-button>
+
+    <p class="downscaled text-low">{t('site:create.plaintexturls.description')}</p>
 
   </article>
 </div>

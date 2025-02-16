@@ -1,7 +1,7 @@
 ---
-import { CreatePageForm } from '@client/sites/PageApp/CreatePageForm';
 import PageLayout from '@layouts/Page.astro';
 import { parseSite } from '@schemas/SiteSchema';
+import CreatePageForm from '@svelte/sites/CreatePageForm.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
 
 const { siteKey } = Astro.params;
@@ -21,5 +21,5 @@ const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
 const name = Astro.url.searchParams.get('name') || '';
 ---
 <PageLayout>
-  <CreatePageForm site={site} name={name} client:only="solid-js"/>
+  <CreatePageForm site={site} name={name} client:only="svelte"/>
 </PageLayout>

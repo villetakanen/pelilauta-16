@@ -60,6 +60,7 @@ export const site: Locale = {
   settings: {
     title: 'Asetukset',
     meta: {
+      extra: 'Lisäasetukset',
       title: 'Sivuston tiedot',
       configuration: 'Asetukset',
     },
@@ -90,6 +91,8 @@ export const site: Locale = {
     page: {
       title: 'Luo sivu',
       missing: 'Sivua {name} ei vielä ole olemassa, voit luoda sen alta.',
+      duplicateKey: 'Sivu osoitteessa {key} on jo olemassa.',
+      duplicateKeyLink: 'Avaa sivu',
     },
     system: {
       description:

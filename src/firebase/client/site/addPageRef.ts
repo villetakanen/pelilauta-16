@@ -3,9 +3,9 @@ import {
   SITES_COLLECTION_NAME,
   parseSite,
 } from '@schemas/SiteSchema';
-import { updateSite } from '@stores/SitesApp';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { db } from '..';
+import { updateSite } from './updateSite';
 
 export async function addPageRef(pageRef: PageRef, siteKey: string) {
   // Get the siteDoc and Site from the firestore
@@ -27,5 +27,5 @@ export async function addPageRef(pageRef: PageRef, siteKey: string) {
   }
 
   // Update the site with the new pageRefs
-  await updateSite({ pageRefs: refs }, siteKey);
+  await updateSite({ pageRefs: refs, key: siteKey }, true);
 }
