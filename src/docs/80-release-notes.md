@@ -15,6 +15,7 @@ noun: 'monsters'
 - FIX: added page transitions from Astro 5
 - FIX: Site settings "meta" section moved over to svelte and replaced vanilla select with the system-selector component
 - FIX: Site settings "meta" section now follows the data integrity rules (eg. no empty or 2 letter site names)
+- FIX: Moved plain text urls-toggle to optios page
 
 ### 16.13.0 (2025-02-10)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.

@@ -1,6 +1,4 @@
-import type { CyanToggleButton } from '@11thdeg/cyan-next';
 import type { Site } from '@schemas/SiteSchema';
-import { systemToNounMapping } from '@schemas/nouns';
 import { updateSite } from '@stores/SitesApp';
 import { t } from '@utils/i18n';
 import { type Component, For } from 'solid-js';
@@ -18,18 +16,6 @@ export const SiteMetaDataSection: Component<{ site: Site }> = (props) => {
 
       <h3>{t('site:settings.meta.configuration')}</h3>
       <fieldset>
-        <cn-toggle-button
-          label={t('entries:site.customPageKeys')}
-          pressed={props.site.customPageKeys}
-          onChange={(event: Event) =>
-            updateSite(
-              {
-                customPageKeys: (event.target as CyanToggleButton).pressed,
-              },
-              props.site.key,
-            )
-          }
-        />
         <SiteHomePageSelect site={props.site} />
       </fieldset>
     </section>
