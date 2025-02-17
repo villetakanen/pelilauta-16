@@ -20,6 +20,7 @@ noun: 'monsters'
 - FIX: Page creator supports usePlainTextURLs
 - FIX: Page creator checks for empty page name, and warns the user
 - FIX: Page creator checks for duplicate page names, and warns the user
+- FIX: Site homepage selector moved to the site "meta" section for clarity
 
 ### 16.13.0 (2025-02-10)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.

@@ -63,6 +63,7 @@ export const site: Locale = {
       extra: 'Lisäasetukset',
       title: 'Sivuston tiedot',
       configuration: 'Asetukset',
+      saved: 'Asetukset tallennettu',
     },
     theming: {
       title: 'Ulkoasu',

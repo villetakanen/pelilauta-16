@@ -14,7 +14,6 @@ import { type Component, createSignal, onMount } from 'solid-js';
 import { ThemingSection } from '../../SiteApp/settings/ThemingSection';
 import { SiteCard } from '../../sites/SiteCard';
 import { DangerZoneSection } from './DangerZoneSection';
-import { SiteMetaDataSection } from './SiteMetaDataSection';
 
 export const SiteSettingsApp: Component<{ site: string }> = (props) => {
   const uid = useStore($uid);
@@ -38,7 +37,6 @@ export const SiteSettingsApp: Component<{ site: string }> = (props) => {
       <WithAuth allow={allow()}>
         <div class="content-columns">
           <SiteCard {...(site() as Site)} />
-          <SiteMetaDataSection site={site() as Site} />
           <ThemingSection site={site() as Site} />
           <DangerZoneSection site={site() as Site} />
         </div>
