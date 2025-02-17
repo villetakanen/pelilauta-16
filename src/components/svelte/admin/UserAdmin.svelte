@@ -5,7 +5,7 @@ import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import User from './User.svelte';
 
-$: allow = $appMeta.admins.includes($uid);
+const allow = $derived.by(() => $appMeta.admins.includes($uid));
 </script>
 
 <style>

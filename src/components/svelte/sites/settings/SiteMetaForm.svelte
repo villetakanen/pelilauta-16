@@ -5,6 +5,7 @@ import { update } from '@stores/site';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import SystemSelect from '../SystemSelect.svelte';
+import SiteHomepageSelect from './SiteHomepageSelect.svelte';
 
 interface Props {
   site: Site;
@@ -15,11 +16,13 @@ let name = $state(site.name);
 let description = $state(site.description);
 let system = $state(site.system);
 let hidden = $state(site.hidden);
+let homepage = $state(site.homepage ?? '');
 
 const dirty = $derived.by(() => {
   if (name !== site.name) return true;
   if (site.description !== description) return true;
   if (site.system !== system) return true;
+  if (site.homepage !== homepage) return true;
   return false;
 });
 function setName(e: Event) {
@@ -31,6 +34,10 @@ function setDescription(e: Event) {
 function setSystem(s: string) {
   system = s;
 }
+function setHomepage(key: string) {
+  homepage = key;
+}
+
 async function setHidden(e: Event) {
   const value = (e.target as CyanToggleButton).pressed;
   hidden = value;
@@ -53,6 +60,9 @@ async function handleSubmit(e: Event) {
   }
   if (system !== site.system) {
     updates.system = system;
+  }
+  if (homepage !== site.homepage) {
+    updates.homepage = homepage;
   }
   await update(updates);
   pushSnack(t('site:settings.meta.saved'));
@@ -84,7 +94,13 @@ async function handleSubmit(e: Event) {
           oninput={setDescription}
           placeholder={t('entries:site.placeholders.description')}>{description}</textarea>
       </label>
-      <SystemSelect system={system} {setSystem}/>
+      <SystemSelect
+        {system}
+        {setSystem}/>
+      <SiteHomepageSelect
+        {site} 
+        {homepage}
+        {setHomepage}/>
     </fieldset>
     <div class="toolbar justify-end">
       <button type="button" onclick={reset} class="text" disabled={!dirty}>{t('actions:reset')}</button>
