@@ -4,6 +4,7 @@ import { uid } from '@stores/session';
 import { site } from '@stores/site';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import SiteMetaForm from './SiteMetaForm.svelte';
+import SiteThemingSection from './SiteThemingSection.svelte';
 
 /**
  * A Wrapper for the SiteMembersApp component,
@@ -22,5 +23,6 @@ const allow = $derived.by(() => {
 <WithAuth {allow}>
   <div class="content-columns">
     <SiteMetaForm site={$site}/>
+    <SiteThemingSection site={$site}/>
   </div>
 </WithAuth>

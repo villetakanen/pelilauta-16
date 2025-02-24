@@ -19,7 +19,9 @@ try {
   const parser = new Parser();
   const feed = await parser.parseURL('https://www.myrrys.com/blog/rss.xml');
   posts = feed.items.slice(0, 3) as RSSItem[];
-  posts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());;
+  posts.sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
+  );
 
   // We want to grab the https://roolipelitiedotus.fi/feed/ RSS feed and post the latest 3 posts in this stream.
   const parser2 = new Parser();
