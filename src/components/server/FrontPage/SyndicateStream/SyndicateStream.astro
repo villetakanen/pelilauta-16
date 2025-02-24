@@ -17,7 +17,7 @@ let posts2: RSSItem[] = [];
 try {
   // We want to grab the myrrys.com RSS feed and post the latest 3 posts in this stream.
   const parser = new Parser();
-  const feed = await parser.parseURL('https://myrrys.com/rss.xml');
+  const feed = await parser.parseURL('https://www.myrrys.com/blog/rss.xml');
   posts = feed.items.slice(0, 3) as RSSItem[];
   posts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());;
 
