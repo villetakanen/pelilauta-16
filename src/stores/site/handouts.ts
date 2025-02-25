@@ -1,3 +1,4 @@
+import { addNotification } from '@firebase/client/notifications';
 import {
   HANDOUTS_COLLECTION_NAME,
   type Handout,
@@ -25,14 +26,6 @@ onMount(handouts, () => {
 });
 
 async function subscribe(key: string) {
-  /*handouts.set([
-    handoutFrom({
-      title: 'Esimerkkijuttu',
-      key: '1',
-      siteKey: key,
-    }),
-  ]);*/
-
   const { getFirestore, collection, onSnapshot, query } = await import(
     'firebase/firestore'
   );
@@ -142,4 +135,20 @@ export async function update(handout: Partial<Handout>) {
     ),
     entry,
   );
+
+  // If the handout has readers, add a notification for each reader
+  for (const reader in handout.readers) {
+    if (reader !== uid.get()) {
+      addNotification({
+        from: uid.get(),
+        to: reader,
+        message: handout.title || '?',
+        targetKey: `${handout.siteKey}/${handout.key}`,
+        targetType: 'handout.update',
+        key: '',
+        createdAt: new Date(),
+        read: false,
+      });
+    }
+  }
 }

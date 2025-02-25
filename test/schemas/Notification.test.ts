@@ -12,7 +12,7 @@ test('ParseNotification creates a notification object', () => {
     to: 'user2',
     message: 'Hello',
     targetKey: '456',
-    targetType: 'post',
+    targetType: 'site.loved',
     read: false,
   });
   const parsed = NotificationSchema.parse(notification);

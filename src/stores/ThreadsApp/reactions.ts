@@ -62,7 +62,7 @@ export async function loveReply(
     key: replyKey,
     from: uid,
     to: reply.owners[0],
-    targetType: 'replylove',
+    targetType: 'reply.loved',
     targetKey: `${threadKey}/${replyKey}`,
     createdAt: new Date(),
     read: false,

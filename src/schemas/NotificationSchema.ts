@@ -3,6 +3,17 @@ import { z } from 'zod';
 
 export const NOTIFICATION_FIRESTORE_COLLECTION = 'notifications';
 
+const TargetTypeEnum = z.enum([
+  'thread', // key -> thread.key
+  'thread.reply', // key -> thread.key/reply.key
+  'thread.loved', // key -> thread.key
+  'reply.loved', // key -> thread.key/reply.key
+  'site.loved', // key -> site.key
+  'site.invited', // key -> site.key
+  'page.loved', // key -> site.key/page.key
+  'handout.update', // key -> site.key/handout.key
+]);
+
 export const NotificationSchema = z.object({
   key: z.string(),
   createdAt: z.date(),
@@ -10,7 +21,7 @@ export const NotificationSchema = z.object({
   to: z.string(),
   message: z.string(),
   targetKey: z.string(),
-  targetType: z.string(),
+  targetType: TargetTypeEnum,
   read: z.boolean(),
 });
 
