@@ -1,5 +1,4 @@
 ---
-import { SiteSettingsApp } from '@client/SitesApp/SiteSettingsApp/SiteSettingsApp';
 import ModalPage from '@layouts/ModalPage.astro';
 import { parseSite } from '@schemas/SiteSchema';
 import SettingsApp from '@svelte/sites/settings/SettingsApp.svelte';
@@ -19,5 +18,4 @@ const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
 
 <ModalPage>
   <SettingsApp {site} client:only="svelte" />
-  { siteKey && <SiteSettingsApp site={siteKey} client:only="solid-js"/> }
 </ModalPage>
