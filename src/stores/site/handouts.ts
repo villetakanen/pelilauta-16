@@ -8,7 +8,7 @@ import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
-import { logWarn } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import { where } from 'firebase/firestore';
 import { atom, onMount } from 'nanostores';
 import { site } from '.';
@@ -136,8 +136,13 @@ export async function update(handout: Partial<Handout>) {
     entry,
   );
 
+  if (!handout.readers) return;
+
   // If the handout has readers, add a notification for each reader
-  for (const reader in handout.readers) {
+  for (const reader of handout.readers) {
+    logDebug(
+      `Adding notification for reader ${reader}, handout ${handout.key}, readers: ${handout.readers}`,
+    );
     if (reader !== uid.get()) {
       addNotification({
         from: uid.get(),
@@ -146,7 +151,7 @@ export async function update(handout: Partial<Handout>) {
         targetKey: `${handout.siteKey}/${handout.key}`,
         targetType: 'handout.update',
         targetTitle: handout.title || '?',
-        key: '',
+        key: `${handout.key}-${reader}`,
         createdAt: new Date(),
         read: false,
       });

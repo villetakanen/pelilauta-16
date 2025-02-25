@@ -5,13 +5,20 @@ import {
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
 
 export async function addNotification(notification: Notification) {
-  const { addDoc, getFirestore, collection } = await import(
+  const { addDoc, getFirestore, collection, setDoc, doc } = await import(
     'firebase/firestore'
   );
   const data = toFirestoreEntry(notification);
-  const doc = await addDoc(
-    collection(getFirestore(), NOTIFICATION_FIRESTORE_COLLECTION),
+  if (!notification.key) {
+    const doc = await addDoc(
+      collection(getFirestore(), NOTIFICATION_FIRESTORE_COLLECTION),
+      data,
+    );
+    return doc.id;
+  }
+  await setDoc(
+    doc(getFirestore(), NOTIFICATION_FIRESTORE_COLLECTION, notification.key),
     data,
   );
-  return doc.id;
+  return notification.key;
 }

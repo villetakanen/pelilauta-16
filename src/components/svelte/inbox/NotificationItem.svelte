@@ -1,4 +1,5 @@
 <script lang="ts">
+import { deleteNotification } from '@firebase/client/inbox/deleteNotification';
 import { markRead } from '@firebase/client/inbox/markRead';
 import type { Notification } from '@schemas/NotificationSchema';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
@@ -16,6 +17,7 @@ const { notification }: Props = $props();
 const noun = $derived.by(() => {
   if (notification.targetType.endsWith('.loved')) return 'love';
   if (notification.targetType.endsWith('.reply')) return 'discussion';
+  if (notification.targetType.startsWith('handout.')) return 'books';
   return 'info';
 });
 
@@ -26,6 +28,9 @@ const href = $derived.by(() => {
 
 async function read() {
   markRead(notification.key, true);
+}
+async function remove() {
+  deleteNotification(notification.key);
 }
 </script>
 
@@ -50,11 +55,9 @@ async function read() {
   <button class="text" onclick={read} aria-label={t('actions:markRead')}>
     <cn-icon noun="check"></cn-icon>
   </button>
+  {:else}
+  <button class="text" aria-label="delete" onclick={remove}>
+    <cn-icon noun="delete"></cn-icon>
+  </button>
   {/if}
 </article>
-
-<style>
-.unread {
-  background-color: red;
-}
-</style>
