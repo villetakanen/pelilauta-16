@@ -59,6 +59,7 @@ export async function loveReply(
   // Add reaction to social graph
 
   const reaction: Notification = {
+    targetTitle: replyDoc.data()?.title || '?',
     key: replyKey,
     from: uid,
     to: reply.owners[0],

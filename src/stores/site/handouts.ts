@@ -145,6 +145,7 @@ export async function update(handout: Partial<Handout>) {
         message: handout.title || '?',
         targetKey: `${handout.siteKey}/${handout.key}`,
         targetType: 'handout.update',
+        targetTitle: handout.title || '?',
         key: '',
         createdAt: new Date(),
         read: false,

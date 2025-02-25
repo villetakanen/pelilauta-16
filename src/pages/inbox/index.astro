@@ -1,8 +1,7 @@
 ---
-import { SocialApp } from '@client/SocialApp/SocialApp';
-import Page from '@layouts/Page.astro';
-import { t } from '@utils/i18n';
+import ModalPage from '@layouts/ModalPage.astro';
+import InboxApp from '@svelte/inbox/InboxApp.svelte';
 ---
-<Page title={t('social:inbox.title')}>
-  <SocialApp client:only="solid-js" />
-</Page>
+<ModalPage>
+  <InboxApp client:only="svelte" />
+</ModalPage>

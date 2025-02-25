@@ -22,6 +22,7 @@ export const NotificationSchema = z.object({
   message: z.string(),
   targetKey: z.string(),
   targetType: TargetTypeEnum,
+  targetTitle: z.string(),
   read: z.boolean(),
 });
 
@@ -43,6 +44,7 @@ export function parseNotification(
     key: key || n.key || '',
     createdAt: toDate(n.createdAt),
     read: n.read || false,
+    targetTitle: n.targetTitle || '-',
     from,
   });
 }

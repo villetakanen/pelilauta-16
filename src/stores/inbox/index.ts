@@ -53,7 +53,7 @@ async function subscribeToNotifications(key: string) {
     collection(getFirestore(), NOTIFICATION_FIRESTORE_COLLECTION),
     where('to', '==', key),
     orderBy('createdAt', 'desc'),
-    limit(10),
+    limit(30),
   );
 
   unsubscribe = onSnapshot(q, (snapshot) => {
@@ -83,6 +83,8 @@ function patchNotification(key: string, data: Record<string, unknown>) {
   } else {
     current[index] = parseNotification(data, key);
   }
+
+  current.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   notifications.set(current);
 }
