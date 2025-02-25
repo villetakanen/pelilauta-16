@@ -1,11 +1,11 @@
 import {
   NotificationSchema,
-  ParseNotification,
+  parseNotification,
 } from '@schemas/NotificationSchema';
 import { expect, test } from 'vitest';
 
-test('ParseNotification creates a notification object', () => {
-  const notification = ParseNotification({
+test('parseNotification creates a notification object', () => {
+  const notification = parseNotification({
     key: '123',
     createdAt: new Date(),
     from: 'user1',

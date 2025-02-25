@@ -1,7 +1,7 @@
 ---
-import { InboxRailButton } from '@client/SocialApp/InboxRailButton';
 import { AdminNavigationButton } from '@client/navigation/AdminNavigationButton';
 import SettingNavigationButton from '@svelte/app/SettingNavigationButton.svelte';
+import InboxNavigationButton from '@svelte/inbox/InboxNavigationButton.svelte';
 import { t } from 'src/utils/i18n';
 const currentPath = Astro.url.pathname;
 ---
@@ -28,7 +28,7 @@ const currentPath = Astro.url.pathname;
     ></cn-navigation-icon>
   </a>
   
-  <InboxRailButton client:only="solid-js"/>
+  <InboxNavigationButton client:only="svelte"/>
   <div class="grow"></div>
   <AdminNavigationButton client:only="solid-js"/>
   <a href="/docs/01-index">

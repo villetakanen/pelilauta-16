@@ -27,7 +27,7 @@ export const NotificationSchema = z.object({
 
 export type Notification = z.infer<typeof NotificationSchema>;
 
-export function ParseNotification(
+export function parseNotification(
   n: Partial<Notification>,
   key?: string,
 ): Notification {
