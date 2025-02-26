@@ -5,6 +5,9 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.15.x (ongoing)
+- FIX: Handout notification link now opens the handout page as expected.
+
 ### 16.15.0 (2025-02-26)
 - FEAT: adding a player to a site now sends a notification to the player
 
