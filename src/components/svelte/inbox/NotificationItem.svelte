@@ -27,6 +27,10 @@ const href = $derived.by(() => {
     return `/threads/${notification.targetKey}`;
   if (notification.targetType === 'site.invited')
     return `/sites/${notification.targetKey}`;
+  if (notification.targetType.startsWith('handout.')) {
+    const keys = notification.targetKey.split('/');
+    return `/sites/${keys[0]}/handouts/${keys[1]}`;
+  }
 });
 
 async function read() {
