@@ -3,11 +3,13 @@ import {
   type Notification,
 } from '@schemas/NotificationSchema';
 import { toFirestoreEntry } from '@utils/client/toFirestoreEntry';
+import { logDebug } from '@utils/logHelpers';
 
 export async function addNotification(notification: Notification) {
   const { addDoc, getFirestore, collection, setDoc, doc } = await import(
     'firebase/firestore'
   );
+  logDebug('addNotification', notification);
   const data = toFirestoreEntry(notification);
   if (!notification.key) {
     const doc = await addDoc(

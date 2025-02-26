@@ -17,6 +17,7 @@ const { notification }: Props = $props();
 const noun = $derived.by(() => {
   if (notification.targetType.endsWith('.loved')) return 'love';
   if (notification.targetType.endsWith('.reply')) return 'discussion';
+  if (notification.targetType.endsWith('.invited')) return 'adventurer';
   if (notification.targetType.startsWith('handout.')) return 'books';
   return 'info';
 });
@@ -24,6 +25,8 @@ const noun = $derived.by(() => {
 const href = $derived.by(() => {
   if (notification.targetType === 'thread.loved')
     return `/threads/${notification.targetKey}`;
+  if (notification.targetType === 'site.invited')
+    return `/sites/${notification.targetKey}`;
 });
 
 async function read() {
