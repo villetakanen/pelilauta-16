@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { CyanToggleButton } from '@11thdeg/cyan-next';
+import { addNotification } from '@firebase/client/notifications';
 import { uid } from '@stores/session';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import UserSelect from '@svelte/app/UserSelect.svelte';
@@ -28,6 +29,18 @@ function addPlayer(event: Event) {
   const newPlayers = $site.players
     ? [...$site.players, selectedUid]
     : [selectedUid];
+
+  addNotification({
+    key: `${$site.key}-${selectedUid}`,
+    targetType: 'site.invited',
+    createdAt: new Date(),
+    targetKey: $site.key,
+    to: selectedUid,
+    from: $uid,
+    targetTitle: $site.name,
+    read: false,
+  });
+
   update({ players: newPlayers });
 }
 

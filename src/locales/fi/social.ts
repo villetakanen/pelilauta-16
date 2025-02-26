@@ -17,5 +17,8 @@ export const social: Locale = {
     handout: {
       update: 'päivitti salaisuuttasi',
     },
+    site: {
+      invited: 'kutsui sinut peliin',
+    },
   },
 };

@@ -5,6 +5,9 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.15.0 (2025-02-26)
+- FEAT: adding a player to a site now sends a notification to the player
+
 ### 16.14.0 (2025-02-25)
 - FIX: front page fabs moved over to svelte
 - FIX: Site creation tool moved over to svelte

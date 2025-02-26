@@ -19,7 +19,7 @@ export const NotificationSchema = z.object({
   createdAt: z.date(),
   from: z.string(),
   to: z.string(),
-  message: z.string(),
+  message: z.string().optional(),
   targetKey: z.string(),
   targetType: TargetTypeEnum,
   targetTitle: z.string(),
