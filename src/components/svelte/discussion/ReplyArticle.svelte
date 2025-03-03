@@ -3,6 +3,7 @@ import type { Reply } from '@schemas/ReplySchema';
 import { uid } from '@stores/session';
 import AvatarLink from '@svelte/app/AvatarLink.svelte';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
+import { t } from '@utils/i18n';
 
 interface Props {
   reply: Reply;
@@ -35,15 +36,13 @@ const fromUser = $derived.by(() => {
           >
             <cn-icon xsmall noun="quote" />
           </button>
-          <button
-          type="button"
-  
-        >
-          <cn-icon xsmall noun="fork" />
-        </button>
+      <a
+        aria-label={t('actions:fork')}
+        class="button text"
+        href={`/threads/${reply.threadKey}/replies/${reply.key}/fork`}>
+        <cn-icon noun="fork" small></cn-icon>
+      </a>
     </div>
-
-
     {reply.markdownContent}
   </cn-bubble>
     

@@ -1,7 +1,7 @@
 ---
 import { Discussion } from '@client/ThreadApp/Discussion';
 import { parseThread } from '@schemas/ThreadSchema';
-import DiscussionApp from '@server/DiscussionApp/DiscussionApp.astro';
+//import DiscussionApp from '@server/DiscussionApp/DiscussionApp.astro';
 import ThreadArticle from '@server/ThreadsApp/ThreadArticle.astro';
 import ThreadInfoSection from '@server/ThreadsApp/ThreadInfoSection.astro';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -37,5 +37,5 @@ const snippet = createSnippet(thread.markdownContent || '');
     <ThreadInfoSection thread={thread} />
   </div>
   <Discussion thread={thread} client:only="solid-js"/>
-  <DiscussionApp key={threadKey} />
+  <!--DiscussionApp key={threadKey} /-->
 </Page>

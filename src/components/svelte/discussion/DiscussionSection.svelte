@@ -9,9 +9,8 @@ const { discussion: initDiscussion }: Props = $props();
 </script>
 <div class="content-columns">
   <section class="flex flex-col column-l" style="gap:var(--cn-grid)">
-
-        {#each initDiscussion as reply}
-          <ReplyArticle {reply} />
-        {/each}
-</section>
+    {#each initDiscussion as reply}
+      <ReplyArticle {reply} />
+    {/each}
+  </section>
 </div>

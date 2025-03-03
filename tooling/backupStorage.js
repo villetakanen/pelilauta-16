@@ -1,20 +1,20 @@
-import { initializeApp, cert } from 'firebase-admin/app';
-import { getStorage } from 'firebase-admin/storage';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import { cert, initializeApp } from 'firebase-admin/app';
+import { getStorage } from 'firebase-admin/storage';
 
 // Replace with your service account key file path
-import serviceAccount from '../server_principal.json' with { type: "json" };
+import serviceAccount from '../server_principal.json' with { type: 'json' };
 
 // Replace with your desired download directory
 const downloadDirectory = './firebase-backup';
 
-async function downloadAllFiles(){
+async function downloadAllFiles() {
   try {
     // Initialize Firebase Admin SDK
     initializeApp({
       credential: cert(serviceAccount),
-      storageBucket: 'skaldbase.appspot.com', 
+      storageBucket: 'skaldbase.appspot.com',
     });
 
     const storage = getStorage();
