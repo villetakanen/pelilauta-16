@@ -2,6 +2,10 @@
 dist/
 .vercel/
 .netlify/
+
+# Backups
+firebase-backup/
+
 # generated types
 .astro/
 
