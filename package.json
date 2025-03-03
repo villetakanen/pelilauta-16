@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "16.15.1",
+  "version": "16.16.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -11,7 +11,8 @@
     "test": "vitest",
     "check": "biome check --write .",
     "test:e2e": "node e2e/init-test-db.js && playwright test",
-    "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs"
+    "generateSW": "SW_DIST_PATH=.vercel/output/static workbox injectManifest workbox.config.cjs",
+    "backup:storage": "node tooling/backupStorage.js"
   },
   "dependencies": {
     "@11thdeg/cyan-next": "1.0.3",

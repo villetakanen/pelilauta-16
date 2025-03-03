@@ -19,6 +19,7 @@ export const social: Locale = {
     },
     site: {
       invited: 'kutsui sinut peliin',
+      loved: 'tykkäsi pelistäsi tai sivustostasi',
     },
   },
 };

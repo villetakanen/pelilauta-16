@@ -42,6 +42,11 @@ export async function createSite(site: Partial<Site>): Promise<string> {
     }
     logDebug('createSite', 'Creating site with given key', siteData);
     await setDoc(siteRef, siteData);
+
+    setDoc(doc(getFirestore(), `reactions/${site.key}`), {
+      subscribers: siteData.owners,
+    });
+
     return site.key;
   }
   //logDebug('createSite', 'Creating site with automatic key', siteData);
@@ -53,5 +58,10 @@ export async function createSite(site: Partial<Site>): Promise<string> {
     key: id,
     homepage: id,
   });
+
+  setDoc(doc(getFirestore(), `reactions/${id}`), {
+    subscribers: siteData.owners,
+  });
+
   return id;
 }

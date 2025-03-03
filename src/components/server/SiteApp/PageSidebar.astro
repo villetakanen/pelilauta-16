@@ -1,5 +1,6 @@
 ---
 import type { Site } from '@schemas/SiteSchema';
+import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import SiteTocSection from './SiteTocSection.astro';
 
 interface Props {
@@ -14,7 +15,10 @@ const withPosterCSS = site.posterURL ? 'surface p-2' : 'p-1';
   {site.posterURL && (
     <img src={site.posterURL} alt={site.name} class="poster" />
   )}
+  <ReactionButton key={site.key} client:only="svelte"/>
+  
   {site.description && <p>{site.description}</p>}
+  
   <SiteTocSection site={site} />
 </article>
 )}
