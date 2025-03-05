@@ -2,6 +2,7 @@
 import { appMeta } from '@stores/metaStore/metaStore';
 import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
+import AddSiteReactions from './AddSiteReactions.svelte';
 
 import {
   SITES_COLLECTION_NAME,
@@ -51,6 +52,9 @@ function getLatesPageRef(site: Site) {
         -
         {toDisplayString(getLatesPageRef(site)?.flowTime)}
       </p>
+      <div class="toolbar">
+        <AddSiteReactions site={site} />
+      </div>
     {/each}
   </section>
   </div>

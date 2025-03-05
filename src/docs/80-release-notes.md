@@ -5,7 +5,14 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.13.x (ongoing)
+### 16.16.0 (2025-03-03)
+- FIX: Handout notification link now opens the handout page as expected.
+- FEAT: Sites can be (again) loved by users. The love button is visible on the site sidebar.
+
+### 16.15.0 (2025-02-26)
+- FEAT: adding a player to a site now sends a notification to the player
+
+### 16.14.0 (2025-02-25)
 - FIX: front page fabs moved over to svelte
 - FIX: Site creation tool moved over to svelte
 - FIX: Added tooltips, helper text and more readable error messages to the site creation tool
@@ -22,6 +29,9 @@ noun: 'monsters'
 - FIX: Page creator checks for duplicate page names, and warns the user
 - FIX: Site homepage selector moved to the site "meta" section for clarity
 - FIX: Site danger zone options moved to a svelte comp (all site settigns are now in svelte)
+- FIX: Inbox button moved to svelte
+- FIX: Inbox button listens to new messages and updates the badge
+- FEAT: Handout updates now add a notification to the user inbox, if there already is a notification, it will be updated.
 
 ### 16.13.0 (2025-02-10)
 - FIX: Eula dialog ported to Svelte, the dialog was not opening properly before page reload, causing some accounts without initialized profile data in the database.

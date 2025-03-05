@@ -4,6 +4,8 @@ export const social: Locale = {
   inbox: {
     title: 'Tapahtumat',
     notificationCount: 'uutta tapahtumaa',
+    description:
+      'Viimeaikaiset tapahtumat. Yli 30pv vanhat tapahtumat poistetaan ajoittain automatiikan toimesta.',
   },
   notification: {
     reply: {
@@ -11,6 +13,13 @@ export const social: Locale = {
     },
     thread: {
       loved: 'tykkäsi ketjusta',
+    },
+    handout: {
+      update: 'päivitti salaisuuttasi',
+    },
+    site: {
+      invited: 'kutsui sinut peliin',
+      loved: 'tykkäsi pelistäsi tai sivustostasi',
     },
   },
 };

@@ -1,0 +1,12 @@
+---
+import { fetchDiscussion } from '@firebase/server/discussion/fetchDiscussion';
+import DiscussionSection from '@svelte/discussion/DiscussionSection.svelte';
+
+interface Props {
+  key: string;
+}
+const { key }: Props = Astro.props;
+
+const discussion = await fetchDiscussion(key);
+---
+<DiscussionSection discussion={discussion} client:only="svelte"/>
