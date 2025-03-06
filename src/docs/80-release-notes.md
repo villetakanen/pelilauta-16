@@ -5,10 +5,12 @@ noun: 'monsters'
 ---
 ## Version 16
 
-### 16.16.1 (ongoing)
+### 16.16.x (ongoing)
 - FIX: Handout editor save opens the handout page as expected.
 - FIX: Handout editor oninput event now updates the handout content as expected.
 - FIX: Handout list ordered by name.
+- FIX: Export tool moved to a separate page, and converted to Svelte.
+- FIX: Export tool supports again exporting all pages as a collated `.md` in addition to a `.zip` of the markdonwn -pages.
 
 ### 16.16.0 (2025-03-03)
 - FIX: Handout notification link now opens the handout page as expected.
