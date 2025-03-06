@@ -41,7 +41,7 @@ async function handleSubmit(e: Event) {
     markdownContent,
   });
 
-  // window.location.href = `/sites/${site.key}/handouts/${handout.key}`;
+  window.location.href = `/sites/${site.key}/handouts/${handout.key}`;
 }
 </script>
 
@@ -51,13 +51,13 @@ async function handleSubmit(e: Event) {
     <div class="toolbar">
       <label class="grow">
         {t('entries:handout.title')}
-        <input type="text" value={handout.title}  onchange={titleChanged}/>
+        <input type="text" value={handout.title}  oninput={titleChanged}/>
       </label>
     </div>
     
     <cn-editor
       value={handout.markdownContent}
-      onchange={markdownContentChanged}
+      oninput={markdownContentChanged}
     ></cn-editor>
 
     <div class="toolbar justify-end">

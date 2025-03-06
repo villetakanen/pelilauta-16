@@ -113,6 +113,10 @@ function mergeHandouts(
     }
   }
 
+  merged.sort((a, b) => {
+    return a.title.localeCompare(b.title);
+  });
+
   return merged;
 }
 
