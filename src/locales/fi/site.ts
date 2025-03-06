@@ -19,6 +19,19 @@ export const site: Locale = {
     },
     empty: 'Ei kelloja',
   },
+  data: {
+    title: 'Tuo & vie',
+    description: 'Työkalut sivuston tietojen tuontiin ja vientiin',
+    export: {
+      title: 'Vie',
+      asMarkdown: 'Markdown',
+      asMarkdownDocument:
+        'Sivuston voi viedä yhtenä pitkänä markdown-tiedostona. Tällöin sivut ladotaan peräkkäin yhteen tiedostoon, esimekiksi tulostamista, keinoälytyökaluja tai julkaisua ajatellen.',
+    },
+    actions: {
+      asMarkdonwDocument: 'Vie .md -tiedostona',
+    },
+  },
   handouts: {
     title: 'Salaisuudet',
     description:

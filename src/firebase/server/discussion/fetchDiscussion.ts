@@ -16,7 +16,7 @@ export async function fetchDiscussion(threadKey: string): Promise<Reply[]> {
   if (!threadKey) {
     return [];
   }
-  const replies = await serverDB
+  const replies = serverDB
     .collection(THREADS_COLLECTION_NAME)
     .doc(threadKey)
     .collection(REPLIES_COLLECTION);
