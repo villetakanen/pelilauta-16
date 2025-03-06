@@ -5,6 +5,11 @@ noun: 'monsters'
 ---
 ## Version 16
 
+### 16.16.1 (ongoing)
+- FIX: Handout editor save opens the handout page as expected.
+- FIX: Handout editor oninput event now updates the handout content as expected.
+- FIX: Handout list ordered by name.
+
 ### 16.16.0 (2025-03-03)
 - FIX: Handout notification link now opens the handout page as expected.
 - FEAT: Sites can be (again) loved by users. The love button is visible on the site sidebar.
