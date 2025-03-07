@@ -13,16 +13,7 @@ const origin = new URL(Astro.request.url).origin;
 // Fetch site data from the api
 const channelsResponse = await fetch(`${origin}/api/meta/channels.json`);
 const channelsData = await channelsResponse.json();
-/*
- [{
-    "description": "Pelilautaan liittyvät keskustelut, palaute, viat jne.",
-    "icon": "fox",
-    "name": "Pelilauta",
-    "slug": "pelilauta",
-    "threadCount": 1,
-    "category": "Meta"
-  },]
-*/
+
 const channels = channelsData.map((channel: Partial<Channel>) =>
   parseChannel(channel),
 );

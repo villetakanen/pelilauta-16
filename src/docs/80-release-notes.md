@@ -11,6 +11,8 @@ noun: 'monsters'
 - FIX: Handout list ordered by name.
 - FIX: Export tool moved to a separate page, and converted to Svelte.
 - FIX: Export tool supports again exporting all pages as a collated `.md` in addition to a `.zip` of the markdonwn -pages.
+- FIX: added a new-style store for the subscription data. This will be used on the svelte-based components that need "notifications" on new updates (i.e. can be subscribed to)
+- FIX: removed the old solid-js channels index page, as we already had a functional svelte version (but were sometimes linking to the old one)
 
 ### 16.16.0 (2025-03-03)
 - FIX: Handout notification link now opens the handout page as expected.
