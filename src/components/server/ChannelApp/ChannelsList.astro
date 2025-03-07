@@ -27,7 +27,7 @@ function inCategory(cat: string) {
       <div class="surface p-2 border-radius mb-2">
         <h3>{cat}</h3>
         { inCategory(cat).map((channel: Channel) => (
-          <ChannelInfoRow channel={channel} client:load />   
+          <ChannelInfoRow channel={channel} client:only="svelte" />   
         )) }
       </div>
     )) }
