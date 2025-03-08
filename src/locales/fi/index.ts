@@ -24,9 +24,9 @@ export const fi: Locale = {
     shortname: 'Pelilauta 2',
     mekanismi: 'Mekanismi',
     meta: {
-      title: 'Pelilauta 2 16 [RC]',
+      title: 'Pelilauta 2',
       description:
-        'Pelilauta 2 - Versio 16 [RC] – Roolipelikeskustelut, sivustot, wikit ja muuta sellaista',
+        'Pelilauta 2 - Versio 16 – Roolipelikeskustelut, sivustot, wikit ja muuta sellaista',
       version: 'Versio',
       source: 'Koodi',
       dangerZone: 'Vaaravyöhyke',

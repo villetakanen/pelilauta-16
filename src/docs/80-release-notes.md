@@ -16,6 +16,8 @@ noun: 'monsters'
 - FIX: removed deprecated solid-js parts from library/sites page, and replaced them with svelte components where needed
 - FIX: admin rail button moved to svelte
 - FIX: removed deprecated SiteCard solid-js component from the project
+- FIX: moved OnboardingCard to svelte
+- FIX: small polish to app locales
 
 ### 16.16.0 (2025-03-03)
 - FIX: Handout notification link now opens the handout page as expected.
