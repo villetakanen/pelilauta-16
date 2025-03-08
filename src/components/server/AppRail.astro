@@ -1,5 +1,5 @@
 ---
-import { AdminNavigationButton } from '@client/navigation/AdminNavigationButton';
+import AdminNavigationButton from '@svelte/admin/AdminNavigationButton.svelte';
 import SettingNavigationButton from '@svelte/app/SettingNavigationButton.svelte';
 import InboxNavigationButton from '@svelte/inbox/InboxNavigationButton.svelte';
 import { t } from 'src/utils/i18n';
@@ -40,7 +40,7 @@ function isThreadsRoute() {
   
   <InboxNavigationButton client:only="svelte"/>
   <div class="grow"></div>
-  <AdminNavigationButton client:only="solid-js"/>
+  <AdminNavigationButton client:only="svelte"/>
   <a href="/docs/01-index">
     <cn-navigation-icon
       noun="design"

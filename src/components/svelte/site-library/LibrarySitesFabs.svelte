@@ -1,7 +1,6 @@
 <script lang="ts">
-import { t } from '@utils/i18n';
 import { uid } from '@stores/session';
-
+import { t } from '@utils/i18n';
 </script>
 {#if $uid}
 <a class="fab" href="/create/site">
