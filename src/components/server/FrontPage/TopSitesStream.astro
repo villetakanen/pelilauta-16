@@ -1,7 +1,7 @@
 ---
-import { OnboardingCard } from '@client/FrontPage/OnboardingCard';
 import { type Site, parseSite } from '@schemas/SiteSchema';
 import SiteCard from '@server/ui/SiteCard.astro';
+import OnboardingCard from '@svelte/frontpage/OnboardingCard.svelte';
 import { t } from '@utils/i18n';
 
 const origin = Astro.url.origin;
@@ -13,7 +13,7 @@ const sites = (sitesJSON as Array<Site>).map((site) =>
 );
 ---
 <div class="flex flex-col column-s">
-    <div><OnboardingCard client:only="solid-js"/></div>
+    <div><OnboardingCard client:only="svelte"/></div>
     {sites.map((site) => (
       site && <SiteCard site={site}/>
     ))}
