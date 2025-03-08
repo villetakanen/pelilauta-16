@@ -11,7 +11,7 @@ import { type WritableAtom, onMount } from 'nanostores';
 /**
  * A nanostore for caching the user's sites.
  */
-export const $sitesCache: WritableAtom<Site[]> = persistentAtom(
+export const userSites: WritableAtom<Site[]> = persistentAtom(
   'user-site-cache',
   [],
   {
@@ -22,12 +22,11 @@ export const $sitesCache: WritableAtom<Site[]> = persistentAtom(
     },
   },
 );
-export const userSites = $sitesCache;
 
-onMount($sitesCache, () => {
+onMount(userSites, () => {
   const uid = $uid.get();
   if (!uid) {
-    $sitesCache.set([]);
+    userSites.set([]);
     return;
   }
   // refresh sites for the user from the DB
@@ -64,5 +63,5 @@ async function refreshSites() {
     }
   }
 
-  $sitesCache.set(sitesArray);
+  userSites.set(sitesArray);
 }

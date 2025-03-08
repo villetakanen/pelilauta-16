@@ -1,9 +1,9 @@
 ---
-import { SiteFabs } from '@client/library/SiteFabs';
 import PageWithTray from '@layouts/PageWithTray.astro';
 import LibraryTray from '@server/library/LibraryTray.astro';
 import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import UserSitesList from '@svelte/site-library/UserSitesList.svelte';
+import LibrarySitesFabs from '@svelte/site-library/LibrarySitesFabs.svelte';
 import { t } from '@utils/i18n';
 
 const title = `${t('app:shortname')} – ${t('library:title')}`;
@@ -14,7 +14,7 @@ const description = t('library:description');
 <PageWithTray title={title} description={description} shortTitle={shortTitle}>
   <LibraryTray slot="app-tray" />
   <UserSitesList client:only="svelte" />
-  <SiteFabs slot="fab-tray" client:only="solid-js"/>
+  <LibrarySitesFabs slot="fab-tray" client:only="svelte"/>
   <BackgroundPoster
       slot="app-background-poster"
       src="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-2.webp"
