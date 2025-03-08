@@ -1,5 +1,5 @@
 <script lang="ts">
-import { userSites } from '@stores/sitesStore/userSitesCache';
+import { userSites } from '@stores/userSites';
 import SiteCard from './SiteCard.svelte';
 import { filters } from './filters.svelte';
 const filtered = $derived.by(() => {

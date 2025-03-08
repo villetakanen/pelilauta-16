@@ -1,6 +1,6 @@
 <script lang="ts">
 import { uid } from '@stores/session/';
-import { userSites } from '@stores/sitesStore/userSitesCache';
+import { userSites } from '@stores/userSites/index.ts';
 import { t } from '@utils/i18n.ts';
 import { onMount } from 'svelte';
 import FilteredSites from './FilteredSites.svelte';
