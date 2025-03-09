@@ -19,6 +19,7 @@ noun: 'monsters'
 - FIX: moved OnboardingCard to svelte
 - FIX: small polish to app locales
 - FIX: forum front page SSR
+- FIX: moved cardsubsctiption to svelte
 
 ### 16.16.0 (2025-03-03)
 - FIX: Handout notification link now opens the handout page as expected.

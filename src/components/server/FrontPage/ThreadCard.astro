@@ -1,10 +1,10 @@
 ---
-import { CardSubscriber } from '@client/FrontPage/CardSubscriber';
 import { ProfileLink } from '@client/shared/ProfileLink';
 import { ThreadLikeButton } from '@client/threads/ThreadLikeButton';
 import type { Thread } from '@schemas/ThreadSchema';
 import { MarkdownSnippetSection } from '@shared/MarkdownSnippetSection';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
+import CardSubscription from '@svelte/frontpage/CardSubscription.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 
 export interface Props {
@@ -33,8 +33,6 @@ const poster = thread.poster
       <MarkdownSnippetSection content={`${thread.markdownContent}`} client:only="solid-js"/>
     </div>
 
-    <CardSubscriber thread={thread} client:only="solid-js"/>
-
     <div slot="actions" class="toolbar items-center">
       <div class="grow downscaled">
         <p class="m-0 px-1">
@@ -45,6 +43,7 @@ const poster = thread.poster
       </div>
 
       <ThreadLikeButton thread={thread} client:only="solid-js"/>
+      <CardSubscription thread={thread} client:only="svelte"/>
 
       <div>
         <a href={`/threads/${thread.key}#discussion`} class="decoration-none">
