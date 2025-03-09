@@ -1,6 +1,6 @@
 ---
 import type { Channel } from '@schemas/ChannelSchema';
-import ChannelInfoRow from '@svelte/channels/ChannelInfoRow.svelte';
+import ChannelInfoRow from './ChannelInfoRow.astro';
 
 /**
  * Takes in Channels[] and prints a section for each category
@@ -27,7 +27,7 @@ function inCategory(cat: string) {
       <div class="surface p-2 border-radius mb-2">
         <h3>{cat}</h3>
         { inCategory(cat).map((channel: Channel) => (
-          <ChannelInfoRow channel={channel} client:only="svelte" />   
+          <ChannelInfoRow channel={channel} />   
         )) }
       </div>
     )) }
