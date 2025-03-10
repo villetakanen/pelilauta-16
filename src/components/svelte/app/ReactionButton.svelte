@@ -3,6 +3,7 @@ import { addNotification } from '@firebase/client/notifications';
 import { persistentAtom } from '@nanostores/persistent';
 import { type Reactions, reactionsSchema } from '@schemas/ReactionsSchema';
 import { uid } from '@stores/session';
+    import { logDebug } from '@utils/logHelpers';
 import { onMount } from 'svelte';
 
 /**
@@ -68,6 +69,7 @@ onMount(async () => {
 
 async function onclick(e: Event) {
   e.preventDefault();
+  logDebug('ReactionButton', `Reaction ${type} clicked for ${key}`);
   if (!$uid) return;
 
   const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
@@ -84,6 +86,7 @@ async function onclick(e: Event) {
   await updateDoc(doc(getFirestore(), `reactions/${key}`), {
     [type]: reaction,
   });
+  logDebug('ReactionButton', `Reaction ${type} updated for ${key}`);
 
   $reactions = {
     ...$reactions,

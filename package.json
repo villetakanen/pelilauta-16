@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "16.16.6",
+  "version": "17.0.0-a1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -15,7 +15,7 @@
     "backup:storage": "node tooling/backupStorage.js"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.3",
+    "@11thdeg/cyan-next": "1.0.4",
     "@astrojs/check": "^0.9.4",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/solid-js": "^5.0.1",
@@ -61,7 +61,11 @@
     "workbox-cli": "^7.3.0"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": ["@firebase/util"],
-    "onlyBuiltDependencies": ["@firebase/util"]
+    "ignoredBuiltDependencies": [
+      "@firebase/util"
+    ],
+    "onlyBuiltDependencies": [
+      "@firebase/util"
+    ]
   }
 }

@@ -4,7 +4,7 @@ import type { Thread } from '@schemas/ThreadSchema';
 import { MarkdownSnippetSection } from '@shared/MarkdownSnippetSection';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
 import CardSubscription from '@svelte/frontpage/CardSubscription.svelte';
-import ThreadLikeButton from '@svelte/threads/ThreadLikeButton.svelte';
+import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 
 export interface Props {
@@ -42,7 +42,7 @@ const poster = thread.poster
         </p>
       </div>
 
-      <ThreadLikeButton thread={thread} client:only="svelte"/>
+      <ReactionButton key={thread.key} client:only="svelte" />
       <CardSubscription thread={thread} client:only="svelte"/>
 
       <div>
