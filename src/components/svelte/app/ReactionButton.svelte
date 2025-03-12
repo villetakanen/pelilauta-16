@@ -37,8 +37,9 @@ interface Props {
   type?: 'love';
   small?: boolean;
   key: string;
+  target: 'thread' | 'site' | 'reply';
 }
-const { type = 'love', small = false, key }: Props = $props();
+const { type = 'love', small = false, key, target }: Props = $props();
 
 const reactions = persistentAtom<Reactions>(
   `reactions/${key}`,
@@ -97,8 +98,8 @@ async function onclick(e: Event) {
 async function createNotification() {
   for (const subscriber of $reactions.subscribers) {
     addNotification({
-      key: `${key}-love-${$uid}`,
-      targetType: 'site.loved',
+      key: `${key}-${type}-${$uid}`,
+      targetType: `${target}.loved`,
       createdAt: new Date(),
       targetKey: key,
       to: subscriber,

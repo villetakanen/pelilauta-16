@@ -1,6 +1,6 @@
 ---
 import { ProfileLink } from '@client/shared/ProfileLink';
-import { ThreadLikeButton } from '@client/threads/ThreadLikeButton';
+import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import type { Thread } from '@schemas/ThreadSchema';
 import { toDisplayString } from '@utils/contentHelpers';
 import { createSnippet } from '@utils/contentHelpers';
@@ -20,7 +20,7 @@ const { thread } = Astro.props;
   </div>
   <p class="downscaled">{createSnippet(thread.markdownContent || '')}</p>
   <div class="toolbar m-0 p-0">
-    <ThreadLikeButton thread={thread} client:only="solid-js"/>
+    <ReactionButton target="thread" key={thread.key} client:only="svelte" />
     <p class="grow">
       <ProfileLink uid={thread.author} client:only="solid-js"/>
     </p>

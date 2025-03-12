@@ -42,7 +42,7 @@ const poster = thread.poster
         </p>
       </div>
 
-      <ReactionButton key={thread.key} client:only="svelte" />
+      <ReactionButton key={thread.key} target="thread" client:only="svelte" />
       <CardSubscription thread={thread} client:only="svelte"/>
 
       <div>
