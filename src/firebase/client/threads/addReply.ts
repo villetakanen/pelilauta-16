@@ -26,8 +26,8 @@ export async function addReply(
     threadKey: thread.key,
     markdownContent: markdonwContent,
     owners: [author],
-    quoteref,
   };
+  if (quoteref) replyData.quoteref = quoteref;
   const data = toFirestoreEntry(replyData);
 
   const reply = await addDoc(
