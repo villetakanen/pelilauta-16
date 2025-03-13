@@ -3,7 +3,7 @@ import { addNotification } from '@firebase/client/notifications';
 import { persistentAtom } from '@nanostores/persistent';
 import { type Reactions, reactionsSchema } from '@schemas/ReactionsSchema';
 import { uid } from '@stores/session';
-    import { logDebug } from '@utils/logHelpers';
+import { logDebug } from '@utils/logHelpers';
 import { onMount } from 'svelte';
 
 /**

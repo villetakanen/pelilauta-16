@@ -4,9 +4,9 @@ import { ProfileLink } from '@client/shared/ProfileLink';
 import type { Thread } from '@schemas/ThreadSchema';
 import { ThreadRepliesButton } from '@shared/ThreadsApp/ThreadRepliesButton';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
+import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
-import ReactionButton from '@svelte/app/ReactionButton.svelte';
 
 interface Props {
   thread: Thread;

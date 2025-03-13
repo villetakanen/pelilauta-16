@@ -5,6 +5,9 @@ export async function markRead(key: string, read: boolean) {
   const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
   const db = getFirestore();
   const notificationDoc = doc(db, NOTIFICATION_FIRESTORE_COLLECTION, key);
-  logDebug('@firebase/client/inbox/markRead', `Marking notification ${key} as read: ${read}`);
+  logDebug(
+    '@firebase/client/inbox/markRead',
+    `Marking notification ${key} as read: ${read}`,
+  );
   await updateDoc(notificationDoc, { read });
 }

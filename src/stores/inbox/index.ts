@@ -58,13 +58,12 @@ async function subscribeToNotifications(key: string) {
   let initial = true;
 
   unsubscribe = onSnapshot(q, (snapshot) => {
-
     // If this is the first snapshot, we need to refresh the
     // local copy of notifications (to remove any stale data)
     if (initial) {
       initial = false;
       const online = snapshot.docChanges();
-      const local:Notification[] = [];
+      const local: Notification[] = [];
 
       for (const change of online) {
         local.push(parseNotification(change.doc.data(), change.doc.id));
