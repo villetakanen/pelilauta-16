@@ -5,6 +5,7 @@ import AvatarLink from '@svelte/app/AvatarLink.svelte';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import { t } from '@utils/i18n';
+import { marked } from 'marked';
 
 interface Props {
   reply: Reply;
@@ -50,7 +51,7 @@ const fromUser = $derived.by(() => {
       </cn-menu>
     </div>
     <div>
-      {reply.markdownContent}
+      {@html marked(reply.markdownContent || '')}
     </div>
     <div class="toolbar justify-end" style="margin-bottom: calc(var(--cn-grid) * -1)">
       <ReactionButton target="reply" small key={reply.key}></ReactionButton>
