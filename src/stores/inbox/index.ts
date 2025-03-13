@@ -44,7 +44,6 @@ onStop(notifications, () => {
 
 async function subscribeToNotifications(key: string) {
   unsubscribe();
-  logDebug('Subscribing to notifications');
 
   const { getFirestore, onSnapshot, query, collection, where, orderBy, limit } =
     await import('firebase/firestore');
@@ -53,11 +52,30 @@ async function subscribeToNotifications(key: string) {
     collection(getFirestore(), NOTIFICATION_FIRESTORE_COLLECTION),
     where('to', '==', key),
     orderBy('createdAt', 'desc'),
-    limit(30),
+    limit(10),
   );
 
+  let initial = true;
+
   unsubscribe = onSnapshot(q, (snapshot) => {
-    logDebug('Notifications snapshot received', snapshot.docChanges().length);
+
+    // If this is the first snapshot, we need to refresh the
+    // local copy of notifications (to remove any stale data)
+    if (initial) {
+      initial = false;
+      const online = snapshot.docChanges();
+      const local:Notification[] = [];
+
+      for (const change of online) {
+        local.push(parseNotification(change.doc.data(), change.doc.id));
+      }
+
+      notifications.set(local);
+      return;
+    }
+
+    // Otherwise, we need to update the local copy of notifications,
+    // by adding, modifying, or removing notifications as needed
     for (const change of snapshot.docChanges()) {
       if (change.type === 'removed') {
         popNotification(change.doc.id);

@@ -3,6 +3,7 @@ import type { Reply } from '@schemas/ReplySchema';
 import { uid } from '@stores/session';
 import AvatarLink from '@svelte/app/AvatarLink.svelte';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
+    import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import { t } from '@utils/i18n';
 
 interface Props {
@@ -25,17 +26,7 @@ const fromUser = $derived.by(() => {
       <p class="grow">
         <ProfileLink uid={reply.owners[0]} />
       </p>
-      <cn-reaction-button
-        noun="love"
-        small
-        count={reply.lovesCount}
-      ></cn-reaction-button>
-      <button
-            type="button"
-    
-          >
-            <cn-icon xsmall noun="quote" />
-          </button>
+      <ReactionButton target="reply" small key={reply.key}></ReactionButton>
       <a
         aria-label={t('actions:fork')}
         class="button text"
