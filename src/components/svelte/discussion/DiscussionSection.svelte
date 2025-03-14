@@ -5,6 +5,7 @@ import {
   ReplySchema,
 } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
+import { markEntrySeen } from '@stores/subscription';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { onMount } from 'svelte';
 import ReplyArticle from './ReplyArticle.svelte';
@@ -19,6 +20,8 @@ const { discussion: initDiscussion, thread }: Props = $props();
 let discussion = $state(initDiscussion);
 
 onMount(async () => {
+  markEntrySeen(thread.key);
+
   const { getFirestore, query, collection, orderBy, onSnapshot } = await import(
     'firebase/firestore'
   );

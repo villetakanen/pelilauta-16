@@ -94,10 +94,13 @@ async function onclick(e: Event) {
     reaction.splice(index, 1);
   }
 
-  await updateDoc(doc(getFirestore(), `reactions/${key}`), {
+  await updateDoc(doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`), {
     [type]: reaction,
   });
-  logDebug('ReactionButton', `Reaction ${type} updated for ${key}`);
+  logDebug(
+    'ReactionButton',
+    `Reaction ${type} updated for ${key} as ${reaction}`,
+  );
 
   $reactions = {
     ...$reactions,
@@ -106,6 +109,9 @@ async function onclick(e: Event) {
 }
 
 async function createNotification() {
+  if (!['thread', 'reply', 'site'].includes(target))
+    throw new Error('createNotification: Invalid target');
+
   for (const subscriber of $reactions.subscribers) {
     addNotification({
       key: `${key}-${type}-${$uid}`,
