@@ -41,6 +41,10 @@ export async function addReply(
     flowTime: serverTimestamp(),
   });
 
+  // If the author of the reply is the same as the thread creator,
+  // we don't need to add a notification to the thread creator
+  if (thread.owners[0] === author) return;
+
   // Add a notification to the thread creator (the first owner of the thread)
   const targetTitle =
     markdonwContent.length > 50

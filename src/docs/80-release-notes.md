@@ -5,9 +5,16 @@ noun: 'monsters'
 ---
 ## Version 17
 
+### 17.0.0-b1 (ongoing)
+
 - BREAKING: Thread reactions are now stored in the new Reactions data structure.
 - FIX: Local notifications cache is cleared when notifications are loaded.
-
+- FIX: Reactions do not send notification to self
+- FIX: Can not like own entries
+- FIX: Deprecated profile lovedThreads
+- FIX: Deprecated reply lovers array
+- CHORE: updated cyan design system to 1.0.7 for better support of speech bubbles
+- FIX: removed all solid-js components related to discussions
 
 ## Version 16
 
