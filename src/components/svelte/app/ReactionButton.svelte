@@ -1,7 +1,11 @@
 <script lang="ts">
 import { addNotification } from '@firebase/client/notifications';
 import { persistentAtom } from '@nanostores/persistent';
-import { type Reactions, reactionsSchema } from '@schemas/ReactionsSchema';
+import {
+  REACTIONS_COLLECTION_NAME,
+  type Reactions,
+  reactionsSchema,
+} from '@schemas/ReactionsSchema';
 import { uid } from '@stores/session';
 import { logDebug } from '@utils/logHelpers';
 import { onMount } from 'svelte';
@@ -66,7 +70,9 @@ const disabled = $derived.by(() => {
 
 onMount(async () => {
   const { getFirestore, doc, getDoc } = await import('firebase/firestore');
-  const reactionsDoc = await getDoc(doc(getFirestore(), `reactions/${key}`));
+  const reactionsDoc = await getDoc(
+    doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`),
+  );
   if (reactionsDoc.exists()) {
     $reactions = reactionsSchema.parse(reactionsDoc.data());
   }

@@ -15,6 +15,8 @@ noun: 'monsters'
 - FIX: Deprecated reply lovers array
 - CHORE: updated cyan design system to 1.0.7 for better support of speech bubbles
 - FIX: removed all solid-js components related to discussions
+- FIX: removing a reply decrements the reply count of the parent thread
+- FIX: removing a reply deletes the corresponding reactions-entry
 
 ## Version 16
 

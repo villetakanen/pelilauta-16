@@ -19,6 +19,8 @@
  */
 import { z } from 'zod';
 
+export const REACTIONS_COLLECTION_NAME = 'reactions';
+
 export const reactionsSchema = z.object({
   subscribers: z.array(z.string()), // The users that are subscribed to the entry
   love: z.array(z.string()).optional(), // The users that have reacted with love
