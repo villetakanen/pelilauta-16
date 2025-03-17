@@ -1,10 +1,10 @@
 ---
 import { ThreadActions } from '@client/ThreadsApp/ThreadActions';
 import { ProfileLink } from '@client/shared/ProfileLink';
-import { ThreadLikeButton } from '@client/threads/ThreadLikeButton';
 import type { Thread } from '@schemas/ThreadSchema';
 import { ThreadRepliesButton } from '@shared/ThreadsApp/ThreadRepliesButton';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
+import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 
@@ -34,7 +34,7 @@ const noun = topicToNoun(channel);
       </a>
       <div slot="actions" class="toolbar items-center">
         <ThreadRepliesButton thread={thread} client:only="solid-js" />
-        <ThreadLikeButton thread={thread} client:only="solid-js" />
+        <ReactionButton target="thread" key={thread.key} client:only="svelte" />
       </div>
      </p>
     </cn-card>

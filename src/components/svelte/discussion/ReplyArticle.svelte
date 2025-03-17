@@ -3,7 +3,9 @@ import type { Reply } from '@schemas/ReplySchema';
 import { uid } from '@stores/session';
 import AvatarLink from '@svelte/app/AvatarLink.svelte';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
+import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import { t } from '@utils/i18n';
+import { marked } from 'marked';
 
 interface Props {
   reply: Reply;
@@ -25,25 +27,35 @@ const fromUser = $derived.by(() => {
       <p class="grow">
         <ProfileLink uid={reply.owners[0]} />
       </p>
-      <cn-reaction-button
-        noun="love"
-        small
-        count={reply.lovesCount}
-      ></cn-reaction-button>
-      <button
-            type="button"
-    
-          >
-            <cn-icon xsmall noun="quote" />
-          </button>
-      <a
-        aria-label={t('actions:fork')}
-        class="button text"
-        href={`/threads/${reply.threadKey}/replies/${reply.key}/fork`}>
-        <cn-icon noun="fork" small></cn-icon>
-      </a>
+      <cn-menu inline>
+        <ul>
+          <li>
+            <a
+              href={`/threads/${reply.threadKey}/replies/${reply.key}/fork`}
+            >
+              <cn-icon noun="fork" small></cn-icon>
+              <span>{t('actions:fork')}</span>
+            </a>
+          </li>
+          {#if fromUser}
+            <li>
+              <a
+                href={`/threads/${reply.threadKey}/replies/${reply.key}/delete`}
+              >
+                <cn-icon noun="delete" small></cn-icon>
+                <span>{t('actions:delete')}</span>
+              </a>
+            </li>
+          {/if}
+        </ul>
+      </cn-menu>
     </div>
-    {reply.markdownContent}
+    <div>
+      {@html marked(reply.markdownContent || '')}
+    </div>
+    <div class="toolbar justify-end" style="margin-bottom: calc(var(--cn-grid) * -1)">
+      <ReactionButton target="reply" small key={reply.key}></ReactionButton>
+    </div>
   </cn-bubble>
     
   {#if fromUser}

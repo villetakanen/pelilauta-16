@@ -33,11 +33,17 @@ export const threads: Locale = {
     title: 'Keskustelu',
     reply: 'Vastaa',
     empty: 'Aloita keskustelu aiheesta vastaamalla alta.',
+    confirmDelete: {
+      message: 'Oletko varma, että haluat poistaa tämän viestin?',
+    },
   },
   confirmDelete: {
     title: 'Vahvista poisto',
     success: 'Keskustelu poistettu',
     message:
       'Oletko varma, että haluat poistaa tämän keskustelun pysyvästi. Keskustelua ei voi palauttaa.',
+  },
+  snacks: {
+    replyDeleted: 'Viesti poistettu',
   },
 };

@@ -13,6 +13,7 @@ export const social: Locale = {
     },
     thread: {
       loved: 'tykkäsi ketjusta',
+      reply: 'vastasi ketjuusi',
     },
     handout: {
       update: 'päivitti salaisuuttasi',

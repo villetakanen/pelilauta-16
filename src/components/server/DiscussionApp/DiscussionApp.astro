@@ -1,12 +1,13 @@
 ---
 import { fetchDiscussion } from '@firebase/server/discussion/fetchDiscussion';
+import type { Thread } from '@schemas/ThreadSchema';
 import DiscussionSection from '@svelte/discussion/DiscussionSection.svelte';
 
 interface Props {
-  key: string;
+  thread: Thread;
 }
-const { key }: Props = Astro.props;
+const { thread }: Props = Astro.props;
 
-const discussion = await fetchDiscussion(key);
+const discussion = await fetchDiscussion(thread.key);
 ---
-<DiscussionSection discussion={discussion} client:only="svelte"/>
+<DiscussionSection discussion={discussion} {thread} client:only="svelte"/>

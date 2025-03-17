@@ -28,6 +28,19 @@ export const subscription: WritableAtom<Subscription | null> = persistentAtom(
   },
 );
 
+export async function markEntrySeen(entityKey: string) {
+  const { getFirestore, updateDoc, doc } = await import('firebase/firestore');
+  const db = getFirestore();
+  const docRef = doc(db, SUBSCRIPTIONS_FIRESTORE_PATH, uid.get());
+  const data = subscription.get();
+  if (!data) {
+    return;
+  }
+  const seenEntities = { ...data.seenEntities };
+  seenEntities[entityKey] = Date.now();
+  updateDoc(docRef, { seenEntities });
+}
+
 export const hasSeen = computed(subscription, (subscription) => {
   logDebug('hasSeen computed');
   if (!subscription) {

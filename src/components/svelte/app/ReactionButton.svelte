@@ -1,8 +1,13 @@
 <script lang="ts">
 import { addNotification } from '@firebase/client/notifications';
 import { persistentAtom } from '@nanostores/persistent';
-import { type Reactions, reactionsSchema } from '@schemas/ReactionsSchema';
+import {
+  REACTIONS_COLLECTION_NAME,
+  type Reactions,
+  reactionsSchema,
+} from '@schemas/ReactionsSchema';
 import { uid } from '@stores/session';
+import { logDebug } from '@utils/logHelpers';
 import { onMount } from 'svelte';
 
 /**
@@ -36,8 +41,9 @@ interface Props {
   type?: 'love';
   small?: boolean;
   key: string;
+  target: 'thread' | 'site' | 'reply';
 }
-const { type = 'love', small = false, key }: Props = $props();
+const { type = 'love', small = false, key, target }: Props = $props();
 
 const reactions = persistentAtom<Reactions>(
   `reactions/${key}`,
@@ -57,10 +63,16 @@ const count = $derived.by(() => {
 const checked = $derived.by(() => {
   return $reactions[type]?.includes($uid) || undefined;
 });
+const disabled = $derived.by(() => {
+  if ($reactions.subscribers.includes($uid)) return true;
+  return undefined;
+});
 
 onMount(async () => {
   const { getFirestore, doc, getDoc } = await import('firebase/firestore');
-  const reactionsDoc = await getDoc(doc(getFirestore(), `reactions/${key}`));
+  const reactionsDoc = await getDoc(
+    doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`),
+  );
   if (reactionsDoc.exists()) {
     $reactions = reactionsSchema.parse(reactionsDoc.data());
   }
@@ -68,6 +80,7 @@ onMount(async () => {
 
 async function onclick(e: Event) {
   e.preventDefault();
+  logDebug('ReactionButton', `Reaction ${type} clicked for ${key}`);
   if (!$uid) return;
 
   const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
@@ -81,9 +94,13 @@ async function onclick(e: Event) {
     reaction.splice(index, 1);
   }
 
-  await updateDoc(doc(getFirestore(), `reactions/${key}`), {
+  await updateDoc(doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`), {
     [type]: reaction,
   });
+  logDebug(
+    'ReactionButton',
+    `Reaction ${type} updated for ${key} as ${reaction}`,
+  );
 
   $reactions = {
     ...$reactions,
@@ -92,10 +109,13 @@ async function onclick(e: Event) {
 }
 
 async function createNotification() {
+  if (!['thread', 'reply', 'site'].includes(target))
+    throw new Error('createNotification: Invalid target');
+
   for (const subscriber of $reactions.subscribers) {
     addNotification({
-      key: `${key}-love-${$uid}`,
-      targetType: 'site.loved',
+      key: `${key}-${type}-${$uid}`,
+      targetType: `${target}.loved`,
       createdAt: new Date(),
       targetKey: key,
       to: subscriber,
@@ -115,6 +135,7 @@ async function createNotification() {
     onkeydown={(e: Event) => {if ((e as KeyboardEvent).key === 'Enter') onclick(e);}}
     {count}
     {checked}
+    {disabled}
     aria-pressed={checked}
     noun={type}
     small={small || undefined}

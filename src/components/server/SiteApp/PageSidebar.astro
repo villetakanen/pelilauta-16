@@ -15,7 +15,7 @@ const withPosterCSS = site.posterURL ? 'surface p-2' : 'p-1';
   {site.posterURL && (
     <img src={site.posterURL} alt={site.name} class="poster" />
   )}
-  <ReactionButton key={site.key} client:only="svelte"/>
+  <ReactionButton key={site.key} target="site" client:only="svelte"/>
   
   {site.description && <p>{site.description}</p>}
   
