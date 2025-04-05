@@ -1,3 +1,7 @@
+import {
+  REACTIONS_COLLECTION_NAME,
+  type Reactions,
+} from '@schemas/ReactionsSchema';
 import { REPLIES_COLLECTION, type Reply } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
 
@@ -15,6 +19,7 @@ export async function addReply(
     increment,
     doc,
     updateDoc,
+    setDoc,
   } = await import('firebase/firestore');
   const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
   const { addNotification } = await import('../notifications');
@@ -41,15 +46,22 @@ export async function addReply(
     flowTime: serverTimestamp(),
   });
 
-  // If the author of the reply is the same as the thread creator,
-  // we don't need to add a notification to the thread creator
-  if (thread.owners[0] === author) return;
-
   // Add a notification to the thread creator (the first owner of the thread)
   const targetTitle =
     markdonwContent.length > 50
       ? `${markdonwContent.substring(0, 50)}...`
       : markdonwContent;
+
+  const reactions: Reactions = {
+    subscribers: thread.owners,
+    love: [],
+  };
+  // Add the reactions to the reply
+  await setDoc(doc(db, REACTIONS_COLLECTION_NAME, reply.id), reactions);
+
+  // If the author of the reply is the same as the thread creator,
+  // we don't need to add a notification to the thread creator
+  if (thread.owners[0] === author) return;
 
   await addNotification({
     key: `${reply.id}-${thread.owners[0]}`,

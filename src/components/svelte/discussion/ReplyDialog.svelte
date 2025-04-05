@@ -28,7 +28,6 @@ async function onsubmit(e: Event) {
   const form = e.target as HTMLFormElement;
   const formData = new FormData(form);
   const markdownContent = formData.get('reply') as string;
-  console.log(markdownContent);
 
   await addReply(thread, $uid, markdownContent);
 

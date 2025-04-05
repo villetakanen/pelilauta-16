@@ -7,6 +7,7 @@ noun: 'monsters'
 
 ## 17.0.x (ongoing)
 - FIX: Onboarding card no longer part of sites-stream to avoid unnecessary css-hacks.
+- FIX: Thread creators comments can now be loved (in addition to the other responses).
 
 ### 17.0.0 (2025-03-24)
 
