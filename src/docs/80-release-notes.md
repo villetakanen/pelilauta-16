@@ -5,10 +5,11 @@ noun: 'monsters'
 ---
 ## Version 17
 
-## 17.0.x (ongoing)
+## 17.1.0 (5.4.2025)
 - FEAT: Asset tag can be copied to clipboard from the asset lists
 - FIX: Onboarding card no longer part of sites-stream to avoid unnecessary css-hacks.
 - FIX: Thread creators comments can now be loved (in addition to the other responses).
+- CHORE: Removed a lot of deprecated solid-js components from the project.
 
 ### 17.0.0 (2025-03-24)
 
