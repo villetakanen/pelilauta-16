@@ -8,7 +8,7 @@ import { t } from '@utils/i18n';
     noun="fox"
     cover="/myrrys-proprietary/public-domain/talk-to-me-by-wootha-620px.webp"
     href="/login"
-    class="secondary"
+    class="secondary mb-2"
     >
     <p>{t('app:onboarding.text')}</p>
     <div slot="actions" class="toolbar justify-center">

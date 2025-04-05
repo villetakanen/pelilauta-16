@@ -5,7 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.0.0-b1 (ongoing)
+## 17.0.x (ongoing)
+- FIX: Onboarding card no longer part of sites-stream to avoid unnecessary css-hacks.
+
+### 17.0.0 (2025-03-24)
 
 - BREAKING: Thread reactions are now stored in the new Reactions data structure.
 - FIX: Local notifications cache is cleared when notifications are loaded.
