@@ -1,8 +1,8 @@
 ---
-import { ProfileLink } from '@client/shared/ProfileLink';
 import type { Thread } from '@schemas/ThreadSchema';
 import { MarkdownSnippetSection } from '@shared/MarkdownSnippetSection';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
+import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import CardSubscription from '@svelte/frontpage/CardSubscription.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
@@ -36,7 +36,7 @@ const poster = thread.poster
     <div slot="actions" class="toolbar items-center">
       <div class="grow downscaled">
         <p class="m-0 px-1">
-          <ProfileLink uid={thread.owners[0]} client:load /> 
+          <ProfileLink uid={thread.owners[0]} client:only="svelte" /> 
           <br />
           {toDisplayString(thread.flowTime)}
         </p>

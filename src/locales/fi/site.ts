@@ -57,6 +57,9 @@ export const site: Locale = {
     massImport: {
       description: 'Tuodaan {complete} / {count} sivua',
     },
+    'legacy-folder-import': {
+      title: 'Tuonti',
+    },
   },
   members: {
     title: 'Jäsenet',
@@ -88,6 +91,7 @@ export const site: Locale = {
     errorDeletingSite: 'Virhe poistettaessa sivustoa',
     pageCreated: 'Sivu luotu',
     pageUpdated: 'Sivun muutokset tallennettu',
+    copied: 'Kopioitu',
   },
   tray: {
     actions: {

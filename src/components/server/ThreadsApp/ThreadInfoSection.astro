@@ -1,9 +1,9 @@
 ---
 import { ThreadActions } from '@client/ThreadsApp/ThreadActions';
-import { ProfileLink } from '@client/shared/ProfileLink';
 import type { Thread } from '@schemas/ThreadSchema';
 import { ThreadRepliesButton } from '@shared/ThreadsApp/ThreadRepliesButton';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
+import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
@@ -27,7 +27,7 @@ const noun = topicToNoun(channel);
       {toDisplayString(thread.flowTime)}
     </p>
     <p class="mb-0">
-      <ProfileLink uid={author} client:only="solid-js" /> 
+      <ProfileLink uid={author} client:only="svelte" /> 
       {t('threads:info.inTopic')}
       <a href={`/channels/${channel}/1`} class="link">
         {channel.charAt(0).toUpperCase() + channel.slice(1)}

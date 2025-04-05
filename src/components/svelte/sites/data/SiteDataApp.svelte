@@ -19,5 +19,10 @@ $site = initialSite;
       <p class="downscaled text-low">{t('site:data.description')}</p>
     </section>
     <ExportAsMdSection />
+    <section class="column-s">
+      <a href="/site/{$site.key}/import-folder" class="button">
+        {t('site:import.legacy-folder-import.title')}
+      </a>
+    </section>
   </MembersOnly>
 </div>
