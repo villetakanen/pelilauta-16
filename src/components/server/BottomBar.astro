@@ -1,7 +1,8 @@
 ---
+import SettingNavigationButton from '@svelte/app/SettingNavigationButton.svelte';
 import InboxNavigationButton from '@svelte/inbox/InboxNavigationButton.svelte';
 import { t } from 'src/utils/i18n';
-import { ProfileButton } from '../client/navigation/ProfileButton';
+
 const currentPath = Astro.url.pathname;
 
 type RailItem = {
@@ -44,9 +45,7 @@ const rail: Array<RailItem> = [
           )
         })
       }
-      <InboxNavigationButton client:only="svelte" />
-      <div class="profile_button">
-        <ProfileButton client:only="solid-js" />
-       </div>
+  <InboxNavigationButton client:only="svelte" />
+  <SettingNavigationButton client:only="svelte"/>
 </nav>
 
