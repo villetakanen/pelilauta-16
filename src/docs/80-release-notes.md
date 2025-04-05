@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ## 17.0.x (ongoing)
+- FEAT: Asset tag can be copied to clipboard from the asset lists
 - FIX: Onboarding card no longer part of sites-stream to avoid unnecessary css-hacks.
 - FIX: Thread creators comments can now be loved (in addition to the other responses).
 

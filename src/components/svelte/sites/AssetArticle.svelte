@@ -3,6 +3,7 @@ import { deleteSiteAsset } from '@firebase/client/site/deleteSiteFromAssets';
 import type { Asset } from '@schemas/AssetSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
+import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 
 type Props = {
@@ -16,6 +17,13 @@ const showActions = $derived.by(() => {
 
 async function deleteAsset() {
   deleteSiteAsset(site, `${asset.storagePath}`);
+}
+async function copyMarkdown() {
+  const markdown = `<img src="${asset.url}" alt="${asset.name}" />`;
+  await navigator.clipboard.writeText(markdown);
+  pushSnack({
+    message: t('site:snacks.copied'),
+  });
 }
 </script>
 
@@ -35,7 +43,10 @@ async function deleteAsset() {
       {asset.mimetype} 
       {asset.description}</p>
   </div>
-  <div class="flex m-0 p-0">
+  <div class="flex m-0 p-0 justify-end">
+    <button onclick={copyMarkdown} type="button" aria-label="{t('actions:copy-markdown')}" onkeydown={(e) => e.key === 'Enter' && copyMarkdown()}>
+      <cn-icon noun="copy-md"></cn-icon>
+    </button>
     {#if showActions}
     <a
       aria-label={t('actions:edit')}
@@ -59,7 +70,7 @@ async function deleteAsset() {
 .asset {
   display: grid;
   gap: var(--cn-gap);
-  grid-template-columns: calc(8 * var(--cn-grid)) 1fr calc(12 * var(--cn-grid));
+  grid-template-columns: calc(8 * var(--cn-grid)) 1fr calc(20 * var(--cn-grid));
   margin-bottom: var(--cn-gap);
 }
 .asset img {
