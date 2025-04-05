@@ -12,11 +12,13 @@ const sites = (sitesJSON as Array<Site>).map((site) =>
   parseSite(site, site.key),
 );
 ---
-<div class="flex flex-col column-s">
-    <div><OnboardingCard client:only="svelte"/></div>
-    {sites.map((site) => (
-      site && <SiteCard site={site}/>
-    ))}
+<div class="column-s">
+    <OnboardingCard client:only="svelte"/>
+    <div class="flex flex-col">
+      {sites.map((site) => (
+        site && <SiteCard site={site}/>
+      ))}
+    </div>
     <div class="flex justify-center mt-2">
       <a href="/sites" class="button">
         {t('actions:showMore')}
