@@ -21,7 +21,7 @@ let title = $state(name || '');
 const key = $derived.by(() => {
   logDebug('Derived key', { site, title });
   if (site.usePlainTextURLs) return toMekanismiURI(title);
-  return '-';
+  return '_auto_';
 });
 const keyClash = $derived.by(() => {
   // If the site does not use plain text URLs, there can't be a clash
