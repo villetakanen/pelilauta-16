@@ -21,7 +21,7 @@ let title = $state(name || '');
 const key = $derived.by(() => {
   logDebug('Derived key', { site, title });
   if (site.usePlainTextURLs) return toMekanismiURI(title);
-  return '-';
+  return '_auto_';
 });
 const keyClash = $derived.by(() => {
   // If the site does not use plain text URLs, there can't be a clash
@@ -48,7 +48,11 @@ async function onsubmit(e: Event) {
   newPage.markdownContent = `# ${title}\n\n`;
   newPage.owners = [$uid];
 
-  const slug = await addPage(site.key, newPage, key);
+  const slug = await addPage(
+    site.key,
+    newPage,
+    site.usePlainTextURLs ? key : undefined,
+  );
 
   pushSessionSnack(
     t('site:create.page.success', { key: `${site.key}/${slug}` }),

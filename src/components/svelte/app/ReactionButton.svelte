@@ -63,7 +63,7 @@ const count = $derived.by(() => {
 const checked = $derived.by(() => {
   return $reactions[type]?.includes($uid) || undefined;
 });
-const disabled = $derived.by(() => {
+const inactive = $derived.by(() => {
   if ($reactions.subscribers.includes($uid)) return true;
   return undefined;
 });
@@ -135,7 +135,7 @@ async function createNotification() {
     onkeydown={(e: Event) => {if ((e as KeyboardEvent).key === 'Enter') onclick(e);}}
     {count}
     {checked}
-    {disabled}
+    {inactive}
     aria-pressed={checked}
     noun={type}
     small={small || undefined}

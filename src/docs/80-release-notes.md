@@ -6,8 +6,9 @@ noun: 'monsters'
 ## Version 17
 
 ## 17.1.x (ongoing)
-- FIX: updated Cyan design system to 1.0.9
-- FIX: removed 2 deprecated solid-js components
+- FIX: removed 3 deprecated solid-js components
+- FIX: creating pages for a site with auto-generated urls works again
+- CHORE: updated Cyan design system to 1.0.10
 
 ## 17.1.0 (5.4.2025)
 - FEAT: Asset tag can be copied to clipboard from the asset lists
