@@ -16,7 +16,6 @@ import { $uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { doc, updateDoc } from 'firebase/firestore';
 import { type Component, createSignal } from 'solid-js';
-import { SiteTocRegenSection } from '../SiteTocRegen';
 
 export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
   const uid = useStore($uid);
@@ -145,8 +144,6 @@ export const SiteTocAdmin: Component<{ site: Site }> = (props) => {
           </button>
         </div>
       </section>
-
-      <SiteTocRegenSection site={props.site} />
     </div>
   ) : null;
 };

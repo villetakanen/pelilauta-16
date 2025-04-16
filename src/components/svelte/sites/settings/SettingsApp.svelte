@@ -6,6 +6,7 @@ import WithAuth from '@svelte/app/WithAuth.svelte';
 import SiteDangerZoneSection from './SiteDangerZoneSection.svelte';
 import SiteMetaForm from './SiteMetaForm.svelte';
 import SiteThemingSection from './SiteThemingSection.svelte';
+import SiteTocRegenSection from './SiteTocRegenSection.svelte';
 
 /**
  * A Wrapper for the SiteMembersApp component,
@@ -25,6 +26,7 @@ const allow = $derived.by(() => {
   <div class="content-columns">
     <SiteMetaForm site={$site}/>
     <SiteThemingSection site={$site}/>
+    <SiteTocRegenSection site={$site}/>
     <SiteDangerZoneSection site={$site}/>
   </div>
 </WithAuth>

@@ -179,7 +179,9 @@ export const site: Locale = {
       },
     },
     regenerate: {
-      info: 'Luo hakemisto uudelleen sivujen kategorioiden perusteella',
+      title: 'Hakemiston luonti',
+      info: 'Jos sivuston hakemisto on vioittunut, tai se puuttuu historiallisista syistä, voit luoda hakemiston uudelleen tästä.',
+      action: 'Luo hakemisto',
     },
     other: 'Luokittelemattomat',
     all: 'Sisältö',

@@ -1,7 +1,6 @@
 /**
  * A Solid-js auth-view component that allows users to delete a page.
  */
-
 import { deletePage } from '@firebase/client/site/deletePage';
 import { useStore } from '@nanostores/solid';
 import type { Page } from '@schemas/PageSchema';
