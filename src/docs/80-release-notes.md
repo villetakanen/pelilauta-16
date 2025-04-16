@@ -10,6 +10,7 @@ noun: 'monsters'
 - FIX: creating pages for a site with auto-generated urls works again
 - FIX: site toc regeneration moved over to svelte
 - FIX: page delete confirmation moved over to svelte
+- FIX: removed extra logging
 - CHORE: updated Cyan design system to 1.0.10
 
 ## 17.1.0 (5.4.2025)
