@@ -5,8 +5,7 @@ import {
   SubscriptionSchema,
 } from '@schemas/SubscriberSchema';
 import { uid } from '@stores/session';
-import { toDisplayString } from '@utils/contentHelpers';
-import { logDebug, logError } from '@utils/logHelpers';
+import { logError } from '@utils/logHelpers';
 import { type WritableAtom, computed, onMount, onStop } from 'nanostores';
 
 /**
@@ -42,20 +41,13 @@ export async function markEntrySeen(entityKey: string) {
 }
 
 export const hasSeen = computed(subscription, (subscription) => {
-  logDebug('hasSeen computed');
   if (!subscription) {
-    logDebug('hasSeen computed: no subscription');
     return () => false;
   }
   return (entityKey: string, flowTime: number) => {
     if (subscription.allSeenAt >= flowTime) {
-      logDebug(
-        'hasSeen computed: allSeenAt',
-        toDisplayString(subscription.allSeenAt),
-      );
       return false;
     }
-    logDebug('hasSeen computed: seen', subscription.seenEntities[entityKey]);
     return (subscription.seenEntities[entityKey] ?? 0) >= flowTime;
   };
 });
