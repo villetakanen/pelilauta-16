@@ -11,6 +11,7 @@ noun: 'monsters'
 - FIX: site toc regeneration moved over to svelte
 - FIX: page delete confirmation moved over to svelte
 - FIX: removed extra logging
+- FIX: moved table of contents and page sorting tools to svelte
 - CHORE: updated Cyan design system to 1.0.10
 
 ## 17.1.0 (5.4.2025)

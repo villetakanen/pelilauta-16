@@ -173,6 +173,7 @@ export const site: Locale = {
     repair: 'Luo hakemisto',
     admin: {
       title: 'Hallinta',
+      info: 'Sivuston hakemiston hallinta. Voit valita sivuston sivujen järjestyksen ja luoda sekä järjestää sivukategorioita.',
       newCategory: 'Uusi kategoria',
       categories: {
         title: 'Kategoriat',

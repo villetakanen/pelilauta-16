@@ -34,6 +34,12 @@ export const CategoryRefSchema = z.object({
 
 export type CategoryRef = z.infer<typeof CategoryRefSchema>;
 
+export function parseCategories(data: Partial<CategoryRef[]>): CategoryRef[] {
+  return data.map((category) => {
+    return CategoryRefSchema.parse(category);
+  });
+}
+
 export const SiteSortOrderSchema = z.enum([
   'name',
   'createdAt',
