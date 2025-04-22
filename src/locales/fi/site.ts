@@ -204,4 +204,14 @@ export const site: Locale = {
   latestChanges: {
     title: 'Muutokset',
   },
+  license: {
+    '0': '-',
+    'cc-by': 'CC-BY',
+    'cc-by-sa': 'CC-BY-SA',
+    'cc-by-nc': 'CC-BY-NC',
+    'cc-by-nc-sa': 'CC-BY-NC-SA',
+    cc0: 'CC0',
+    'public-domain': 'Vapaa (Public Domain)',
+    OGL: 'OGL',
+  },
 };
