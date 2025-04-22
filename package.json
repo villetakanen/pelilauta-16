@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "17.1.5",
+  "version": "17.1.6",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
