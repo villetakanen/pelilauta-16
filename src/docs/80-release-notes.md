@@ -13,6 +13,9 @@ noun: 'monsters'
 - FIX: removed extra logging
 - FIX: moved table of contents and page sorting tools to svelte
 - FIX: Asset upload asset upload fab moved to svelte
+- FIX: Asset metadata editor moved to svelte
+- FIX: Asset metadata editor license selection works as expected
+- FIX: Asset metadata visible to all users, editor only for the site owners
 - CHORE: updated Cyan design system to 1.0.10
 
 ## 17.1.0 (5.4.2025)

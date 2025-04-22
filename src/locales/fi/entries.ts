@@ -9,6 +9,11 @@ export const entries: Locale = {
     showAdminTools: 'Näytä admin-työkalut',
     language: 'Kieli',
   },
+  assets: {
+    name: 'Nimi',
+    description: 'Kuvaus',
+    license: 'Lisenssi',
+  },
   handout: {
     title: 'Otsikko',
   },
