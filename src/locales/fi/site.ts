@@ -173,13 +173,16 @@ export const site: Locale = {
     repair: 'Luo hakemisto',
     admin: {
       title: 'Hallinta',
+      info: 'Sivuston hakemiston hallinta. Voit valita sivuston sivujen järjestyksen ja luoda sekä järjestää sivukategorioita.',
       newCategory: 'Uusi kategoria',
       categories: {
         title: 'Kategoriat',
       },
     },
     regenerate: {
-      info: 'Luo hakemisto uudelleen sivujen kategorioiden perusteella',
+      title: 'Hakemiston luonti',
+      info: 'Jos sivuston hakemisto on vioittunut, tai se puuttuu historiallisista syistä, voit luoda hakemiston uudelleen tästä.',
+      action: 'Luo hakemisto',
     },
     other: 'Luokittelemattomat',
     all: 'Sisältö',
