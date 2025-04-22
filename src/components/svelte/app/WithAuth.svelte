@@ -16,7 +16,7 @@ const { allow, children, message }: Props = $props();
   {@render children?.()}
 {:else}
   <div class="content-columns">
-    <article>
+    <article class="surface border-radius p-2">
       <h1>{t('app:forbidden.title')}</h1>
       <div class="flex justify-center">
         <cn-icon noun="monsters" xlarge></cn-icon>
