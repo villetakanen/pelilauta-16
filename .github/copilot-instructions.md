@@ -23,23 +23,28 @@ Most of the client side interactivity is now done with Svelte. We use the same n
 state management as the previous Solid-js components. Switch over to svelte is done for lit-element and performance
 reasons.
 
-Svelte uses runes mode, typescript and we want to model the componets as
+Svelte uses runes mode, typescript and we want to model the componets with template below:
 ```
 <script lang="ts">
+import { uid } from '@stores/session';
+// uid is used as $uid, as nanostores implement svelte store interface
 
 interface Props {
   [propName: string]: [type],
   ...   // other props
 }
 const { propName, ... }: Props = $props;
+const statefulVar = $state('value'); // stateful store, use $state, use let if you need to reassign
+const derivedVar = $derived.by(() => {return value}) // derived store, use $derived.by
+
 ...
 </script>
 
-<style>
-...if any
-</style>
-
-[html ...]
+<section>
+  <h1>{statefulVar}</h1>
+  <p>{derivedVar}</p>
+  <p>{propName}</p>
+</section>
 ```
 
 ## TyopeScript

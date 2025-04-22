@@ -1,8 +1,8 @@
 ---
 import { EmailLoginSection } from '@client/login/EmailLoginSection';
 import { PasswordLoginSection } from '@client/login/PasswordLoginSection';
-import { SyndicatedLoginSection } from '@client/login/SyndicatedLoginSection';
 import ModalPage from '@layouts/ModalPage.astro';
+import SyndicatedLoginSection from '@svelte/login/SyndicatedLoginSection.svelte';
 import { t } from '@utils/i18n';
 
 /* A server side rendered login page: we only provide client side session, as all
@@ -29,7 +29,7 @@ const showPasswordLoginFlag =
         <EmailLoginSection client:only="solid-js"/>
       </div>
       <div>
-        <SyndicatedLoginSection client:only="solid-js"/>
+        <SyndicatedLoginSection client:only="svelte"/>
       </div>
     </div>
   </main>

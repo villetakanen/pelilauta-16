@@ -16,7 +16,9 @@ noun: 'monsters'
 - FIX: Asset metadata editor moved to svelte
 - FIX: Asset metadata editor license selection works as expected
 - FIX: Asset metadata visible to all users, editor only for the site owners
+- FIX: Moved syndicated login to svelte
 - CHORE: updated Cyan design system to 1.0.10
+- CHORE: updated Cyan design system to 1.0.11
 
 ## 17.1.0 (5.4.2025)
 - FEAT: Asset tag can be copied to clipboard from the asset lists
