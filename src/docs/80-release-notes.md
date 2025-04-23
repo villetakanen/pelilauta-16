@@ -18,7 +18,9 @@ noun: 'monsters'
 - FIX: Asset metadata visible to all users, editor only for the site owners
 - FIX: Moved syndicated login to svelte
 - FIX: WithAuth component sections have surface
+- FIX: Thread stream (frontpage) read-more link points to the channels page as expected
 - CHORE: updated Cyan design system to version 1.0.12
+- CHORE: L&L Wiki added to the list of links in the footer
 
 ## 17.1.0 (5.4.2025)
 - FEAT: Asset tag can be copied to clipboard from the asset lists
