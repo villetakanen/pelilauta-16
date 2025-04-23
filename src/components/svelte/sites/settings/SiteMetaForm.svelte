@@ -5,6 +5,7 @@ import { update } from '@stores/site';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import SystemSelect from '../SystemSelect.svelte';
+import LicenseSelect from '../assets/LicenseSelect.svelte';
 import SiteHomepageSelect from './SiteHomepageSelect.svelte';
 
 interface Props {
@@ -17,12 +18,14 @@ let description = $state(site.description);
 let system = $state(site.system);
 let hidden = $state(site.hidden);
 let homepage = $state(site.homepage ?? '');
+let license = $state(site.license ?? '0'); // Default to 'none' if not set
 
 const dirty = $derived.by(() => {
   if (name !== site.name) return true;
   if (site.description !== description) return true;
   if (site.system !== system) return true;
   if (site.homepage !== homepage) return true;
+  if (site.license !== license) return true;
   return false;
 });
 function setName(e: Event) {
@@ -36,6 +39,10 @@ function setSystem(s: string) {
 }
 function setHomepage(key: string) {
   homepage = key;
+}
+function setLicense(e: Event) {
+  const value = (e.target as HTMLSelectElement).value;
+  license = value;
 }
 
 async function setHidden(e: Event) {
@@ -63,6 +70,9 @@ async function handleSubmit(e: Event) {
   }
   if (homepage !== site.homepage) {
     updates.homepage = homepage;
+  }
+  if (license !== site.license) {
+    updates.license = license;
   }
   await update(updates);
   pushSnack(t('site:settings.meta.saved'));
@@ -101,6 +111,7 @@ async function handleSubmit(e: Event) {
         {site} 
         {homepage}
         {setHomepage}/>
+      <LicenseSelect value={license} onchange={setLicense}/>
     </fieldset>
     <div class="toolbar justify-end">
       <button type="button" onclick={reset} class="text" disabled={!dirty}>{t('actions:reset')}</button>

@@ -5,7 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-## 17.1.x (ongoing)
+## 17.2.0 (2025-04-23)
+- FEAT: Site text content license selection added to the site settings
+- FEAT: Site text content license info added to page footer
+- FEAT: Site text content license metadata added to schemas
 - FIX: removed 3 deprecated solid-js components
 - FIX: creating pages for a site with auto-generated urls works again
 - FIX: site toc regeneration moved over to svelte
@@ -22,7 +25,7 @@ noun: 'monsters'
 - CHORE: updated Cyan design system to version 1.0.12
 - CHORE: L&L Wiki added to the list of links in the footer
 
-## 17.1.0 (5.4.2025)
+## 17.1.0 (2025-04-05)
 - FEAT: Asset tag can be copied to clipboard from the asset lists
 - FIX: Onboarding card no longer part of sites-stream to avoid unnecessary css-hacks.
 - FIX: Thread creators comments can now be loved (in addition to the other responses).
