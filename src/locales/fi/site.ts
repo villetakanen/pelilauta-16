@@ -213,5 +213,14 @@ export const site: Locale = {
     cc0: 'CC0',
     'public-domain': 'Vapaa (Public Domain)',
     OGL: 'OGL',
+    forText: 'Sivuston tekstisisältö ',
+    links: {
+      'cc-by': 'https://creativecommons.org/licenses/by/4.0/deed.fi',
+      'cc-by-sa': 'https://creativecommons.org/licenses/by-sa/4.0/deed.fi',
+      'cc-by-nc': 'https://creativecommons.org/licenses/by-nc/4.0/deed.fi',
+      'cc-by-nc-sa':
+        'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fi',
+      cc0: 'https://creativecommons.org/publicdomain/zero/1.0/deed.fi',
+    },
   },
 };

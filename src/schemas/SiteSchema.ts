@@ -63,6 +63,8 @@ export const SiteSchema = EntrySchema.extend({
   customPageKeys: z.boolean().optional(),
   pageRefs: z.array(PageRefSchema).optional(),
   pageCategories: z.array(CategoryRefSchema).optional(),
+  // Metadata
+  license: z.string().optional(),
   // Options
   usePlayers: z.boolean().optional(),
   useClocks: z.boolean().optional(),
@@ -117,6 +119,7 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
       // customPageKeys is the legacy field for usePlainTextUrls, but inverted - use it's value
       // if usePlainTextUrls is not set
       usePlainTextUrls: data.usePlainTextURLs || !customPageKeys,
+      license: data.license || '0',
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
@@ -148,5 +151,6 @@ export function siteFrom(template: Partial<Site>): Site {
     sortOrder: template?.sortOrder || 'name',
     customPageKeys: template?.customPageKeys || !template?.usePlainTextURLs,
     usePlainTextURLs: template?.usePlainTextURLs || false,
+    license: template?.license || '0',
   };
 }
