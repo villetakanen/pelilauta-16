@@ -1,21 +1,4 @@
 /* This content should be moved to the design system */
-nav.cn-tray .cn-tray-title {
-  margin-top: calc(-1 * var(--cn-grid));
-  border-bottom: var(--color-border) solid 1px;
-}
-@media (min-width: 621px) {
-  nav.cn-tray {
-    padding-left: var(--cn-rail-width);
-  }
-}
-.profile_button {
-  min-height: 56px;
-}
-cn-loader[for="navigation"] {
-  height: 72px;
-  width: 56px;
-}
-
 .page-poster-section img {
   max-height: 42vh;
 }
@@ -25,10 +8,6 @@ img.preview-icon {
   aspect-ratio: 1 / 1;
   border-radius: var(--cn-grid);
   object-fit: cover;
-}
-
-p.align-right {
-  text-align: right;
 }
 .border-top {
   border-top: var(--color-border) solid 1px;
@@ -62,15 +41,6 @@ div.forum-topics {
       2
     );
   gap: var(--cn-gap);
-}
-.cn-app-bar.on-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background-color: var(--cn-elevation-1);
-  border-radius: 0 0 0 var(--cn-border-radius);
 }
 select {
   container: inline-size;
@@ -116,9 +86,7 @@ span.notification-pill {
 .items-center {
   align-items: center;
 }
-.border-t {
-  border-color: var(--color-border);
-}
+
 .debug {
   overflow-x: auto;
 }
@@ -264,8 +232,6 @@ li cn-dice,
 p cn-dice {
   display: inline-flex;
 }
-
-
 dialog {
   color: var(--color-text);
   font-family: var(--cn-font-family-text);
@@ -304,9 +270,7 @@ dialog h3 {
   margin-bottom: calc(var(--cn-grid) * 2);
   color: var(--color-heading-2);
 }
-.no-decoration {
-  text-decoration: none;
-}
+
 a.hoverable:hover {
   background-color: color-mix(in hsl, var(--color-on-primary), transparent 89%);
   text-decoration: underline;
