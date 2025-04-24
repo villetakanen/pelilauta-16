@@ -5,9 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-## 17.3.0 (In testing)
+## 17.3.0 (2025-04-23)
 - FEAT: Bluesky integration added to the SSR. This requires setting bsky credentials in the env file.
 - FEAT: App admins can post as "pelilauta.social" on bluesky through the app admin tools.
+- FEAT: New threads are automatically shared via the app's bluesky account.
 
 ## 17.2.0 (2025-04-23)
 - FEAT: Site text content license selection added to the site settings
