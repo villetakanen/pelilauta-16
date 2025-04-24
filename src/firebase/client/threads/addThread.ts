@@ -57,7 +57,7 @@ export async function addThread(
   thread: Partial<Thread>,
   files: File[],
   uid: string,
-): Promise<string> {
+): Promise<Thread> {
   const { updateDoc, addDoc, collection, getFirestore, doc, getDoc } =
     await import('firebase/firestore');
   const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
@@ -117,5 +117,5 @@ export async function addThread(
   // component, not here
   await markEntrySeen(docRef.id, Date.now());
 
-  return docRef.id;
+  return dbThread;
 }

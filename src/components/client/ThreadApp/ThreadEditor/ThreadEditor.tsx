@@ -76,7 +76,7 @@ export const ThreadEditor: Component<{
     let key = props.threadKey;
     // If we dont have a threadKey, we are creating a new thread
     if (!props.threadKey) {
-      key = await addThread(data, files(), uid());
+      key = (await addThread(data, files(), uid())).key;
     } else {
       console.log('Updating thread', props.threadKey, data);
       await updateThread(props.threadKey, data);
