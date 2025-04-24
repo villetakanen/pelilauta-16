@@ -5,6 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
+## 17.3.1 (2025-04-23)
+- FIX: Reactions entry is created as expected to new threads.
+- FIX: Bluesky integration can be disabled with a feature flag.
+
 ## 17.3.0 (2025-04-23)
 - FEAT: Bluesky integration added to the SSR. This requires setting bsky credentials in the env file.
 - FEAT: App admins can post as "pelilauta.social" on bluesky through the app admin tools.
