@@ -2,6 +2,7 @@
 import type { ServiceAccount } from 'firebase-admin';
 import admin from 'firebase-admin';
 import { cert, initializeApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
 // const activeApps = getApps();
@@ -33,3 +34,4 @@ const initApp = () => {
 
 export const serverApp = initApp(); // activeApps.length === 0 ? initApp() : activeApps[0];
 export const serverDB = getFirestore(serverApp);
+export const serverAuth = getAuth(serverApp);
