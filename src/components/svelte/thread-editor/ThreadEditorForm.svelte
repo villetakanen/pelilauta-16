@@ -139,7 +139,11 @@ onMount(() => {
     </button>
     <div class="grow"></div>
     <button type="submit" disabled={saving || !changed} data-testid="send-thread-button">
-      <cn-icon noun="send"></cn-icon>
+      {#if saving}
+        <cn-loader noun="send" style="display:inline-block;vertical-align: middle"></cn-loader>
+      {:else}
+        <cn-icon noun="send"></cn-icon>
+      {/if}
       <span>{t('actions:send')}</span>
     </button>
   </section>

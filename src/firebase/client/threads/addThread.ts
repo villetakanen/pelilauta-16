@@ -1,5 +1,9 @@
 import { type Channel, parseChannel } from '@schemas/ChannelSchema';
 import {
+  REACTIONS_COLLECTION_NAME,
+  type Reactions,
+} from '@schemas/ReactionsSchema';
+import {
   THREADS_COLLECTION_NAME,
   type Thread,
   createThread,
@@ -44,6 +48,24 @@ async function increaseThreadCount(channel: string) {
   await updateDoc(channelsRef, {
     topics: channelsArray,
   });
+}
+/**
+ * Will be called after thread creation
+ *
+ * @param thread
+ */
+async function addReactionsForThread(thread: Thread) {
+  const { doc, getFirestore, setDoc } = await import('firebase/firestore');
+
+  const reactions: Reactions = {
+    subscribers: thread.owners,
+    love: [],
+  };
+  // Add the reactions to the reply
+  await setDoc(
+    doc(getFirestore(), REACTIONS_COLLECTION_NAME, thread.key),
+    reactions,
+  );
 }
 
 /**
@@ -109,6 +131,9 @@ export async function addThread(
     toClientEntry(dbThreadDoc.data() as Partial<Thread>),
     docRef.id,
   );
+
+  // Add the thread to the reactions collection
+  await addReactionsForThread(dbThread);
 
   thread.tags && (await updateThreadTags(dbThread));
 

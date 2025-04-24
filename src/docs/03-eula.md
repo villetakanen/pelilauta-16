@@ -12,4 +12,5 @@ noun: 'fox'
 - Tietosi tallennetaan salattuina Googlen pilvipalveluun EU:ssa. Tallennettavat tiedot on kuvattu [avoimena koodina GitHubissa](https://github.com/villetakanen/pelilauta-16/tree/main/src/schemas).
 
 **Kolmannet osapuolet**
-- Sovellus tarjoaa syötteitä (RSS, ActivityPub), joiden kautta kolmannet osapuolet voivat lukea tietoja. Pelilauta ei vastaa kolmansien osapuolten toiminnasta.
+- Sovellus tarjoaa syötteitä (RSS, ActivityPub, ATProto), joiden kautta kolmannet osapuolet voivat lukea tietoja. Pelilauta ei vastaa kolmansien osapuolten toiminnasta.
+- Sovellus syndikoi osan viesteistä nostoina kolmansille osapuolille (ATProto, ActivityPub). 
