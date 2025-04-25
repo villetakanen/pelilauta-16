@@ -5,9 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-## 17.3.1 (2025-04-23)
+## 17.3.x
 - FIX: Reactions entry is created as expected to new threads.
 - FIX: Bluesky integration can be disabled with a feature flag.
+- CHORE: Updated Cyan design system to 1.0.13 with enhanced tray ux.
 
 ## 17.3.0 (2025-04-23)
 - FEAT: Bluesky integration added to the SSR. This requires setting bsky credentials in the env file.
