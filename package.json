@@ -62,12 +62,7 @@
     "workbox-cli": "^7.3.0"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": [
-      "@firebase/util"
-    ],
-    "onlyBuiltDependencies": [
-      "@firebase/util",
-      "lefthook"
-    ]
+    "ignoredBuiltDependencies": ["@firebase/util"],
+    "onlyBuiltDependencies": ["@firebase/util", "lefthook"]
   }
 }
