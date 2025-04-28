@@ -74,6 +74,15 @@ async function testSSRNoAuth() {
         <cn-icon noun="adventurer" small></cn-icon> Test SSR No Auth
       </button>
     </li>
+    <li>
+      <button id="error-button">Throw test error</button>
+<script>
+  function handleClick () {
+    throw new Error('This is a test error');
+  }
+  document.querySelector("#error-button").addEventListener("click", handleClick);
+</script>
+    </li>
   </ul>
 </WithAuth>
 

@@ -6,9 +6,11 @@ import vercel from '@astrojs/vercel';
 
 import svelte from '@astrojs/svelte';
 
+import sentry from '@sentry/astro';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [solidJs(), svelte()],
+  integrations: [solidJs(), svelte(), sentry()],
   output: 'server',
   adapter: vercel({
     webAnalytics: { enabled: true },

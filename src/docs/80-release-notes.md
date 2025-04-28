@@ -10,6 +10,7 @@ noun: 'monsters'
 - FIX: Channels -page fabs now on svelte
 - FIX: Added moderator only button to reshare a thread on the social media feeds.
 - FIX: Reactions entry is created as expected to new threads.
+- CHORE: Added Sentry for error tracking.
 - CHORE: Updated Cyan design system to 1.0.13 with enhanced tray ux.
 
 ## 17.3.0 (2025-04-23)
