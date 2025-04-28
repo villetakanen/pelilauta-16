@@ -47,6 +47,26 @@ const derivedVar = $derived.by(() => {return value}) // derived store, use $deri
 </section>
 ```
 
+### Nanostores on svelte
+
+Do note, that we are using the `nanostores` package for state management. The stores are imported from
+`@stores/session` and `@stores/route`. The stores are used as `$storeName` in the components. The way runes
+mode uses these is to add a `$` to the store name. This is done by the svelte compiler, so you can use the
+store name as a normal variable. 
+
+f.ex:
+```
+<script lang="ts">
+import { uid } from '@stores/session';
+
+logDebug('uid', $uid);
+</script>
+
+<a href="/profile/{$uid}">
+  <img src="https://avatars.dicebear.com/api/bottts/{$uid}.svg" alt="Avatar" />
+</a>
+```
+
 ## TyopeScript
 
 We use shorhands for library paths. E.g. `import SectionComponent from '@svelte/app/SectionComponent.svelte'`
