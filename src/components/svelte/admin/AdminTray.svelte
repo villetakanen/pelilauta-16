@@ -40,8 +40,17 @@ async function testSSRNoAuth() {
 </script>
 
 <WithAuth allow={visible}>
-  <h2>Tools</h2>
+  <h3>MOD / ADM</h3>
+  <p class="text-caption pb-1 pt-1">
+    Admin and Mod tools. Please note some of the tools are not available in the public
+    deployment of the Pelilauta app - and require a local deployment.
+  </p>
   <ul>
+    <li>
+      <a href="/admin/channels">
+        <cn-icon noun="discussion" small></cn-icon> Forum / Channels
+      </a>
+    </li>
     <li>
       <a href="/admin/messaging">
         <cn-icon noun="send" small></cn-icon> Social Media Poster
@@ -53,11 +62,7 @@ async function testSSRNoAuth() {
           <cn-icon noun="adventurer" small></cn-icon> Users
         </a>
       </li>
-      <li>
-        <a href="/admin/channels">
-          <cn-icon noun="discussion" small></cn-icon> Channels
-        </a>
-      </li>
+      
     {/if}
     <li>
       <a href="/admin/sites">
