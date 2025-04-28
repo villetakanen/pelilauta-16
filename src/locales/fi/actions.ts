@@ -36,5 +36,6 @@ export const actions: Locale = {
   deregister: 'Poista tili pysyvästi',
   learnMore: 'Lue lisää',
   reset: 'Palauta',
+  reposted: 'Jaettu uudelleen onnistuneesti',
   upload: 'Lataa',
 };

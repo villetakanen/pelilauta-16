@@ -30,7 +30,7 @@ async function onsubmit(e: Event) {
   try {
     // Check if the thread has owners and use the first one
     await syndicateToBsky(thread, thread.owners[0]);
-    pushSnack('threads:actions.reposted');
+    pushSnack('actions:reposted');
   } catch (error) {
     console.error('Error syndicating to Bluesky:', error);
     pushSnack('threads:actions.repostFailed');
