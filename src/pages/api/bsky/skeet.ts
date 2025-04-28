@@ -7,7 +7,6 @@ import type { FirebaseError } from 'firebase-admin';
 import type { DecodedIdToken } from 'firebase-admin/auth';
 
 export const POST: APIRoute = async ({ request }) => {
-  
   const endpointName = '/api/bsky/post'; // For logging context
 
   // 1. Get Authorization Header
