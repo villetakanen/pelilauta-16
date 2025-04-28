@@ -1,16 +1,22 @@
 import solidJs from '@astrojs/solid-js';
+import svelte from '@astrojs/svelte';
+import vercel from '@astrojs/vercel';
+import sentry from '@sentry/astro';
 import { defineConfig } from 'astro/config';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-import vercel from '@astrojs/vercel';
-
-import svelte from '@astrojs/svelte';
-
-import sentry from '@sentry/astro';
-
 // https://astro.build/config
 export default defineConfig({
-  integrations: [solidJs(), svelte(), sentry()],
+  integrations: [
+    solidJs(),
+    svelte(),
+    sentry({
+      sourceMapsUploadOptions: {
+        project: 'pelilauta',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+      },
+    }),
+  ],
   output: 'server',
   adapter: vercel({
     webAnalytics: { enabled: true },
