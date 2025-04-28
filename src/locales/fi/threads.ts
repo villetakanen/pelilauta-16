@@ -11,6 +11,13 @@ export const threads: Locale = {
     author: 'Kirjoittanut',
     inTopic: 'aiheessa',
     replies: '{count} vastausta',
+    actions: {
+      title: 'Toiminnot',
+      admin: {
+        title: 'Hallinta',
+        repost: 'Jaa uudelleen',
+      },
+    },
   },
   quote: {
     fromThread: 'Lainaus keskustelusta',

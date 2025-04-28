@@ -2,7 +2,10 @@ import { authedPost } from '@firebase/client/apiClient';
 import { type Channel, ChannelSchema } from '@schemas/ChannelSchema';
 import type { Thread } from '@schemas/ThreadSchema';
 
-async function syndicateToBsky(thread: Thread, uid: string): Promise<void> {
+export async function syndicateToBsky(
+  thread: Thread,
+  uid: string,
+): Promise<void> {
   const { getProfile } = await import('@stores/profilesStore');
 
   const profile = getProfile(uid);

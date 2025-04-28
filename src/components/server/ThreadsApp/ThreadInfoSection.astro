@@ -1,10 +1,10 @@
 ---
-import { ThreadActions } from '@client/ThreadsApp/ThreadActions';
 import type { Thread } from '@schemas/ThreadSchema';
 import { ThreadRepliesButton } from '@shared/ThreadsApp/ThreadRepliesButton';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import ReactionButton from '@svelte/app/ReactionButton.svelte';
+import ThreadInfoActions from '@svelte/threads/ThreadInfoActions.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 
@@ -38,5 +38,5 @@ const noun = topicToNoun(channel);
       </div>
      </p>
     </cn-card>
-  <ThreadActions thread={thread} client:only="solid-js" />
+  <ThreadInfoActions {thread} client:only="svelte" />
 </section>
