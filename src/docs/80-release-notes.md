@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ## 17.3.x
+- FIX: Channel page info polish
 - FIX: Channel page supports poster images
 - FIX: Channels -page fabs now on svelte
 - FIX: Added moderator only button to reshare a thread on the social media feeds.
