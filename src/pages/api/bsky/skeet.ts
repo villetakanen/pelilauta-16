@@ -7,7 +7,7 @@ import type { FirebaseError } from 'firebase-admin';
 import type { DecodedIdToken } from 'firebase-admin/auth';
 
 export const POST: APIRoute = async ({ request }) => {
-  if (import.meta.env.SECRET_FEATURE_FLAG_Workbox !== 'true') {
+  if (import.meta.env.SECRET_FEATURE_bsky !== 'true') {
     return new Response(
       JSON.stringify({
         success: false,
