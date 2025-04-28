@@ -23,12 +23,18 @@ const admin = $derived.by(() => {
   return isAdmin($uid) ?? false;
 });
 
-async function onsubmit() {
+async function onsubmit(e: Event) {
+  e.preventDefault();
   if (!thread || !thread.owners || thread.owners.length === 0)
     throw new Error('Thread or owners not defined');
-  // Check if the thread has owners and use the first one
-  await syndicateToBsky(thread, thread.owners[0]);
-  pushSnack('threads:actions.reposted');
+  try {
+    // Check if the thread has owners and use the first one
+    await syndicateToBsky(thread, thread.owners[0]);
+    pushSnack('threads:actions.reposted');
+  } catch (error) {
+    console.error('Error syndicating to Bluesky:', error);
+    pushSnack('threads:actions.repostFailed');
+  }
 }
 </script>
 {#if owns || admin}
