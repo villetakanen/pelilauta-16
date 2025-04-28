@@ -1,5 +1,4 @@
 ---
-import { ForumAdminApp } from '@client/admin/ForumAdminApp';
 import PageWithTray from '@layouts/PageWithTray.astro';
 import AdminTray from '@svelte/admin/AdminTray.svelte';
 
@@ -7,15 +6,10 @@ import AdminTray from '@svelte/admin/AdminTray.svelte';
 // SECRET_FEATURE_FLAG_Admin_tools
 
 const visible = import.meta.env.SECRET_FEATURE_FLAG_Admin_tools === 'true';
-
-if (!visible) {
-  // Redirect to the home page if the feature is disabled
-  return Astro.redirect('/');
-}
 ---
 <PageWithTray title="Admin" description="Admin tools for pelilauta">
   <AdminTray client:only="svelte" showLocalTools={visible} slot="app-tray"/> 
  { visible ? (
- <ForumAdminApp client:only="solid-js"/>
+ <cn-icon noun="fox" xlarge></cn-icon>
  ): <div>Feature Disabled</div> }
 </PageWithTray>

@@ -54,7 +54,7 @@ async function testSSRNoAuth() {
         </a>
       </li>
       <li>
-        <a href="/admin">
+        <a href="/admin/channels">
           <cn-icon noun="discussion" small></cn-icon> Channels
         </a>
       </li>
