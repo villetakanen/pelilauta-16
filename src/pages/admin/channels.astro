@@ -5,10 +5,7 @@ import ChannelsAdmin from '@svelte/admin/channels/ChannelsAdmin.svelte';
 
 const visible = import.meta.env.SECRET_FEATURE_FLAG_Admin_tools === 'true';
 ---
-<PageWithTray title="Admin: Channels" description="Channel Admin tools for pelilauta">
+<PageWithTray title="Forum: Channels" description="Channel Admin tools for pelilauta">
   <AdminTray client:only="svelte" slot="app-tray" showLocalTools={visible} /> 
-  { visible ? 
-    (<ChannelsAdmin client:only="svelte" />): 
-    (<div>Feature Disabled for this deployment</div>)
-  }
+  <ChannelsAdmin client:only="svelte" />
 </PageWithTray>

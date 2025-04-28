@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const CHANNEL_NOUNS = ['discussion', 'adventurer'];
+
 export const ChannelSchema = z.object({
   description: z.string(),
   icon: z.string(),
