@@ -1,9 +1,10 @@
 ---
 import { ForumFabs } from '@client/ThreadsApp/ForumFabs';
-import { ForumTray } from '@client/threads/ForumTray';
 import PageWithTray from '@layouts/PageWithTray.astro';
 import { parseChannel } from '@schemas/ChannelSchema';
 import ChannelApp from '@server/ChannelApp/ChannelApp.astro';
+import ChannelTray from '@server/ChannelApp/ChannelTray.astro';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import { t } from '@utils/i18n';
 
 const channelKey = Astro.params.channel || 'pelilauta';
@@ -31,6 +32,16 @@ const shortTitle = channel.name;
 ---
 <PageWithTray title={title} shortTitle={shortTitle} description={channel.description}>
   <ChannelApp channel={channel} startAt={page}/>
-  <ForumTray slot="app-tray" client:only="solid-js"/>
+  <ChannelTray slot="app-tray" server:defer/>
   <ForumFabs channel={channel.slug} client:only="solid-js"/>
+
+  <BackgroundPoster
+      slot="app-background-poster"
+      src="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-2.webp"
+      md="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-2-960.webp"
+    />
+  
+  <p class="text-caption text-center" style="opacity:0.44" slot="app-footer-credits">
+    Taustakuva © Juno Viinikka (<a href="https://linktr.ee/junowski">https://linktr.ee/junowski</a>)
+  </p>
 </PageWithTray>
