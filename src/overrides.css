@@ -386,3 +386,16 @@ input[data-error] {
   border-color: var(--color-alert);
   background-color: color-mix(in hsl, var(--color-alert), transparent 66%);
 }
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cn-gap);
+  justify-content: flex-start;
+  align-items: stretch;
+  justify-items: stretch;
+}
+.items-center {
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
