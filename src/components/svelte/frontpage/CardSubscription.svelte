@@ -2,6 +2,7 @@
 import type { CnCard } from '@11thdeg/cyan-next';
 import type { Thread } from '@schemas/ThreadSchema';
 import { hasSeen } from '@stores/subscription';
+import { uid } from '@stores/session';
 
 interface Props {
   thread: Thread;
@@ -9,6 +10,12 @@ interface Props {
 const { thread }: Props = $props();
 
 $effect(() => {
+  // This efffect should only run if we have an active user session
+  if (!$uid) {
+    return;
+  }
+  
+  // As we have an UID, we can check if the thread has been seen
   const element = document.getElementById(
     `thread-card-${thread.key}`,
   ) as CnCard;
