@@ -33,7 +33,7 @@ export const threads: Locale = {
   channel: {
     page: 'Sivu',
     threadCount: '{count} keskustelua',
-    pageCount: '{count} sivua',
+    pageCount: 'Sivu {current}/{count}',
     toFirstPage: 'Ensimmäinen sivu <',
     nextPage: '> Seuraava sivu',
   },

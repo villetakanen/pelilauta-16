@@ -5,7 +5,9 @@ noun: 'monsters'
 ---
 ## Version 17
 
-## 17.3.x
+## 17.4.0 (2025-04-29)
+- FEAT: Channel info shown in channel page
+- FIX: Channel items use server island for better performance (note: the page component still loads channel info, which could likely be moved to another server island)
 - FIX: Channel page info polish
 - FIX: Channel page supports poster images
 - FIX: Channels -page fabs now on svelte
