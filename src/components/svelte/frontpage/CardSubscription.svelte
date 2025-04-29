@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { CnCard } from '@11thdeg/cyan-next';
 import type { Thread } from '@schemas/ThreadSchema';
-import { hasSeen } from '@stores/subscription';
 import { uid } from '@stores/session';
+import { hasSeen } from '@stores/subscription';
 
 interface Props {
   thread: Thread;
@@ -14,7 +14,7 @@ $effect(() => {
   if (!$uid) {
     return;
   }
-  
+
   // As we have an UID, we can check if the thread has been seen
   const element = document.getElementById(
     `thread-card-${thread.key}`,
