@@ -8,13 +8,14 @@ interface Props {
 const { channel } = Astro.props;
 ---
 <div class="flex flex-no-wrap hoverable p-2 mx--2">
-  <cn-icon class="no-shrink" noun={channel.icon} ></cn-icon>
+  
+  <cn-icon class="no-shrink mt-1" noun={channel.icon} ></cn-icon>
     
   <div class="grow">
-    <h4 class="downscaled mb-1">
+    <h4 class="downscaled m-0">
       <a href={`/channels/${channel.slug}/1`}>{channel.name}</a>
     </h4>
-    <p class="m-0">{channel.description}</p>
+    <p class="m-0 downscaled">{channel.description}</p>
   </div>
     
   <div class="downscaled no-shrink" style="width: 20%">

@@ -8,6 +8,7 @@ noun: 'monsters'
 ## 17.4.x (ongoing)
 - FIX: Updated Cyan design system to 1.0.14
 - FIX: Faster front-page-load-times
+- FIX: Channels/Forums -page layout more forum-like, loads faster
 
 ## 17.4.0 (2025-04-29)
 - FEAT: Channel info shown in channel page

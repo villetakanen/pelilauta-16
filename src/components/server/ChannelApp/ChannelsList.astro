@@ -24,12 +24,17 @@ function inCategory(cat: string) {
 <div class="content-columns">
   <div class="column-l">
     { categories().map((cat: string) => (
-      <div class="surface p-2 border-radius mb-2">
-        <h3>{cat}</h3>
-        { inCategory(cat).map((channel: Channel) => (
-          <ChannelInfoRow channel={channel} />   
-        )) }
+      <div class="surface mb-2">
+        <h3 class="m-0 downscaled header-4 elevation-1 p-1">{cat}</h3>
+        <div class="px-2">
+          { inCategory(cat).map((channel: Channel) => (
+            <ChannelInfoRow channel={channel} />   
+          )) }
+        </div>
       </div>
     )) }
+    <div class="flex items-center p-2">
+      <cn-icon noun="discussion" xlarge />
+    </div>
   </div>
 </div>
