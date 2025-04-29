@@ -16,7 +16,7 @@ const { site } = Astro.props;
   title={site.name}
   cover={site.posterURL || undefined}
   >
-  <p>{site.description}</p>
+  <p class="downscaled">{site.description}</p>
 
   <div slot="actions" class="toolbar">
     <SiteOwnerToken {site} client:only="svelte"/>

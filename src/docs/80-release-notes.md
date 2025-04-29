@@ -5,6 +5,11 @@ noun: 'monsters'
 ---
 ## Version 17
 
+## 17.4.x (ongoing)
+- FIX: Updated Cyan design system to 1.0.14
+- FIX: Faster front-page-load-times
+- FIX: Channels/Forums -page layout more forum-like, loads faster
+
 ## 17.4.0 (2025-04-29)
 - FEAT: Channel info shown in channel page
 - FIX: Channel items use server island for better performance (note: the page component still loads channel info, which could likely be moved to another server island)
