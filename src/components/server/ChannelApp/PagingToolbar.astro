@@ -9,7 +9,7 @@ interface Props {
 }
 const { channel, lastThreadFlowTime, hasNextPage } = Astro.props;
 ---
-<div class="toolbar">
+<div class="toolbar elevation-1 px-2">
   <p>
     <a href={`/channels/${channel.slug}/1`}>{t('threads:channel.toFirstPage')}</a>
   </p>

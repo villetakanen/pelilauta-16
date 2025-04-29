@@ -1,9 +1,8 @@
 ---
 import type { Thread } from '@schemas/ThreadSchema';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
-import ReactionButton from '@svelte/app/ReactionButton.svelte';
+import ThreadSubsciber from '@svelte/threads/ThreadSubscriber.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
-import { createSnippet } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 
 interface Props {
@@ -11,23 +10,41 @@ interface Props {
 }
 const { thread } = Astro.props;
 ---
-<div class="my-1 elevation-1 p-2">
-  <div class="toolbar m-0 p-0">
-  <h4 class="downscaled hoverable mb-0">
-    <a href={`/threads/${thread.key}`}>{thread.title}</a>
-  </h4>
-  <p>{toDisplayString(thread.createdAt)}</p>
-  </div>
-  <p class="downscaled">{createSnippet(thread.markdownContent || '')}</p>
-  <div class="toolbar m-0 p-0">
-    <ReactionButton target="thread" key={thread.key} client:only="svelte" />
-    <p class="grow">
-      <ProfileLink uid={thread.author} client:only="solid-js"/>
-    </p>
-    <p>
-      <a href={`/threads/${thread.key}#discussion`}>
-        {t('threads:info.replies', { count: thread.replyCount || 0 })}
+<article class="tl-grid hoverable" id={`thread-${thread.key}`}>
+  <ThreadSubsciber thread={thread} client:only="svelte" />
+
+  <!-- Grid col 1 -->
+  <div>
+    <h4 class="downscaled m-0">
+      <a href={`/threads/${thread.key}`} class="no-decoration">
+        {thread.title}
       </a>
+    </h4>
+    <p class="text-caption m-0">
+      <ProfileLink uid={thread.author} client:only="svelte"/>
+      {thread.tags?.map((tag) => (
+        <span class="pill">
+          {tag}
+        </span>
+      ))}
     </p>
   </div>
-</div>
+
+  <!-- Grid col 2 -->
+  <div class="text-caption m-0 border-left">
+    <a href={`/threads/${thread.key}#discussion`}>
+      {t('threads:info.flowTime', { time: toDisplayString(thread.flowTime) })}<br>
+      {t('threads:info.replies', { count: thread.replyCount || 0 })}
+    </a>
+  </div>
+
+</article>
+
+<style>
+@media (min-width: 621px) {
+  .tl-grid {
+    display: grid;
+    grid-template-columns: 3fr 1fr 
+  }
+}
+</style>

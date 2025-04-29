@@ -399,3 +399,29 @@ input[data-error] {
   justify-items: center;
   justify-content: center;
 }
+.no-decoration {
+  text-decoration: none;
+}
+.border-left {
+  border-left: var(--color-border) solid 1px;
+  padding-left: var(--cn-gap);
+}
+.border-between:not(:first-child) {
+  border-top: var(--color-border) solid 1px;
+}
+.notify {
+  background-color: color-mix(in hsl, var(--color-notify), transparent 90%);
+}
+.notify:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: calc(var(--cn-grid) * 4);
+  width: calc(var(--cn-grid) * 4);
+  background: var(--color-notify);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+}

@@ -11,14 +11,16 @@ const threads = (threadsJSON as Array<Thread>).map((thread) =>
   parseThread(thread, thread.key),
 );
 ---
-<div class="flex flex-col column" style="align-items: flex-start">
+<section>
+  <div class="flex-col">
     {threads.map((thread) => (
       thread && <ThreadCard thread={thread} />
-    ))}
-    <div class="flex justify-center mt-2">
-      <a href="/channels" class="button">
-        {t('actions:showMore')}
-      </a>
-    </div>
+    ))} 
   </div>
+  <div class="flex items-center mt-2">
+    <a href="/channels" class="button">
+      {t('actions:showMore')}
+    </a>
+  </div>
+</section>
 
