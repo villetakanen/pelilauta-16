@@ -1,7 +1,7 @@
 ---
 import type { Channel } from '@schemas/ChannelSchema';
 import { type Thread, parseThread } from '@schemas/ThreadSchema';
-import { t } from '@utils/i18n';
+import ChannelInfoSection from './ChannelInfoSection.astro';
 import PaginationToolbar from './PagingToolbar.astro';
 import ThreadListItem from './ThreadListItem.astro';
 
@@ -26,10 +26,6 @@ const threads = threadsJSON.map((thread: Thread) =>
 );
 const lastThreadFlowTime = threads[threads.length - 1]?.flowTime || 0;
 const hasNextPage = threads.length === 10;
-
-// The channel has N pages where N is the number of threads divided by 10
-// and rounded up. The last page is the one that has the last thread.
-const pages = Math.ceil((channel.threadCount || 0) / 10);
 ---
 <div class="content-columns">
   <section class="column-l">
@@ -42,12 +38,8 @@ const pages = Math.ceil((channel.threadCount || 0) / 10);
       )) }
     <PaginationToolbar channel={channel} lastThreadFlowTime={lastThreadFlowTime} hasNextPage={hasNextPage}/>
   </section>
-  <section class="column-s flex flex-col items-center surface p-2">
-    <cn-icon noun={channel.icon} large />
-    <h2 class="downscaled m-0">{channel.name}</h2>
-    <p class="mt-0">
-      {t('threads:channel.threadCount', {count: channel.threadCount})}<br />
-      {t('threads:channel.pageCount', {count: pages})}</p>
-    {channel.description && <p class="text-small">{channel.description}</p>}
-  </section>
+  
+  <ChannelInfoSection
+    {channel}
+    {startAt} />
 </div>
