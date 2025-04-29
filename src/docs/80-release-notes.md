@@ -9,6 +9,9 @@ noun: 'monsters'
 - FIX: Updated Cyan design system to 1.0.14
 - FIX: Faster front-page-load-times
 - FIX: Channels/Forums -page layout more forum-like, loads faster
+- FIX: Card notify effect no longer runs on anonymous sessions
+- FIX: Moved static thread reply count from solid-js to SSR Astro
+- CHORE: Removed some deprecated solid-js components no longer in use
 
 ## 17.4.0 (2025-04-29)
 - FEAT: Channel info shown in channel page

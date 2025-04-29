@@ -1,6 +1,5 @@
 ---
 import type { Thread } from '@schemas/ThreadSchema';
-import { ThreadRepliesButton } from '@shared/ThreadsApp/ThreadRepliesButton';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import ReactionButton from '@svelte/app/ReactionButton.svelte';
@@ -33,7 +32,12 @@ const noun = topicToNoun(channel);
         {channel.charAt(0).toUpperCase() + channel.slice(1)}
       </a>
       <div slot="actions" class="toolbar items-center">
-        <ThreadRepliesButton thread={thread} client:only="solid-js" />
+        <div class="flex align-center">
+          <cn-icon noun="send" small />
+          <span class="text-caption decoration-none">
+            {thread.replyCount}
+          </span>
+        </div>
         <ReactionButton target="thread" key={thread.key} client:only="svelte" />
       </div>
      </p>
