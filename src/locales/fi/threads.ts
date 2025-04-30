@@ -11,6 +11,9 @@ export const threads: Locale = {
     author: 'Kirjoittanut',
     inTopic: 'aiheessa',
     replies: '{count} vastausta',
+    createdAt: 'Luotu {time}',
+    flowTime: 'Päivitetty {time}',
+    loveCount: '{count} tykkäystä',
     actions: {
       title: 'Toiminnot',
       admin: {

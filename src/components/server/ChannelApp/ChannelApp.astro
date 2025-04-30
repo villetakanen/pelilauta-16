@@ -1,6 +1,7 @@
 ---
 import type { Channel } from '@schemas/ChannelSchema';
 import { type Thread, parseThread } from '@schemas/ThreadSchema';
+import { t } from '@utils/i18n';
 import ChannelInfoSection from './ChannelInfoSection.astro';
 import PaginationToolbar from './PagingToolbar.astro';
 import ThreadListItem from './ThreadListItem.astro';
@@ -28,14 +29,23 @@ const lastThreadFlowTime = threads[threads.length - 1]?.flowTime || 0;
 const hasNextPage = threads.length === 10;
 ---
 <div class="content-columns">
-  <section class="column-l">
+  <section class="column-l surface">
+    <div class="toolbar px-2">
+      <a href={`/channels/`}>{t('threads:forum.title')}</a> 
+      <span>{channel.name}</span>
+    </div>
    <PaginationToolbar
      channel={channel} 
      lastThreadFlowTime={lastThreadFlowTime} 
      hasNextPage={hasNextPage}/>
-     { threads.map((thread: Thread) => (
-       <ThreadListItem thread={thread} />
-      )) }
+
+     <!-- Threads for the page  -->
+    <div class="p-2 flex-col">
+      { threads.map((thread: Thread) => (
+        <ThreadListItem thread={thread} />
+        )) }
+    </div>
+
     <PaginationToolbar channel={channel} lastThreadFlowTime={lastThreadFlowTime} hasNextPage={hasNextPage}/>
   </section>
   

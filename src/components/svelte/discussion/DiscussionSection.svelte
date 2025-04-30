@@ -59,7 +59,7 @@ onMount(async () => {
 });
 </script>
 <div class="content-columns">
-  <section class="flex flex-col column-l" style="gap:var(--cn-grid)">
+  <section class="flex-col column-l" style="gap:var(--cn-grid)">
     {#each discussion as reply}
       <ReplyArticle {reply} />
     {/each}
