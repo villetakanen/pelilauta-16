@@ -6,6 +6,7 @@ import SiteTray from '@server/SiteApp/SiteTray.astro';
 import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import PageFabs from '@svelte/sites/PageFabs.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { logError } from '@utils/logHelpers';
 import { systemToNoun } from '@utils/schemaHelpers';
 import PageWithTray from 'src/layouts/PageWithTray.astro';
 
@@ -27,6 +28,16 @@ const homePageKey = site.homepage || site.key;
 const pageResponse = await fetch(
   `${origin}/api/sites/${siteKey}/pages/${homePageKey}.json`,
 );
+
+// We get some sentry errors when the page is not found, so we need to handle this
+// gracefully. This should not happen unless someone is crawling random adresses, but just in case.
+if (pageResponse.status === 404) {
+  logError(
+    `Page ${homePageKey} not found for site ${siteKey}. Redirecting to 404.`,
+  );
+  return Astro.redirect('/404');
+}
+
 const page = parsePage(toClientEntry(await pageResponse.json()), homePageKey);
 
 const noun = systemToNoun(site.system);
