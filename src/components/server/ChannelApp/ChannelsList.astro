@@ -1,5 +1,6 @@
 ---
 import type { Channel } from '@schemas/ChannelSchema';
+import ForumOnboardingArticle from '@svelte/threads/ForumOnboardingArticle.svelte';
 import ChannelInfoRow from './ChannelInfoRow.astro';
 
 /**
@@ -23,6 +24,8 @@ function inCategory(cat: string) {
 ---
 <div class="content-columns">
   <div class="column-l">
+    <ForumOnboardingArticle client:only="svelte"/>
+
     { categories().map((cat: string) => (
       <div class="surface mb-2">
         <h3 class="m-0 downscaled header-4 elevation-1 p-1">{cat}</h3>
