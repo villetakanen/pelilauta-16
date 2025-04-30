@@ -31,7 +31,3 @@ async function fetchAppMeta() {
     }
   }
 }
-
-export function isAdmin(uid: string) {
-  return $appMeta.get().admins.includes(uid);
-}

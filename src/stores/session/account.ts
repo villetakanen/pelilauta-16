@@ -4,6 +4,7 @@ import {
   type Account,
   parseAccount,
 } from '@schemas/AccountSchema';
+import { $appMeta } from '@stores/metaStore/metaStore';
 import { logWarn } from '@utils/logHelpers';
 import { atom, computed } from 'nanostores';
 
@@ -31,6 +32,18 @@ export const requiresEula = computed([account, accountNotFound], (acc, anf) => {
   if (!acc) return false;
   return !acc.eulaAccepted;
 });
+
+// Helper for the admin tooling visiblity. The actual authz is done in the
+// backend, this is just a helper to show/hide the admin tools in the UI.
+export const showAdminTools = computed(
+  [$account, $appMeta],
+  (account, appMeta) => {
+    if (!account) return false;
+    if (!account.uid) return false;
+    if (appMeta?.admins?.includes(account.uid)) return true;
+    return false;
+  },
+);
 
 // *** REFACTORED UP TO HERE *******************************************
 export const $requiresEula = computed($account, (account) => {

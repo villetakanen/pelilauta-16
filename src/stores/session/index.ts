@@ -119,3 +119,4 @@ export async function logout() {
 }
 
 export * from './subscriber';
+export * from './account';
