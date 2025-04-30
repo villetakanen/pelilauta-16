@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ## 17.4.x (ongoing)
+- FIX: Admin tools visibility uses Nanostores derived store for better DX and performance
 - FIX: Reply dialog widht regression issue fixed with component level css
 - FIX: Challen page looks forum-like
 - FIX: Channel page thread shows unread status like the front-page

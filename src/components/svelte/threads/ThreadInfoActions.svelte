@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Thread } from '@schemas/ThreadSchema';
-import { isAdmin } from '@stores/metaStore/metaStore';
+import { showAdminTools } from '@stores/session';
 import { uid } from '@stores/session';
 import { syndicateToBsky } from '@svelte/thread-editor/submitThreadUpdate';
 import { pushSnack } from '@utils/client/snackUtils';
@@ -18,11 +18,6 @@ const owns = $derived.by(() => {
   return thread?.owners?.includes($uid) ?? false;
 });
 
-const admin = $derived.by(() => {
-  // Ensure thread and owners exist before checking
-  return isAdmin($uid) ?? false;
-});
-
 async function onsubmit(e: Event) {
   e.preventDefault();
   if (!thread || !thread.owners || thread.owners.length === 0)
@@ -37,7 +32,7 @@ async function onsubmit(e: Event) {
   }
 }
 </script>
-{#if owns || admin}
+{#if owns || $showAdminTools}
   <section class="flex flex-col border-t p-2 mt-2">
     {#if owns}
       <h4 class="downscaled m-0">{t('threads:info.actions.title')}</h4> 
@@ -54,7 +49,7 @@ async function onsubmit(e: Event) {
         {t('actions:delete')} 
       </a>
     {/if}
-    {#if admin}
+    {#if $showAdminTools}
       <h4 class="downscaled m-0">
         <cn-icon noun="admin"></cn-icon>
         {t('threads:info.actions.admin.title')}</h4>
