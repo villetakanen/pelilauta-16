@@ -56,6 +56,7 @@ async function onsubmit(e: Event) {
       rows="5"
       name="reply"
       required
+      class="reply-textarea"
       bind:value={replyContent}
     ></textarea>
     
@@ -69,3 +70,15 @@ async function onsubmit(e: Event) {
     </div>
   </form>
 </dialog>
+
+<style>
+.reply-textarea {
+  min-width: 85dvw;
+}
+@media screen and (min-width: 621px) {
+  .reply-textarea {
+    min-width: 620px;
+  }
+}
+
+</style>

@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ## 17.4.x (ongoing)
+- FIX: Reply dialog widht regression issue fixed with component level css
 - FIX: Challen page looks forum-like
 - FIX: Channel page thread shows unread status like the front-page
 - FIX: Updated Cyan design system to 1.0.14
