@@ -22,17 +22,11 @@ onMount(clocks, () => {
 });
 
 async function subscribe(key: string) {
-  const { getFirestore, collection, onSnapshot } = await import(
-    'firebase/firestore'
-  );
+  const { db } = await import('src/firebase/client');
+  const { collection, onSnapshot } = await import('firebase/firestore');
 
   onSnapshot(
-    collection(
-      getFirestore(),
-      SITES_COLLECTION_NAME,
-      key,
-      CLOCKS_COLLECTION_NAME,
-    ),
+    collection(db, SITES_COLLECTION_NAME, key, CLOCKS_COLLECTION_NAME),
     (snapshot) => {
       if (snapshot.empty) {
         clocks.set([]);
