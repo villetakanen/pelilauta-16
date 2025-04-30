@@ -26,19 +26,13 @@ onMount(handouts, () => {
 });
 
 async function subscribe(key: string) {
-  const { getFirestore, collection, onSnapshot, query } = await import(
-    'firebase/firestore'
-  );
+  const { db } = await import('src/firebase/client');
+  const { collection, onSnapshot, query } = await import('firebase/firestore');
 
   if (site.get()?.owners.includes(uid.get())) {
     // The user is an owner of the site, so they can see all handouts
     onSnapshot(
-      collection(
-        getFirestore(),
-        SITES_COLLECTION_NAME,
-        key,
-        HANDOUTS_COLLECTION_NAME,
-      ),
+      collection(db, SITES_COLLECTION_NAME, key, HANDOUTS_COLLECTION_NAME),
       (snapshot) => {
         const newHandouts = new Array<Handout>();
 
@@ -62,12 +56,7 @@ async function subscribe(key: string) {
   } else {
     // We need to get the handouts that the user is in the readers ACL of the handout
     const q = query(
-      collection(
-        getFirestore(),
-        SITES_COLLECTION_NAME,
-        key,
-        HANDOUTS_COLLECTION_NAME,
-      ),
+      collection(db, SITES_COLLECTION_NAME, key, HANDOUTS_COLLECTION_NAME),
       where('readers', 'array-contains', uid.get()),
     );
     onSnapshot(q, (snapshot) => {

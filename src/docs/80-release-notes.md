@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ## 17.4.x (ongoing)
+- FIX: Firestore subscribing stores init uses clent/db init correctly (instead of direct getFirestore call , which might not work due to race conditions)
 - FIX: Admin tools visibility uses Nanostores derived store for better DX and performance
 - FIX: Reply dialog widht regression issue fixed with component level css
 - FIX: Challen page looks forum-like

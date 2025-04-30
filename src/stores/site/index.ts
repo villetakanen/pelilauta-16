@@ -19,8 +19,9 @@ onMount(site, () => {
 });
 
 async function subscribe(key: string) {
-  const { getFirestore, doc, onSnapshot } = await import('firebase/firestore');
-  onSnapshot(doc(getFirestore(), SITES_COLLECTION_NAME, key), (doc) => {
+  const { db } = await import('src/firebase/client');
+  const { doc, onSnapshot } = await import('firebase/firestore');
+  onSnapshot(doc(db, SITES_COLLECTION_NAME, key), (doc) => {
     if (doc.exists()) {
       site.set(parseSite(toClientEntry(doc.data()), key));
     } else {
