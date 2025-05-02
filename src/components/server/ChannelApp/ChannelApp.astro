@@ -1,6 +1,7 @@
 ---
 import type { Channel } from '@schemas/ChannelSchema';
 import { type Thread, parseThread } from '@schemas/ThreadSchema';
+import ForumOnboardingArticle from '@svelte/threads/ForumOnboardingArticle.svelte';
 import { t } from '@utils/i18n';
 import ChannelInfoSection from './ChannelInfoSection.astro';
 import PaginationToolbar from './PagingToolbar.astro';
@@ -29,7 +30,10 @@ const lastThreadFlowTime = threads[threads.length - 1]?.flowTime || 0;
 const hasNextPage = threads.length === 10;
 ---
 <div class="content-columns">
-  <section class="column-l surface">
+  <div class="column-l">
+    <ForumOnboardingArticle client:only="svelte"/>
+    <section class="surface">
+    
     <div class="toolbar px-2">
       <a href={`/channels/`}>{t('threads:forum.title')}</a> 
       <span>{channel.name}</span>
@@ -48,6 +52,7 @@ const hasNextPage = threads.length === 10;
 
     <PaginationToolbar channel={channel} lastThreadFlowTime={lastThreadFlowTime} hasNextPage={hasNextPage}/>
   </section>
+  </div>
   
   <ChannelInfoSection
     {channel}

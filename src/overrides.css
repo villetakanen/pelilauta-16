@@ -425,3 +425,17 @@ input[data-error] {
   pointer-events: none;
   opacity: 0.5;
 }
+/* This is a surface type, supports elevation 0 to 4 */
+.secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-on-secondary);
+}
+.secondary.elevation-1,
+.secondary .elevation-1 {
+  background-color: light-dark(
+    color-mix(in hsl, var(--color-secondary), var(--color-primary) 10%),
+    color-mix(in hsl, var(--color-secondary), var(--color-primary) 30%)
+  );
+  color: var(--color-on-secondary);
+  box-shadow: var(--shadow-elevation-1);
+}
