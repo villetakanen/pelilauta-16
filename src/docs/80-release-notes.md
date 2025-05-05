@@ -5,7 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-## 17.4.x (ongoing)
+## 17.5.x (ongoing)
+- FIX: moved the login page to astro and svelte
+
+## 17.5.0 (2025-05-01)
 - FEAT: Added an onboarding article to the Channels and Channel -pages.
 - FIX: Firestore subscribing stores init uses clent/db init correctly (instead of direct getFirestore call , which might not work due to race conditions)
 - FIX: Admin tools visibility uses Nanostores derived store for better DX and performance
