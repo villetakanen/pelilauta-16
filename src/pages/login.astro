@@ -1,7 +1,7 @@
 ---
-import { EmailLoginSection } from '@client/login/EmailLoginSection';
-import { PasswordLoginSection } from '@client/login/PasswordLoginSection';
 import ModalPage from '@layouts/ModalPage.astro';
+import EmailLoginSection from '@svelte/login/EmailLoginSection.svelte';
+import PasswordLoginSection from '@svelte/login/PasswordLoginSection.svelte';
 import SyndicatedLoginSection from '@svelte/login/SyndicatedLoginSection.svelte';
 import { t } from '@utils/i18n';
 
@@ -22,11 +22,11 @@ const showPasswordLoginFlag =
     <div class="content-columns">
       { showPasswordLoginFlag &&
         <div>
-          <PasswordLoginSection client:only="solid-js"/>
+          <PasswordLoginSection client:only="svelte"/>
         </div>
       }
       <div>
-        <EmailLoginSection client:only="solid-js"/>
+        <EmailLoginSection client:only="svelte"/>
       </div>
       <div>
         <SyndicatedLoginSection client:only="svelte"/>
