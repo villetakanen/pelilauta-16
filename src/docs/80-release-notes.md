@@ -7,6 +7,8 @@ noun: 'monsters'
 
 ## 17.5.x (ongoing)
 - FIX: moved the login page to astro and svelte
+- FIX: moved the session authentication info section (in settings) to svelte
+- FIX: disabled server island for front page sitelist, as it was causing issues with the server-side rendering at Vercel side
 
 ## 17.5.0 (2025-05-01)
 - FEAT: Added an onboarding article to the Channels and Channel -pages.
