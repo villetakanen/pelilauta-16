@@ -22,9 +22,7 @@ Astro.response.headers.set(
         <DeferredSection class="column-s" slot="fallback" />
       </SyndicateStream>
 
-      <TopSitesStream server:defer>
-        <DeferredSection class="column-s" slot="fallback" />
-      </TopSitesStream>
+      <TopSitesStream />
 
     </div>
     <FrontpageFabs client:only="svelte" slot="fab-tray"/>

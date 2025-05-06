@@ -10,6 +10,7 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 import { onMount } from 'svelte';
 import Actions from './Actions.svelte';
+import AuthnSection from './AuthnSection.svelte';
 import ProfileTool from './ProfileTool.svelte';
 
 let profile: Profile | null = $state(null);
@@ -42,7 +43,8 @@ async function subscribe() {
     </div>
     <ProfileTool {profile} />
     <Actions />
-  {:else}
+    <AuthnSection />
+  {:else} 
     <div>
       <cn-loader></cn-loader>
     </div>
