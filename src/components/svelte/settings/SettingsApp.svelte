@@ -12,6 +12,7 @@ import { onMount } from 'svelte';
 import Actions from './Actions.svelte';
 import AuthnSection from './AuthnSection.svelte';
 import ProfileTool from './ProfileTool.svelte';
+import RemoveAccountSection from './RemoveAccountSection.svelte';
 
 let profile: Profile | null = $state(null);
 
@@ -44,6 +45,7 @@ async function subscribe() {
     <ProfileTool {profile} />
     <Actions />
     <AuthnSection />
+    <RemoveAccountSection />
   {:else} 
     <div>
       <cn-loader></cn-loader>
