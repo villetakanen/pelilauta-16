@@ -6,7 +6,7 @@ import AddFilesButton from '@svelte/app/AddFilesButton.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
 import { extractTags } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
-import { logError } from '@utils/logHelpers';
+import { logDebug, logError } from '@utils/logHelpers';
 import type { CnEditor } from 'cn-editor/src/cn-editor';
 import { onMount } from 'svelte';
 import { submitThreadUpdate } from './submitThreadUpdate';
@@ -21,12 +21,22 @@ const { thread, channelKey, channels }: Props = $props();
 let saving = $state(false);
 let changed = $state(false);
 let files = $state<File[]>([]);
-const previews = $derived(
-  files.map((file) => ({ src: URL.createObjectURL(file), caption: file.name })),
-);
+const previews = $derived.by(() => {
+  if (thread?.images) {
+    return thread.images.map((image) => ({
+      src: image.url,
+      caption: image.alt,
+    }));
+  }
+  return files.map((file) => ({
+    src: URL.createObjectURL(file),
+    caption: file.name,
+  }));
+});
 let tags = $state<string[]>(thread?.tags || []);
 
 async function handleSubmit(event: Event) {
+  logDebug('ThreadEditorForm', 'handleSubmit', event);
   event.preventDefault();
   saving = true;
   const data = new FormData(event.target as HTMLFormElement);
@@ -36,7 +46,7 @@ async function handleSubmit(event: Event) {
   try {
     const slug = await submitThreadUpdate(data, $uid, tags, files);
     saving = false;
-    window.location.href = `/threads/${slug}`;
+    // window.location.href = `/threads/${slug}`;
   } catch (error) {
     logError('Error saving thread', error);
     pushSnack(t('threads:editor.error.save'));
@@ -80,6 +90,7 @@ onMount(() => {
         disabled={saving}
         placeholder={t('entries:thread.placeholders.title')}
         onchange={handleChange}
+        value={thread?.title || ''}
       />
     </label>
     <label>

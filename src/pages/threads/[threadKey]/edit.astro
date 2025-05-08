@@ -10,7 +10,9 @@ const title = `${t('app:shortname')} – ${t('actions:edit.thread')}`;
 const shortTitle = t('actions:edit.thread');
 
 // Fetch site data from the api
-const threadResponse = await fetch(`${origin}/api/threads/${threadKey}.json`);
+const threadResponse = await fetch(
+  `${Astro.url.origin}/api/threads/${threadKey}.json`,
+);
 if (threadResponse.status === 404) {
   return Astro.redirect('/404');
 }
