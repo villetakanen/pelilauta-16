@@ -9,6 +9,8 @@ noun: 'monsters'
 - FIX: moved the login page to astro and svelte
 - FIX: moved the session authentication info section (in settings) to svelte
 - FIX: disabled server island for front page sitelist, as it was causing issues with the server-side rendering at Vercel side
+- FIX: deprecated thread editor solid-js component, and added thread update branch to the svelte alternative (making the the svelte version able tho handle both thread creation and thread updates)
+- FIX: Export as .md tool works if the pages have only markdown content (ie. no rendered html for some reason)
 
 ## 17.5.0 (2025-05-01)
 - FEAT: Added an onboarding article to the Channels and Channel -pages.

@@ -44,6 +44,9 @@ export async function submitThreadUpdate(
   files: File[],
 ) {
   const { addThread } = await import('@firebase/client/threads/addThread');
+  const { updateThread } = await import(
+    '@firebase/client/threads/updateThread'
+  );
 
   const title = data.get('title') as string;
   const markdownContent = data.get('markdownContent') as string;
@@ -63,6 +66,17 @@ export async function submitThreadUpdate(
 
   if (tags.length > 0) {
     thread.tags = tags;
+  }
+
+  // Handle thread updates (e.g., editing a thread)
+  if (data.has('key')) {
+    const key = data.get('key') as string;
+    thread.key = key;
+
+    // the updateThread function requires the thread key to be set in the thread object
+    await updateThread(thread);
+
+    return key;
   }
 
   const posted = await addThread(thread, files, uid);
