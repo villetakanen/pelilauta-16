@@ -28,11 +28,11 @@ let tags = $state<string[]>(thread?.tags || []);
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
-  if (thread?.key) {
-    throw new Error('Editing existing threads is not supported yet');
-  }
   saving = true;
   const data = new FormData(event.target as HTMLFormElement);
+  if (thread) {
+    data.append('key', thread.key);
+  }
   try {
     const slug = await submitThreadUpdate(data, $uid, tags, files);
     saving = false;

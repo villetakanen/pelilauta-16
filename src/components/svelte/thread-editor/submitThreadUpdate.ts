@@ -1,6 +1,7 @@
 import { authedPost } from '@firebase/client/apiClient';
 import { type Channel, ChannelSchema } from '@schemas/ChannelSchema';
 import type { Thread } from '@schemas/ThreadSchema';
+import { updateThread } from '@stores/ThreadsApp/updateThread';
 
 export async function syndicateToBsky(
   thread: Thread,
@@ -63,6 +64,18 @@ export async function submitThreadUpdate(
 
   if (tags.length > 0) {
     thread.tags = tags;
+  }
+
+  // Handle thread updates (e.g., editing a thread)
+  if (data.has('key')) {
+    const key = data.get('key') as string;
+    thread.key = key;
+
+    updateThread(key, {
+      ...thread,
+    });
+
+    return key;
   }
 
   const posted = await addThread(thread, files, uid);
