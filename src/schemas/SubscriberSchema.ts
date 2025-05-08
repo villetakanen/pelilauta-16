@@ -21,7 +21,7 @@ export const SubscriptionSchema = z.object({
   pushMessages: z.boolean(),
   notifyOnThreads: z.boolean(),
   notifyOnLikes: z.boolean(),
-  messagingTokens: z.array(z.string()),
+  messagingTokens: z.array(z.string()).default([]),
 });
 
 export type Subscription = z.infer<typeof SubscriptionSchema>;
