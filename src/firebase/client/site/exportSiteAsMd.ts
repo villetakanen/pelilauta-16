@@ -22,9 +22,9 @@ export async function exportSiteAsMd(site: Site, origin: string) {
     const index = pageEntries.findIndex((page) => page.key === ref.key);
     if (index >= 0) {
       const page = pageEntries[index];
-      const markdown = page.htmlContent ? 
-        _turndownService.turndown(page.htmlContent ?? '') :
-        page.markdownContent ?? '';
+      const markdown = page.htmlContent
+        ? _turndownService.turndown(page.htmlContent ?? '')
+        : (page.markdownContent ?? '');
       pages.push(markdown);
       pageEntries.splice(index, 1);
     }
@@ -32,9 +32,9 @@ export async function exportSiteAsMd(site: Site, origin: string) {
 
   // Add the pages that were not in the toc
   for (const page of pageEntries) {
-    const markdown = page.htmlContent ? 
-      _turndownService.turndown(page.htmlContent ?? '') :
-      page.markdownContent ?? '';
+    const markdown = page.htmlContent
+      ? _turndownService.turndown(page.htmlContent ?? '')
+      : (page.markdownContent ?? '');
     pages.push(markdown);
   }
 
