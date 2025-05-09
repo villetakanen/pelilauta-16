@@ -3,7 +3,11 @@ import {
   type Reactions,
 } from '@schemas/ReactionsSchema';
 import { REPLIES_COLLECTION, type Reply } from '@schemas/ReplySchema';
-import { THREADS_COLLECTION_NAME, type Thread, type ImageArraySchema } from '@schemas/ThreadSchema';
+import {
+  type ImageArraySchema,
+  THREADS_COLLECTION_NAME,
+  type Thread,
+} from '@schemas/ThreadSchema';
 import type { z } from 'astro/zod';
 import { addAssetToThread } from './addAssetToThread';
 
@@ -38,7 +42,7 @@ export async function addReply(
   if (quoteref) replyData.quoteref = quoteref;
 
   if (files.length > 0) {
-    const uploadedImages:z.infer<typeof ImageArraySchema> = [];
+    const uploadedImages: z.infer<typeof ImageArraySchema> = [];
     for (const file of files) {
       const { downloadURL: url } = await addAssetToThread(thread.key, file);
       const alt = file.name;

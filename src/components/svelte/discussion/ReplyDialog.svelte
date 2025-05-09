@@ -45,7 +45,6 @@ async function onsubmit(e: Event) {
   const markdownContent = formData.get('reply') as string;
 
   if (files.length > 0) {
-
     await addReply(thread, $uid, markdownContent, '', files);
   } else {
     await addReply(thread, $uid, markdownContent);
