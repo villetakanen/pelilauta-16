@@ -3,14 +3,20 @@ import {
   type Reactions,
 } from '@schemas/ReactionsSchema';
 import { REPLIES_COLLECTION, type Reply } from '@schemas/ReplySchema';
-import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
+import {
+  type ImageArraySchema,
+  THREADS_COLLECTION_NAME,
+  type Thread,
+} from '@schemas/ThreadSchema';
+import type { z } from 'astro/zod';
+import { addAssetToThread } from './addAssetToThread';
 
 export async function addReply(
   thread: Thread,
   author: string,
   markdonwContent: string,
   quoteref?: string,
-  images?: { url: string; alt: string }[],
+  files: File[] = [],
 ) {
   const {
     serverTimestamp,
@@ -34,7 +40,16 @@ export async function addReply(
     owners: [author],
   };
   if (quoteref) replyData.quoteref = quoteref;
-  if (images) replyData.images = images;
+
+  if (files.length > 0) {
+    const uploadedImages: z.infer<typeof ImageArraySchema> = [];
+    for (const file of files) {
+      const { downloadURL: url } = await addAssetToThread(thread.key, file);
+      const alt = file.name;
+      uploadedImages.push({ url, alt });
+    }
+    replyData.images = uploadedImages;
+  }
 
   const data = toFirestoreEntry(replyData);
 
