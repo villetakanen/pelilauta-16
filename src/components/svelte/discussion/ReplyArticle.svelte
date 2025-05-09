@@ -14,6 +14,15 @@ const { reply }: Props = $props();
 const fromUser = $derived.by(() => {
   return reply.owners[0] === $uid;
 });
+
+const images = $derived.by(() => {
+  return (
+    reply.images?.map((image) => ({
+      src: image.url,
+      caption: image.alt,
+    })) || []
+  );
+});
 </script>
 <article  class="flex flex-no-wrap">
   {#if !fromUser}
@@ -51,6 +60,9 @@ const fromUser = $derived.by(() => {
       </cn-menu>
     </div>
     <div>
+      {#if images.length }
+        <cn-lightbox {images}></cn-lightbox>
+      {/if}
       {@html marked(reply.markdownContent || '')}
     </div>
     <div class="toolbar justify-end" style="margin-bottom: calc(var(--cn-grid) * -1)">

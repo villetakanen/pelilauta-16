@@ -5,6 +5,15 @@ import { ContentEntrySchema } from './ContentEntry';
 
 export const THREADS_COLLECTION_NAME = 'stream';
 
+export const ImageArraySchema = z
+  .array(
+    z.object({
+      url: z.string(),
+      alt: z.string(),
+    }),
+  )
+  .default([]);
+
 export const ThreadSchema = ContentEntrySchema.extend({
   title: z.string(),
   channel: z.string().optional(),
@@ -12,14 +21,7 @@ export const ThreadSchema = ContentEntrySchema.extend({
   youtubeId: z.string().optional(),
   topic: z.string().optional(), // key of the topic this thread belongs to, defaults to 'Yleinen'
   poster: z.string().optional(), // URL for the poster image
-  images: z
-    .array(
-      z.object({
-        url: z.string(),
-        alt: z.string(),
-      }),
-    )
-    .optional(), // URLs for the images shared as attachments
+  images: ImageArraySchema.optional(),
   replyCount: z.number().optional(),
   lovedCount: z.number().optional(),
   createdAt: z.any().optional(),

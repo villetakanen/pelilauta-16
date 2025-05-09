@@ -10,6 +10,7 @@ export async function addReply(
   author: string,
   markdonwContent: string,
   quoteref?: string,
+  images?: { url: string; alt: string }[],
 ) {
   const {
     serverTimestamp,
@@ -33,6 +34,8 @@ export async function addReply(
     owners: [author],
   };
   if (quoteref) replyData.quoteref = quoteref;
+  if (images) replyData.images = images;
+
   const data = toFirestoreEntry(replyData);
 
   const reply = await addDoc(

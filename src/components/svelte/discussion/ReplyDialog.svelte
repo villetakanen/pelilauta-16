@@ -2,6 +2,7 @@
 import { addReply } from '@firebase/client/threads/addReply';
 import type { Thread } from '@schemas/ThreadSchema';
 import { uid } from '@stores/session';
+import AddFilesButton from '@svelte/app/AddFilesButton.svelte';
 import { t } from '@utils/i18n';
 
 interface Props {
@@ -10,6 +11,16 @@ interface Props {
 const { thread }: Props = $props();
 const dialogId = `reply-dialog-${thread.key}`;
 let replyContent = $state<string>('');
+let files = $state<File[]>([]);
+let changed = $state(false);
+let saving = $state(false);
+
+const previews = $derived.by(() => {
+  return files.map((file) => ({
+    src: URL.createObjectURL(file),
+    caption: file.name,
+  }));
+});
 
 function showDialog() {
   const dialog = document.getElementById(dialogId) as HTMLDialogElement;
@@ -19,17 +30,29 @@ function showDialog() {
 function handleClose() {
   const dialog = document.getElementById(dialogId) as HTMLDialogElement;
   replyContent = '';
+  files = [];
   dialog.close();
+  changed = false;
+  saving = false;
 }
 
 async function onsubmit(e: Event) {
   // TODO: Send the reply
   e.preventDefault();
+  saving = true;
   const form = e.target as HTMLFormElement;
   const formData = new FormData(form);
   const markdownContent = formData.get('reply') as string;
 
-  await addReply(thread, $uid, markdownContent);
+  if (files.length > 0) {
+    const images = previews.map((file) => ({
+      url: file.src,
+      alt: file.caption,
+    }));
+    await addReply(thread, $uid, markdownContent, '', images);
+  } else {
+    await addReply(thread, $uid, markdownContent);
+  }
 
   handleClose();
 }
@@ -51,6 +74,13 @@ async function onsubmit(e: Event) {
   </div>
 
   <form {onsubmit}>
+
+    {#if files.length > 0}
+    <section style="container: images / inline-size; width: min(420px,90vw); margin: 0 auto; margin-bottom: var(--cn-gap)">
+      <cn-lightbox images={previews}></cn-lightbox>
+    </section>
+    {/if}
+
     <textarea
       placeholder={t('entries:reply.markdownContent')}
       rows="5"
@@ -60,7 +90,17 @@ async function onsubmit(e: Event) {
       bind:value={replyContent}
     ></textarea>
     
-    <div class="toolbar justify-end">
+    <div class="toolbar">
+      <AddFilesButton
+        accept="image/*"
+        multiple={true}
+        addFiles={(newFiles: File[]) => {
+          files = [...files, ...newFiles];
+          changed = true;
+        }}
+      disabled={saving}
+    />
+      <div class="grow"></div>
       <button type="button" class="text" onclick={handleClose}>
         {t('actions:cancel')}
       </button>

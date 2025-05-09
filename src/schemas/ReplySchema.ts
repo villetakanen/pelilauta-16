@@ -1,6 +1,7 @@
 import { logError } from '@utils/logHelpers';
 import { z } from 'zod';
 import { ContentEntrySchema } from './ContentEntry';
+import { ImageArraySchema } from './ThreadSchema';
 
 export const REPLIES_COLLECTION = 'comments';
 
@@ -20,6 +21,7 @@ export const ReplySchema = ContentEntrySchema.extend({
   // htmlContent: z.string().optional(),
   // owners: z.array(z.string()),
 
+  images: ImageArraySchema.optional(), // Array of images in the reply
   quoteref: z.string().optional(), // The key of the reply that this reply is quoting.
   threadKey: z.string(), // The key of the thread that this reply is in.
 });
