@@ -45,11 +45,8 @@ async function onsubmit(e: Event) {
   const markdownContent = formData.get('reply') as string;
 
   if (files.length > 0) {
-    const images = previews.map((file) => ({
-      url: file.src,
-      alt: file.caption,
-    }));
-    await addReply(thread, $uid, markdownContent, '', images);
+
+    await addReply(thread, $uid, markdownContent, '', files);
   } else {
     await addReply(thread, $uid, markdownContent);
   }
