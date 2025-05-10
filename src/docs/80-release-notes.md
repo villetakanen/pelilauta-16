@@ -5,6 +5,9 @@ noun: 'monsters'
 ---
 ## Version 17
 
+### 17.6.x (ongoing)
+- FIX: Forum Fabs are now on svelte
+
 ### 17.6.0 (2025-05-09)
 - FEAT: Reply dialog now lets you add images to the reply
 - CHORE: removed some deprecated solid-js components from the project
