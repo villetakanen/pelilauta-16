@@ -12,6 +12,8 @@ export const ChannelSchema = z.object({
   flowTime: z.number().optional(),
 });
 
+export const ChannelsSchema = z.array(ChannelSchema);
+
 export type Channel = z.infer<typeof ChannelSchema>;
 
 export function parseChannel(c: Partial<Channel>) {

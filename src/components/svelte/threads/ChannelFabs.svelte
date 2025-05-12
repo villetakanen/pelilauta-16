@@ -1,16 +1,15 @@
 <script lang="ts">
-import { t } from "@utils/i18n";
-import { uid } from "@stores/session";
+import { uid } from '@stores/session';
+import { t } from '@utils/i18n';
 
 interface Props {
   channel: string;
 }
-const {channel}: Props = $props();
+const { channel }: Props = $props();
 
 const visible = $derived.by(() => {
   return !!$uid;
 });
-
 </script>
 {#if visible}
   <a href={`/create/thread?channel=${channel}`} class="fab">
