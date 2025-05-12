@@ -1,11 +1,11 @@
 ---
-import { ForumFabs } from '@client/ThreadsApp/ForumFabs';
 import PageWithTray from '@layouts/PageWithTray.astro';
 import { parseChannel } from '@schemas/ChannelSchema';
 import ChannelApp from '@server/ChannelApp/ChannelApp.astro';
 import ChannelTray from '@server/ChannelApp/ChannelTray.astro';
 import DeferredSection from '@server/app/DeferredSection.astro';
 import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
+import ChannelFabs from '@svelte/threads/ChannelFabs.svelte';
 import { t } from '@utils/i18n';
 
 const channelKey = Astro.params.channel || 'pelilauta';
@@ -44,7 +44,7 @@ const shortTitle = channel.name;
     <cn-loader noun="discussion" x-large slot="fallback"/>
   </ChannelTray>
 
-  <ForumFabs channel={channel.slug} client:only="solid-js"/>
+  <ChannelFabs client:only="svelte" slot="fab-tray"/>
 
   <BackgroundPoster
       slot="app-background-poster"
