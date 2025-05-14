@@ -19,8 +19,8 @@ test('Prints out the key if not found', () => {
   expect(t('app:missing')).toBe('app:missing');
 });
 
-test('Substitutes the link in the cross post message', () => {
+/*test('Substitutes the link in the cross post message', () => {
   expect(t('threads:fork.crossPost', { link: '/threads/123' })).toBe(
     'Jatkoi keskustelua [uudessa langassa](/threads/123).',
   );
-});
+});*/

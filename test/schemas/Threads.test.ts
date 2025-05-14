@@ -6,6 +6,9 @@ test('createThread factory creates a thread object', () => {
     {
       title: 'title',
       owners: ['owner 1'],
+      channel: 'channel',
+      createdAt: '2023-01-01T00:00:00Z',
+      updatedAt: '2023-01-01T00:00:00Z',
     },
     'key',
   );

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const CHANNEL_NOUNS = ['discussion', 'adventurer'];
+export const CHANNEL_DEFAULT_SLUG = 'yleinen';
 
 export const ChannelSchema = z.object({
   description: z.string(),
@@ -15,6 +16,7 @@ export const ChannelSchema = z.object({
 export const ChannelsSchema = z.array(ChannelSchema);
 
 export type Channel = z.infer<typeof ChannelSchema>;
+export type Channels = z.infer<typeof ChannelsSchema>;
 
 export function parseChannel(c: Partial<Channel>) {
   return ChannelSchema.parse({

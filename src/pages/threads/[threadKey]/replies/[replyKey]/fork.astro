@@ -1,9 +1,9 @@
 ---
-import { ForkThreadApp } from '@client/threads/ForkThreadApp/ForkThreadApp';
 import ModalPage from '@layouts/ModalPage.astro';
-import { parseReply } from '@schemas/ReplySchema';
-import { parseThread } from '@schemas/ThreadSchema';
-import { toClientEntry } from '@utils/client/entryUtils';
+import { ChannelsSchema } from '@schemas/ChannelSchema';
+import { ReplySchema } from '@schemas/ReplySchema';
+import { ThreadSchema } from '@schemas/ThreadSchema';
+import ForkThreadApp from '@svelte/thread-editor/ForkThreadApp.svelte';
 import { t } from '@utils/i18n';
 
 // We want to fetch the thread and the reply server side, and pass those to
@@ -17,22 +17,24 @@ if (!threadKey || !replyKey) {
   Astro.redirect('/404');
 }
 
-const threadData = await fetch(`${origin}/api/threads/${threadKey}.json`).then(
-  (res) => res.json(),
-);
-const thread = parseThread(toClientEntry(threadData), threadKey);
-
-const replyData = await fetch(
+// Fetch the thread, the reply, and channnels server side
+const threadResponse = await fetch(`${origin}/api/threads/${threadKey}.json`);
+const replyResponse = await fetch(
   `${origin}/api/replies/${threadKey}/${replyKey}.json`,
-).then((res) => res.json());
-const reply = parseReply(toClientEntry(replyData), replyKey, threadKey);
+);
+const channelsResponse = await fetch(`${origin}/api/meta/channels.json`);
 
-// Lets check we have the right thread and reply
-if (!thread?.key || !reply?.key) {
+// If any of the requests fail, we should redirect to a 404 page
+if (!threadResponse.ok || !replyResponse.ok || !channelsResponse.ok) {
   //logDebug('thread or reply not found', { threadKey, replyKey });
   Astro.redirect('/404');
 }
+
+// Parse the responses using the schemas (these come from the API, so this is a bit of extra)
+const thread = ThreadSchema.parse(await threadResponse.json());
+const reply = ReplySchema.parse(await replyResponse.json());
+const channels = ChannelsSchema.parse(await channelsResponse.json());
 ---
 <ModalPage title={t('threads:fork.title')}>
-  <ForkThreadApp thread={thread} reply={reply} client:only="solid-js"/>
+  <ForkThreadApp {thread} {reply} {channels} client:only="svelte"/>
 </ModalPage>

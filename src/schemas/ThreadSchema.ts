@@ -16,10 +16,9 @@ export const ImageArraySchema = z
 
 export const ThreadSchema = ContentEntrySchema.extend({
   title: z.string(),
-  channel: z.string().optional(),
+  channel: z.string(),
   siteKey: z.string().optional(),
   youtubeId: z.string().optional(),
-  topic: z.string().optional(), // key of the topic this thread belongs to, defaults to 'Yleinen'
   poster: z.string().optional(), // URL for the poster image
   images: ImageArraySchema.optional(),
   replyCount: z.number().optional(),
@@ -79,8 +78,6 @@ export function createThread(
     channel: source?.channel || '',
     siteKey: source?.siteKey || undefined,
     youtubeId: source?.youtubeId || undefined,
-    // Legacy field, should be removed
-    topic: source?.channel || source?.topic || 'Yleinen',
     poster: source?.poster || '',
     images: source?.images || [],
     owners: source?.owners || [],

@@ -9,6 +9,7 @@ import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import type { CnEditor } from 'cn-editor/src/cn-editor';
 import { onMount } from 'svelte';
+import ChannelSelect from './ChannelSelect.svelte';
 import { submitThreadUpdate } from './submitThreadUpdate';
 
 interface Props {
@@ -39,14 +40,21 @@ async function handleSubmit(event: Event) {
   logDebug('ThreadEditorForm', 'handleSubmit', event);
   event.preventDefault();
   saving = true;
-  const data = new FormData(event.target as HTMLFormElement);
+  const form = new FormData(event.target as HTMLFormElement);
+  const data: Partial<Thread> = {
+    title: form.get('title') as string,
+    channel: form.get('channel') as string,
+    markdownContent: form.get('markdownContent') as string,
+    tags,
+    owners: [$uid],
+  };
   if (thread) {
-    data.append('key', thread.key);
+    data.key = thread.key;
   }
   try {
-    const slug = await submitThreadUpdate(data, $uid, tags, files);
+    const slug = await submitThreadUpdate(data, files);
     saving = false;
-    // window.location.href = `/threads/${slug}`;
+    window.location.href = `/threads/${slug}`;
   } catch (error) {
     logError('Error saving thread', error);
     pushSnack(t('threads:editor.error.save'));
@@ -75,12 +83,30 @@ onMount(() => {
     }
   }
 });
+
+function onChannelChange(event: Event) {
+  const select = event.target as HTMLSelectElement;
+  const selectedChannel = select.value;
+  if (selectedChannel !== channelKey) {
+    handleChange();
+  }
+}
+
+function onAddFiles(newFiles: File[]) {
+  if (!newFiles || newFiles.length === 0) {
+    return;
+  }
+  files = [...files, ...newFiles];
+  handleChange();
+}
 </script>
 
 <form
   id="thread-editor"
   class="content-editor"
   onsubmit={handleSubmit}>
+
+  <!-- Toolbar for title, channel, and add files button -->
   <section class="toolbar">
     <label class="grow">
     {t('entries:thread.title')}
@@ -93,29 +119,21 @@ onMount(() => {
         value={thread?.title || ''}
       />
     </label>
-    <label>
-      {t('entries:thread.channel')}
-      <select
-        name="channel"
-        onchange={handleChange}
-      >
-        {#each channels as channel}
-          <option value={channel.slug}
-            selected={!!channelKey && channel.slug === channelKey}
-          >{channel.name}</option>
-        {/each}
-      </select>
-    </label>
+    <ChannelSelect 
+      channels={channels}
+      channelKey={channelKey}
+      disabled={saving}
+      onchange={onChannelChange}
+    />
     <AddFilesButton
       accept="image/*"
       multiple={true}
-      addFiles={(newFiles: File[]) => {
-        files = [...files, ...newFiles];
-        changed = true;
-      }}
+      addFiles={onAddFiles}
       disabled={saving}
     />
   </section>
+
+  <!-- Lightbox for attachments like images -->
   {#if files.length > 0}
     <section style="container: images / inline-size; width: min(420px,90vw); margin: 0 auto; margin-bottom: var(--cn-gap)">
       <cn-lightbox images={previews}></cn-lightbox>
