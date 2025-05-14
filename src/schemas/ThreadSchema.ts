@@ -1,6 +1,7 @@
 import { logError } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { z } from 'zod';
+import { CHANNEL_DEFAULT_SLUG } from './ChannelSchema';
 import { ContentEntrySchema } from './ContentEntry';
 
 export const THREADS_COLLECTION_NAME = 'stream';
@@ -16,10 +17,9 @@ export const ImageArraySchema = z
 
 export const ThreadSchema = ContentEntrySchema.extend({
   title: z.string(),
-  channel: z.string().optional(),
+  channel: z.string(),
   siteKey: z.string().optional(),
   youtubeId: z.string().optional(),
-  topic: z.string().optional(), // key of the topic this thread belongs to, defaults to 'Yleinen'
   poster: z.string().optional(), // URL for the poster image
   images: ImageArraySchema.optional(),
   replyCount: z.number().optional(),
@@ -80,7 +80,7 @@ export function createThread(
     siteKey: source?.siteKey || undefined,
     youtubeId: source?.youtubeId || undefined,
     // Legacy field, should be removed
-    topic: source?.channel || source?.topic || 'Yleinen',
+    topic: source?.channel ?? CHANNEL_DEFAULT_SLUG,
     poster: source?.poster || '',
     images: source?.images || [],
     owners: source?.owners || [],

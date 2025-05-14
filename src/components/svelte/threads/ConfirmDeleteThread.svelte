@@ -1,11 +1,11 @@
 <script lang="ts">
 import { deleteThread } from '@firebase/client/threads/deleteThread';
 import type { Thread } from '@schemas/ThreadSchema';
+import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
-import { uid } from '@stores/session';
 
 interface Props {
   thread: Thread;
@@ -16,7 +16,7 @@ const allow = $derived.by(() => {
     return false;
   }
   return thread.owners.includes($uid);
-})
+});
 
 async function onsubmit(e: Event) {
   e.preventDefault();
@@ -39,7 +39,6 @@ async function onsubmit(e: Event) {
     }
   }
 }
-
 </script>
 <WithAuth {allow}>
   <div class="content-columns">

@@ -1,3 +1,4 @@
+import { CHANNEL_DEFAULT_SLUG } from '@schemas/ChannelSchema';
 import {
   THREADS_COLLECTION_NAME,
   type Thread,
@@ -47,9 +48,14 @@ export async function GET({ request }: APIContext) {
 
   // Convert the threads to client format
   for (const threadDoc of threads.docs) {
-    publicThreads.push(
-      parseThread(toClientEntry(threadDoc.data()), threadDoc.id),
-    );
+    const data = threadDoc.data();
+    // Some legacy threads have a topic instead of a channel,
+    // so lets set the channel to the topic if it exists
+    // and the channel is not set set a default channel,
+    // as channel is expected by version 17 and beyond
+    data.channel = data.channel ?? CHANNEL_DEFAULT_SLUG;
+
+    publicThreads.push(parseThread(toClientEntry(data), threadDoc.id));
   }
 
   return new Response(JSON.stringify(publicThreads), {

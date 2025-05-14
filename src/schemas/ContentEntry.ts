@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 export const EntrySchema = z.object({
   key: z.string(),
-  flowTime: z.number(),
+  flowTime: z.coerce.number(),
   owners: z.array(z.string()),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
 });
 
 export const ContentEntrySchema = EntrySchema.extend({
@@ -19,8 +19,8 @@ export const ContentEntrySchema = EntrySchema.extend({
   owners: z.array(z.string()),
 });
 
+// Types
 export type Entry = z.infer<typeof EntrySchema>;
-
 export type ContentEntry = z.infer<typeof ContentEntrySchema>;
 
 export function contentEntryFrom(

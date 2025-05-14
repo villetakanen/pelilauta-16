@@ -25,8 +25,8 @@ export async function GET({ params }: APIContext): Promise<Response> {
   }
 
   try {
-    const thread = parseReply(toClientEntry(data), replyKey, threadKey);
-    return new Response(JSON.stringify(thread), {
+    const reply = parseReply(toClientEntry(data), replyKey, threadKey);
+    return new Response(JSON.stringify(reply), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

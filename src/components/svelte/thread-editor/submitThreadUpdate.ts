@@ -38,50 +38,28 @@ export async function syndicateToBsky(
 }
 
 export async function submitThreadUpdate(
-  data: FormData,
-  uid: string,
-  tags: string[],
-  files: File[],
+  data: Partial<Thread>,
+  files?: File[],
 ) {
   const { addThread } = await import('@firebase/client/threads/addThread');
   const { updateThread } = await import(
     '@firebase/client/threads/updateThread'
   );
 
-  const title = data.get('title') as string;
-  const markdownContent = data.get('markdownContent') as string;
-  const channel = data.get('channel') as string;
-
-  if (!title || !markdownContent || !channel) {
+  if (!data.title || !data.markdownContent || !data.channel || !data.owners) {
     throw new Error('Missing minimum required fields');
   }
 
-  const thread: Partial<Thread> = {
-    title,
-    markdownContent,
-    channel,
-    owners: [uid],
-    author: uid,
-  };
-
-  if (tags.length > 0) {
-    thread.tags = tags;
-  }
-
   // Handle thread updates (e.g., editing a thread)
-  if (data.has('key')) {
-    const key = data.get('key') as string;
-    thread.key = key;
-
+  if (data.key) {
     // the updateThread function requires the thread key to be set in the thread object
-    await updateThread(thread);
-
-    return key;
+    await updateThread(data);
+    return data.key;
   }
 
-  const posted = await addThread(thread, files, uid);
+  const posted = await addThread(data, files || [], data.owners[0]);
 
-  await syndicateToBsky(posted, uid);
+  await syndicateToBsky(posted, data.owners[0]);
 
   return posted.key;
 }
