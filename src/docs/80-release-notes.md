@@ -8,6 +8,8 @@ noun: 'monsters'
 ### 17.6.x (ongoing)
 - FIX: Forum Fabs are now on svelte
 - FIX: Delete thread confirmation moved to svelte
+- FIX: Thread fork moved to svelte
+- FIX: Multiple small tread creation and cross-posting fixes
 
 ### 17.6.0 (2025-05-09)
 - FEAT: Reply dialog now lets you add images to the reply

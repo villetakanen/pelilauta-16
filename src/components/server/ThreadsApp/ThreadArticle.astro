@@ -1,6 +1,7 @@
 ---
 import type { Thread } from '@schemas/ThreadSchema';
 import { markdownToHTML } from '@utils/marked';
+import QuoteBubble from './QuoteBubble.astro';
 
 interface Props {
   thread: Thread;
@@ -20,6 +21,12 @@ const figures =
   <h1 class="downscaled">
     {thread.title}
   </h1>
+  { thread.quoteRef && (
+    <QuoteBubble 
+      threadKey={thread.quoteRef.split('/')[0]}
+      replyKey={thread.quoteRef.split('/')[1]}
+    />
+  )}
   { figures.length > 0 && <cn-lightbox images={JSON.stringify(figures)}></cn-lightbox> }
   <section set:html={htmlContent} />
   { thread.tags && thread.tags.length > 0 &&

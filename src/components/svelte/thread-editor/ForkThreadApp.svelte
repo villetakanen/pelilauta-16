@@ -1,4 +1,5 @@
 <script lang="ts">
+import { addReply } from '@firebase/client/threads/addReply';
 import { CHANNEL_DEFAULT_SLUG, type Channels } from '@schemas/ChannelSchema';
 import type { Reply } from '@schemas/ReplySchema';
 import type { Thread } from '@schemas/ThreadSchema';
@@ -44,15 +45,20 @@ async function onsubmit(e: Event) {
     title,
     channel,
     markdownContent,
-    quoteRef: thread.key,
+    quoteRef: `${thread.key}/${reply.key}`,
     tags: extractTags(markdownContent),
     owners: [$uid],
   };
 
-  saving = false;
-
   try {
     const slug = await submitThreadUpdate(data);
+
+    await addReply(
+      thread,
+      $uid,
+      `${t('threads:fork.crossPost')} [${title}](/threads/${slug})`,
+    );
+
     saving = false;
     window.location.href = `/threads/${slug}`;
   } catch (error) {
