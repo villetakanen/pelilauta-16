@@ -1,7 +1,6 @@
 import { logError } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { z } from 'zod';
-import { CHANNEL_DEFAULT_SLUG } from './ChannelSchema';
 import { ContentEntrySchema } from './ContentEntry';
 
 export const THREADS_COLLECTION_NAME = 'stream';
@@ -79,8 +78,6 @@ export function createThread(
     channel: source?.channel || '',
     siteKey: source?.siteKey || undefined,
     youtubeId: source?.youtubeId || undefined,
-    // Legacy field, should be removed
-    topic: source?.channel ?? CHANNEL_DEFAULT_SLUG,
     poster: source?.poster || '',
     images: source?.images || [],
     owners: source?.owners || [],
