@@ -439,3 +439,6 @@ input[data-error] {
   color: var(--color-on-secondary);
   box-shadow: var(--shadow-elevation-1);
 }
+.content-editor .grow {
+  max-height: calc(100dvh - var(--cn-grid) * 28);
+}
