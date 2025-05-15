@@ -37,6 +37,7 @@ let hasChanges = $state(false);
 let editorValue = $state(page.markdownContent);
 let tags = $state<string[]>(page.tags || []);
 let contentMigrated = $state(false);
+let saving = $state(false);
 
 function handleChange(event: Event) {
   hasChanges = true;
@@ -59,6 +60,10 @@ onMount(() => {
 
 async function handleSubmission(event: Event) {
   event.preventDefault();
+  if (saving || !hasChanges) {
+    return;
+  }
+  saving = true;
   const form = event.target as HTMLFormElement;
   const formData = new FormData(form);
   const changes: Partial<Page> = Object.fromEntries(formData.entries());
@@ -72,6 +77,7 @@ async function handleSubmission(event: Event) {
   } catch (error) {
     pushSnack(t('snacks:pageUpdateError'));
     logError('Error updating page', error);
+    saving = false;
   }
 }
 
@@ -93,6 +99,7 @@ function handleEditorChange(event: Event) {
           name="name"
           required
           maxlength="42"
+          disabled={saving}
           data-testid="page-name"
           oninput={handleChange}
         />
@@ -121,6 +128,7 @@ function handleEditorChange(event: Event) {
     <section class="grow">
       <cn-editor
         id="page-editor"
+        disabled={saving}
         value={editorValue}
         oninput={handleEditorChange}
         onchange={handleEditorChange}
@@ -144,8 +152,13 @@ function handleEditorChange(event: Event) {
       <a href={`/sites/${site.key}/${page.key}`} class="button text">
         {t('actions:cancel')}
       </a>
-      <button type="submit" class="button cta" data-testid="save-button" disabled={!hasChanges}>
-        {t('actions:save')}
+      <button type="submit" class="button cta" data-testid="save-button" disabled={!hasChanges || saving}>
+        {#if saving}
+          <cn-loader noun="mekanismi"></cn-loader>
+        {:else}
+          <cn-icon noun="mekanismi"></cn-icon>
+        {/if}
+        <span>{t('actions:save')}</span>
       </button>
     </section>
   </form>
