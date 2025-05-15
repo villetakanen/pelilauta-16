@@ -11,6 +11,7 @@ noun: 'monsters'
 - FIX: Delete thread confirmation moved to svelte
 - FIX: Thread fork moved to svelte
 - FIX: Multiple small tread creation and cross-posting fixes
+- Chore: pulled cn-editor to 2.0.0 from the submodule, added requirements to the package.json
 
 ### 17.6.0 (2025-05-09)
 - FEAT: Reply dialog now lets you add images to the reply

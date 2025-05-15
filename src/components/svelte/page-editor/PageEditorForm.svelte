@@ -128,6 +128,7 @@ function handleEditorChange(event: Event) {
     <section class="grow">
       <cn-editor
         id="page-editor"
+        gutter
         disabled={saving}
         value={editorValue}
         oninput={handleEditorChange}
