@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.6.x (ongoing)
+- FIX: Page saving state microtransactions added to the page editor
 - FIX: Forum Fabs are now on svelte
 - FIX: Delete thread confirmation moved to svelte
 - FIX: Thread fork moved to svelte
