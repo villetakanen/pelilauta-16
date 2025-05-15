@@ -14,7 +14,7 @@ export const PageSchema = ContentEntrySchema.extend({
     .array(
       z.object({
         author: z.string(),
-        createdAt: z.date(),
+        createdAt: z.coerce.date().default(() => new Date()),
         markdownContent: z.string(),
       }),
     )
