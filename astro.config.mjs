@@ -1,4 +1,3 @@
-import solidJs from '@astrojs/solid-js';
 import svelte from '@astrojs/svelte';
 import vercel from '@astrojs/vercel';
 import sentry from '@sentry/astro';
@@ -8,7 +7,6 @@ import { visualizer } from 'rollup-plugin-visualizer';
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    solidJs(),
     svelte(),
     sentry({
       dsn: 'https://1fcabaabfe76dd246dea76e7e30b6ede@o4509229934968832.ingest.de.sentry.io/4509229941719120',

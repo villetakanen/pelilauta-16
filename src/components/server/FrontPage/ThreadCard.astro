@@ -1,11 +1,11 @@
 ---
 import type { Thread } from '@schemas/ThreadSchema';
-import { MarkdownSnippetSection } from '@shared/MarkdownSnippetSection';
 import { topicToNoun } from '@stores/ThreadsApp/topics';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import CardSubscription from '@svelte/frontpage/CardSubscription.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
+import { marked } from 'marked';
 
 export interface Props {
   thread: Thread;
@@ -18,6 +18,10 @@ const poster = thread.poster
   : thread.images && thread.images.length > 0
     ? thread.images[0].url
     : undefined;
+
+const md = thread.markdownContent || '';
+const snippet = await marked(md.slice(0, 220));
+
 ---
 
 <div style="flex-basis: auto; width: 100%">
@@ -30,7 +34,7 @@ const poster = thread.poster
     id={`thread-card-${thread.key}`} 
   >
     <div class="downscaled">
-      <MarkdownSnippetSection content={`${thread.markdownContent}`} client:only="solid-js"/>
+      <Fragment set:html={snippet} />
     </div>
 
     <div slot="actions" class="toolbar items-center">
