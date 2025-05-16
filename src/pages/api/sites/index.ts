@@ -1,41 +1,52 @@
+import { toClientEntry } from '@utils/client/entryUtils';
+import { logError } from '@utils/logHelpers';
 import { getAstroQueryParams } from '@utils/server/astroApiHelpers';
 import type { APIContext } from 'astro';
-import { serverDB } from 'src/firebase/server';
-import { type Site, parseSite } from 'src/schemas/SiteSchema';
+import { type Site, siteFrom } from 'src/schemas/SiteSchema';
 
 export async function GET({ request }: APIContext) {
   const publicSites = new Array<Site>();
 
   const searchParams = getAstroQueryParams(request);
 
-  const queryWithLimit = searchParams.limit
-    ? serverDB
-        .collection('sites')
-        .where('hidden', '==', false)
-        .limit(Number.parseInt(searchParams.limit))
-        .orderBy('flowTime', 'desc')
-    : serverDB.collection('sites').where('hidden', '==', false);
+  try {
+    const { serverDB } = await import('src/firebase/server');
 
-  const sitesCollection = searchParams.uid
-    ? queryWithLimit.where('owners', 'array-contains', searchParams.uid)
-    : queryWithLimit;
+    const queryWithLimit = searchParams.limit
+      ? serverDB
+          .collection('sites')
+          .where('hidden', '==', false)
+          .limit(Number.parseInt(searchParams.limit))
+          .orderBy('flowTime', 'desc')
+      : serverDB.collection('sites').where('hidden', '==', false);
 
-  const sites = await sitesCollection.get();
+    const sitesCollection = searchParams.uid
+      ? queryWithLimit.where('owners', 'array-contains', searchParams.uid)
+      : queryWithLimit;
 
-  for (const siteDoc of sites.docs) {
-    // //logDebug('Sitedata', siteDoc.data().name, siteDoc.data().owners);
-    const site = parseSite(siteDoc.data(), siteDoc.id);
-    publicSites.push(site);
+    const siteDocs = await sitesCollection.get();
+
+    for (const siteDoc of siteDocs.docs) {
+      publicSites.push(siteFrom(toClientEntry(siteDoc.data()), siteDoc.id));
+    }
+
+    publicSites.sort((a, b) => {
+      return b.flowTime - a.flowTime;
+    });
+
+    return new Response(JSON.stringify(publicSites), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (e: unknown) {
+    logError(e);
+    return new Response('Error fetching sites', {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
-
-  publicSites.sort((a, b) => {
-    return b.flowTime - a.flowTime;
-  });
-
-  return new Response(JSON.stringify(publicSites), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
 }

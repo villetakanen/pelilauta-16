@@ -130,27 +130,27 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
 }
 
 /**
- * Utility for creating a site entry from a partial data. Sets default values for new sites for every field.
+ * Utility for creating a site entry from a partial data. Sets default values
+ * where schema does not provide them.
  *
  * @param template
  * @returns a Site object (extends Entry)
  */
 export function siteFrom(template: Partial<Site>, key?: string): Site {
-  return {
-    // A Key is required by the schema
+  const coerced: Partial<Site> = {
+    ...template,
     key: key ?? template.key ?? '',
-    // Default values for new sites is 0
     flowTime: template.flowTime ?? 0,
-    createdAt: template?.createdAt || new Date(),
-    updatedAt: template?.updatedAt || new Date(),
-    name: template?.name || '',
-    owners: template?.owners || [],
-    hidden: template?.hidden || true,
-    // Default values for new sites
-    system: template?.system || 'homebrew',
-    sortOrder: template?.sortOrder || 'name',
-    customPageKeys: template?.customPageKeys || !template?.usePlainTextURLs,
-    usePlainTextURLs: template?.usePlainTextURLs || false,
-    license: template?.license || '0',
+    name: template.name || '-',
+    description: template.description || '',
+    owners: template.owners || [],
+    hidden: template.hidden || false,
+    system: template.system || 'homebrew',
+    sortOrder: template.sortOrder || 'name',
+    customPageKeys: template.customPageKeys || !template.usePlainTextURLs,
+    usePlainTextURLs: template.usePlainTextURLs || false,
+    license: template.license || '0',
   };
+
+  return SiteSchema.parse(coerced);
 }

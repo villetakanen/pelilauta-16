@@ -1,5 +1,5 @@
 ---
-import ModalPage from '@layouts/ModalPage.astro';
+import EditorPage from '@layouts/EditorPage.astro';
 import { PageSchema } from '@schemas/PageSchema';
 import { SiteSchema } from '@schemas/SiteSchema';
 import PageEditorForm from '@svelte/page-editor/PageEditorForm.svelte';
@@ -39,6 +39,6 @@ if (!siteResponse.ok || !pageResponse.ok) {
 const site = SiteSchema.parse(await siteResponse.json());
 const page = PageSchema.parse(await pageResponse.json());
 ---
-<ModalPage title={t('site:editor.title')}>
+<EditorPage title={t('site:editor.title')}>
   <PageEditorForm site={site} page={page} client:only="svelte"/>
-</ModalPage>
+</EditorPage>
