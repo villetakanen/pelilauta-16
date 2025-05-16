@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.6.x (ongoing)
+- FIX: When loading a set of sites, we now dynamically import the DB and capture firestore errors gracefully.
 - FIX: Editor component is only loaded when needed as it's a heavy component
 - FIX: Page API route error handling improved to avoid Vercel function timeout crashes.
 - FIX: Patched editor view cn-editor max-height in overrides
