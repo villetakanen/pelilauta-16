@@ -22,6 +22,9 @@ export const threads: Locale = {
       },
     },
   },
+  edit: {
+    title: 'Muokkaa viestiä',
+  },
   quote: {
     fromThread: 'Lainaus keskustelusta',
   },

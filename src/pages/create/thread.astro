@@ -1,5 +1,5 @@
 ---
-import ModalPage from '@layouts/ModalPage.astro';
+import EditorPage from '@layouts/EditorPage.astro';
 import { type Channel, ChannelSchema } from '@schemas/ChannelSchema';
 import ThreadEditorForm from '@svelte/thread-editor/ThreadEditorForm.svelte';
 import { t } from '@utils/i18n';
@@ -18,9 +18,9 @@ const channels = channelsData.map((channel: Partial<Channel>) =>
 );
 ---
 
-<ModalPage title={title} shortTitle={shortTitle}>
+<EditorPage title={title} shortTitle={shortTitle}>
   <ThreadEditorForm
     topic={channel}
     channels={channels}
     client:only="svelte"/>
-</ModalPage>
+</EditorPage>

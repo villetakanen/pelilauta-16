@@ -1,4 +1,5 @@
 ---
+import EditorPage from '@layouts/EditorPage.astro';
 import ModalPage from '@layouts/ModalPage.astro';
 import { handoutFrom } from '@schemas/HandoutSchema';
 import { parseSite } from '@schemas/SiteSchema';
@@ -32,6 +33,6 @@ const handout = handoutFrom(
   siteKey,
 );
 ---
-<ModalPage>
+<EditorPage>
   <HandoutEditor handout={handout} site={site} client:only="svelte"/>
-</ModalPage>
+</EditorPage>
