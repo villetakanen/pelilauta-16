@@ -135,10 +135,10 @@ export function parseSite(data: Partial<Site>, newKey?: string): Site {
  * @param template
  * @returns a Site object (extends Entry)
  */
-export function siteFrom(template: Partial<Site>): Site {
+export function siteFrom(template: Partial<Site>, key?: string): Site {
   return {
     // A Key is required by the schema
-    key: template.key ?? '',
+    key: key ?? template.key ?? '',
     // Default values for new sites is 0
     flowTime: template.flowTime ?? 0,
     createdAt: template?.createdAt || new Date(),

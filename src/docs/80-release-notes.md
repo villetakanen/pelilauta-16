@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.6.x (ongoing)
+- FIX: Page API route error handling improved to avoid Vercel function timeout crashes.
 - FIX: Patched editor view cn-editor max-height in overrides
 - FIX: Page history dates are now correctly coerced to dates
 - FIX: Page saving state microtransactions added to the page editor
@@ -13,6 +14,7 @@ noun: 'monsters'
 - FIX: Delete thread confirmation moved to svelte
 - FIX: Thread fork moved to svelte
 - FIX: Multiple small tread creation and cross-posting fixes
+- Chore: added longer stale-while-revalidate cache to active user list
 - Chore: pulled cn-editor to 2.0.0 from the submodule, added requirements to the package.json
 
 ### 17.6.0 (2025-05-09)
