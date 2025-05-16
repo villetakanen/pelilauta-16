@@ -1,14 +1,10 @@
 import { serverDB } from '@firebase/server';
 import { PAGES_COLLECTION_NAME, parsePage } from '@schemas/PageSchema';
-import { SITES_COLLECTION_NAME, parseSite } from '@schemas/SiteSchema';
+import { SITES_COLLECTION_NAME, siteFrom } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
-import { rewriteWikiLinks } from '@utils/server/contentHelpers';
-import { renderAssetMarkup } from '@utils/server/renderAssetMarkup';
-import { renderDice } from '@utils/server/renderDice';
-import { renderProfileTags } from '@utils/server/renderProfileTags';
-import { renderTags } from '@utils/server/renderTags';
+import { logError } from '@utils/logHelpers';
+import { renderWikiContent } from '@utils/server/wiki/renderWikiContent';
 import type { APIContext } from 'astro';
-import { marked } from 'marked';
 
 export async function GET({ params, url }: APIContext): Promise<Response> {
   const { siteKey, pageKey } = params;
@@ -17,61 +13,44 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
     return new Response('Invalid request', { status: 400 });
   }
 
-  const siteDoc = await serverDB
-    .collection(SITES_COLLECTION_NAME)
-    .doc(siteKey)
-    .get();
-  const site = parseSite(toClientEntry(siteDoc.data() || {}), siteKey);
-
-  const pagesCollection = serverDB
-    .collection(SITES_COLLECTION_NAME)
-    .doc(siteKey)
-    .collection(PAGES_COLLECTION_NAME);
-  const pageDoc = await pagesCollection.doc(pageKey).get();
-
-  const data = pageDoc.data();
-
-  if (!pageDoc.exists || !data) {
-    return new Response('Page not found', { status: 404 });
-  }
-
   try {
-    const page = parsePage(toClientEntry(data), pageKey, siteKey);
+    // We want to get the site and page data from the server
+    const siteRef = serverDB.collection(SITES_COLLECTION_NAME).doc(siteKey);
+    const pageRef = siteRef.collection(PAGES_COLLECTION_NAME).doc(pageKey);
 
-    // If the page has markdown content, convert it to HTML
-    // Legacy pages might have HTML content, that we want to convert to
-    // markdown if they are edited - thus we only convert if the ma
-    // rkdown content is present
-    //
-    // @TODO: this should be moved to a utility function, as there are
-    // multiple places where we convert markdown to HTML, and more extensions
-    // in addition to wikilinks might be added in the future
-    //
-    // F.ex. support for attach:file.jpg style asset links, or other
-    // custom markdown extensions
-    if (page.markdownContent) {
-      const c = rewriteWikiLinks(
-        page.markdownContent || '',
-        siteKey,
-        url.origin,
-      );
-      page.htmlContent = await marked(
-        renderProfileTags(renderTags(c, url.origin), url.origin) || '',
-      );
+    // Get the docs
+    const siteDoc = await siteRef.get();
+    const pageDoc = await pageRef.get();
+
+    // Get the data
+    const siteData = siteDoc.data();
+    const pageData = pageDoc.data();
+
+    // Return 404 if the site or page does not exist
+    if (!siteDoc.exists || !siteData || !pageDoc.exists || !pageData) {
+      return new Response('Site or page not found', { status: 404 });
     }
 
-    page.htmlContent = renderDice(
-      renderAssetMarkup(page.htmlContent || '', site, url.origin),
-    );
+    // Convert the firestore data to client side objects
+    const site = siteFrom(toClientEntry(siteData), siteDoc.id);
+    const page = parsePage(toClientEntry(pageData), pageKey, siteKey);
 
+    // page html content is either rendered at SSR, or privided from a legacy
+    // data. This is handled in the renderWikiContent utility
+    page.htmlContent = await renderWikiContent(page, site, url);
+
+    // Return the page data and 200 OK
     return new Response(JSON.stringify(page), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
         // No cache, as pages can be edited
+        'Cache-Control':
+          'no-store, no-cache, must-revalidate, proxy-revalidate',
       },
     });
   } catch (err: unknown) {
-    return new Response('Invalid page data', { status: 500 });
+    logError(err);
+    return new Response('Internal server error', { status: 500 });
   }
 }
