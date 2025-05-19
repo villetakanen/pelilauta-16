@@ -155,9 +155,9 @@ function handleEditorChange(event: Event) {
       </a>
       <button type="submit" class="button cta" data-testid="save-button" disabled={!hasChanges || saving}>
         {#if saving}
-          <cn-loader noun="mekanismi"></cn-loader>
+          <cn-loader noun="save"></cn-loader>
         {:else}
-          <cn-icon noun="mekanismi"></cn-icon>
+          <cn-icon noun="save"></cn-icon>
         {/if}
         <span>{t('actions:save')}</span>
       </button>
