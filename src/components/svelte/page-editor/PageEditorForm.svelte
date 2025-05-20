@@ -125,7 +125,7 @@ function handleEditorChange(event: Event) {
       </div>
     {/if}
 
-    <section class="grow">
+
       <cn-editor
         id="page-editor"
         gutter
@@ -135,7 +135,6 @@ function handleEditorChange(event: Event) {
         onchange={handleEditorChange}
         placeholder={t('entries:page.markdownContent')}
       ></cn-editor>
-    </section>
 
     {#if tags && tags.length > 0}
     <section class="tags py-1 elevation-1 flex">

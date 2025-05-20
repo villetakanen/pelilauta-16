@@ -21,13 +21,11 @@ const { title, shortTitle, description } = Astro.props;
     <!-- AppRail is always shown on desktop, it does not take that much space -->
     <AppRail />
 
-    <!-- The main application content area -->
+  <!-- The main application content area -->
 	<main>
-      <!-- All content will be wrapped in an singe content-container -->
-      <div class="content-editor">
-        <slot />
-      </div>
-    </main>
+    <!-- The main content area is expected to contain a form with .content-editor class -->
+    <slot />
+  </main>
 
     <!-- Editor does not have the tailer - so we need to import snackbar here -->
     <Snackbar />

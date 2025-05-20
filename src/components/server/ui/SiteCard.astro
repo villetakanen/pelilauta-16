@@ -23,4 +23,6 @@ const { site } = Astro.props;
     <div class="grow"></div>
     <p>{toDisplayString(site.flowTime)}</p>
   </div>
+
+  <slot />
 </cn-card>

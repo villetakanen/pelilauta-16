@@ -139,7 +139,7 @@ function onAddFiles(newFiles: File[]) {
       <cn-lightbox images={previews}></cn-lightbox>
     </section>
   {/if}
-  <section class="grow">
+
     <cn-editor
       value={thread?.markdownContent || ''}
       name="markdownContent"
@@ -147,7 +147,7 @@ function onAddFiles(newFiles: File[]) {
       oninput={handleContentChange}
       placeholder={t('entries:thread.placeholders.content')}
     ></cn-editor>
-  </section>
+
 
   {#if tags.length > 0}
     <section class="flex elevation-1 p-1">
