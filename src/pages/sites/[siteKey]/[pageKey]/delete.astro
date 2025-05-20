@@ -1,9 +1,8 @@
 ---
 import ModalPage from '@layouts/ModalPage.astro';
-import { parsePage } from '@schemas/PageSchema';
-import { parseSite } from '@schemas/SiteSchema';
+import { PageSchema } from '@schemas/PageSchema';
+import { SiteSchema } from '@schemas/SiteSchema';
 import DeletePageView from '@svelte/sites/DeletePageView.svelte';
-import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
 
 interface Props {
@@ -12,26 +11,23 @@ interface Props {
 }
 
 const { siteKey, pageKey } = Astro.params;
-const origin = new URL(Astro.request.url).origin;
 
 // Fetch site data from the api
-const siteResponse = await fetch(`${origin}/api/sites/${siteKey}`);
+const siteResponse = await fetch(`${Astro.url.origin}/api/sites/${siteKey}`);
 // Fetch page data from the api
 const pageResponse = await fetch(
-  `${origin}/api/sites/${siteKey}/pages/${pageKey}.json`,
+  `${Astro.url.origin}/api/sites/${siteKey}/pages/${pageKey}.json`,
 );
 
-if (siteResponse.status === 404 || pageResponse.status === 404) {
+if (!siteResponse.ok || !pageResponse.ok) {
+  // If the site or page is not found, redirect to the 404 page
   return Astro.redirect('/404');
 }
 
-// Get the site and page data
-const site = parseSite(toClientEntry(await siteResponse.json()), siteKey);
-const page = parsePage(
-  toClientEntry(await pageResponse.json()),
-  pageKey,
-  siteKey,
-);
+// Site and page data come from the API - so we can expect them to be
+// in the correct format for the client apps.
+const site = SiteSchema.parse(await siteResponse.json());
+const page = PageSchema.parse(await pageResponse.json());
 
 const title = `${t('actions:delete')} – ${page.name}`;
 ---

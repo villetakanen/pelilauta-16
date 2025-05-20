@@ -1,5 +1,5 @@
 import { serverDB } from '@firebase/server';
-import { PAGES_COLLECTION_NAME, parsePage } from '@schemas/PageSchema';
+import { PAGES_COLLECTION_NAME, pageFrom } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME, siteFrom } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logError } from '@utils/logHelpers';
@@ -33,7 +33,7 @@ export async function GET({ params, url }: APIContext): Promise<Response> {
 
     // Convert the firestore data to client side objects
     const site = siteFrom(toClientEntry(siteData), siteDoc.id);
-    const page = parsePage(toClientEntry(pageData), pageKey, siteKey);
+    const page = pageFrom(toClientEntry(pageData), pageKey, siteKey);
 
     // page html content is either rendered at SSR, or privided from a legacy
     // data. This is handled in the renderWikiContent utility

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const EntrySchema = z.object({
   key: z.string(),
-  flowTime: z.coerce.number(),
+  flowTime: z.coerce.number().default(0),
   owners: z.array(z.string()),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),

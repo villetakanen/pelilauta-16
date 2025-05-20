@@ -1,4 +1,4 @@
-import { type Page, parsePage } from '@schemas/PageSchema';
+import { type Page, pageFrom } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { DEFAULT_PROPS, entryToMarkdown } from '@utils/entryConversions';
@@ -16,7 +16,7 @@ export async function createSiteExport(site: Site, origin: string) {
   const pages = pageData as Array<Page>;
 
   for (const page of pages) {
-    const parsed = parsePage(toClientEntry(page), `${page.key}`, `${site.key}`);
+    const parsed = pageFrom(toClientEntry(page), `${page.key}`, `${site.key}`);
     const file = entryToMarkdown(parsed, [
       ...DEFAULT_PROPS,
       'category',

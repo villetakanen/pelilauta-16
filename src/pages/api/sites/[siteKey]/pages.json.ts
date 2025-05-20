@@ -2,7 +2,7 @@ import { serverDB } from '@firebase/server';
 import {
   PAGES_COLLECTION_NAME,
   type Page,
-  parsePage,
+  pageFrom,
 } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -24,7 +24,7 @@ export async function GET({ params }: APIContext): Promise<Response> {
   const pages: Array<Page> = [];
 
   for (const pageDoc of pageDocs.docs) {
-    pages.push(parsePage(toClientEntry(pageDoc.data()), pageDoc.id, siteKey));
+    pages.push(pageFrom(toClientEntry(pageDoc.data()), pageDoc.id, siteKey));
   }
 
   return new Response(JSON.stringify(pages), {

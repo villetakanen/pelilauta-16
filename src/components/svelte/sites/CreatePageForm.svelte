@@ -1,6 +1,6 @@
 <script lang="ts">
 import { addPage } from '@firebase/client/site/addPage';
-import { createPage } from '@schemas/PageSchema';
+import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import { pushSessionSnack } from '@utils/client/snackUtils';
@@ -43,10 +43,13 @@ function setTitle(e: Event) {
 async function onsubmit(e: Event) {
   e.preventDefault();
 
-  const newPage = createPage(key || '', site.key);
-  newPage.name = title;
-  newPage.markdownContent = `# ${title}\n\n`;
-  newPage.owners = [$uid];
+  const newPage: Partial<Page> = {
+    key: key || undefined,
+    name: title,
+    siteKey: site.key,
+    markdownContent: `# ${title}\n\n`,
+    owners: [$uid],
+  };
 
   const slug = await addPage(
     site.key,

@@ -1,7 +1,7 @@
 import {
   PAGES_COLLECTION_NAME,
   type Page,
-  parsePage,
+  pageFrom,
 } from '@schemas/PageSchema';
 import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
@@ -37,7 +37,7 @@ export async function setPage(
   if (!pageDoc.exists()) throw new Error('updatePage: Page not found');
 
   // Then we need to update the page references
-  const updatedPage = parsePage(
+  const updatedPage = pageFrom(
     toClientEntry(pageDoc.data() as Record<string, unknown>),
     key,
   );

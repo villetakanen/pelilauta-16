@@ -1,4 +1,4 @@
-import { type Page, parsePage } from '@schemas/PageSchema';
+import { type Page, pageFrom } from '@schemas/PageSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
 import { updatePageRef } from './updatePageRef';
@@ -25,7 +25,7 @@ export async function updatePage(
   if (!pageDoc.exists()) throw new Error('updatePage: Page not found');
 
   // Then we need to update the page references
-  const updatedPage = parsePage(
+  const updatedPage = pageFrom(
     toClientEntry(pageDoc.data() as Record<string, unknown>),
     pageKey,
     siteKey,
