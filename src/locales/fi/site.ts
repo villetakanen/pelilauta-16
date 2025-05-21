@@ -87,9 +87,9 @@ export const site: Locale = {
       title: 'Historia',
       navigation: {
         title: 'Versiot',
-        current: '{step} (avoinna)'
-      }
-    }
+        current: '{step} (avoinna)',
+      },
+    },
   },
   settings: {
     title: 'Asetukset',
@@ -156,7 +156,7 @@ export const site: Locale = {
   editor: {
     title: 'Muokkaa sivua',
   },
-  
+
   frontPage: 'Etusivu',
   owners: {
     title: 'Omistajat',
