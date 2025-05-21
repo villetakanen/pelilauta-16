@@ -148,6 +148,7 @@ export const site: Locale = {
       contentMigrateWarning:
         'Sivun aiempi sisältö on konvertoitu markdown-muotoon',
     },
+    created: 'Sivu {key} luotu onnistuneesti',
   },
   frontPage: 'Etusivu',
   owners: {

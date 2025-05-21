@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const EntrySchema = z.object({
   key: z.string(),
-  flowTime: z.coerce.number(),
-  owners: z.array(z.string()),
+  flowTime: z.coerce.number().default(0),
+  owners: z.array(z.string()).default([]),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
 });
@@ -25,12 +25,11 @@ export type ContentEntry = z.infer<typeof ContentEntrySchema>;
 
 export function contentEntryFrom(
   data: Partial<ContentEntry>,
-  key = '',
+  key?: string,
 ): ContentEntry {
   return ContentEntrySchema.parse({
     ...data,
-    key: data.key || key,
-    flowTime: data.flowTime || Date.now(),
+    key: key || data.key || '',
     owners: data.owners || [],
     markdownContent: data.markdownContent || '',
     htmlContent: data.htmlContent || '',

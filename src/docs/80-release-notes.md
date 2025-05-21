@@ -6,6 +6,8 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.6.x (ongoing)
+- FIX: New page creation snack works as expected
+- FIX: Page schema now provides new-style pageFrom helper
 - FIX: Removed flex-box cleanup related CSS errors from different views
 - FIX: Removed extraneous html section/divs from the page and thread editors
 - FIX: When loading a set of sites, we now dynamically import the DB and capture firestore errors gracefully.
