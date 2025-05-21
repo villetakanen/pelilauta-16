@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@11thdeg/cyan-next':
-        specifier: 1.0.17
-        version: 1.0.17
+        specifier: 1.1.0
+        version: 1.1.0
       '@astrojs/check':
         specifier: ^0.9.4
         version: 0.9.4(typescript@5.8.3)
@@ -162,8 +162,8 @@ importers:
 
 packages:
 
-  '@11thdeg/cyan-next@1.0.17':
-    resolution: {integrity: sha512-UxWJpoJgr0RR+p8xLUnhVAMiHc+mRWgV7VFFPXBU1sBY1/h29UB3knSPpqa/2MPvfLgQXL310UcXf5Pkfg3XcQ==}
+  '@11thdeg/cyan-next@1.1.0':
+    resolution: {integrity: sha512-5qviZte1IHMxfzpITursIdfQ+37GTXAvqFBjYEPDGP7klaF3AvnV+C2glRRijolcFZKUQ5JqQM+o/nGkDxyuyA==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -6097,7 +6097,7 @@ packages:
 
 snapshots:
 
-  '@11thdeg/cyan-next@1.0.17':
+  '@11thdeg/cyan-next@1.1.0':
     dependencies:
       '@types/node': 22.15.19
       lit: 3.3.0
@@ -9518,7 +9518,7 @@ snapshots:
   connect@1.9.2:
     dependencies:
       formidable: 1.0.17
-      mime: 1.2.4
+      mime: 3.0.0
       qs: 0.4.2
 
   consola@3.4.2: {}
@@ -11378,8 +11378,7 @@ snapshots:
 
   mime@1.2.4: {}
 
-  mime@3.0.0:
-    optional: true
+  mime@3.0.0: {}
 
   mimic-fn@2.1.0: {}
 

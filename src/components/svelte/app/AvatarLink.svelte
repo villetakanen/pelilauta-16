@@ -10,12 +10,13 @@ const { uid }: Props = $props();
 {#await fetchProfileEntry(uid)}
   <cn-loader icon></cn-loader>
 {:then profile}
-  <a href="/profiles/{profile.key}" aria-label="{profile.nick}">
+  <a href="/profiles/{profile.key}" aria-label="{profile.nick}" 
+    style="display: block; text-decoration: none;margin-right: calc(-2 * var(--cn-grid));border:solid 2px var(--color-surface);border-radius:50%;">
   <cn-avatar
-    style="margin-right: calc(-1 * var(--cn-gap)); padding: 0; margin-bottom: var(--cn-grid)"
-    class="elevation-4"
+    style="padding: 0; margin-bottom: var(--cn-grid)"
     src={profile.avatarURL} 
     nick={profile.nick}
+    elevation="1"
     size="small"></cn-avatar>
   </a>
 {/await}
