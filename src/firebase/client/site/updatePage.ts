@@ -1,6 +1,7 @@
 import { type Page, pageFrom } from '@schemas/PageSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug } from '@utils/logHelpers';
+import { addPageRevision } from './addPageRevision';
 import { updatePageRef } from './updatePageRef';
 import { updatePageTags } from './updatePageTags';
 
@@ -15,7 +16,16 @@ export async function updatePage(
   const { toFirestoreEntry } = await import('@utils/client/toFirestoreEntry');
   const db = getFirestore();
 
-  // First we need to update the page
+  // Lets start by saving the diff, and updating the previous revision key
+  // to the revision we just created
+  changes.previousRevisionKey = await addPageRevision(
+    siteKey,
+    pageKey,
+    changes.markdownContent || '',
+  );
+  changes.revisionCount = (changes.revisionCount || 0) + 1;
+
+  // Then we need to update the page
   const pageRef = doc(db, 'sites', siteKey, 'pages', pageKey);
   await updateDoc(pageRef, toFirestoreEntry(changes));
 

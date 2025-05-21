@@ -1,0 +1,34 @@
+---
+import type { Page } from '@schemas/PageSchema';
+import type { Site } from '@schemas/SiteSchema'
+import { t } from '@utils/i18n';
+
+interface Props {
+  site:Site;
+  page:Page
+  historySteps: number;
+}
+
+// This component shows history links for all the history steps we have (count down from 
+// revisions - current requested step)
+const { site, page, historySteps } = Astro.props as Props;
+
+const stepsCount = page.revisionCount + 1;
+---
+<section class="column-s elevation-1 p-2">
+  <h2>{t('site:page.history.navigation.title')}</h2>
+  <ul class="list">
+    {Array.from({ length: stepsCount }, (_, step) => {
+      return (
+        <li>
+          {step === historySteps - 1 ? (
+            <strong>{t('site:page.history.navigation.current', {step: step + 1})}</strong>
+            ) : (
+          <a href={`/sites/${site.key}/${page.key}/history/${step}`}>
+            {t('site:page.history.navigation.step', { step })}
+          </a>
+            )}
+        </li>
+      );
+    })}
+</section>

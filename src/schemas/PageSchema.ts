@@ -35,67 +35,12 @@ export const PageRevisionSchema = z.object({
    * Comments if any.
    */
   comments: z.string().optional(),
+  previousRevisionKey: z.string().optional(),
 });
 
 export type Page = z.infer<typeof PageSchema>;
 export type PageRevision = z.infer<typeof PageRevisionSchema>;
 
-/* export const parsePage = (
-  data: Partial<Page>,
-  key = '',
-  siteKey = '',
-): Page => {
-  const revisionHistory = [];
-  if (data.revisionHistory && Array.isArray(data.revisionHistory)) {
-    for (const revision of data.revisionHistory) {
-      const { author, createdAt, markdownContent } = revision;
-      revisionHistory.push({
-        author,
-        markdownContent,
-        createdAt: toDate(createdAt),
-      });
-    }
-  }
-
-  try {
-    return PageSchema.parse({
-      ...data,
-      siteKey:
-        data.siteKey && typeof data.siteKey === 'string'
-          ? data.siteKey
-          : siteKey,
-      owners:
-        typeof data.owners === 'string'
-          ? [data.owners]
-          : data.owners
-            ? data.owners
-            : [],
-      flowTime: toDate(data.flowTime).getTime(),
-      key,
-      revisionHistory,
-      markdownContent: data.markdownContent || '',
-    });
-  } catch (err: unknown) {
-    if (err instanceof z.ZodError) {
-      logError(err.issues);
-    }
-    throw err;
-  }
-};*/
-
-/*export function createPage(key: string, siteKey: string) {
-  return parsePage(
-    {
-      key,
-      siteKey,
-      name: '',
-      flowTime: new Date().getTime(),
-      owners: [],
-    },
-    key,
-    siteKey,
-  );
-}*/
 export function pageFrom(data: Partial<Page>, key = '', siteKey = ''): Page {
   return PageSchema.parse({
     ...data,

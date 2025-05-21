@@ -50,6 +50,9 @@ importers:
       '@nanostores/persistent':
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.0.1)
+      '@sanity/diff-match-patch':
+        specifier: ^3.2.0
+        version: 3.2.0
       '@sentry/astro':
         specifier: ^9.19.0
         version: 9.20.0(astro@5.7.13(@types/node@22.15.19)(jiti@2.4.2)(rollup@2.79.2)(terser@5.39.2)(typescript@5.8.3)(yaml@2.8.0))
@@ -2111,6 +2114,10 @@ packages:
     resolution: {integrity: sha512-h1J+Yzjo/X+0EAvR2kIXJDuTuyT7drc+t2ALY0nIcGPbTatNOf0VWdhEA2Z4AAjv6X1NJV7SYo5oCTYRJhSlVA==}
     cpu: [x64]
     os: [win32]
+
+  '@sanity/diff-match-patch@3.2.0':
+    resolution: {integrity: sha512-4hPADs0qUThFZkBK/crnfKKHg71qkRowfktBljH2UIxGHHTxIzt8g8fBiXItyCjxkuNy+zpYOdRMifQNv8+Yww==}
+    engines: {node: '>=18.18'}
 
   '@sentry-internal/browser-utils@9.20.0':
     resolution: {integrity: sha512-Cpuz9XzZgSNiVm+0DEOSE3aMDHIzonOrDgw5ZiXs4DgGOlMX9Solrcjp+tytQJhgl0uuOcd17r9kpocuIdSktQ==}
@@ -8509,6 +8516,8 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.41.0':
     optional: true
+
+  '@sanity/diff-match-patch@3.2.0': {}
 
   '@sentry-internal/browser-utils@9.20.0':
     dependencies:

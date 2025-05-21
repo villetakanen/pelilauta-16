@@ -29,7 +29,7 @@ const homePageKey = site.homepage || site.key;
 
 // Fetch page data from the API
 const pageResponse = await fetch(
-  `${origin}/api/sites/${siteKey}/pages/${homePageKey}.json`,
+  `${Astro.url.origin}/api/sites/${siteKey}/pages/${homePageKey}`,
 );
 
 if (!pageResponse.ok) {
