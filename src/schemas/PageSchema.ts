@@ -1,7 +1,7 @@
 import { logError } from '@utils/logHelpers';
 import { toDate } from '@utils/schemaHelpers';
 import { z } from 'zod';
-import { ContentEntrySchema } from './ContentEntry';
+import { ContentEntrySchema, contentEntryFrom } from './ContentEntry';
 
 export const PAGES_COLLECTION_NAME = 'pages';
 
@@ -66,16 +66,16 @@ export const parsePage = (
   }
 };
 
-export function createPage(key: string, siteKey: string) {
-  return parsePage(
-    {
-      key,
-      siteKey,
-      name: '',
-      flowTime: new Date().getTime(),
-      owners: [],
-    },
-    key,
-    siteKey,
-  );
+export function pageFrom(
+  data: Partial<Page>,
+  key?: string,
+  siteKey?: string,
+): Page {
+  const contentEntry = contentEntryFrom(data, key);
+
+  return PageSchema.parse({
+    ...data,
+    ...contentEntry,
+    siteKey: siteKey || data.siteKey,
+  });
 }
