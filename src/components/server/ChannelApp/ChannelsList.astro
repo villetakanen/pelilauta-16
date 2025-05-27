@@ -27,9 +27,9 @@ function inCategory(cat: string) {
     <ForumOnboardingArticle client:only="svelte"/>
 
     { categories().map((cat: string) => (
-      <div class="surface mb-2">
+      <div class="surface pb-1 mb-2">
         <h3 class="m-0 downscaled header-4 elevation-1 p-1">{cat}</h3>
-        <div class="px-2">
+        <div class="grid my-1">
           { inCategory(cat).map((channel: Channel) => (
             <ChannelInfoRow channel={channel} />   
           )) }
@@ -41,3 +41,10 @@ function inCategory(cat: string) {
     </div>
   </div>
 </div>
+
+<style>
+.grid {
+  grid-template-columns: calc(var(--cn-icon-size) + var(--cn-grid)) 1fr calc(var(--cn-grid) * 12);
+  gap: var(--cn-gap);
+}
+</style>
