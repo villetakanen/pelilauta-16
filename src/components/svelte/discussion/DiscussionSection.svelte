@@ -59,10 +59,12 @@ onMount(async () => {
 });
 </script>
 <div class="content-columns">
-  <section class="flex-col column-l" style="gap:var(--cn-grid)">
+  <section class="column-l">
+    <div class="flex-col">
     {#each discussion as reply}
       <ReplyArticle {reply} />
     {/each}
+    </div>
     <ReplyDialog {thread}/>
   </section>
 </div>

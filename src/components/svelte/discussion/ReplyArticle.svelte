@@ -31,9 +31,9 @@ const images = $derived.by(() => {
     </div>
   {/if}
 
-  <cn-bubble reply={fromUser || undefined} class="grow">
-    <div class="toolbar downscaled" style="margin-top: -16px; gap: var(--cn-grid)">
-      <p class="grow">
+  <cn-bubble reply={fromUser || undefined}>
+    <div class="toolbar downscaled">
+      <p>
         <ProfileLink uid={reply.owners[0]} />
       </p>
       <cn-menu inline>
@@ -65,7 +65,7 @@ const images = $derived.by(() => {
       {/if}
       {@html marked(reply.markdownContent || '')}
     </div>
-    <div class="toolbar justify-end" style="margin-bottom: calc(var(--cn-grid) * -1)">
+    <div class="toolbar justify-end">
       <ReactionButton target="reply" small key={reply.key}></ReactionButton>
     </div>
   </cn-bubble>

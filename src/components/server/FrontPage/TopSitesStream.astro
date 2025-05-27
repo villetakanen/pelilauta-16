@@ -19,9 +19,9 @@ const sites = (sitesJSON as Array<Site>).map((site) =>
       site && <SiteCard site={site}/>
     ))}
   </div>
-    <div class="flex justify-center mt-2">
-      <a href="/sites" class="button">
-        {t('actions:showMore')}
-      </a>
-    </div>
+  <div class="flex items-center mt-2">
+    <a href="/sites" class="button">
+      {t('actions:showMore')}
+    </a>
+  </div>
 </section>
