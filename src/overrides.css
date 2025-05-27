@@ -46,12 +46,12 @@ select {
   container: inline-size;
   position: relative;
 }
-astro-island,
+/*astro-island,
 astro-slot {
   display: contents !important;
   margin: 0;
   padding: 0;
-}
+}*/
 .toolbar label {
   margin-bottom: 0;
 }
@@ -438,4 +438,15 @@ input[data-error] {
   );
   color: var(--color-on-secondary);
   box-shadow: var(--shadow-elevation-1);
+}
+.shrink {
+  flex-shrink: 1;
+}
+.content-columns > * {
+  overflow-x: hidden;
+  container: content-block / inline-size;
+}
+.flex > * {
+  flex-shrink: 1;
+  flex-grow: 1;
 }

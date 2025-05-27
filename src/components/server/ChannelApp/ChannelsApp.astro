@@ -1,5 +1,9 @@
 ---
-import { type Channel, parseChannel } from '@schemas/ChannelSchema';
+import {
+  type Channel,
+  ChannelsSchema,
+  parseChannel,
+} from '@schemas/ChannelSchema';
 import ChannelsList from './ChannelsList.astro';
 
 // Lets fetch the channels from the API
@@ -8,8 +12,6 @@ const origin = new URL(Astro.request.url).origin;
 const channelsResponse = await fetch(`${origin}/api/meta/channels.json`);
 const channelsData = await channelsResponse.json();
 
-const channels = channelsData.map((channel: Partial<Channel>) =>
-  parseChannel(channel),
-);
+const channels = ChannelsSchema.parse(channelsData);
 ---
 <ChannelsList channels={channels} />

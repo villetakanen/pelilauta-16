@@ -10,7 +10,7 @@ interface Props {
 const { site: initialSite }: Props = $props();
 $site = initialSite;
 </script>
-<nav class="border-top">
+<nav class="border-top" style="flex: 0 0 auto;">
   <ul>
   {#if $site.useClocks}
     <li>
