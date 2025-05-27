@@ -43,9 +43,9 @@ const actions: Array<SiteTrayAction> = [
 ];
 ---
 <div class="flex flex-col h-full pb-1">
-  <h3>{t('app:mekanismi')}</h3>
+  <h3 style="flex: 0 0 auto;">{t('app:mekanismi')}</h3>
 
-  <nav>
+  <nav style="flex: 0 0 auto;">
     <ul>
       {actions.map((action) => (
         <li class={`${action.break && 'border-t'}`}>
@@ -62,7 +62,7 @@ const actions: Array<SiteTrayAction> = [
 
   <div class="grow"></div>
 
-  <div class="tray-bottom-tools border-t ">
+  <div class="tray-bottom-tools border-t" style="flex: 0 0 auto;">
     <SiteAdminActions site={site} client:only="svelte"/>
   </div>
 </div>
