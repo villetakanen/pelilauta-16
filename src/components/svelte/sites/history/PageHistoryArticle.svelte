@@ -7,25 +7,21 @@ interface Props {
   revision: number;
 }
 const { page, revision }: Props = $props();
-
-const requestedRevisionIndex = $derived.by(() => {
-  const countback = page.revisionHistory
-    ? page.revisionHistory.length - revision
-    : 0;
-  return Math.max(-1, countback);
-});
+const revisionCount = page.revisionHistory?.length || 0;
 </script>
 
 <section>
   <header class="surface mb-1 p-2">
-    {t('site:page.history.revision', {index: requestedRevisionIndex + 1})}
+    {t('site:page.history.revision', {index: revision })}
   </header>
 
-  <article class="surface p-2">
-    {#if requestedRevisionIndex < 0}
+  <article class="surface p-2" style="overflow: auto; scroll-x: scroll;">
+    {#if revision > revisionCount }
       <p>Current!</p>
     {:else}
-      <p>Revision {requestedRevisionIndex + 1} of {page.name}</p>
+      {#if (page.revisionHistory?.[revision - 1])}
+        <pre>{page.revisionHistory[revision - 1].markdownContent}</pre>
+      {/if}
     {/if}
   </article>
 </section>

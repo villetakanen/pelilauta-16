@@ -14,7 +14,6 @@ interface Props {
 }
 
 const { siteKey, pageKey } = Astro.params;
-const revision = Number(Astro.url.searchParams.get('revision') || 0);
 
 // Fetch site and page data from the API
 const siteResponse = await fetch(`${Astro.url.origin}/api/sites/${siteKey}`);
@@ -32,6 +31,10 @@ const page = PageSchema.parse(await pageResponse.json());
 const title = `${t('site:page.history.title')} – ${site.name} / ${page.name || pageKey}`;
 const noun = systemToNoun(site.system);
 const image = site.backgroundURL || '';
+const revision = Number(
+  Astro.url.searchParams.get('revision') ||
+    (page.revisionHistory?.length || 0) + 1,
+);
 ---
 <PageWithTray 
   {title}

@@ -5,6 +5,7 @@ import { uid } from '@stores/session';
 import { site } from '@stores/site';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import PageHistoryArticle from './PageHistoryArticle.svelte';
+import PageHistoryIndex from './PageHistoryIndex.svelte';
 
 /**
  * A Wrapper for the SiteMembersApp component,
@@ -26,5 +27,6 @@ const allow = $derived.by(() => {
 <WithAuth {allow}>
   <div class="content-columns">
     <PageHistoryArticle {page} {revision}/>
+    <PageHistoryIndex {page} {revision}/>
   </div>
 </WithAuth>
