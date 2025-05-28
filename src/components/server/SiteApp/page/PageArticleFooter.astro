@@ -1,6 +1,7 @@
 ---
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
+import { toDisplayString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 
 interface Props {
@@ -13,11 +14,11 @@ const { page, site } = Astro.props as Props;
 const showLicenseAsLink = site.license?.startsWith('cc') as boolean;
 const showLicenseAsText = !showLicenseAsLink && site.license !== '0';
 ---
-{page.tags ? <div class="flex">
- {page.tags?.map((tag) => (
-   <a href={`/tags/${tag.toLowerCase()}`} class="cn-tag">{tag}</a>
-  ))} </div> : ''}
-<footer class="downscaled flex justify-space-between border-t mt-2">
+<footer class="downscaled toolbar border-t mt-2">
+
+  <p class="m-0 p-0">
+    {toDisplayString(page.flowTime)}
+  </p>
   
   {showLicenseAsText && <p>
     {t('site:license.forText')} {t('site:license.' + site.license)} {site.license}

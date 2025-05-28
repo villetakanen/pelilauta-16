@@ -18,5 +18,5 @@ const shareButton = !noSharing;
 
 <cn-app-bar title={barTitle} shortTitle={shortTitle} mode={mode} noun={noun}>
   <slot />
-  {shareButton && <cn-share-button></cn-share-button>}
+  {shareButton && <cn-share-button label={t('actions:share')}></cn-share-button>}
 </cn-app-bar>
