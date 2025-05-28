@@ -5,7 +5,8 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.6.x (ongoing)
+### 17.7.0 (unreleased)
+- FEAT: Restored the page history route
 - FIX: Site layout updates
 - FIX: New page creation snack works as expected
 - FIX: Page schema now provides new-style pageFrom helper
@@ -21,9 +22,9 @@ noun: 'monsters'
 - FIX: Delete thread confirmation moved to svelte
 - FIX: Thread fork moved to svelte
 - FIX: Multiple small tread creation and cross-posting fixes
-- Chore: Updated Cyan design system to 1.0.15, removed some deprecated overrides
-- Chore: added longer stale-while-revalidate cache to active user list
-- Chore: pulled cn-editor to 2.0.0 from the submodule, added requirements to the package.json
+- CHORE: Updated Cyan design system to 1.0.15, removed some deprecated overrides
+- CHORE: added longer stale-while-revalidate cache to active user list
+- CHORE: pulled cn-editor to 2.0.0 from the submodule, added requirements to the package.json
 
 ### 17.6.0 (2025-05-09)
 - FEAT: Reply dialog now lets you add images to the reply

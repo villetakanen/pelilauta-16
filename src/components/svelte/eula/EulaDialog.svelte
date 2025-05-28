@@ -141,4 +141,5 @@ function setNick(n: string) {
       {t('login:eula.accept')}
     </button>
   </div>
+  </form>
 </dialog>

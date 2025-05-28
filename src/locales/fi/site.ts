@@ -73,6 +73,22 @@ export const site: Locale = {
     useRecentChanges: 'Viimeisimmät muutokset -paneeli',
     useSidebar: 'Sivupalkki (Mekanismi SideBar)',
   },
+  page: {
+    migrateContentInfo:
+      'Sivu on tehty aiemmalla versiolla pelilaudasta, ja sen sisältöä ei voi muokata ilman konversiota. Konversio voi joskus muuttaa sivun ulkoasua ja rakennetta.',
+    migrateContent: 'Konvertoi',
+    revisionCount: 'muokkausta',
+    missing: 'Sivua ei löydy, voit luoda sen tästä',
+    editor: {
+      contentMigrateWarning:
+        'Sivun aiempi sisältö on konvertoitu markdown-muotoon',
+    },
+    created: 'Sivu {key} luotu onnistuneesti',
+    history: {
+      title: 'Muutokset',
+      revision: 'Versio {index}',
+    },
+  },
   settings: {
     title: 'Asetukset',
     meta: {
@@ -138,18 +154,7 @@ export const site: Locale = {
   editor: {
     title: 'Muokkaa sivua',
   },
-  page: {
-    migrateContentInfo:
-      'Sivu on tehty aiemmalla versiolla pelilaudasta, ja sen sisältöä ei voi muokata ilman konversiota. Konversio voi joskus muuttaa sivun ulkoasua ja rakennetta.',
-    migrateContent: 'Konvertoi',
-    revisionCount: 'muokkausta',
-    missing: 'Sivua ei löydy, voit luoda sen tästä',
-    editor: {
-      contentMigrateWarning:
-        'Sivun aiempi sisältö on konvertoitu markdown-muotoon',
-    },
-    created: 'Sivu {key} luotu onnistuneesti',
-  },
+
   frontPage: 'Etusivu',
   owners: {
     title: 'Omistajat',
