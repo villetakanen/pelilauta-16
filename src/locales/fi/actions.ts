@@ -26,6 +26,7 @@ export const actions: Locale = {
   logout: 'Kirjaudu ulos',
   send: 'Lähetä',
   save: 'Tallenna',
+  share: 'Jaa',
   showMore: 'Näytä lisää',
   show: {
     options: 'Näytä lisäasetukset',

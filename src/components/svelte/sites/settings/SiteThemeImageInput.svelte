@@ -69,17 +69,17 @@ async function deleteImage() {
   onsubmit={onsubmit}
   class="flex flex-no-wrap p-2"
 >
-  <div class="preview-container flex align-center justify-center">
-    {#if preview}
-      <img
-        src={preview}
-        alt={t('app:meta.preview')}
-        class="preview-icon"
-      />
-    {:else}
-      <cn-icon noun="assets" large></cn-icon>
-    {/if}
-  </div>
+  {#if preview}
+    <img
+      src={preview}
+      alt={t('app:meta.preview')}
+      class="icon-large flex-none"
+      style="align-self: flex-start;justify-self: center;flex-grow: 0;"
+     />
+  {:else}
+    <cn-icon noun="assets" large class="flex-none" style="align-self: flex-start;justify-self: center;flex-grow: 0;"></cn-icon>
+  {/if}
+  
   <div>
     <label>{t(`entries:site.${imageField}`)}
       <input type="file" accept="image/*" onchange={fileChanged} />
@@ -100,17 +100,3 @@ async function deleteImage() {
   </div>
 </form>
 
-<style>
-.preview-icon {
-  aspect-ratio: 1 / 1;
-  width: calc(14 * var(--cn-grid));
-  height: calc(14 * var(--cn-grid));
-}
-.preview-container {
-  aspect-ratio: 1 / 1;
-  width: calc(14 * var(--cn-grid));
-  height: calc(14 * var(--cn-grid));
-  background-color: var(--background-elevation-1);
-  border-radius: var(--border-radius);
-}
-</style>

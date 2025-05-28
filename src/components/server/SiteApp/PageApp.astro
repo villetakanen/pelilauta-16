@@ -2,36 +2,19 @@
 import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import LatestPagesSection from './LatestPagesSection.astro';
-import PageArticleFooter from './PageArticleFooter.astro';
-import PageArticleHeader from './PageArticleHeader.astro';
 import PageSidebar from './PageSidebar.astro';
-
-/** SSR Site app */
+import PageArticle from './page/PageArticle.astro';
 
 interface Props {
-  page?: Page;
+  page: Page;
   site: Site;
-  pageKey: string;
 }
 const { site, page } = Astro.props as Props;
-
-const elevation = site.posterURL ? 'surface' : 'elevation-1';
-const exists = page !== undefined;
 ---
 <div class="content-columns">
-  { exists ? <article class={`column-l ${elevation} p-2`}>
-    <PageArticleHeader page={page} site={site}/>
-    <div style="min-height: 70dvh" set:html={page.htmlContent}></div>
-    <PageArticleFooter page={page} site={site}/>
-  </article> 
+
+  <PageArticle {page} {site} />
   <PageSidebar site={site} />
   <LatestPagesSection site={site} />
-  :
-  <article class="column-l elevation-1 p-2">
-    <div class="flex">
-        <cn-icon noun="monsters" xlarge />
-        <h1>404</h1>
-      </div>
-  </article>
-  }
+  
 </div>

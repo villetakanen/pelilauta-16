@@ -1,20 +1,4 @@
 /* This content should be moved to the design system */
-.page-poster-section img {
-  max-height: 42vh;
-}
-
-img.preview-icon {
-  width: var(--cn-icon-size-large);
-  aspect-ratio: 1 / 1;
-  border-radius: var(--cn-grid);
-  object-fit: cover;
-}
-.border-top {
-  border-top: var(--color-border) solid 1px;
-}
-.justify-center {
-  justify-content: center;
-}
 .justify-space-between {
   justify-content: space-between;
 }
@@ -46,12 +30,6 @@ select {
   container: inline-size;
   position: relative;
 }
-/*astro-island,
-astro-slot {
-  display: contents !important;
-  margin: 0;
-  padding: 0;
-}*/
 .toolbar label {
   margin-bottom: 0;
 }
@@ -68,10 +46,6 @@ span.notification-pill {
   color: var(--color-on-notify);
   background: var(--color-notify);
   box-shadow: var(--shadow-elevation-1);
-}
-.line-between + .line-between {
-  border-top: solid 1px var(--color-border);
-  padding-top: var(--cn-grid);
 }
 .no-shrink {
   flex-shrink: 0;
@@ -114,9 +88,7 @@ span.notification-pill {
     background: linear-gradient(transparent, var(--shadow-color));
   }
 }
-.hoverable:hover {
-  background-color: color-mix(in hsl, var(--color-on-primary), transparent 95%);
-}
+
 cn-menu button.menu-item {
   display: flex;
   border-radius: 0;
@@ -222,9 +194,7 @@ main table td {
 .justify-start {
   justify-content: start;
 }
-.justify-center {
-  justify-content: center;
-}
+
 cn-dice {
   z-index: 1;
 }
@@ -438,15 +408,4 @@ input[data-error] {
   );
   color: var(--color-on-secondary);
   box-shadow: var(--shadow-elevation-1);
-}
-.shrink {
-  flex-shrink: 1;
-}
-.content-columns > * {
-  overflow-x: hidden;
-  container: content-block / inline-size;
-}
-.flex > * {
-  flex-shrink: 1;
-  flex-grow: 1;
 }
