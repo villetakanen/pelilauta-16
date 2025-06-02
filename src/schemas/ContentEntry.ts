@@ -1,12 +1,5 @@
 import { z } from 'zod';
-
-export const EntrySchema = z.object({
-  key: z.string(),
-  flowTime: z.coerce.number().default(0),
-  owners: z.array(z.string()).default([]),
-  createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional(),
-});
+import { EntrySchema } from './EntrySchema';
 
 export const ContentEntrySchema = EntrySchema.extend({
   public: z.boolean().optional(),
@@ -19,8 +12,6 @@ export const ContentEntrySchema = EntrySchema.extend({
   owners: z.array(z.string()),
 });
 
-// Types
-export type Entry = z.infer<typeof EntrySchema>;
 export type ContentEntry = z.infer<typeof ContentEntrySchema>;
 
 export function contentEntryFrom(

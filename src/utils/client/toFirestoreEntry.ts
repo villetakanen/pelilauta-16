@@ -1,4 +1,4 @@
-import type { Entry } from '@schemas/ContentEntry';
+import type { Entry } from '@schemas/EntrySchema';
 import { Timestamp, serverTimestamp } from 'firebase/firestore';
 
 export interface Params {
