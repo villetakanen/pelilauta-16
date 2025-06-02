@@ -7,6 +7,7 @@ noun: 'monsters'
 
 ### 17.7.0 (unreleased)
 - FEAT: Restored the page history route
+- FIX: Cleaned up the EntrySchema for better CoPilot support and code readability
 - FIX: Site layout updates
 - FIX: New page creation snack works as expected
 - FIX: Page schema now provides new-style pageFrom helper

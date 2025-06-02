@@ -3,7 +3,7 @@ import { logError } from '@utils/logHelpers';
 import { parseFlowTime } from '@utils/schemaHelpers';
 import { z } from 'zod';
 import { AssetSchema } from './AssetSchema';
-import { EntrySchema } from './ContentEntry';
+import { EntrySchema } from './EntrySchema';
 
 export const SITES_COLLECTION_NAME = 'sites';
 
