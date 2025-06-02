@@ -5,7 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.7.0 (unreleased)
+### 17.7.x (ongoing)
+- FIX: the top sites stream on the front page handles SSR API errors gracefully. This might prevent some of the issues with the front page. 
+
+### 17.7.0 (2025-06-02)
 - FEAT: Restored the page history route
 - FIX: Cleaned up the EntrySchema for better CoPilot support and code readability
 - FIX: Site layout updates
