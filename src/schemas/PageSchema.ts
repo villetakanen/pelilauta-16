@@ -10,7 +10,7 @@ export const RevisionSchema = z.object({
   author: z.string(),
   // We timestamp revisions with the time they were
   // created at server-side, defaulting to now if not provided
-  createdAt: z.coerce.date().default(() => new Date()),
+  // createdAt: z.coerce.date().default(() => new Date()),
   // Legacy support for full markdown content revisions
   markdownContent: z.string().optional(),
   // /sites/:siteKey/pages/:pageKey/revisions/:revisionKey for post diff-style revisions
@@ -36,11 +36,10 @@ export const parsePage = (
   const revisionHistory = [];
   if (data.revisionHistory && Array.isArray(data.revisionHistory)) {
     for (const revision of data.revisionHistory) {
-      const { author, createdAt, markdownContent } = revision;
+      const { author, markdownContent } = revision;
       revisionHistory.push({
         author,
         markdownContent,
-        createdAt: toDate(createdAt),
       });
     }
   }

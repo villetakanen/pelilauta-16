@@ -25,6 +25,7 @@ export async function addPageRevision(current: Page, incoming: Partial<Page>) {
     current.key,
   );
   const historyDoc = await getDoc(historyDocRef);
+
   try {
     if (historyDoc.exists()) {
       // If the history doc exists, we update it with the new revision
@@ -36,22 +37,6 @@ export async function addPageRevision(current: Page, incoming: Partial<Page>) {
       'Error parsing page history, continuing with an empty history data',
       err,
     );
-  }
-
-  // Merge legacy history data if it exists, and there were no revisions in the history doc
-  // This enables us to ship this as a minor update without breaking existing app
-  if (
-    history.history.length === 0 &&
-    current.revisionHistory &&
-    Array.isArray(current.revisionHistory)
-  ) {
-    logWarn('Legacy page history detected, merging into new history format');
-    for (const revision of current.revisionHistory) {
-      history.history.push({
-        ...revision,
-        createdAt: revision.createdAt.getTime(),
-      });
-    }
   }
 
   history.history.push({
