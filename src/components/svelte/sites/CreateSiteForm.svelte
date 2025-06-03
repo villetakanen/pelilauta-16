@@ -64,7 +64,7 @@ async function onsubmit(e: Event) {
   e.preventDefault();
 
   const { createSite } = await import('@firebase/client/site/createSite');
-  const { addPage } = await import('@firebase/client/site/addPage');
+  const { addPage } = await import('@firebase/client/page/addPage');
 
   try {
     const id = await createSite(siteData);
@@ -79,7 +79,7 @@ async function onsubmit(e: Event) {
       },
       id,
     );
-    pushSessionSnack(t('site:snacks.siteCreated'), { sitename: `${id}` });
+    pushSessionSnack(t('site:snacks.siteCreated', { sitename: `${id}` }));
     window.location.href = `/sites/${id}`;
   } catch (error) {
     pushSnack(t('site:create.snacks.errorCreatingSite'));

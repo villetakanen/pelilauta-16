@@ -1,4 +1,4 @@
-import { updatePage } from '@firebase/client/site/updatePage';
+import { updatePage } from '@firebase/client/page/updatePage';
 import type { Page } from '@schemas/PageSchema';
 import { logWarn } from '@utils/logHelpers';
 

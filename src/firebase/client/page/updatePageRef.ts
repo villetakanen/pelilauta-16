@@ -9,7 +9,7 @@ export async function updatePageRef(page: Page) {
     {
       key,
       name,
-      flowTime: flowTime,
+      flowTime,
       category: category || '-',
       author: owners[0] || '-',
     },

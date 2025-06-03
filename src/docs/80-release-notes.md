@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Page history is now saved to a separate collection, to prevent it from taking up the page document size qupta.
 - FIX: the top sites stream on the front page handles SSR API errors gracefully. This might prevent some of the issues with the front page. 
 
 ### 17.7.0 (2025-06-02)

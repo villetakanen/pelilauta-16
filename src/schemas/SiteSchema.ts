@@ -18,6 +18,8 @@ export const PageRefSchema = z.object({
   name: z.string(),
   author: z.string(),
   category: z.string().optional(),
+  // Note: we save flowTime instead of updatedAt, as firestore
+  // does not fully support timestamps in array fields
   flowTime: z.number(),
 });
 
