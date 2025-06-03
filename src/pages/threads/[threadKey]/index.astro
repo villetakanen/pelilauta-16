@@ -13,7 +13,9 @@ if (!threadKey) {
   return Astro.redirect('/404');
 }
 // Fetch the tread data from the API
-const threadResponse = await fetch(`${Astro.url.origin}/api/threads/${threadKey}.json`);
+const threadResponse = await fetch(
+  `${Astro.url.origin}/api/threads/${threadKey}.json`,
+);
 
 if (!threadResponse.ok) {
   return Astro.redirect('/404');

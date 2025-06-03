@@ -7,10 +7,10 @@ import {
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
 import { markEntrySeen } from '@stores/subscription';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { fixImageData } from '@utils/fixImageData';
 import { onMount } from 'svelte';
 import ReplyArticle from './ReplyArticle.svelte';
 import ReplyDialog from './ReplyDialog.svelte';
-    import { fixImageData } from '@utils/fixImageData';
 
 interface Props {
   thread: Thread;
