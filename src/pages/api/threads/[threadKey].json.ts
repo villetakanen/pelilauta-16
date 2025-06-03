@@ -2,6 +2,8 @@ import { serverDB } from '@firebase/server';
 import { CHANNEL_DEFAULT_SLUG } from '@schemas/ChannelSchema';
 import { THREADS_COLLECTION_NAME, parseThread } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { type EntryWithImages, fixImageData } from '@utils/fixImageData';
+import { logDebug } from '@utils/logHelpers';
 import type { APIContext } from 'astro';
 
 export async function GET({ params }: APIContext): Promise<Response> {
@@ -35,7 +37,12 @@ export async function GET({ params }: APIContext): Promise<Response> {
   }
 
   try {
-    const thread = parseThread(toClientEntry(data), threadKey);
+    const data = threadDoc.data() || {};
+
+    const fixedImages = fixImageData(data);
+
+    const thread = parseThread(toClientEntry(fixedImages), threadKey);
+
     return new Response(JSON.stringify(thread), {
       status: 200,
       headers: {

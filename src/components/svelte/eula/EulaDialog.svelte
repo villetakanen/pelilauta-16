@@ -43,8 +43,8 @@ $effect(() => {
 });
 
 async function getUserInfo() {
-  const { getAuth } = await import('firebase/auth');
-  const user = getAuth().currentUser;
+  const { auth } = await import('@firebase/client');
+  const user = auth.currentUser;
   if (!user) return;
   avararUrl = user.photoURL || '';
   const dpn = user.displayName;

@@ -7,6 +7,7 @@ import {
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
 import { markEntrySeen } from '@stores/subscription';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { fixImageData } from '@utils/fixImageData';
 import { onMount } from 'svelte';
 import ReplyArticle from './ReplyArticle.svelte';
 import ReplyDialog from './ReplyDialog.svelte';
@@ -44,7 +45,7 @@ onMount(async () => {
       } else {
         const index = d.findIndex((r) => r.key === change.doc.id);
         const reply = ReplySchema.parse({
-          ...toClientEntry(data),
+          ...toClientEntry(fixImageData(data)),
           key: change.doc.id,
         });
         if (index !== -1) {

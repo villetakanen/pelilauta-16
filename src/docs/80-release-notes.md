@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Eula dialog was fetching the Firebase Auth directly from the SDK, without using the client init - which can cause a situation where the Firebase App is not initialized yet, and the call fails.
 - FIX: Page history is now saved to a separate collection, to prevent it from taking up the page document size qupta.
 - FIX: the top sites stream on the front page handles SSR API errors gracefully. This might prevent some of the issues with the front page. 
 

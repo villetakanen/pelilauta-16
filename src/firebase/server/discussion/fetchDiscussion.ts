@@ -5,6 +5,7 @@ import {
 } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { fixImageData } from '@utils/fixImageData';
 import { serverDB } from '..';
 
 /**
@@ -26,7 +27,11 @@ export async function fetchDiscussion(threadKey: string): Promise<Reply[]> {
   const discussion: Reply[] = [];
 
   for (const doc of snapshot.docs) {
-    const reply = parseReply(toClientEntry(doc.data()), doc.id, threadKey);
+    const reply = parseReply(
+      toClientEntry(fixImageData(doc.data())),
+      doc.id,
+      threadKey,
+    );
     discussion.push(reply);
   }
 
