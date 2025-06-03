@@ -1,5 +1,5 @@
 <script lang="ts">
-import { addPage } from '@firebase/client/site/addPage';
+import { addPage } from '@firebase/client/page/addPage';
 import { pageFrom } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';

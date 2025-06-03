@@ -15,3 +15,9 @@ sites/[key]
 +- handouts/[handoutKey] # Handout data
 +- history/[pageKey] # Page history diffs
 ```
+
+### Key fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `updatedAt` | `timestamp` | The last time the site, or it's pages, assets, or handouts were updated (including created pages, assets and handouts)|
