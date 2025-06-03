@@ -6,6 +6,7 @@ import {
 import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { serverDB } from '..';
+import { fixImageData } from '@utils/fixImageData';
 
 /**
  * Server side function to fetch a discussion related to a thread
@@ -26,7 +27,8 @@ export async function fetchDiscussion(threadKey: string): Promise<Reply[]> {
   const discussion: Reply[] = [];
 
   for (const doc of snapshot.docs) {
-    const reply = parseReply(toClientEntry(doc.data()), doc.id, threadKey);
+    const reply = parseReply(toClientEntry(
+      fixImageData(doc.data())), doc.id, threadKey);
     discussion.push(reply);
   }
 

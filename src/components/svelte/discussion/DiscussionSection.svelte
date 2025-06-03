@@ -10,6 +10,7 @@ import { toClientEntry } from '@utils/client/entryUtils';
 import { onMount } from 'svelte';
 import ReplyArticle from './ReplyArticle.svelte';
 import ReplyDialog from './ReplyDialog.svelte';
+    import { fixImageData } from '@utils/fixImageData';
 
 interface Props {
   thread: Thread;
@@ -44,7 +45,7 @@ onMount(async () => {
       } else {
         const index = d.findIndex((r) => r.key === change.doc.id);
         const reply = ReplySchema.parse({
-          ...toClientEntry(data),
+          ...toClientEntry(fixImageData(data)),
           key: change.doc.id,
         });
         if (index !== -1) {
