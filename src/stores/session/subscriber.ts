@@ -2,7 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import { logError } from '@utils/logHelpers';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
-import { $uid } from '.';
+import { uid } from '.';
 import {
   SUBSCRIPTIONS_FIRESTORE_PATH,
   type Subscription,
@@ -25,8 +25,8 @@ export const $subscriber = persistentAtom<Subscription>(
 let unsubscribe: () => void;
 
 onMount($subscriber, () => {
-  const uid = $uid.get();
-  if (uid) initSubscriberStore(uid);
+  const u = uid.get();
+  if (u) initSubscriberStore(u);
 });
 
 export async function initSubscriberStore(uid: string) {
@@ -65,8 +65,7 @@ async function createSubscriptionEntry(uid: string) {
 }
 
 export function hasSeenEntry(entryKey: string, timestamp: number) {
-  const uid = $uid.get();
-  if (!uid) {
+  if (!uid.get()) {
     return true;
   }
 
@@ -76,11 +75,10 @@ export function hasSeenEntry(entryKey: string, timestamp: number) {
 
 export async function markEntrySeen(entryKey: string, timestamp: number) {
   const subscriber = $subscriber.get();
-  const uid = $uid.get();
   subscriber.seenEntities[entryKey] = timestamp;
   const { updateDoc, doc } = await import('firebase/firestore');
   try {
-    await updateDoc(doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid}`), {
+    await updateDoc(doc(db, `${SUBSCRIPTIONS_FIRESTORE_PATH}/${uid.get()}`), {
       seenEntities: {
         ...subscriber.seenEntities,
       },

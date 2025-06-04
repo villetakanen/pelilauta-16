@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Session state is now correctly initialized on logout (no more flickering of the eula dialog on logout).
 - FIX: Older discussions were missing some mandatory fields - added a on-the-fly patch to regenerate the missing fields.
 - FIX: Eula dialog was fetching the Firebase Auth directly from the SDK, without using the client init - which can cause a situation where the Firebase App is not initialized yet, and the call fails.
 - FIX: Page history is now saved to a separate collection, to prevent it from taking up the page document size qupta.

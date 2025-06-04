@@ -1,5 +1,5 @@
 import { SITES_COLLECTION_NAME, type Site } from '@schemas/SiteSchema';
-import { $uid } from '@stores/session';
+import { uid } from '@stores/session';
 import { logError } from '@utils/logHelpers';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { deleteObject, listAll, ref } from 'firebase/storage';
@@ -36,15 +36,13 @@ async function deleteAssets(site: Site) {
 }
 
 export async function deleteSite(site: Site) {
-  // Get the current user's uid
-  const uid = $uid.get();
-  if (!uid) {
+  if (!uid.get()) {
     throw new Error('Site deletion aborted, session uid not set');
   }
 
   // Sanity check, the database will throw an error
   // if the uid is not in the owners list at the DB side
-  if (!site.owners.includes(uid)) {
+  if (!site.owners.includes(uid.get())) {
     throw new Error('Site deletion aborted, user is not an owner');
   }
 
