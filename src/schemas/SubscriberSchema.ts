@@ -18,7 +18,7 @@ export const SubscriptionSchema = z.object({
   uid: z.string(),
   allSeenAt: z.number(),
   seenEntities: z.record(z.string(), z.number()),
-  pushMessages: z.boolean(),
+  pushMessages: z.boolean().default(false),
   notifyOnThreads: z.boolean(),
   notifyOnLikes: z.boolean(),
   messagingTokens: z.array(z.string()).default([]),
