@@ -1,14 +1,42 @@
 import { authedPost } from '@firebase/client/apiClient';
 import { type Channel, ChannelSchema } from '@schemas/ChannelSchema';
+import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
 import type { Thread } from '@schemas/ThreadSchema';
+import { logError } from '@utils/logHelpers';
+
+async function getProfile(uid: string) {
+  const { db } = await import('@firebase/client');
+  const { getDoc, doc } = await import('firebase/firestore');
+  const { normalizeProfileData } = await import('@stores/profiles');
+
+  try {
+    const publicProfileDoc = await getDoc(
+      doc(db, PROFILES_COLLECTION_NAME, uid),
+    );
+    if (publicProfileDoc.exists()) {
+      const profileData = publicProfileDoc.data();
+      if (profileData) {
+        return normalizeProfileData(profileData, uid);
+      }
+    }
+  } catch (error) {
+    logError('submitThreadUpdate', 'getProfile', uid, error);
+  }
+  return {
+    key: uid,
+    nick: 'Anonymous',
+    username: 'Anonymous',
+    avatarUrl: '',
+    bio: '',
+    frozen: false,
+  };
+}
 
 export async function syndicateToBsky(
   thread: Thread,
   uid: string,
 ): Promise<void> {
-  const { getProfile } = await import('@stores/profilesStore');
-
-  const profile = getProfile(uid);
+  const profile = await getProfile(uid);
 
   // Fetch channels from the server
   const channelsResponse = await fetch(

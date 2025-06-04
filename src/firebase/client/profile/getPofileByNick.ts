@@ -1,5 +1,5 @@
 import { PROFILES_COLLECTION_NAME } from '@schemas/ProfileSchema';
-import { type PublicProfile, PublicProfileSchema } from '@stores/profilesStore';
+import { type PublicProfile, PublicProfileSchema } from '@stores/profiles';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '..';
 
