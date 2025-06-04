@@ -47,6 +47,7 @@ onMount(async () => {
         const reply = ReplySchema.parse({
           ...toClientEntry(fixImageData(data)),
           key: change.doc.id,
+          threadKey: thread.key,
         });
         if (index !== -1) {
           d[index] = reply;
