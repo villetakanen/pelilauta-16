@@ -3,7 +3,7 @@ import {
   type Site,
   parseSite,
 } from '@schemas/SiteSchema';
-import { $uid } from '@stores/session';
+import { uid } from '@stores/session';
 import { logDebug } from '@utils/logHelpers';
 import { updateDoc } from 'firebase/firestore';
 
@@ -21,8 +21,8 @@ export async function createSite(site: Partial<Site>): Promise<string> {
   logDebug('createSite', site);
 
   // Get the current user's uid
-  const uid = $uid.get();
-  if (!uid) {
+  const u = uid.get();
+  if (!u) {
     throw new Error('Site creation aborted, session uid not set');
   }
 
@@ -31,7 +31,7 @@ export async function createSite(site: Partial<Site>): Promise<string> {
   const siteData = toFirestoreEntry(parsedSite);
 
   // Add the current user's uid to the site's owners
-  siteData.owners = [uid];
+  siteData.owners = [u];
 
   // If the site has a key, try to create the site with that given key
   if (site.key && site.usePlainTextURLs) {

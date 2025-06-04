@@ -5,7 +5,7 @@ import {
   ReplySchema,
 } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
-import { markEntrySeen } from '@stores/subscription';
+import { hasSeen, setSeen } from '@stores/subscription';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { fixImageData } from '@utils/fixImageData';
 import { onMount } from 'svelte';
@@ -21,7 +21,10 @@ const { discussion: initDiscussion, thread }: Props = $props();
 let discussion = $state(initDiscussion);
 
 onMount(async () => {
-  markEntrySeen(thread.key);
+  if (!$hasSeen(thread.key, thread.flowTime)) {
+    // We haven't seen this thread or it's latest comments yet, so we mark it as seen
+    setSeen(thread.key);
+  }
 
   const { getFirestore, query, collection, orderBy, onSnapshot } = await import(
     'firebase/firestore'

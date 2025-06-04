@@ -4,7 +4,7 @@ import {
   type Site,
   parseSite,
 } from '@schemas/SiteSchema';
-import { $uid } from '@stores/session';
+import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { type WritableAtom, onMount } from 'nanostores';
 
@@ -24,8 +24,8 @@ export const userSites: WritableAtom<Site[]> = persistentAtom(
 );
 
 onMount(userSites, () => {
-  const uid = $uid.get();
-  if (!uid) {
+  const u = uid.get();
+  if (!u) {
     userSites.set([]);
     return;
   }
@@ -40,7 +40,7 @@ async function refreshSites() {
   const siteDocs = await getDocs(
     query(
       collection(getFirestore(), SITES_COLLECTION_NAME),
-      where('owners', 'array-contains', $uid.get()),
+      where('owners', 'array-contains', uid.get()),
     ),
   );
 
@@ -52,7 +52,7 @@ async function refreshSites() {
   const playerSiteDocs = await getDocs(
     query(
       collection(getFirestore(), SITES_COLLECTION_NAME),
-      where('players', 'array-contains', $uid.get()),
+      where('players', 'array-contains', uid.get()),
     ),
   );
 
