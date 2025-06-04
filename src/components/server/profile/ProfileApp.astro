@@ -23,5 +23,5 @@ const { profile } = Astro.props;
   <ProfileSiteList uid={profile.key} server:defer>
     <ProfileSiteListPlaceholder slot="fallback" />
   </ProfileSiteList>
-  <ProfileThreads uid={profile.key} />
+  <ProfileThreads uid={profile.key}/>
 </div>

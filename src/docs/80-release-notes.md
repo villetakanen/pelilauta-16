@@ -6,6 +6,8 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Removed erroneous thread channel icon resolution from the server-side rendering (which expected a client-side nanostore to be initialized)
+- FIX: Removed deprecated social stores
 - FIX: Nanostore for locally cached public profiles exposes loading state, allowing the UI to show proper loading indicators.
 - FIX: Nanostore initialization for subscription is now done with a derived store, which should prevent some of the issues with the subscription not being initialized correctly with onmount.
 - FIX: Session state is now correctly initialized on logout (no more flickering of the eula dialog on logout).
