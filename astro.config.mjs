@@ -28,19 +28,16 @@ export default defineConfig({
   }),
   vite: {
     optimizeDeps: {
-      include: [
-        'nanostores',
-        '@nanostores/persistent'
-      ],
+      include: ['nanostores', '@nanostores/persistent'],
       exclude: [
         'firebase/firestore',
         'firebase/auth',
         'firebase/storage',
-        'firebase/app'
-      ]
+        'firebase/app',
+      ],
     },
     ssr: {
-      noExternal: ['nanostores', '@nanostores/persistent']
+      noExternal: ['nanostores', '@nanostores/persistent'],
     },
     plugins: [
       visualizer({

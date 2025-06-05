@@ -69,9 +69,7 @@
     "workbox-cli": "^7.3.0"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": [
-      "@firebase/util"
-    ],
+    "ignoredBuiltDependencies": ["@firebase/util"],
     "onlyBuiltDependencies": [
       "@biomejs/biome",
       "@firebase/util",

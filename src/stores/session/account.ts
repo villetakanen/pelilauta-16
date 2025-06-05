@@ -55,19 +55,19 @@ async function handleAccountSnapshot(
 ) {
   if (accountData) {
     try {
-    const incoming = parseAccount(accountData, key);
+      const incoming = parseAccount(accountData, key);
 
-    // Lets handle the account update
-    account.set(incoming);
+      // Lets handle the account update
+      account.set(incoming);
 
-    // Check if the lastLogin is within 24 hours, if not we will update it
-    const lastLoginTime = incoming.lastLogin?.getTime() || 0;
-    if (Date.now() - lastLoginTime > LAST_LOGIN_TIMEOUT) {
-      // If the lastLogin is more than 24 hours ago, update it
-      await stampLoginTime(incoming.uid);
-    }
+      // Check if the lastLogin is within 24 hours, if not we will update it
+      const lastLoginTime = incoming.lastLogin?.getTime() || 0;
+      if (Date.now() - lastLoginTime > LAST_LOGIN_TIMEOUT) {
+        // If the lastLogin is more than 24 hours ago, update it
+        await stampLoginTime(incoming.uid);
+      }
 
-    accountNotFound.set(false);
+      accountNotFound.set(false);
     } catch (error) {
       logWarn(
         'AccountStore',
@@ -96,8 +96,9 @@ export async function subscribe(uid: string) {
 
   try {
     const accountRef = doc(getFirestore(), ACCOUNTS_COLLECTION_NAME, uid);
-    unsubscribe = onSnapshot(accountRef, (snapshot) =>
-      handleAccountSnapshot(snapshot.data(), uid),
+    unsubscribe = onSnapshot(
+      accountRef,
+      (snapshot) => handleAccountSnapshot(snapshot.data(), uid),
       (error) => {
         logWarn(
           'AccountStore',
