@@ -144,5 +144,5 @@ async function stampLoginTime(uid: string) {
 
 export function reset() {
   account.set(null);
-  unsubscribe();
+  unsubscribe?.();
 }

@@ -3,38 +3,51 @@ import { t } from '@utils/i18n';
 
 interface NickNameInputProps {
   nick: string;
-  setNick: (nickname: string) => void;
+  onNickChange: (nick: string, exists: boolean) => void;
 }
-const { nick, setNick }: NickNameInputProps = $props();
+const { nick, onNickChange }: NickNameInputProps = $props();
 let exists = $state(false);
+let currentNick = $state(nick);
+
+// Keep currentNick in sync with prop changes
+$effect(() => {
+  currentNick = nick;
+});
+
+async function onInput(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const newNick = target.value;
+  currentNick = newNick;
+  onNickChange(newNick, exists);
+}
 
 async function onBlur(event: Event) {
   const target = event.target as HTMLInputElement;
-  const nick = target.value;
+  const nickValue = target.value;
 
-  if (!nick) {
+  if (!nickValue) {
+    exists = false;
+    onNickChange(nickValue, false);
     return;
   }
 
-  // This component is mounted with a auto-generated nickname, which
-  // may be taken, so we need to check for duplicates
-  const hasDuplicate = await checkForDuplicate(nick);
-
-  if (!hasDuplicate) {
-    setNick(nick);
-  }
+  // Check for duplicates on blur
+  const hasDuplicate = await checkForDuplicate(nickValue);
+  exists = hasDuplicate;
+  onNickChange(nickValue, hasDuplicate);
 }
 
-async function checkForDuplicate(nickname: string) {
-  const { getProfileByNick } = await import(
-    '@firebase/client/profile/getPofileByNick'
-  );
+async function checkForDuplicate(nickname: string): Promise<boolean> {
+  if (!nickname) return false;
 
-  const profile = await getProfileByNick(nickname);
-  const hasDuplicate = !!profile;
-
-  exists = hasDuplicate;
-  return hasDuplicate;
+  try {
+    const { doc, getDoc, getFirestore } = await import('firebase/firestore');
+    const profileDoc = await getDoc(doc(getFirestore(), 'profiles', nickname));
+    return profileDoc.exists();
+  } catch (error) {
+    console.error('Error checking nickname:', error);
+    return false;
+  }
 }
 </script>
 
@@ -43,7 +56,8 @@ async function checkForDuplicate(nickname: string) {
     {t('entries:profile.nick')}
     <input
       type="text"
-      value={nick}
+      value={currentNick}
+      oninput={onInput}
       onblur={onBlur}
       data-error={exists}
     />

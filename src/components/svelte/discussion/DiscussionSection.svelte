@@ -5,9 +5,11 @@ import {
   ReplySchema,
 } from '@schemas/ReplySchema';
 import { THREADS_COLLECTION_NAME, type Thread } from '@schemas/ThreadSchema';
+import { uid } from '@stores/session';
 import { hasSeen, setSeen } from '@stores/subscription';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { fixImageData } from '@utils/fixImageData';
+import { t } from '@utils/i18n';
 import { onMount } from 'svelte';
 import ReplyArticle from './ReplyArticle.svelte';
 import ReplyDialog from './ReplyDialog.svelte';
@@ -70,6 +72,16 @@ onMount(async () => {
       <ReplyArticle {reply} />
     {/each}
     </div>
-    <ReplyDialog {thread}/>
+
+    {#if $uid}
+      <ReplyDialog {thread} />
+    {:else}
+      <div class="toolbar items-center">
+        <a href="/login" class="button">
+          <cn-icon noun="send"></cn-icon>
+          <span>{t('actions:login')}</span>
+        </a>
+      </div>
+    {/if}
   </section>
 </div>
