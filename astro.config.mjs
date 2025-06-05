@@ -27,6 +27,21 @@ export default defineConfig({
     webAnalytics: { enabled: true },
   }),
   vite: {
+    optimizeDeps: {
+      include: [
+        'nanostores',
+        '@nanostores/persistent'
+      ],
+      exclude: [
+        'firebase/firestore',
+        'firebase/auth',
+        'firebase/storage',
+        'firebase/app'
+      ]
+    },
+    ssr: {
+      noExternal: ['nanostores', '@nanostores/persistent']
+    },
     plugins: [
       visualizer({
         emitFile: true,

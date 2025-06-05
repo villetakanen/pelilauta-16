@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "17.7.9",
+  "version": "17.7.10",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -69,7 +69,17 @@
     "workbox-cli": "^7.3.0"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": ["@firebase/util"],
-    "onlyBuiltDependencies": ["@firebase/util", "lefthook"]
+    "ignoredBuiltDependencies": [
+      "@firebase/util"
+    ],
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "@firebase/util",
+      "@sentry/cli",
+      "esbuild",
+      "lefthook",
+      "protobufjs",
+      "sharp"
+    ]
   }
 }

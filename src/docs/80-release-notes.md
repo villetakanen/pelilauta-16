@@ -6,6 +6,8 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Dependency build updates to fix broken dev build artifacts.
+- FIX: Account store cleanup improvements, removed deprecated $account alias as solid-js components are no longer used.
 - FIX: Removed erroneous thread channel icon resolution from the server-side rendering (which expected a client-side nanostore to be initialized)
 - FIX: Removed deprecated social stores
 - FIX: Nanostore for locally cached public profiles exposes loading state, allowing the UI to show proper loading indicators.
