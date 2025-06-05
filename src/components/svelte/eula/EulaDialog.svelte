@@ -9,7 +9,7 @@ import { requiresEula } from '@stores/session/account';
 import { profile } from '@stores/session/profile';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
-import { logWarn } from '@utils/logHelpers';
+import { logError, logWarn } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import { toFid } from '@utils/toFid';
 import { type Snippet, onMount } from 'svelte';
@@ -19,13 +19,16 @@ interface Props {
   children?: Snippet;
 }
 const { children }: Props = $props();
-let dialog: HTMLDialogElement;
+let dialog: HTMLDialogElement | undefined;
 let nick = $state('');
-let avararUrl = $state('');
+let avatarUrl = $state('');
+let nickExists = $state(false);
+
 const valid = $derived.by(() => {
   if ($profile?.nick) return true;
-  return !!nick;
+  return !!nick && !nickExists;
 });
+
 const handle = $derived.by(() => {
   if ($profile?.nick) return toFid($profile.nick);
   if (nick) return toFid(nick);
@@ -39,14 +42,18 @@ onMount(() => {
 });
 
 $effect(() => {
-  $requiresEula && dialog.showModal();
+  if ($requiresEula && dialog && !dialog.open) {
+    dialog.showModal();
+  } else if (!$requiresEula && dialog && dialog.open) {
+    dialog.close();
+  }
 });
 
 async function getUserInfo() {
   const { auth } = await import('@firebase/client');
   const user = auth.currentUser;
   if (!user) return;
-  avararUrl = user.photoURL || '';
+  avatarUrl = user.photoURL || '';
   const dpn = user.displayName;
   const username = dpn ?? user.email?.split('@')[0];
   nick = toMekanismiURI(username || '');
@@ -54,46 +61,55 @@ async function getUserInfo() {
 
 async function handleSubmit(e: Event) {
   e.preventDefault();
-  dialog.close();
 
-  // Update Account data to DB
-  const account: Partial<Account> = { eulaAccepted: true };
+  // Validate nick one more time before submission
+  if (!$profile?.nick && (!nick || nickExists)) {
+    pushSnack(t('snacks:error.invalidNick'));
+    return;
+  }
+
   try {
-    await createAccount(account, $uid);
-    pushSnack(t('snacks:account.created'));
-  } catch (error) {
-    await updateAccount(account, $uid);
-    pushSnack(t('snacks:eula.accepted'));
-  }
-
-  // Assuming either of the above operations succeeded,
-  // we can now create a profile for the user, if it does not
-  // exist
-  if (!$profile?.nick) {
-    const profileData: Partial<Profile> = {};
-    profileData.nick = nick;
-    if (avararUrl) {
-      profileData.avatarURL = avararUrl;
+    // Update Account data to DB
+    const account: Partial<Account> = { eulaAccepted: true };
+    try {
+      await createAccount(account, $uid);
+      pushSnack(t('snacks:account.created'));
+    } catch (error) {
+      await updateAccount(account, $uid);
+      pushSnack(t('snacks:eula.accepted'));
     }
-    createProfile(profileData, $uid);
-    pushSnack(t('snacks:profile.created'));
-  } else {
-    logWarn('User has a profile, skipping profile creation');
-  }
 
-  // Close the dialog
-  dialog?.close();
+    // Create profile if needed
+    if (!$profile?.nick && nick && !nickExists) {
+      const profileData: Partial<Profile> = {
+        nick,
+        ...(avatarUrl && { avatarURL: avatarUrl }),
+      };
+      await createProfile(profileData, $uid);
+      pushSnack(t('snacks:profile.created'));
+    } else if ($profile?.nick) {
+      logWarn('User has a profile, skipping profile creation');
+    }
+  } catch (error) {
+    logError(
+      'EulaDialog',
+      'handleSubmit',
+      'Failed to complete EULA process:',
+      error,
+    );
+    pushSnack(t('snacks:error.general'));
+  }
 }
 
 async function handleCancel(e?: Event) {
   e?.preventDefault();
   const { signOut, getAuth } = await import('firebase/auth');
   await signOut(getAuth());
-  dialog.close();
 }
 
-function setNick(n: string) {
-  nick = n;
+function handleNickChange(newNick: string, exists: boolean) {
+  nick = newNick;
+  nickExists = exists;
 }
 </script>
 
@@ -114,11 +130,11 @@ function setNick(n: string) {
       </p>
     {:else}
       <div class="flex flex-no-wrap">
-        <cn-avatar nick={nick} src={avararUrl}></cn-avatar>
+        <cn-avatar nick={nick} src={avatarUrl}></cn-avatar>
         <fieldset class="grow">
           <NickNameInput
             {nick}
-            {setNick}
+            onNickChange={handleNickChange}
           />
           <p>
             <strong>{t('entries:profile.username')}: </strong>
