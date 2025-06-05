@@ -53,11 +53,12 @@ async function onsubmit(e: Event) {
   handleClose();
 }
 </script>
-<div class="toolbar justify-center">
-<button type="button" onclick={showDialog}>
-  <cn-icon noun="send"></cn-icon>
-  <span>{t('threads:discussion.reply')}</span>
-</button>
+
+<div class="toolbar items-center">
+  <button type="button" onclick={showDialog}>
+    <cn-icon noun="send"></cn-icon>
+    <span>{t('threads:discussion.reply')}</span>
+  </button>
 </div>
 
 <dialog id={dialogId}>

@@ -84,7 +84,8 @@ async function onclick(e: Event) {
   if (!$uid) return;
 
   const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
-  const reaction = $reactions[type] || [];
+  const currentReactions = reactions.get();
+  const reaction = currentReactions[type] || [];
   const index = reaction.indexOf($uid);
 
   if (index === -1) {
@@ -97,15 +98,11 @@ async function onclick(e: Event) {
   await updateDoc(doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`), {
     [type]: reaction,
   });
-  logDebug(
-    'ReactionButton',
-    `Reaction ${type} updated for ${key} as ${reaction}`,
-  );
 
-  $reactions = {
-    ...$reactions,
+  reactions.set({
+    ...currentReactions,
     [type]: reaction,
-  };
+  });
 }
 
 async function createNotification() {

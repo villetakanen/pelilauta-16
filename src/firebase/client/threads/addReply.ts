@@ -71,7 +71,7 @@ export async function addReply(
       : markdonwContent;
 
   const reactions: Reactions = {
-    subscribers: thread.owners,
+    subscribers: [author],
     love: [],
   };
   // Add the reactions to the reply

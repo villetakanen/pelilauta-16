@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: When a reply is created, the reactions object gets the proper subscribers (reply creator) instead of cloning the parent thread subscribers.
 - FIX: Eula dialog open race condition and nickname binding issues fixed.
 - FIX: Dependency build updates to fix broken dev build artifacts.
 - FIX: Account store cleanup improvements, removed deprecated $account alias as solid-js components are no longer used.
