@@ -4,7 +4,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { onMount } from 'nanostores';
 import { db } from 'src/firebase/client';
 
-export const $appMeta = persistentAtom<AppMeta>(
+export const appMeta = persistentAtom<AppMeta>(
   'app-meta',
   {
     admins: [],
@@ -16,9 +16,8 @@ export const $appMeta = persistentAtom<AppMeta>(
     },
   },
 );
-export const appMeta = $appMeta;
 
-onMount($appMeta, () => {
+onMount(appMeta, () => {
   fetchAppMeta();
 });
 
@@ -27,7 +26,7 @@ async function fetchAppMeta() {
   if (appMetaDoc.exists()) {
     const data = appMetaDoc.data();
     if (data) {
-      $appMeta.set(data as AppMeta);
+      appMeta.set(data as AppMeta);
     }
   }
 }

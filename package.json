@@ -1,7 +1,7 @@
 {
   "name": "pelilauta-16",
   "type": "module",
-  "version": "17.7.7",
+  "version": "17.7.10",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -70,6 +70,14 @@
   },
   "pnpm": {
     "ignoredBuiltDependencies": ["@firebase/util"],
-    "onlyBuiltDependencies": ["@firebase/util", "lefthook"]
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "@firebase/util",
+      "@sentry/cli",
+      "esbuild",
+      "lefthook",
+      "protobufjs",
+      "sharp"
+    ]
   }
 }

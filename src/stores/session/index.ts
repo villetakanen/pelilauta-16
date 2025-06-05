@@ -6,8 +6,8 @@ import { computed, onMount } from 'nanostores';
 import { auth } from 'src/firebase/client';
 import {
   $account,
-  subscribeToAccount,
-  unsubscribeFromAccount,
+  subscribe as subscribeToAccount,
+  reset as unsubscribeFromAccount,
 } from './account';
 import { subscribeToProfile, unsubscribeFromProfile } from './profile';
 import { initSubscriberStore } from './subscriber';

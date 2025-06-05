@@ -4,11 +4,13 @@ import {
   type Account,
   parseAccount,
 } from '@schemas/AccountSchema';
-import { $appMeta } from '@stores/metaStore/metaStore';
+import { appMeta } from '@stores/metaStore/metaStore';
 import { logWarn } from '@utils/logHelpers';
 import { atom, computed } from 'nanostores';
 
-// *** Primary session stores ******************************************
+// *** Primary session stores: Acccount ******************************************
+
+const LAST_LOGIN_TIMEOUT = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 // The nanostores persisten atom that holds the current user Account data.
 export const account = persistentAtom<Account | null>('session-account', null, {
@@ -36,7 +38,7 @@ export const requiresEula = computed([account, accountNotFound], (acc, anf) => {
 // Helper for the admin tooling visiblity. The actual authz is done in the
 // backend, this is just a helper to show/hide the admin tools in the UI.
 export const showAdminTools = computed(
-  [$account, $appMeta],
+  [account, appMeta], // Uses $account
   (account, appMeta) => {
     if (!account) return false;
     if (!account.uid) return false;
@@ -45,50 +47,102 @@ export const showAdminTools = computed(
   },
 );
 
-// *** REFACTORED UP TO HERE *******************************************
-export const $requiresEula = computed($account, (account) => {
-  if (accountNotFound.get()) return true;
-  if (!account) return false;
-  return !account.eulaAccepted;
-});
-
 let unsubscribe: () => void;
 
-export async function subscribeToAccount(uid: string) {
+async function handleAccountSnapshot(
+  accountData: Partial<Account> | undefined,
+  key: string,
+) {
+  if (accountData) {
+    try {
+      const incoming = parseAccount(accountData, key);
+
+      // Lets handle the account update
+      account.set(incoming);
+
+      // Check if the lastLogin is within 24 hours, if not we will update it
+      const lastLoginTime = incoming.lastLogin?.getTime() || 0;
+      if (Date.now() - lastLoginTime > LAST_LOGIN_TIMEOUT) {
+        // If the lastLogin is more than 24 hours ago, update it
+        await stampLoginTime(incoming.uid);
+      }
+
+      accountNotFound.set(false);
+    } catch (error) {
+      logWarn(
+        'AccountStore',
+        'handleAccountSnapshot',
+        'Error parsing account data',
+        error,
+      );
+      // If we fail to parse the account data, we'LL handle it as not found
+      handleAccountSnapshot(undefined, key);
+    }
+  } else {
+    // If the account data is null, we set the account to null and mark it as not found
+    account.set(null);
+    accountNotFound.set(true);
+  }
+}
+
+export async function subscribe(uid: string) {
+  // Clean up existing subscription first to prevent memory leaks
+  if (unsubscribe) {
+    unsubscribe();
+    unsubscribe = () => {};
+  }
+
   const { doc, onSnapshot, getFirestore } = await import('firebase/firestore');
 
-  const accountRef = doc(getFirestore(), ACCOUNTS_COLLECTION_NAME, uid);
-  unsubscribe = onSnapshot(accountRef, (snapshot) => {
-    if (snapshot.exists()) {
-      $account.set(parseAccount(snapshot.data()));
-
-      // Lets check if the lastLogin is within 24 hours, if not we will update it
-      const lastLoginTime = $account.get()?.lastLogin?.getTime() || 0;
-      console.log('lastLogin', lastLoginTime);
-      const now = new Date();
-      const diff = now.getTime() - lastLoginTime;
-      const hours = diff / 1000 / 60 / 60;
-      if (hours > 24) {
-        stampLoginTime(uid);
-      }
-      accountNotFound.set(false);
-    } else {
-      accountNotFound.set(true);
-    }
-  });
+  try {
+    const accountRef = doc(getFirestore(), ACCOUNTS_COLLECTION_NAME, uid);
+    unsubscribe = onSnapshot(
+      accountRef,
+      (snapshot) => handleAccountSnapshot(snapshot.data(), uid),
+      (error) => {
+        logWarn(
+          'AccountStore',
+          'subscribe',
+          'Error receiving account snapshot',
+          error,
+        );
+        handleAccountSnapshot(undefined, uid);
+      },
+    );
+  } catch (error) {
+    logWarn('AccountStore', 'subscribe', 'Error subscribing to account', error);
+    handleAccountSnapshot(undefined, uid);
+  }
 }
 
 async function stampLoginTime(uid: string) {
+  if (!uid) {
+    logWarn(
+      'AccountStore',
+      'stampLoginTime',
+      'No uid provided, aborting update',
+    );
+    return;
+  }
+
   const { doc, updateDoc, getFirestore, serverTimestamp } = await import(
     'firebase/firestore'
   );
-  updateDoc(doc(getFirestore(), ACCOUNTS_COLLECTION_NAME, uid), {
-    lastLogin: serverTimestamp(),
-  });
-  logWarn('AccountStore', 'stampLoginTime', 'Updated lastLogin time');
+  try {
+    await updateDoc(doc(getFirestore(), ACCOUNTS_COLLECTION_NAME, uid), {
+      lastLogin: serverTimestamp(),
+    });
+  } catch (error) {
+    logWarn(
+      'AccountStore',
+      'stampLoginTime',
+      'Error updating lastLogin time',
+      error,
+    );
+  }
 }
 
-export const unsubscribeFromAccount = () => {
-  $account.set(null);
-  unsubscribe?.();
-};
+export function reset() {
+  account.set(null);
+  unsubscribe();
+}

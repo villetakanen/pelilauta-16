@@ -1,6 +1,5 @@
 ---
 import type { Thread } from '@schemas/ThreadSchema';
-import { topicToNoun } from '@stores/ThreadsApp/topics';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import ReactionButton from '@svelte/app/ReactionButton.svelte';
 import CardSubscription from '@svelte/frontpage/CardSubscription.svelte';
@@ -9,9 +8,10 @@ import { marked } from 'marked';
 
 export interface Props {
   thread: Thread;
+  noun: string;
 }
 
-const { thread } = Astro.props;
+const { thread, noun } = Astro.props;
 
 const poster = thread.poster
   ? thread.poster
@@ -29,7 +29,7 @@ const snippet = await marked(md.slice(0, 220));
     title={thread.title} 
     cover={poster} 
     elevation="1" 
-    noun={topicToNoun(thread.channel)}
+    {noun}
     id={`thread-card-${thread.key}`} 
   >
     <div class="downscaled">
