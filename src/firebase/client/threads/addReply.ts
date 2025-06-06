@@ -10,7 +10,6 @@ import {
   type Thread,
 } from '@schemas/ThreadSchema';
 import { createSnippet } from '@utils/contentHelpers';
-import { t } from '@utils/i18n';
 import { logWarn } from '@utils/logHelpers';
 import type { z } from 'astro/zod';
 import { authedPost } from '../apiClient';
