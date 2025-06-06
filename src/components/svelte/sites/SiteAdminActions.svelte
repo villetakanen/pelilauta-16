@@ -31,6 +31,7 @@ const showActions = $derived.by(() => {
         <a href={`/sites/${site.key}/data`} class="tray-button">
           <cn-icon noun="import-export" xsmall></cn-icon>
           <span>{t('site:data.title')}</span>
+        </a>
       </li>
       <li>
         <a href={`/sites/${site.key}/options`} class="tray-button">
