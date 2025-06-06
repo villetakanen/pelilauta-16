@@ -45,7 +45,11 @@ const snippet = await marked(md.slice(0, 220));
         </p>
       </div>
 
-      <ReactionButton key={thread.key} target="thread" client:only="svelte" />
+      <ReactionButton
+        key={thread.key}
+        title={thread.title}
+        target="thread"
+        client:only="svelte" />
       <CardSubscription thread={thread} client:only="svelte"/>
 
       <div>

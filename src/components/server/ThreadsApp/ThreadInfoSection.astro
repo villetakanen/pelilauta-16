@@ -36,7 +36,9 @@ const channel = `${thread?.channel || '-'}`;
             {thread.replyCount}
           </span>
         </div>
-        <ReactionButton target="thread" key={thread.key} client:only="svelte" />
+        <ReactionButton target="thread" key={thread.key} 
+          title={thread.title}
+          client:only="svelte" />
       </div>
      </p>
     </cn-card>
