@@ -47,7 +47,7 @@ async function remove() {
 
 <article
   class={`notification-item flex flex-no-wrap mb-1 p-1 border-radius ${notification.read ? '' : 'elevation-4'}`}>
-  <cn-icon {noun} small class="mt-1"></cn-icon>
+  <cn-icon {noun} small class="mt-1 flex-none"></cn-icon>
   <div class="grow">
     <p class="m-0">
       <ProfileLink uid={notification.from} />
@@ -63,11 +63,11 @@ async function remove() {
   </div>
 
   {#if !notification.read}
-  <button class="text" onclick={read} aria-label={t('actions:markRead')}>
+  <button class="text flex-none" onclick={read} aria-label={t('actions:markRead')}>
     <cn-icon noun="check"></cn-icon>
   </button>
   {:else}
-  <button class="text" aria-label="delete" onclick={remove}>
+  <button class="text flex-none" aria-label="delete" onclick={remove}>
     <cn-icon noun="delete"></cn-icon>
   </button>
   {/if}

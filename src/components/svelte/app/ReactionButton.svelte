@@ -1,13 +1,14 @@
 <script lang="ts">
-import { addNotification } from '@firebase/client/notifications';
+import { authedPost } from '@firebase/client/apiClient';
 import { persistentAtom } from '@nanostores/persistent';
+import type { NotificationRequest } from '@schemas/NotificationSchema';
 import {
   REACTIONS_COLLECTION_NAME,
   type Reactions,
   reactionsSchema,
 } from '@schemas/ReactionsSchema';
 import { uid } from '@stores/session';
-import { logDebug } from '@utils/logHelpers';
+import { logDebug, logWarn } from '@utils/logHelpers';
 import { onMount } from 'svelte';
 
 /**
@@ -38,12 +39,13 @@ import { onMount } from 'svelte';
  * To query all users reactions, simply query the *Reactions* object of the entry with "array-contains" "user id".
  */
 interface Props {
+  title?: string;
   type?: 'love';
   small?: boolean;
   key: string;
   target: 'thread' | 'site' | 'reply';
 }
-const { type = 'love', small = false, key, target }: Props = $props();
+const { type = 'love', small = false, key, target, title }: Props = $props();
 
 const reactions = persistentAtom<Reactions>(
   `reactions/${key}`,
@@ -60,21 +62,27 @@ const reactions = persistentAtom<Reactions>(
 const count = $derived.by(() => {
   return $reactions[type]?.length || 0;
 });
+
 const checked = $derived.by(() => {
   return $reactions[type]?.includes($uid) || undefined;
 });
+
 const inactive = $derived.by(() => {
   if ($reactions.subscribers.includes($uid)) return true;
   return undefined;
 });
 
 onMount(async () => {
-  const { getFirestore, doc, getDoc } = await import('firebase/firestore');
-  const reactionsDoc = await getDoc(
-    doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`),
-  );
-  if (reactionsDoc.exists()) {
-    $reactions = reactionsSchema.parse(reactionsDoc.data());
+  try {
+    const { getFirestore, doc, getDoc } = await import('firebase/firestore');
+    const reactionsDoc = await getDoc(
+      doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`),
+    );
+    if (reactionsDoc.exists()) {
+      reactions.set(reactionsSchema.parse(reactionsDoc.data()));
+    }
+  } catch (error) {
+    logWarn('ReactionButton', 'Failed to fetch reactions:', error);
   }
 });
 
@@ -83,43 +91,67 @@ async function onclick(e: Event) {
   logDebug('ReactionButton', `Reaction ${type} clicked for ${key}`);
   if (!$uid) return;
 
-  const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
   const currentReactions = reactions.get();
-  const reaction = currentReactions[type] || [];
+  const reaction = [...(currentReactions[type] || [])];
   const index = reaction.indexOf($uid);
+  const wasAdded = index === -1;
 
-  if (index === -1) {
+  // Optimistic update
+  if (wasAdded) {
     reaction.push($uid);
-    createNotification();
   } else {
     reaction.splice(index, 1);
   }
-
-  await updateDoc(doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`), {
-    [type]: reaction,
-  });
 
   reactions.set({
     ...currentReactions,
     [type]: reaction,
   });
+
+  try {
+    const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
+    await updateDoc(
+      doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`),
+      {
+        [type]: reaction,
+      },
+    );
+
+    // Send notifications only when adding a reaction (not removing)
+    if (wasAdded && currentReactions.subscribers.length > 0) {
+      await sendReactionNotification(currentReactions.subscribers);
+    }
+  } catch (error) {
+    // Rollback on error
+    reactions.set(currentReactions);
+    logWarn('ReactionButton', 'Failed to update reaction, rolled back:', error);
+  }
 }
 
-async function createNotification() {
-  if (!['thread', 'reply', 'site'].includes(target))
-    throw new Error('createNotification: Invalid target');
+async function sendReactionNotification(subscribers: string[]) {
+  if (!['thread', 'reply', 'site'].includes(target)) {
+    logWarn('ReactionButton', 'Invalid target for notification:', target);
+    return;
+  }
 
-  for (const subscriber of $reactions.subscribers) {
-    addNotification({
-      key: `${key}-${type}-${$uid}`,
+  const notification: NotificationRequest = {
+    notification: {
+      key: '',
       targetType: `${target}.loved`,
-      createdAt: new Date(),
       targetKey: key,
-      to: subscriber,
-      from: $uid,
-      targetTitle: key,
-      read: false,
+      targetTitle: title || key,
+    },
+    recipients: subscribers,
+    from: $uid,
+  };
+
+  try {
+    await authedPost('/api/notifications/send', {
+      body: notification,
     });
+  } catch (error) {
+    // Log but don't throw - notifications are non-critical
+    logWarn('ReactionButton', 'Failed to send notification:', error);
   }
 }
 </script>
