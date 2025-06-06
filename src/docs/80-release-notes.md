@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Improved, experimental ux for the public site list. 
 - FIX: Public site list styles use the Cyan design system flex-none where needed.
 - FIX: ReactionButton sends Entry titles for the notification API for site and thread reactions.
 - FIX: Reactions use the notification API to notify the reaction subscribers of the reaction.
