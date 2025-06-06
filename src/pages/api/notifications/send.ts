@@ -79,7 +79,7 @@ export async function POST({ request }: APIContext): Promise<Response> {
 
     try {
       const rawData = await request.json();
-      const notificationRequest = NotificationRequestSchema.parse(rawData);
+      const notificationRequest = NotificationRequestSchema.parse(rawData.body);
       notificationRequest.from = uid;
 
       logDebug(

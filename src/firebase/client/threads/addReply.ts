@@ -1,4 +1,4 @@
-import type { NotificationRequest } from '@schemas/NotificationSchema';
+import { NotificationRequestSchema } from '@schemas/NotificationSchema';
 import {
   REACTIONS_COLLECTION_NAME,
   type Reactions,
@@ -91,7 +91,7 @@ export async function addReply(
   // we don't need to add a notification to the thread creator
   if (thread.owners[0] === author) return;
 
-  const notification: NotificationRequest = {
+  const notification = NotificationRequestSchema.parse({
     notification: {
       key: '',
       targetType: 'thread.reply',
@@ -103,7 +103,7 @@ export async function addReply(
     // the thread creator, not all owners.
     recipients: [thread.owners[0]],
     from: author,
-  };
+  });
 
   // Add a notification for the thread owner. We do not wait
   // for this to complete, as it is not critical for the notification
