@@ -10,12 +10,12 @@ function systemToNoun(system: string): string {
 }
 ---
 <div>
-  <a class="flex flex-row hoverable p-1" style="text-decoration: none;" href={`/sites/${site.key}`}>
-    <span class="icon">
+  <a class="flex flex-row hoverable p-1 no-decoration" href={`/sites/${site.key}`}>
+    <span class="icon flex-none">
       <cn-icon noun={systemToNoun(site.system)} />
     </span>
     <h4 class="grow downscaled m-0 p-0">{site.name}</h4>
-    <span>
+    <span class="flex-none">
         {toDisplayString(site.flowTime)}
     </span>
   </a>
