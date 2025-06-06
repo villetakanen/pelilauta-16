@@ -14,19 +14,29 @@ const TargetTypeEnum = z.enum([
   'handout.update', // key -> site.key/handout.key
 ]);
 
-export const NotificationSchema = z.object({
-  key: z.string(),
+const NotificationBaseSchema = z.object({
+  key: z.string().default(''),
+  message: z.string().optional(),
+  targetKey: z.string(), // This is alaways required
+  targetType: TargetTypeEnum,
+  targetTitle: z.string().default('-'),
+});
+
+export const NotificationSchema = NotificationBaseSchema.extend({
   createdAt: z.date(),
   from: z.string(),
   to: z.string(),
-  message: z.string().optional(),
-  targetKey: z.string(),
-  targetType: TargetTypeEnum,
-  targetTitle: z.string(),
   read: z.boolean(),
 });
 
+export const NotificationRequestSchema = z.object({
+  notification: NotificationBaseSchema,
+  recipients: z.array(z.string()),
+  from: z.string().optional(),
+});
+
 export type Notification = z.infer<typeof NotificationSchema>;
+export type NotificationRequest = z.infer<typeof NotificationRequestSchema>;
 
 export function parseNotification(
   n: Partial<Notification>,
