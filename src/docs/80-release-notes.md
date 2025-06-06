@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Moved notification logic to a API route, which is now used by replies to create notifications for the thread creator.
 - FIX: When a reply is created, the reactions object gets the proper subscribers (reply creator) instead of cloning the parent thread subscribers.
 - FIX: Eula dialog open race condition and nickname binding issues fixed.
 - FIX: Dependency build updates to fix broken dev build artifacts.

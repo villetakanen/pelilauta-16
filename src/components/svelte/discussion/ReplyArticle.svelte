@@ -26,7 +26,7 @@ const images = $derived.by(() => {
 </script>
 <article  class="flex flex-no-wrap">
   {#if !fromUser}
-    <div class="sm-hidden">
+    <div class="sm-hidden flex-none">
       <AvatarLink uid={reply.owners[0]} />
     </div>
   {/if}
@@ -71,7 +71,7 @@ const images = $derived.by(() => {
   </cn-bubble>
     
   {#if fromUser}
-    <div class="sm-hidden">
+    <div class="sm-hidden flex-none">
       <AvatarLink uid={reply.owners[0]} />
     </div>
   {/if}

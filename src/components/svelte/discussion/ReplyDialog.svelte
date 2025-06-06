@@ -37,6 +37,10 @@ function handleClose() {
 }
 
 async function onsubmit(e: Event) {
+  // Hide the dialog while saving the reply
+  const dialog = document.getElementById(dialogId) as HTMLDialogElement;
+  dialog.close();
+
   // TODO: Send the reply
   e.preventDefault();
   saving = true;

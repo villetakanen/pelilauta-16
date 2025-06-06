@@ -77,6 +77,25 @@ The Lit components, for now, are installed via NPM or Git Submodules.
 The backend is Google Firebase, and we are using the Auth, Firestore and Storage services. Firestore and
 storage methods should always be imported dynamically on the client side, for code splitting.
 
+### Importing Firebase app
+
+We provide an init for both: the client and admin side Firestore Apps. The components should import the
+app, db and auth from the `@firebase/client` for svelte and `@firebase/server` for astro respectively.
+
+Getting the Firebase app, db and auth with direct calls to the Firebase SDK can cause issues with
+code splitting and SSR. 
+
+Examples:
+```ts
+// Client side
+import { app, db, auth } from '@firebase/client';
+```
+
+```ts
+// Server side
+import { serverApp, serverAuth, serverDB} from '@firebase/server';
+```
+
 ## Biome
 
 Biome is used for linting and formatting. We are using the default settings, with 2 spaces as intentation.
