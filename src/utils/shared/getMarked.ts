@@ -13,9 +13,9 @@ import { Marked, type MarkedExtension, type Tokens } from 'marked';
 export function getMarkedInstance(
   origin: string,
   references?: {
-    site?: Site,
-    thread?: Thread
-  }
+    site?: Site;
+    thread?: Thread;
+  },
 ) {
   // Create a new Marked instance to prevent state leakage.
   const marked = new Marked({
@@ -26,7 +26,10 @@ export function getMarkedInstance(
 
   if (references?.site) {
     // Use the single, comprehensive extension for all link types.
-    const wikilinkExtension = createWikilinkExtension(origin, references.site.key);
+    const wikilinkExtension = createWikilinkExtension(
+      origin,
+      references.site.key,
+    );
     marked.use(wikilinkExtension);
   }
 
@@ -38,7 +41,10 @@ export function getMarkedInstance(
 
 // Helper function for creating slugs
 function toDashCase(text: string): string {
-  return text.toLowerCase().trim().replace(/[\s/]+/g, '-');
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[\s/]+/g, '-');
 }
 
 /**
@@ -54,7 +60,10 @@ function toDashCase(text: string): string {
  * @param currentSite The key or slug of the current site.
  * @returns A configured `MarkedExtension` object.
  */
-function createWikilinkExtension(baseUrl: string, currentSite: string): MarkedExtension {
+function createWikilinkExtension(
+  baseUrl: string,
+  currentSite: string,
+): MarkedExtension {
   if (!baseUrl || !currentSite) {
     throw new Error('baseUrl and currentSite are required.');
   }
@@ -74,7 +83,10 @@ function createWikilinkExtension(baseUrl: string, currentSite: string): MarkedEx
 
   // Define custom token types for clarity
   type WikilinkShortcutToken = Tokens.Generic & { text: string };
-  type ObsidianWikilinkToken = Tokens.Generic & { target: string; text: string };
+  type ObsidianWikilinkToken = Tokens.Generic & {
+    target: string;
+    text: string;
+  };
 
   return {
     // This renderer overrides the default behavior for standard [text](target) links
