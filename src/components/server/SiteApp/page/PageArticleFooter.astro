@@ -32,9 +32,7 @@ const showLicenseAsText = !showLicenseAsLink && site.license !== '0';
 
   <p class="m-0 p-0">
     <a href={`/sites/${site.key}/${page.key}/history`}>
-      {(page.revisionHistory?.length || 0) + 1}
-      &nbsp;
-      {t('site:page.revisionCount')}
+      {t('site:page.history.title')}
     </a>
   </p>
 </footer>

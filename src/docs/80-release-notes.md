@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FEAT: Wiki page changes are now saved as diffs in the page history collection, allowing for better tracking of changes.
 - FIX: Moved the wikilink logic to a marked extension to avoid corner-case conflicts with markdown rendering.
 - FIX: Improved, experimental ux for the public site list. 
 - FIX: Public site list styles use the Cyan design system flex-none where needed.
