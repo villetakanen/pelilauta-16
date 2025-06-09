@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.7.x (ongoing)
+- FIX: Moved the wikilink logic to a marked extension to avoid corner-case conflicts with markdown rendering.
 - FIX: Improved, experimental ux for the public site list. 
 - FIX: Public site list styles use the Cyan design system flex-none where needed.
 - FIX: ReactionButton sends Entry titles for the notification API for site and thread reactions.
