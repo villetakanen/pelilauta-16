@@ -5,7 +5,11 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.8.0 (unpublished)
+### 17.8.x (ongoing)
+- FIX: Updated the basehead for better sharing, SEO and social media integration.
+- FIX: Restored much of the service worker functionality, including the ability to cache images and api calls.
+
+### 17.8.0 (2025-06-10)
 - FEAT: Wiki page changes are now saved as diffs in the page history collection, allowing for better tracking of changes.
 - FIX: Moved the wikilink logic to a marked extension to avoid corner-case conflicts with markdown rendering.
 - FIX: Improved, experimental ux for the public site list. 
