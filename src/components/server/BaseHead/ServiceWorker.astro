@@ -27,6 +27,6 @@ const isWorkboxEnabled = import.meta.env.SECRET_FEATURE_FLAG_Workbox === 'true';
 
 {!isWorkboxEnabled && (
   <script is:inline>
-    console.warn('Service Worker is disabled.');
+    console.warn('Service Worker is disabled: {isWorkboxEnabled}');
   </script>
 )}
