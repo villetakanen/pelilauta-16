@@ -9,7 +9,6 @@ export function toTimeString(date: Date | number | undefined): string {
   return `${isoString.substring(0, 10)} ${isoString.substring(11, 19)}`;
 }
 
-
 /**
  * Takes in a string of markdown content and extracts tags (#tag) from it.
  * @param content

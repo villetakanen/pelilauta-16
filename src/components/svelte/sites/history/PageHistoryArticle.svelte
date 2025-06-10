@@ -1,10 +1,10 @@
 <script lang="ts">
 import type { PageHistory } from '@schemas/PageHistorySchema';
 import type { Page } from '@schemas/PageSchema';
-    import { uid } from '@stores/session';
-    import AvatarLink from '@svelte/app/AvatarLink.svelte';
-    import ProfileLink from '@svelte/app/ProfileLink.svelte';
-    import { toDisplayString, toTimeString } from '@utils/contentHelpers';
+import { uid } from '@stores/session';
+import AvatarLink from '@svelte/app/AvatarLink.svelte';
+import ProfileLink from '@svelte/app/ProfileLink.svelte';
+import { toDisplayString, toTimeString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Change, applyPatch, diffLines } from 'diff';
