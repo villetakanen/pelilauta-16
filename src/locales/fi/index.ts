@@ -60,6 +60,11 @@ export const fi: Locale = {
       'go-sites': 'Julkisten pelien ja sivustojen listaus',
       'go-threads': 'Keskustelualueet',
     },
+    offline: {
+      title: 'Ei yhteyttä',
+      message: 'Pelilauta 2 ei ole tällä hetkellä yhteydessä internetiin.',
+      tryAgain: 'Yritä uudelleen',
+    },
   },
   login,
   actions,
