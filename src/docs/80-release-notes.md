@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.8.x (ongoing)
+- FIX: Updated the basehead for better sharing, SEO and social media integration.
 - FIX: Restored much of the service worker functionality, including the ability to cache images and api calls.
 
 ### 17.8.0 (2025-06-10)
