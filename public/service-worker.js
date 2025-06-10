@@ -13,7 +13,10 @@ workbox.precaching.cleanupOutdatedCaches();
 let precache = self.__WB_MANIFEST;
 if (!precache) precache = [{ revision: null, url: 'index.html' }];
 
-workbox.precaching.precacheAndRoute([...precache]);
+workbox.precaching.precacheAndRoute([
+  ...precache,
+  { url: '/offline.html', revision: '1' },
+]);
 
 // Cache API routes with network-first strategy
 workbox.routing.registerRoute(
@@ -82,15 +85,27 @@ workbox.routing.registerRoute(
   }),
 );
 
-// Background sync for failed POST requests
-workbox.backgroundSync.registerRoute(
-  ({ url }) => url.pathname.startsWith('/api/'),
-  new workbox.strategies.NetworkOnly({
+// Background sync for failed POST requests (Workbox 7 syntax)
+const { BackgroundSyncPlugin } = workbox.backgroundSync;
+const { NetworkOnly } = workbox.strategies;
+
+workbox.routing.registerRoute(
+  ({ url, request }) =>
+    url.pathname.startsWith('/api/') && request.method === 'POST',
+  new NetworkOnly({
     plugins: [
-      new workbox.backgroundSync.BackgroundSyncPlugin('api-queue', {
+      new BackgroundSyncPlugin('api-queue', {
         maxRetentionTime: 24 * 60, // Retry for max of 24 hours
       }),
     ],
   }),
-  'POST',
 );
+
+// Offline fallback
+workbox.routing.setCatchHandler(({ event }) => {
+  if (event.request.destination === 'document') {
+    return caches.match('/offline.html');
+  }
+
+  return Response.error();
+});
