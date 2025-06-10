@@ -64,9 +64,9 @@ logDebug('uid', $uid);
 </a>
 ```
 
-## TyopeScript
+## TypeScript
 
-We use shorhands for library paths. E.g. `import SectionComponent from '@svelte/app/SectionComponent.svelte'`
+We use shorthands for library paths. E.g. `import SectionComponent from '@svelte/app/SectionComponent.svelte'`
 
 ## Lit
 
@@ -74,28 +74,119 @@ The Lit components, for now, are installed via NPM or Git Submodules.
 
 ## Google Firebase
 
-The backend is Google Firebase, and we are using the Auth, Firestore and Storage services. Firestore and
-storage methods should always be imported dynamically on the client side, for code splitting.
+The backend is Google Firebase, using Auth, Firestore and Storage services.
 
-### Importing Firebase app
+### Client-side Firebase
 
-We provide an init for both: the client and admin side Firestore Apps. The components should import the
-app, db and auth from the `@firebase/client` for svelte and `@firebase/server` for astro respectively.
+Firestore and storage methods should **always** be imported dynamically for code splitting:
 
-Getting the Firebase app, db and auth with direct calls to the Firebase SDK can cause issues with
-code splitting and SSR. 
-
-Examples:
 ```ts
-// Client side
-import { app, db, auth } from '@firebase/client';
+// ✅ Correct - Dynamic imports
+const { doc, getDoc, updateDoc } = await import('firebase/firestore');
+const { db } = await import('@firebase/client');
+
+// ❌ Incorrect - Static imports cause bundle bloat
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 ```
 
+### Server-side Firebase
+
+For Astro components and API routes:
+
 ```ts
-// Server side
-import { serverApp, serverAuth, serverDB} from '@firebase/server';
+import { serverDB, serverAuth } from '@firebase/server';
+
+// Server-side operations don't need dynamic imports
+const doc = await serverDB.collection('sites').doc(id).get();
+```
+
+### Authentication Patterns
+
+```ts
+// Client-side auth checking
+import { uid } from '@stores/session';
+
+if (!$uid) {
+  // Handle unauthenticated state
+  return;
+}
+
+// Server-side auth (API routes)
+import { tokenToUid } from '@utils/server/auth/tokenToUid';
+
+const uid = await tokenToUid(request);
+if (!uid) {
+  return new Response('Unauthorized', { status: 401 });
+}
 ```
 
 ## Biome
 
 Biome is used for linting and formatting. We are using the default settings, with 2 spaces as intentation.
+
+## Error Handling and Logging
+
+Use the centralized logging utilities with proper context:
+
+```ts
+import { logDebug, logError, logWarn } from '@utils/logHelpers';
+
+// Always provide context (component/function name) as first parameter
+logDebug('ComponentName', 'Action description', data);
+logError('ComponentName', 'Error description:', error);
+```
+
+## Schema Validation
+
+All data should be validated using Zod schemas:
+
+```ts
+import { SiteSchema, type Site } from '@schemas/SiteSchema';
+
+// Parse data from external sources
+const site = SiteSchema.parse(rawData);
+```
+
+## State Management
+
+### Local Component State
+Use `$state` for component-local reactive state:
+
+```ts
+const isOpen = $state(false);
+const items = $state<Item[]>([]);
+```
+
+### Derived State
+Use `$derived.by` for computed values:
+
+```ts
+const filteredItems = $derived.by(() => {
+  return items.filter(item => item.active);
+});
+```
+
+### Global State
+Use nanostores for shared state across components:
+
+```ts
+import { atom } from 'nanostores';
+
+export const globalCounter = atom(0);
+
+// In components
+import { globalCounter } from '@stores/app';
+console.log($globalCounter); // Access reactive value
+```
+
+### Persistent State
+Use `persistentAtom` for state that should survive page reloads:
+
+```ts
+import { persistentAtom } from '@nanostores/persistent';
+
+const userPreferences = persistentAtom('user-prefs', {
+  theme: 'light',
+  language: 'en'
+});
+```

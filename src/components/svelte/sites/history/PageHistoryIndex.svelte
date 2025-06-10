@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { PageHistory } from '@schemas/PageHistorySchema';
 import type { Page } from '@schemas/PageSchema';
 import ProfileLink from '@svelte/app/ProfileLink.svelte';
 import { toDisplayString } from '@utils/contentHelpers';
@@ -6,10 +7,11 @@ import { t } from '@utils/i18n';
 
 interface Props {
   page: Page;
+  diff: PageHistory;
   revision: number;
 }
-const { page, revision }: Props = $props();
-const revisionCount = page.revisionHistory?.length || 0;
+const { page, revision, diff }: Props = $props();
+const revisionCount = diff.history.length || 0;
 </script>
 
 <section class="column-s surface p-2">
@@ -38,10 +40,10 @@ const revisionCount = page.revisionHistory?.length || 0;
       </a>
         {/if}
       <span class="downscaled">
-        {toDisplayString(page.revisionHistory?.[rev - 1]?.createdAt)}
+        {toDisplayString(diff.history[rev - 1]?.createdAt)}
       </span>
       <span class="downscaled text-right">
-        <ProfileLink uid={`${page.revisionHistory?.[rev - 1]?.author}`} />
+        <ProfileLink uid={`${diff.history?.[rev - 1]?.author}`} />
       </span>
     {/each}
   </div>

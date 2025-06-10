@@ -87,6 +87,7 @@ export const site: Locale = {
     history: {
       title: 'Muutokset',
       revision: 'Versio {index}',
+      createdAt: '{date}',
     },
   },
   settings: {
