@@ -1,10 +1,4 @@
 {
-  "routes": [
-    {
-      "src": "/manifest.webmanifest",
-      "dest": "/manifest.webmanifest"
-    }
-  ],
   "headers": [
     {
       "source": "/manifest.webmanifest",
