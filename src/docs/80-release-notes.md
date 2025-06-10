@@ -6,6 +6,7 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.8.x (ongoing)
+- FIX: Rudimentary offline support for the public site list, allowing users to view the list without an internet connection.
 - FIX: Updated the basehead for better sharing, SEO and social media integration.
 - FIX: Restored much of the service worker functionality, including the ability to cache images and api calls.
 
