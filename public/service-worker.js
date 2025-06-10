@@ -63,9 +63,8 @@ workbox.routing.registerRoute(
 
 // Cache CSS and JS with stale-while-revalidate
 workbox.routing.registerRoute(
-  ({ request }) => 
-    request.destination === 'style' || 
-    request.destination === 'script',
+  ({ request }) =>
+    request.destination === 'style' || request.destination === 'script',
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'static-resources',
   }),
@@ -91,9 +90,8 @@ const { BackgroundSyncPlugin } = workbox.backgroundSync;
 const { NetworkOnly } = workbox.strategies;
 
 workbox.routing.registerRoute(
-  ({ url, request }) => 
-    url.pathname.startsWith('/api/') && 
-    request.method === 'POST',
+  ({ url, request }) =>
+    url.pathname.startsWith('/api/') && request.method === 'POST',
   new NetworkOnly({
     plugins: [
       new BackgroundSyncPlugin('api-queue', {
@@ -108,6 +106,6 @@ workbox.routing.setCatchHandler(({ event }) => {
   if (event.request.destination === 'document') {
     return caches.match('/offline.html');
   }
-  
+
   return Response.error();
 });
