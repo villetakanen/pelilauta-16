@@ -1,6 +1,10 @@
 <script lang="ts">
 import type { PageHistory } from '@schemas/PageHistorySchema';
 import type { Page } from '@schemas/PageSchema';
+    import { uid } from '@stores/session';
+    import AvatarLink from '@svelte/app/AvatarLink.svelte';
+    import ProfileLink from '@svelte/app/ProfileLink.svelte';
+    import { toDisplayString, toTimeString } from '@utils/contentHelpers';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { type Change, applyPatch, diffLines } from 'diff';
@@ -107,9 +111,8 @@ $effect(() => {
   <header class="surface mb-1 p-2">
     <span>{t('site:page.history.revision', { index: revision })}</span>
     {#if revisionDetails}
-      <span class="text-sm text-gray-500 ml-4">
-        {t('site:page.history.by', { author: revisionDetails.author, date: new Date(revisionDetails.createdAt).toLocaleString() })}
-      </span>
+      : <ProfileLink uid={revisionDetails.author} />
+      {t('site:page.history.createdAt', {  date: toTimeString(revisionDetails.createdAt) })}
     {/if}
   </header>
 
@@ -121,13 +124,11 @@ $effect(() => {
     {:else if diffParts.length === 0}
       <p>{t('site:page.history.current_version')}</p>
     {:else}
-      <div class="diff-container">
+      <div class="diff">
         {#each diffParts as part}
-          <pre class:added={part.added} class:removed={part.removed} class="diff-line">
-            {#if part.added}<span class="diff-indicator">+</span>{/if}
-            {#if part.removed}<span class="diff-indicator">-</span>{/if}
-            {part.value}
-          </pre>
+          <div class:diff-added={part.added} class:diff-deletion={part.removed} class="flex flex-no-wrap">
+            {#if part.added}<span class="diff-indicator p-1">+</span>{/if}{#if part.removed}<span class="diff-indicator p-1">-</span>{/if}{part.value}
+          </div>
         {/each}
       </div>
     {/if}
@@ -135,39 +136,10 @@ $effect(() => {
 </section>
 
 <style>
-  .diff-container {
-    font-family: monospace;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    white-space: pre-wrap;
-    overflow-x: auto;
-  }
 
-  .diff-line {
-    margin: 0;
-    padding: 0.25rem 0.5rem;
-    display: block;
-  }
-  
-  .diff-indicator {
-    display: inline-block;
-    width: 1em;
-  }
-
-  .added {
-    background-color: var(--color-notify);
-    color: var(--color-on-notify);
-  }
-
-  .removed {
-    background-color: var(--color-alert);
-    color: var(--color-on-alert);
-    text-decoration: line-through;
-  }
-
-  .error {
-    color: var(--color-alert);
-  }
+.diff-indicator {
+  flex: none;
+  width: var(--cn-line);
+  align-items: flex-start;
+}
 </style>
