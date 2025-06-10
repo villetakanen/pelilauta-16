@@ -1,20 +1,32 @@
 ---
-const feature_active = import.meta.env.SECRET_FEATURE_FLAG_Workbox === 'true';
+const isWorkboxEnabled = import.meta.env.SECRET_FEATURE_FLAG_Workbox === 'true';
 ---
-{feature_active &&
-<script is:inline>
-    addEventListener("load", () => {
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(() => {
-            console.log("Service Worker Registered");
-          })
-          .catch((err) => {
-            console.log("Some error occurred while registering service worker");
-            console.log(err);
-          });
+
+{isWorkboxEnabled && (
+  <script is:inline>
+    addEventListener('load', async () => {
+      if (!('serviceWorker' in navigator)) return;
+
+      try {
+        const registration = await navigator.serviceWorker.register('/service-worker.js');
+        console.log('Service Worker registered successfully');
+        
+        // Handle updates
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          if (newWorker?.state === 'installed' && navigator.serviceWorker.controller) {
+            console.log('New version available');
+          }
+        });
+      } catch (error) {
+        console.error('Service Worker registration failed:', error);
       }
     });
-</script> 
-}
+  </script>
+)}
+
+{!isWorkboxEnabled && (
+  <script is:inline>
+    console.warn('Service Worker is disabled.');
+  </script>
+)}
