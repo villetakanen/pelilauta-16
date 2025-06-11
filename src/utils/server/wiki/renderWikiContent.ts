@@ -7,7 +7,7 @@ import { renderTags } from '../renderTags';
 
 export async function renderWikiContent(page: Page, site: Site, url: URL) {
   const { getMarkedInstance } = await import('@utils/shared/getMarked');
-  const marked = await getMarkedInstance(url.origin, { site });
+  const marked = getMarkedInstance(url.origin, { site });
 
   // Legacy pages might not have markdown content, so we'll fall back to
   // contents saved by earlier versions of the App.

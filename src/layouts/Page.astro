@@ -18,7 +18,7 @@ const { title, description, image, shortTitle, noSharing } = Astro.props;
 ---
 
 <html lang="fi">
-  <BaseHead title={title} description={description} image={image} />
+  <BaseHead {title} {description} {image} {noSharing}/>
   <body>
     <AppBar title={title} shortTitle={shortTitle} noSharing={noSharing}>
       <slot name="app-bar" />

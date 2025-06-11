@@ -3,7 +3,7 @@ import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
 import { logError } from '@utils/logHelpers';
 import type { APIContext } from 'astro';
 
-export async function GET({ params, url }: APIContext): Promise<Response> {
+export async function GET({ params }: APIContext): Promise<Response> {
   const { siteKey, pageKey } = params;
 
   if (!siteKey || !pageKey) {
