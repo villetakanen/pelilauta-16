@@ -19,22 +19,34 @@ interface Props {
 }
 
 const { thread, channelKey, channels }: Props = $props();
+
+// Component level state
 let saving = $state(false);
 let changed = $state(false);
 let files = $state<File[]>([]);
+let existingImages = $state<Array<{ url: string; alt: string }>>([]);
+let tags = $state<string[]>(thread?.tags || []);
+
+// Derived state
 const previews = $derived.by(() => {
-  if (thread?.images) {
-    return thread.images.map((image) => ({
-      src: image.url,
-      caption: image.alt,
-    }));
-  }
-  return files.map((file) => ({
+  const filePreviews = files.map((file) => ({
     src: URL.createObjectURL(file),
     caption: file.name,
   }));
+  
+  const imagePreviews = existingImages.map((image) => ({
+    src: image.url,
+    caption: image.alt,
+  }));
+  
+  return [...imagePreviews, ...filePreviews];
 });
-let tags = $state<string[]>(thread?.tags || []);
+
+onMount(() => {
+  if (thread?.images) {
+    existingImages = thread.images;
+  }
+});
 
 async function handleSubmit(event: Event) {
   logDebug('ThreadEditorForm', 'handleSubmit', event);
@@ -73,16 +85,6 @@ async function handleContentChange(event: InputEvent) {
   tags = extractTags(content);
   handleChange();
 }
-
-onMount(() => {
-  if (thread) {
-    // Fetch all the files for this thread
-    const urls = thread.images?.map((image) => image.url);
-    if (urls) {
-      files = urls.map((url) => new File([url], url));
-    }
-  }
-});
 
 function onChannelChange(event: Event) {
   const select = event.target as HTMLSelectElement;
