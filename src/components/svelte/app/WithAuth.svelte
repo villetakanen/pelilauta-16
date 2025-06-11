@@ -16,11 +16,12 @@ const { allow, children, message }: Props = $props();
   {@render children?.()}
 {:else}
   <div class="content-columns">
-    <article class="surface border-radius p-2">
-      <h1>{t('app:forbidden.title')}</h1>
-      <div class="flex justify-center">
+    <article>
+      <div class="flex justify-center p-2">
         <cn-icon noun="monsters" xlarge></cn-icon>
       </div>
+      <div class="surface border-radius p-2 mt-2">
+      <h1>{t('app:forbidden.title')}</h1>
       <p>{message || t('app:forbidden.message')}</p>
       {#if !$uid}
       <div class="toolbar justify-center">
@@ -29,6 +30,7 @@ const { allow, children, message }: Props = $props();
         </a>
       </div>
       {/if}
+      </div>
     </article>
   </div>
 {/if}
