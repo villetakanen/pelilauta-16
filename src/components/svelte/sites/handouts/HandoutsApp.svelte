@@ -37,6 +37,9 @@ onMount(() => {
 </script>
 
 <div class="content-columns">
+  <MembersOnly site={currentSite}>
+
+
   {#if hasError}
     <div class="column-l p-4 text-center">
       <p class="text-error">{t('errors:loadingFailed')}</p>
@@ -52,13 +55,13 @@ onMount(() => {
       <p class="text-light">{t('common:loading')}</p>
     </div>
   {:else}
-    <MembersOnly site={currentSite}>
+    
       <article class="column-l">
         <h2>{t('site:handouts.title')}</h2>
         <p class="text-light">{t('site:handouts.description')}</p>
 
         <HandoutList />
       </article>
-    </MembersOnly>
   {/if}
+  </MembersOnly>
 </div>
