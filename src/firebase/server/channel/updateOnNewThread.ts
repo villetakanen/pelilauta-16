@@ -1,14 +1,18 @@
-import { CHANNELS_META_REF, ChannelsSchema, EntryMetadataSchema } from "@schemas/ChannelSchema";
-import type { Thread } from "@schemas/ThreadSchema";
+import {
+  CHANNELS_META_REF,
+  ChannelsSchema,
+  EntryMetadataSchema,
+} from '@schemas/ChannelSchema';
+import type { Thread } from '@schemas/ThreadSchema';
 
 /**
  * Handle channel metadata updates when a new thread is created.
- * 
- * @param thread 
+ *
+ * @param thread
  */
 export async function updateOnNewThread(thread: Thread): Promise<void> {
-  const { serverDB} = await import("@firebase/server");
-  const channelPath = CHANNELS_META_REF.split("/")
+  const { serverDB } = await import('@firebase/server');
+  const channelPath = CHANNELS_META_REF.split('/');
 
   const metadataRef = serverDB.collection(channelPath[0]).doc(channelPath[1]);
   const metadataDoc = await metadataRef.get();
@@ -21,18 +25,20 @@ export async function updateOnNewThread(thread: Thread): Promise<void> {
     author: thread.owners[0] || '-',
   });
 
-    const updatedChannels = channels.map(channel => {
-        if (channel.slug === thread.channel) {
-        return {
-            ...channel,
-            threadCount: (channel.threadCount || 0) + 1,
-            latestThread: entryMetadata,
-            latestReply: entryMetadata, // Assuming the first post is the latest reply
-        };
-        }
-        return channel;
-    });
+  const updatedChannels = channels.map((channel) => {
+    if (channel.slug === thread.channel) {
+      return {
+        ...channel,
+        threadCount: (channel.threadCount || 0) + 1,
+        latestThread: entryMetadata,
+        latestReply: entryMetadata, // Assuming the first post is the latest reply
+      };
+    }
+    return channel;
+  });
 
-   serverDB.collection(channelPath[0]).doc(channelPath[1])
-    .set({ topics: updatedChannels }, { merge: true })
+  serverDB
+    .collection(channelPath[0])
+    .doc(channelPath[1])
+    .set({ topics: updatedChannels }, { merge: true });
 }

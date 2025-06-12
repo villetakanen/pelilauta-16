@@ -29,20 +29,27 @@ let hasError = false;
 
 // Set appropriate cache headers
 if (startAt === 1) {
-  Astro.response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  Astro.response.headers.set(
+    'Cache-Control',
+    'public, max-age=300, s-maxage=600',
+  );
 } else {
-  Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120');
+  Astro.response.headers.set(
+    'Cache-Control',
+    'public, max-age=60, s-maxage=120',
+  );
 }
 
 try {
-  const queryString = startAt > 1
-    ? `${origin}/api/threads.json?channel=${channel.slug}&limit=10&startAt=${startAt}`
-    : `${origin}/api/threads.json?channel=${channel.slug}&limit=10`;
+  const queryString =
+    startAt > 1
+      ? `${origin}/api/threads.json?channel=${channel.slug}&limit=10&startAt=${startAt}`
+      : `${origin}/api/threads.json?channel=${channel.slug}&limit=10`;
 
   logDebug('ChannelApp', 'Fetching threads:', queryString);
 
   const threadListResponse = await fetch(queryString);
-  
+
   if (!threadListResponse.ok) {
     throw new Error(`Failed to fetch threads: ${threadListResponse.status}`);
   }
@@ -53,7 +60,9 @@ try {
     throw new Error('Invalid response format: expected array');
   }
 
-  threads = threadsJSON.map((thread: Thread) => parseThread(thread, thread.key));
+  threads = threadsJSON.map((thread: Thread) =>
+    parseThread(thread, thread.key),
+  );
   lastThreadFlowTime = threads[threads.length - 1]?.flowTime || 0;
   hasNextPage = threads.length === 10;
 

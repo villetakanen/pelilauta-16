@@ -33,12 +33,12 @@ const previews = $derived.by(() => {
     src: URL.createObjectURL(file),
     caption: file.name,
   }));
-  
+
   const imagePreviews = existingImages.map((image) => ({
     src: image.url,
     caption: image.alt,
   }));
-  
+
   return [...imagePreviews, ...filePreviews];
 });
 
