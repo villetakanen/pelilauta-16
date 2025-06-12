@@ -39,10 +39,10 @@ export const loading = atom<string[]>([]);
 /**
  * Returns a reactive store for a public profile. The store will automatically
  * fetch the profile from the server if it is not available in the store.
- * 
+ *
  * While the profile is being fetched, the store will return `undefined`. If a profile
  * is not found, it will return an anonymous profile with the given `uid`.
- * 
+ *
  * @param uid a Firebase UID of the user whose profile is being fetched
  * @returns a reactive store containing the public profile of the user
  * @throws Error if `uid` is undefined
