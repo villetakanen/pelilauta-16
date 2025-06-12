@@ -409,3 +409,8 @@ input[data-error] {
   color: var(--color-on-secondary);
   box-shadow: var(--shadow-elevation-1);
 }
+.list-none li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
