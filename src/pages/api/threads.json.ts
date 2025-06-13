@@ -13,13 +13,19 @@ import { serverDB } from 'src/firebase/server';
 export async function GET({ request }: APIContext) {
   const publicThreads = new Array<Thread>();
 
-  const { startAt, channel, limit, uid } = getAstroQueryParams(request);
+  const { startAt, channel, limit, uid, sort } = getAstroQueryParams(request);
+
+  const orderBy = startAt
+    ? 'flowTime'
+    : sort === 'createdAt'
+      ? 'createdAt'
+      : 'flowTime';
 
   // Base query for all public threads
   const allPublicThreadsCollection = serverDB
     .collection(THREADS_COLLECTION_NAME)
     .where('public', '==', true)
-    .orderBy('flowTime', 'desc');
+    .orderBy(orderBy, 'desc');
 
   // If channel is provided, filter threads by channel
   const channelThreads = channel
@@ -56,6 +62,17 @@ export async function GET({ request }: APIContext) {
     data.channel = data.channel ?? CHANNEL_DEFAULT_SLUG;
 
     publicThreads.push(parseThread(toClientEntry(data), threadDoc.id));
+  }
+
+  if (!publicThreads.length) {
+    return new Response(JSON.stringify([]), {
+      status: 404,
+      statusText: 'No threads found',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 's-maxage=1, stale-while-revalidate',
+      },
+    });
   }
 
   return new Response(JSON.stringify(publicThreads), {

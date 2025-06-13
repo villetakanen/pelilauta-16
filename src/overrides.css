@@ -414,3 +414,9 @@ input[data-error] {
   margin: 0;
   padding: 0;
 }
+.no-text-wrap {
+  word-wrap: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
