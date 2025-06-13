@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
+import { uid } from '@stores/session';
 import { t } from '@utils/i18n';
 import { site } from '../../../stores/site';
-import { uid } from '@stores/session';
 
 interface Props {
   site: Site;
