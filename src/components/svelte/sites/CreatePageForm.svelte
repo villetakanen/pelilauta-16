@@ -1,6 +1,5 @@
 <script lang="ts">
-import { addPage } from '@firebase/client/page/addPage';
-import { pageFrom } from '@schemas/PageSchema';
+import { PageSchema } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import { pushSessionSnack } from '@utils/client/snackUtils';
@@ -9,60 +8,83 @@ import { logDebug } from '@utils/logHelpers';
 import { toMekanismiURI } from '@utils/mekanismiUtils';
 import MembersOnly from './MembersOnly.svelte';
 
-/* Progressive enhancement for the creating a page for a site */
-
 interface Props {
   site: Site;
   name?: string;
+  category?: string;
 }
-const { site, name }: Props = $props();
+const { site, name = '', category: targetCategory = '' }: Props = $props();
 
-let title = $state(name || '');
-const key = $derived.by(() => {
-  logDebug('Derived key', { site, title });
-  if (site.usePlainTextURLs) return toMekanismiURI(title);
-  return '_auto_';
-});
-const keyClash = $derived.by(() => {
-  // If the site does not use plain text URLs, there can't be a clash
-  if (!site.usePlainTextURLs) return undefined;
+let title = $state(name);
+let category = $state('');
+let saving = $state(false);
 
-  // If the key is empty, there can't be a clash
-  if (!key) return undefined;
-
-  // If the key is already in use, there is a clash
-  const clashingIndex =
-    site.pageRefs?.findIndex((ref) => ref.key === key) ?? -1;
-  return clashingIndex >= 0 ? true : undefined;
+const urlKey = $derived.by(() => {
+  if (!site.usePlainTextURLs || !title.trim()) return null;
+  return toMekanismiURI(title);
 });
 
-function setTitle(e: Event) {
-  title = (e.target as HTMLInputElement).value;
-}
+const hasKeyClash = $derived.by(() => {
+  if (!urlKey) return false;
+  return site.pageRefs?.some((ref) => ref.key === urlKey) ?? false;
+});
+
+const canSubmit = $derived.by(() => {
+  // Need to have
+  // - 1 or more characters in the title
+  // - Not saving
+  // - No key clashes
+  return title.trim() && !saving && !hasKeyClash;
+});
+
+const previewUrl = $derived.by(() => {
+  if (!urlKey) return `${site.name}/[auto]`;
+  return `${site.name}/${urlKey}`;
+});
 
 async function onsubmit(e: Event) {
   e.preventDefault();
 
-  const newPage = pageFrom({
-    key: key || '',
-    siteKey: site.key,
-    name: title,
-    markdownContent: `# ${title}\n\n`,
-    owners: [$uid],
-  });
+  // Prevent double submission, and
+  // submission if the user is not logged in
+  if (!$uid || !canSubmit) return;
 
-  const slug = await addPage(
-    site.key,
-    newPage,
-    site.usePlainTextURLs ? key : undefined,
-  );
+  saving = true;
 
-  pushSessionSnack(t('site:page.created', { key: `${site.key}/${slug}` }));
-  window.location.href = `/sites/${site.key}/${slug}`;
+  try {
+    logDebug('CreatePageForm', 'Creating page:', { title, category });
+
+    const { addPage } = await import('@firebase/client/page/addPage');
+    const { pageFrom } = await import('@schemas/PageSchema');
+
+    const page = PageSchema.parse({
+      key: urlKey || '',
+      siteKey: site.key,
+      name: title,
+      markdownContent: `# ${title}\n\n`,
+      category: category || '',
+      owners: [$uid],
+    });
+
+    const slug = await addPage(site.key, pageFrom(page), urlKey ?? undefined);
+    pushSessionSnack(t('site:page.created', { key: `${site.key}/${slug}` }));
+    window.location.href = `/sites/${site.key}/${slug}`;
+  } catch (e) {
+    logDebug('CreatePageForm', 'Error creating page:', e);
+    pushSessionSnack(t('site:page.createError'));
+  } finally {
+    saving = false;
+  }
 }
 
 function cancel() {
-  history.back();
+  // This is a bit of a hack, but the compiler doesn't like
+  // us setting title and category with 'let' if we only
+  // set them via bind:value - and bind:value does not work
+  // with 'const' variables.
+  title = '';
+  category = '';
+  window.history.back();
 }
 </script>
 
@@ -80,23 +102,34 @@ function cancel() {
           <label>
             {t('entries:page.name')}
             <input
-              data-error={keyClash}
-              oninput={setTitle}
+              data-error={hasKeyClash || undefined}
+              bind:value={title}
               type="text"
-              name="title"
-              value={title} />
+              name="title">
           </label>
+
+          {#if site.pageCategories && site.pageCategories.length > 0}
+          <label>
+            {t('entries:page.category')}
+            <select bind:value={category}>
+              <option value="">-</option>
+              {#each site.pageCategories as cat}
+                <option value={cat.slug}>{cat.name}</option>
+              {/each}
+            </select>
+          </label>
+          {/if}
           
-          {#if keyClash}
+          {#if hasKeyClash}
             <p class="error p-1">
-              {t('site:create.page.duplicateKey', { key: `${site.key}/${key}` })}
+              {t('site:create.page.duplicateKey', { key: `${site.key}/${urlKey}` })}
             </p>
             <p class="downscaled">
-              <a href={`/sites/${site.key}/${key}`}>{t('site:create.page.duplicateKeyLink')}</a>
+              <a href={`/sites/${site.key}/${urlKey}`}>{t('site:create.page.duplicateKeyLink')}</a>
             </p>
           {:else}
             <p class="mt-1 break-all">
-              <code class="p-1">{`https://pelilauta.social/sites/${site.key}/${site.usePlainTextURLs ? key || '...' : '[auto]'}`}</code>
+              <code class="p-1">{previewUrl}</code>
             </p>
           {/if}
         {/if}

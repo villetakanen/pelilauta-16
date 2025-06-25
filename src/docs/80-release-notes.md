@@ -5,7 +5,9 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.8.x (ongoing)
+### 17.9.0 (2025-05-25)
+- FEAT: When a site has categories/topics, the category/topic can be set when creating a new page.
+- FIX: Forum page now shows the latest thread and latest disccussion for a channel.
 - FIX: Public profile atom creator correctly returns undefined when the profile is being loaded. (and an anonymous profile if the profile is not found)
 - FIX: Handouts list spacing and Flexbox issues fixed.
 - FIX: noShare prop is now passed to head component, asking robots not to index the page.

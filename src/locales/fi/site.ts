@@ -181,9 +181,11 @@ export const site: Locale = {
     admin: {
       title: 'Hallinta',
       info: 'Sivuston hakemiston hallinta. Voit valita sivuston sivujen järjestyksen ja luoda sekä järjestää sivukategorioita.',
-      newCategory: 'Uusi kategoria',
+      newCategory: 'Uusi aihe',
+      noCategories: 'Ei aiheita, voin luoda uuden aiheen alla.',
+      categoryPlaceholder: 'Aiheen nimi',
       categories: {
-        title: 'Kategoriat',
+        title: 'Aiheet',
       },
     },
     regenerate: {

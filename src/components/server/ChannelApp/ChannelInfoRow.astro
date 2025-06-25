@@ -1,6 +1,7 @@
 ---
 import type { Channel } from '@schemas/ChannelSchema';
-import { toDisplayString } from '@utils/contentHelpers';
+import ChannelListInfoCell from './channelList/ChannelListInfoCell.astro';
+import ChannelListInfoCellLoading from './channelList/ChannelListInfoCellLoading.astro';
 
 interface Props {
   channel: Channel;
@@ -17,11 +18,15 @@ const { channel } = Astro.props;
     <p class="m-0 downscaled">{channel.description}</p>
   </div>
     
-  <div class="downscaled">
+  <!--div class="downscaled">
     <p class="m-0 mb-0">
       {channel.threadCount}&nbsp;
       <cn-icon xsmall noun="discussion" ></cn-icon>
       <br />
       {toDisplayString(channel.flowTime)}
     </p>
-  </div>
+  </div-->
+
+<ChannelListInfoCell {channel}>
+  <ChannelListInfoCellLoading slot="fallback" />
+</ChannelListInfoCell>  

@@ -190,3 +190,16 @@ const userPreferences = persistentAtom('user-prefs', {
   language: 'en'
 });
 ```
+
+## Page Layouts
+
+We have 4 page layouts for different use cases:
+
+- **Page.astro**: Standard Public pages with full navigation and SEO
+- **PageWithTray.astro**: Interactive pages needing slide-out tray menus (dashboards, tools)
+- **ModalPage.astro**: Routes that look like a modal, and contain a back-button at the top (e.g. settings, profile). Do note: these are not true modals, but full pages that look like modals for UX consistency.
+- **EditorPage.astro**: Content editing interfaces (maximized space, editor-specific features)
+
+Choose based on: public vs authenticated, static vs interactive, full-page vs modal context.
+
+Routes with editors and modals should check if the user is authenticated before rendering.

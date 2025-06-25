@@ -42,6 +42,11 @@ export const threads: Locale = {
     pageCount: 'Sivu {current}/{count}',
     toFirstPage: 'Ensimmäinen sivu <',
     nextPage: '> Seuraava sivu',
+    latest: {
+      createdAt: 'Uusin ketju',
+      flowTime: 'Viimeksi päivitetty',
+      latestIsNewest: '(Viimeisin kommentti, on uusimpaan ketjuun)',
+    },
   },
   discussion: {
     title: 'Keskustelu',
