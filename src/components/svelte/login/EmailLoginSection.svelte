@@ -1,5 +1,6 @@
 <script lang="ts">
 // Import utilities, stores, and lifecycle functions
+import { completeAuthFlow } from '@utils/client/authUtils';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
@@ -42,23 +43,13 @@ const verifyLink = async () => {
       emailFromStorage,
       window.location.href,
     );
-    const idToken = await userCredential.user.getIdToken();
 
     // Clear email from storage on success
     window.localStorage.removeItem('emailForSignIn');
     window.localStorage.removeItem('loginRedirectRoute'); // Also clear redirect route
 
-    // 3. Extract the token from the userCredential
-    await fetch('/api/auth/session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: idToken }),
-    });
-
-    // Handle success (e.g., redirect)
-    window.location.assign(loginRedirectRoute || redirect);
+    // Complete the authentication flow (save session + redirect)
+    await completeAuthFlow(userCredential.user, loginRedirectRoute || redirect);
     // No need to set suspend = false due to redirect
   } catch (error) {
     logError('Error verifying email link:', error);

@@ -1,4 +1,5 @@
 <script lang="ts">
+import { completeAuthFlow } from '@utils/client/authUtils';
 import { pushSessionSnack } from '@utils/client/snackUtils'; // For user feedback
 import { t } from '@utils/i18n'; // For potential future translations
 // Import utilities
@@ -33,23 +34,17 @@ async function loginWithPassword(e: SubmitEvent) {
     const { signInWithEmailAndPassword } = await import('firebase/auth');
     const { auth } = await import('@firebase/client');
 
-    const userCredential= await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
 
-    const idToken = await userCredential.user.getIdToken();
-
-    await fetch('/api/auth/session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: idToken }),
-    });
-
+    // Complete the authentication flow (save session + redirect)
+    await completeAuthFlow(userCredential.user);
 
     email = ''; // Clear email after successful login
     password = ''; // Clear password after successful login
-
-    window.location.assign('/'); // Redirect on success
   } catch (error: unknown) {
     if (error instanceof FirebaseError) {
       logError('Password Sign-In Error:', error.code, error.message);

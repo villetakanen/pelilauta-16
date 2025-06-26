@@ -1,5 +1,6 @@
 <script lang="ts">
 // Import utilities and i18n function
+import { completeAuthFlow } from '@utils/client/authUtils';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 
@@ -32,20 +33,8 @@ async function loginWithGoogle(e: SubmitEvent) {
     // 1. Capture the result of the sign-in
     const userCredential = await signInWithPopup(auth, provider);
 
-    // 2. Get the ID token from the user object
-    const idToken = await userCredential.user.getIdToken();
-
-    // 3. Extract the token from the userCredential
-    await fetch('/api/auth/session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: idToken }),
-    });
-
-    // 4. Redirect on successful login
-    window.location.assign(redirect);
+    // 2. Complete the authentication flow (save session + redirect)
+    await completeAuthFlow(userCredential.user, redirect);
   } catch (error: unknown) {
     console.error('Google Sign-In Error:', error);
     // Provide user feedback on error using snack utility
