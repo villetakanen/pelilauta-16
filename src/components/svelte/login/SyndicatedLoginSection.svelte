@@ -3,7 +3,10 @@
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 
-// No props needed for this component
+interface Props {
+  redirect?: string;
+}
+const { redirect = '/' }: Props = $props();
 
 // State for loading indicator
 let loading = $state(false);
@@ -26,10 +29,23 @@ async function loginWithGoogle(e: SubmitEvent) {
     const provider = new GoogleAuthProvider();
     provider.addScope('email'); // Request email scope
 
-    await signInWithPopup(auth, provider);
+    // 1. Capture the result of the sign-in
+    const userCredential = await signInWithPopup(auth, provider);
 
-    // Redirect on successful login
-    window.location.assign('/');
+    // 2. Get the ID token from the user object
+    const idToken = await userCredential.user.getIdToken();
+
+    // 3. Extract the token from the userCredential
+    await fetch('/api/auth/session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: idToken }),
+    });
+
+    // 4. Redirect on successful login
+    window.location.assign(redirect);
   } catch (error: unknown) {
     console.error('Google Sign-In Error:', error);
     // Provide user feedback on error using snack utility

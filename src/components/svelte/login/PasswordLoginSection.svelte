@@ -33,7 +33,19 @@ async function loginWithPassword(e: SubmitEvent) {
     const { signInWithEmailAndPassword } = await import('firebase/auth');
     const { auth } = await import('@firebase/client');
 
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential= await signInWithEmailAndPassword(auth, email, password);
+
+    const idToken = await userCredential.user.getIdToken();
+
+    await fetch('/api/auth/session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: idToken }),
+    });
+
+
     email = ''; // Clear email after successful login
     password = ''; // Clear password after successful login
 
