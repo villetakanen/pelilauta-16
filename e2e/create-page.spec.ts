@@ -13,13 +13,15 @@ test('Can create a new page with Beta category', async ({ page }) => {
 
   // Create a unique page name using timestamp
   const uniquePageName = `New Test Page ${Date.now()}`;
-  
+
   // Fill in the page name
   await page.getByTestId('page-name-input').fill(uniquePageName);
 
   // Set the page category to 'Beta'
   await expect(page.getByTestId('page-category-select')).toBeVisible();
-  await page.getByTestId('page-category-select').selectOption({ label: 'Beta' });
+  await page
+    .getByTestId('page-category-select')
+    .selectOption({ label: 'Beta' });
 
   // Create the page
   await page.getByTestId('create-page-button').click();
@@ -28,7 +30,9 @@ test('Can create a new page with Beta category', async ({ page }) => {
   await expect(page).toHaveURL(/\/sites\/e2e-test-site\/new-test-page-\d+$/);
 
   // Verify the page content is displayed (should show default content structure)
-  await expect(page.getByRole('heading', { name: uniquePageName, level: 1 })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: uniquePageName, level: 1 }),
+  ).toBeVisible();
 });
 
 test('Page creation requires page name', async ({ page }) => {
@@ -40,13 +44,13 @@ test('Page creation requires page name', async ({ page }) => {
 
   // Try to submit without a name (should prevent submission)
   await page.getByTestId('create-page-button').click();
-  
+
   // Should still be on the same page (submission was prevented)
   await expect(page).toHaveURL(/\/sites\/e2e-test-site\/create\/page$/);
 
   // Create a unique page name using timestamp
   const uniquePageName = `Complete Page ${Date.now()}`;
-  
+
   // Fill in the page name
   await page.getByTestId('page-name-input').fill(uniquePageName);
 
