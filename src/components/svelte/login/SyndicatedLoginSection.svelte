@@ -1,9 +1,13 @@
 <script lang="ts">
 // Import utilities and i18n function
+import { completeAuthFlow } from '@utils/client/authUtils';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 
-// No props needed for this component
+interface Props {
+  redirect?: string;
+}
+const { redirect = '/' }: Props = $props();
 
 // State for loading indicator
 let loading = $state(false);
@@ -26,10 +30,11 @@ async function loginWithGoogle(e: SubmitEvent) {
     const provider = new GoogleAuthProvider();
     provider.addScope('email'); // Request email scope
 
-    await signInWithPopup(auth, provider);
+    // 1. Capture the result of the sign-in
+    const userCredential = await signInWithPopup(auth, provider);
 
-    // Redirect on successful login
-    window.location.assign('/');
+    // 2. Complete the authentication flow (save session + redirect)
+    await completeAuthFlow(userCredential.user, redirect);
   } catch (error: unknown) {
     console.error('Google Sign-In Error:', error);
     // Provide user feedback on error using snack utility

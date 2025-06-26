@@ -31,4 +31,7 @@ export const login: Locale = {
         'Olemme päivittäneet tietosuojakäytäntöjä ja käyttöehtoja sovelluksen version 16 myötä, ja siksi joudumme pyytämään sinulta uudelleen suostumuksen tietojesi käsittelyyn.',
     },
   },
+  snacks: {
+    success: 'Kirjautuminen onnistui!',
+  },
 };

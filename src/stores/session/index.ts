@@ -68,6 +68,14 @@ async function handleFirebaseAuthChange(user: User | null) {
   // Lets see if Firebase has a user for us
   if (user) {
     try {
+      const token = await user.getIdToken();
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
       // We need to subscribe to the account data
       await subscribeToAccount(user.uid);
       subscribeToProfile(user.uid);
@@ -126,6 +134,9 @@ export async function logout() {
 
   // Sign out from Firebase
   auth.signOut();
+
+  // Clear the session cookie
+  await fetch('/api/auth/session', { method: 'DELETE' });
 }
 
 export * from './subscriber';

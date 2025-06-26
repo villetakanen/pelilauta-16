@@ -1,13 +1,15 @@
 <script lang="ts">
 // Import utilities, stores, and lifecycle functions
+import { completeAuthFlow } from '@utils/client/authUtils';
 import { pushSessionSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import { onMount } from 'svelte';
 
-// No props needed for this component
-// interface Props {}
-// const {}: Props = $props();
+interface Props {
+  redirect?: string;
+}
+const { redirect = '/' }: Props = $props();
 
 // Component state using Svelte runes
 let email = $state('');
@@ -36,14 +38,18 @@ const verifyLink = async () => {
       return;
     }
 
-    await signInWithEmailLink(auth, emailFromStorage, window.location.href);
+    const userCredential = await signInWithEmailLink(
+      auth,
+      emailFromStorage,
+      window.location.href,
+    );
 
     // Clear email from storage on success
     window.localStorage.removeItem('emailForSignIn');
     window.localStorage.removeItem('loginRedirectRoute'); // Also clear redirect route
 
-    // Handle success (e.g., redirect)
-    window.location.assign(loginRedirectRoute || '/');
+    // Complete the authentication flow (save session + redirect)
+    await completeAuthFlow(userCredential.user, loginRedirectRoute || redirect);
     // No need to set suspend = false due to redirect
   } catch (error) {
     logError('Error verifying email link:', error);
@@ -79,7 +85,9 @@ const sendLink = async (e: SubmitEvent) => {
 
     window.localStorage.setItem('emailForSignIn', email);
     // Optionally store the intended redirect route if needed after login
-    // window.localStorage.setItem('loginRedirectRoute', '/some-path');
+    if (redirect) {
+      window.localStorage.setItem('loginRedirectRoute', redirect);
+    }
 
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
 
