@@ -103,6 +103,7 @@ function cancel() {
             {t('entries:page.name')}
             <input
               data-error={hasKeyClash || undefined}
+              data-testid="page-name-input"
               bind:value={title}
               type="text"
               name="title">
@@ -111,7 +112,7 @@ function cancel() {
           {#if site.pageCategories && site.pageCategories.length > 0}
           <label>
             {t('entries:page.category')}
-            <select bind:value={category}>
+            <select bind:value={category} data-testid="page-category-select">
               <option value="">-</option>
               {#each site.pageCategories as cat}
                 <option value={cat.slug}>{cat.name}</option>
@@ -138,7 +139,7 @@ function cancel() {
           <button type="button" class="text" onclick={cancel}>
             {t('actions:cancel')}
           </button>
-          <button type="submit">
+          <button type="submit" data-testid="create-page-button">
             <cn-icon noun="add"></cn-icon>
             <span>{t('actions:create.page')}</span>
           </button>

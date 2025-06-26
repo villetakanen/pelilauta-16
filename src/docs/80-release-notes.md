@@ -5,6 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
+### 17.9.x (ongoing)
+- FIX: Session state and token is now available for pages, in addition to authenticated API calls.
+- FIX: Page creation e2e test added to the test suite, which creates a page and verifies that the page is created successfully.
+
 ### 17.9.0 (2025-05-25)
 - FEAT: When a site has categories/topics, the category/topic can be set when creating a new page.
 - FIX: Forum page now shows the latest thread and latest disccussion for a channel.

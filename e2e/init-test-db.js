@@ -40,10 +40,11 @@ const testSite = {
   createdAt: FieldValue.serverTimestamp(),
   updatedAt: FieldValue.serverTimestamp(),
   flowTime: FieldValue.serverTimestamp(),
-  owners: ['e2e-test-owner', 'JatmZFE8X9coxETMz2sUs5YW1r22'],
+  owners: ['e2e-test-owner', 'JatmZFE8X9coxETMz2sUs5YW1r22', 'vN8RyOYratXr80130A7LqVCLmLn1'],
   homepage: 'front-page',
   hidden: true,
   sortOrder: 'name',
+  usePlainTextURLs: true,
   pageCategories: [
     { slug: 'alpha', name: 'Alpha' },
     { slug: 'beta', name: 'Beta' },
@@ -61,6 +62,22 @@ const testSite = {
 };
 serverDB.collection('sites').doc(testSite.key).set(testSite);
 console.log('Test site created:', testSite.key);
+
+
+const testSitePages = await serverDB.collection('sites').doc(testSite.key).collection('pages').get();
+if (testSitePages.empty) {
+  console.log('No pages found for the test site, creating default pages.');
+} else {
+  console.log('Test site already has pages, deleting existing pages.');
+  const batch = serverDB.batch();
+  for (const doc of testSitePages.docs) {
+    console.log('Deleting page:', doc.id);
+    batch.delete(doc.ref);
+  }
+  await batch.commit();
+  
+}
+
 
 // Create a test site front page
 const testSiteFrontPage = {
