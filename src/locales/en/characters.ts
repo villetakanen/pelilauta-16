@@ -12,5 +12,9 @@ export const characters: Locale = {
       description: 'Description',
       descriptionPlaceholder: 'Write character description...',
     },
+    snacks: {
+      saved: 'Character builder saved successfully',
+      saveError: 'Failed to save character builder',
+    },
   },
 };

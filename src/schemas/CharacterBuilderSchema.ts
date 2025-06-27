@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const CHARACTER_BUILDERS_COLLECTION_NAME = 'builders';
+
 export const CharacterMofdifierSchema = z
   .object({
     type: z

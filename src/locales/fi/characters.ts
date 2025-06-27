@@ -12,5 +12,9 @@ export const characters: Locale = {
       description: 'Kuvaus',
       descriptionPlaceholder: 'Kirjoita hahmon kuvaus...',
     },
+    snacks: {
+      saved: 'Hahmokone tallennettu onnistuneesti',
+      saveError: 'Hahmokoneen tallentaminen epäonnistui',
+    },
   },
 };
