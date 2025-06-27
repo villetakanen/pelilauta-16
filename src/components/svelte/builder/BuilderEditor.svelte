@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-  type CharacterBuilder,
   CharacterBuilderSchema,
   type CharacterBuilderStep,
   type CharacterFeature,
@@ -9,57 +8,35 @@ import { appMeta } from '@stores/metaStore/metaStore';
 import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { logDebug, logError } from '@utils/logHelpers';
+import { onDestroy } from 'svelte';
 import BuilderInfoForm from './BuilderInfoForm.svelte';
+import {
+  builder,
+  builderLoading,
+  subscribeToBuilder,
+  unsubscribeFromBuilder,
+} from './builderStore';
+
+interface Props {
+  builderKey: string;
+}
+const { builderKey = 'test-builder' }: Props = $props();
 
 const allow = $derived.by(() => $appMeta.admins.includes($uid));
 
 let editingStep: CharacterBuilderStep | null = $state(null);
 let showAddStepForm = $state(false);
 
-// Initialize with mock data
-const builder = $state<CharacterBuilder>(
-  CharacterBuilderSchema.parse({
-    key: 'test-builder',
-    name: 'Löllöpulautin',
-    description: 'Tämä on testipulautin, joka ei vielä tee mitään.',
-    system: 'll',
-    steps: [
-      {
-        key: 'step1',
-        name: 'Character Origin',
-        description: "Choose your character's background and origin.",
-        min: 1,
-        max: 1,
-        features: [
-          {
-            key: 'noble',
-            characterBuilderKey: 'test-builder',
-            name: 'Noble',
-            modifiers: [
-              {
-                type: 'FEATURE',
-                title: 'Noble Heritage',
-                description: 'You come from a wealthy family.',
-              },
-            ],
-          },
-          {
-            key: 'commoner',
-            characterBuilderKey: 'test-builder',
-            name: 'Commoner',
-            modifiers: [
-              {
-                type: 'FEATURE',
-                title: 'Street Smart',
-                description: 'You know how to survive on the streets.',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  }),
-);
+$effect(() => {
+  // Builder key changed, re-subscribe
+  unsubscribeFromBuilder();
+  subscribeToBuilder(builderKey);
+});
+
+onDestroy(() => {
+  // Clean up subscription when component is destroyed
+  unsubscribeFromBuilder();
+});
 
 // New step form data
 let newStepForm = $state({
@@ -82,7 +59,13 @@ function addNewStep() {
     features: [],
   };
 
-  builder.steps = [...builder.steps, newStep];
+  const currentBuilder = $builder;
+  if (currentBuilder) {
+    builder.set({
+      ...currentBuilder,
+      steps: [...currentBuilder.steps, newStep],
+    });
+  }
 
   // Reset form
   newStepForm = { key: '', name: '', description: '', min: 1, max: 1 };
@@ -91,22 +74,38 @@ function addNewStep() {
 
 function removeStep(stepKey: string) {
   logDebug('BuilderEditor', 'Removing step', stepKey);
-  builder.steps = builder.steps.filter((step) => step.key !== stepKey);
+  const currentBuilder = $builder;
+  if (currentBuilder) {
+    builder.set({
+      ...currentBuilder,
+      steps: currentBuilder.steps.filter((step) => step.key !== stepKey),
+    });
+  }
 }
 
 function moveStepUp(index: number) {
   if (index > 0) {
-    const steps = [...builder.steps];
-    [steps[index - 1], steps[index]] = [steps[index], steps[index - 1]];
-    builder.steps = steps;
+    const currentBuilder = $builder;
+    if (currentBuilder) {
+      const steps = [...currentBuilder.steps];
+      [steps[index - 1], steps[index]] = [steps[index], steps[index - 1]];
+      builder.set({
+        ...currentBuilder,
+        steps,
+      });
+    }
   }
 }
 
 function moveStepDown(index: number) {
-  if (index < builder.steps.length - 1) {
-    const steps = [...builder.steps];
+  const currentBuilder = $builder;
+  if (currentBuilder && index < currentBuilder.steps.length - 1) {
+    const steps = [...currentBuilder.steps];
     [steps[index], steps[index + 1]] = [steps[index + 1], steps[index]];
-    builder.steps = steps;
+    builder.set({
+      ...currentBuilder,
+      steps,
+    });
   }
 }
 
@@ -117,12 +116,20 @@ function editStep(step: CharacterBuilderStep) {
 function saveStep() {
   if (!editingStep) return;
 
+  const currentBuilder = $builder;
+  if (!currentBuilder) return;
+
   const currentEditingStep = editingStep;
-  const stepIndex = builder.steps.findIndex(
+  const stepIndex = currentBuilder.steps.findIndex(
     (s) => s.key === currentEditingStep.key,
   );
   if (stepIndex !== -1) {
-    builder.steps[stepIndex] = { ...currentEditingStep };
+    const updatedSteps = [...currentBuilder.steps];
+    updatedSteps[stepIndex] = { ...currentEditingStep };
+    builder.set({
+      ...currentBuilder,
+      steps: updatedSteps,
+    });
   }
   editingStep = null;
 }
@@ -132,24 +139,50 @@ function cancelEditStep() {
 }
 
 function addFeatureToStep(stepKey: string) {
-  const step = builder.steps.find((s) => s.key === stepKey);
-  if (!step) return;
+  const currentBuilder = $builder;
+  if (!currentBuilder) return;
+
+  const stepIndex = currentBuilder.steps.findIndex((s) => s.key === stepKey);
+  if (stepIndex === -1) return;
 
   const newFeature: CharacterFeature = {
     key: `feature-${Date.now()}`,
-    characterBuilderKey: builder.key,
+    characterBuilderKey: currentBuilder.key,
     name: 'New Feature',
     modifiers: [],
   };
 
-  step.features = [...step.features, newFeature];
+  const updatedSteps = [...currentBuilder.steps];
+  updatedSteps[stepIndex] = {
+    ...updatedSteps[stepIndex],
+    features: [...updatedSteps[stepIndex].features, newFeature],
+  };
+
+  builder.set({
+    ...currentBuilder,
+    steps: updatedSteps,
+  });
 }
 
 function removeFeatureFromStep(stepKey: string, featureKey: string) {
-  const step = builder.steps.find((s) => s.key === stepKey);
-  if (!step) return;
+  const currentBuilder = $builder;
+  if (!currentBuilder) return;
 
-  step.features = step.features.filter((f) => f.key !== featureKey);
+  const stepIndex = currentBuilder.steps.findIndex((s) => s.key === stepKey);
+  if (stepIndex === -1) return;
+
+  const updatedSteps = [...currentBuilder.steps];
+  updatedSteps[stepIndex] = {
+    ...updatedSteps[stepIndex],
+    features: updatedSteps[stepIndex].features.filter(
+      (f) => f.key !== featureKey,
+    ),
+  };
+
+  builder.set({
+    ...currentBuilder,
+    steps: updatedSteps,
+  });
 }
 
 function editFeature(stepKey: string, featureKey: string) {
@@ -158,9 +191,12 @@ function editFeature(stepKey: string, featureKey: string) {
 }
 
 function saveBuilder() {
+  const currentBuilder = $builder;
+  if (!currentBuilder) return;
+
   try {
     // Validate the builder before saving
-    const validatedBuilder = CharacterBuilderSchema.parse(builder);
+    const validatedBuilder = CharacterBuilderSchema.parse(currentBuilder);
     logDebug('BuilderEditor', 'Saving builder', validatedBuilder);
     // TODO: Implement actual save functionality
     alert('Builder saved successfully!');
@@ -172,12 +208,19 @@ function saveBuilder() {
 </script>
 
 <WithAuth {allow}>
-  <div class="content-columns">
-  <section class="column-l">
-    <!-- Builder Meta Information -->
-    <BuilderInfoForm {builder} />
-  </section>
-  <section>
+  {#if $builderLoading}
+    <div class="content-columns">
+      <section class="column-l">
+        <p>Loading builder...</p>
+      </section>
+    </div>
+  {:else if $builder}
+    <div class="content-columns">
+    <section class="column-l">
+      <!-- Builder Meta Information -->
+      <BuilderInfoForm />
+    </section>
+    <section>
 
     <!-- Steps Management -->
     <section class="mb-1">
@@ -222,7 +265,7 @@ function saveBuilder() {
       {/if}
 
       <div class="flex flex-col gap-1">
-        {#each builder.steps as step, index}
+        {#each $builder.steps as step, index}
           <cn-card class="p-1">
             <div class="toolbar justify-space-between mb-1">
               <div class="flex-col items-start">
@@ -234,7 +277,7 @@ function saveBuilder() {
                 <button class="button text" onclick={() => moveStepUp(index)} disabled={index === 0} aria-label="Move step up">
                   <cn-icon noun="up"></cn-icon>
                 </button>
-                <button class="button text" onclick={() => moveStepDown(index)} disabled={index === builder.steps.length - 1} aria-label="Move step down">
+                <button class="button text" onclick={() => moveStepDown(index)} disabled={index === $builder.steps.length - 1} aria-label="Move step down">
                   <cn-icon noun="down"></cn-icon>
                 </button>
                 <button class="button text" onclick={() => editStep(step)} aria-label="Edit step">
@@ -335,10 +378,17 @@ function saveBuilder() {
       <!-- Debug Information -->
     <details class="mt-2 border-top pt-1">
       <summary class="downscaled">Debug: Current Builder State</summary>
-      <pre class="surface elevation-1 p-1 border-radius mt-1 overflow-x-auto downscaled">{JSON.stringify(builder, null, 2)}</pre>
+      <pre class="surface elevation-1 p-1 border-radius mt-1 overflow-x-auto downscaled">{JSON.stringify($builder, null, 2)}</pre>
     </details>
     </section>
 </div>
+  {:else}
+    <div class="content-columns">
+      <section class="column-l">
+        <p>Builder not found.</p>
+      </section>
+    </div>
+  {/if}
 </WithAuth>
 
 <style>
