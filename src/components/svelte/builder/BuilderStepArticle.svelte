@@ -20,6 +20,22 @@ const isFirst = $derived(index === 0);
 function setMode(m: 'view' | 'edit') {
   mode = m;
 }
+
+function handleSave() {
+  if (mode === 'edit') {
+    setMode('view');
+  }
+  const currentBuilder = $builder;
+  if (!currentBuilder) return;
+
+  // Update the step in the builder
+  const updatedSteps = [...currentBuilder.steps];
+  updatedSteps[index] = step;
+  builder.set({
+    ...currentBuilder,
+    steps: updatedSteps,
+  });
+}
 </script>
 
 <article class="builder-step elevation-1 p-1 border-radius full-width">
@@ -65,7 +81,7 @@ function setMode(m: 'view' | 'edit') {
       <textarea bind:value={step.description} placeholder={t('characters:builder.fields.descriptionPlaceholder')}></textarea>
     </label>
     <div class="toolbar">
-      <button class="text" onclick={() => setMode('view')} aria-label={t('characters:builder.editor.steps.save')}>
+      <button class="text" onclick={() => handleSave()} aria-label={t('characters:builder.editor.steps.save')}>
         <cn-icon noun='save'></cn-icon>
       </button>
     </div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+import { updateBuilder } from '@firebase/client/builders';
 import { CharacterBuilderStepSchema } from '@schemas/CharacterBuilderSchema';
 import { t } from '@utils/i18n';
 import BuilderStepArticle from './BuilderStepArticle.svelte';
@@ -17,6 +18,14 @@ function addStep() {
     ...currentBuilder,
     steps: [...currentBuilder.steps, emptyStep],
   });
+
+  updateBuilder(
+    {
+      key: currentBuilder.key,
+      steps: [...currentBuilder.steps, emptyStep],
+    },
+    false,
+  ); // Not silent - this is a user action
 }
 
 function ascendStep(index: number) {
