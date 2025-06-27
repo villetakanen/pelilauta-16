@@ -6,6 +6,10 @@ export const characters: Locale = {
       info: {
         title: 'Hahmokone',
       },
+      steps: {
+        title: 'Vaiheet',
+        add: 'Uusi vaihe',
+      },
     },
     fields: {
       name: 'Nimi',

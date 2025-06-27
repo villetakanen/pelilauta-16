@@ -10,6 +10,7 @@ import WithAuth from '@svelte/app/WithAuth.svelte';
 import { logDebug, logError } from '@utils/logHelpers';
 import { onDestroy } from 'svelte';
 import BuilderInfoForm from './BuilderInfoForm.svelte';
+import BuilderStepsSection from './BuilderStepsSection.svelte';
 import {
   builder,
   builderLoading,
@@ -220,7 +221,8 @@ function saveBuilder() {
       <!-- Builder Meta Information -->
       <BuilderInfoForm />
     </section>
-    <section>
+
+    <BuilderStepsSection />
 
     <!-- Steps Management -->
     <section class="mb-1">
@@ -373,7 +375,6 @@ function saveBuilder() {
         </div>
       </cn-dialog>
     {/if}
-    </section>
     <section class="debug">
       <!-- Debug Information -->
     <details class="mt-2 border-top pt-1">
