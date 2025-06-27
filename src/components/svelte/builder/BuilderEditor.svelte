@@ -174,17 +174,10 @@ function saveBuilder() {
 <WithAuth {allow}>
   <div class="content-columns">
   <section class="column-l">
-  <div class="p-1">
-    <header class="toolbar justify-space-between mb-1">
-      <h1>Character Builder Editor</h1>
-      <button class="button cta" onclick={() => saveBuilder()}>
-        <cn-icon noun="save"></cn-icon>
-        <span>Save Builder</span>
-      </button>
-    </header>
-
     <!-- Builder Meta Information -->
     <BuilderInfoForm {builder} />
+  </section>
+  <section>
 
     <!-- Steps Management -->
     <section class="mb-1">
@@ -337,7 +330,6 @@ function saveBuilder() {
         </div>
       </cn-dialog>
     {/if}
-  </div>
     </section>
     <section class="debug">
       <!-- Debug Information -->
