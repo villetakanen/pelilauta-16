@@ -88,6 +88,11 @@ async function testSSRNoAuth() {
   document.querySelector("#error-button").addEventListener("click", handleClick);
 </script>
     </li>
+    <li>
+      <a href="/admin/builder">
+        <cn-icon noun="builder" small></cn-icon> Builder Editor
+      </a>
+    </li>
   </ul>
 </WithAuth>
 
