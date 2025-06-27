@@ -1,31 +1,21 @@
 <script lang="ts">
-import { updateBuilder } from '@firebase/client/builders';
 import { CharacterBuilderStepSchema } from '@schemas/CharacterBuilderSchema';
 import { t } from '@utils/i18n';
 import BuilderStepArticle from './BuilderStepArticle.svelte';
-import { builder } from './builderStore';
+import { builder, setSteps } from './builderStore';
+
+
 
 function addStep() {
   const currentBuilder = $builder;
   if (!currentBuilder) return;
 
   const emptyStep = CharacterBuilderStepSchema.parse({
-    name: `STEP ${$builder.steps.length + 1}`, // Auto-increment step name
+    name: `STEP ${currentBuilder.steps.length + 1}`, // Auto-increment step name
     description: '...',
   });
 
-  builder.set({
-    ...currentBuilder,
-    steps: [...currentBuilder.steps, emptyStep],
-  });
-
-  updateBuilder(
-    {
-      key: currentBuilder.key,
-      steps: [...currentBuilder.steps, emptyStep],
-    },
-    false,
-  ); // Not silent - this is a user action
+  setSteps([...currentBuilder.steps, emptyStep]);
 }
 
 function ascendStep(index: number) {
@@ -36,10 +26,7 @@ function ascendStep(index: number) {
   const [movedStep] = updatedSteps.splice(index, 1);
   updatedSteps.splice(index - 1, 0, movedStep);
 
-  builder.set({
-    ...currentBuilder,
-    steps: updatedSteps,
-  });
+  setSteps(updatedSteps);
 }
 
 function descendStep(index: number) {
@@ -50,10 +37,7 @@ function descendStep(index: number) {
   const [movedStep] = updatedSteps.splice(index, 1);
   updatedSteps.splice(index + 1, 0, movedStep);
 
-  builder.set({
-    ...currentBuilder,
-    steps: updatedSteps,
-  });
+  setSteps(updatedSteps);
 }
 
 function removeStep(index: number) {
@@ -63,10 +47,7 @@ function removeStep(index: number) {
   const updatedSteps = [...currentBuilder.steps];
   updatedSteps.splice(index, 1);
 
-  builder.set({
-    ...currentBuilder,
-    steps: updatedSteps,
-  });
+  setSteps(updatedSteps);
 }
 </script>
 {#if $builder}

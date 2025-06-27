@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { CharacterBuilderStep } from '@schemas/CharacterBuilderSchema';
 import { t } from '@utils/i18n';
-import { builder } from './builderStore';
+import { builder, setSteps } from './builderStore';
 
 interface Props {
   index: number;
@@ -31,10 +31,7 @@ function handleSave() {
   // Update the step in the builder
   const updatedSteps = [...currentBuilder.steps];
   updatedSteps[index] = step;
-  builder.set({
-    ...currentBuilder,
-    steps: updatedSteps,
-  });
+  setSteps(updatedSteps);
 }
 </script>
 

@@ -10,6 +10,32 @@ export const builderLoading: WritableAtom<boolean> = atom(false);
 
 let unsubscribe: (() => void) | null = null;
 
+/**
+ * Updates the steps array in the database.
+ * The store will be updated automatically via Firestore subscription.
+ */
+export async function setSteps(steps: CharacterBuilder['steps']) {
+  const currentBuilder = builder.get();
+  if (!currentBuilder) {
+    logError('builderStore', 'Cannot update steps: no builder loaded');
+    return;
+  }
+
+  try {
+    const { updateBuilder } = await import('@firebase/client/builders');
+    await updateBuilder(
+      {
+        key: currentBuilder.key,
+        steps,
+      },
+      false, // Not silent - this is a user action
+    );
+    logDebug('builderStore', 'Successfully updated steps in database');
+  } catch (error) {
+    logError('builderStore', 'Failed to update steps:', error);
+  }
+}
+
 export async function subscribeToBuilder(builderKey: string) {
   logDebug('builderStore', 'Subscribing to builder', builderKey);
   builderLoading.set(true);
