@@ -217,7 +217,7 @@ function saveBuilder() {
     </div>
   {:else if $builder}
     <div class="content-columns">
-    <section class="column-l">
+    <section>
       <!-- Builder Meta Information -->
       <BuilderInfoForm />
     </section>

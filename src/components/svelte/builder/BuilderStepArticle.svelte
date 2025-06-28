@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { CharacterBuilderStep } from '@schemas/CharacterBuilderSchema';
 import { t } from '@utils/i18n';
+import BuilderFeaturesList from './BuilderFeaturesList.svelte';
 import { builder, setSteps } from './builderStore';
 
 interface Props {
@@ -35,10 +36,10 @@ function handleSave() {
 }
 </script>
 
-<article class="builder-step elevation-1 p-1 border-radius full-width">
+<article class="builder-step elevation-1 p-2 border-radius full-width">
   <!-- top toolbar: index, (ascend), (descend), (edit), (remove)-->
-  <div class="toolbar">
-    <h4>{index + 1}</h4>
+  <div class="toolbar px-0 mx-0 border-b">
+    <h4>{index + 1}. {step.name}</h4>
     <div class="grow"></div>
     <button class="text" 
       disabled={isFirst}
@@ -62,8 +63,14 @@ function handleSave() {
 
   <!-- View mode -->
   {#if mode === 'view'}
-    <h4 class="m-0">{step.name}</h4>
-    <div class="step-description">{step.description}</div>
+    <p class="downscaled">{step.description}</p>
+
+    <p class="text-caption text-low">
+      Min: {step.min} | Max: {step.max} | Type: {step.key}
+    </p>
+    
+    <!-- Features List -->
+    <BuilderFeaturesList stepIndex={index} features={step.features} />
   {/if}
 
 
@@ -77,12 +84,22 @@ function handleSave() {
       {t('characters:builder.fields.description')}
       <textarea bind:value={step.description} placeholder={t('characters:builder.fields.descriptionPlaceholder')}></textarea>
     </label>
+
+    <div class="flex flex-no-wrap">
+      <label>
+        Min
+        <input type="number" bind:value={step.min} min="0" required />
+      </label>
+      <label>
+        Max
+        <input type="number" bind:value={step.max} min="0" required />
+      </label>
+    </div>
+
     <div class="toolbar">
       <button class="text" onclick={() => handleSave()} aria-label={t('characters:builder.editor.steps.save')}>
         <cn-icon noun='save'></cn-icon>
       </button>
     </div>
   {/if}
-
-  <div>{mode}</div>
 </article>

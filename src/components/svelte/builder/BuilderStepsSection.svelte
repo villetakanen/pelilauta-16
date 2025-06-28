@@ -4,8 +4,6 @@ import { t } from '@utils/i18n';
 import BuilderStepArticle from './BuilderStepArticle.svelte';
 import { builder, setSteps } from './builderStore';
 
-
-
 function addStep() {
   const currentBuilder = $builder;
   if (!currentBuilder) return;

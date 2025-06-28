@@ -58,13 +58,13 @@ async function handleSubmit(event: Event) {
   {#if $builder}
   <h2 class="m-0">{t('characters:builder.editor.info.title')}</h2>
   <fieldset class="elevation-1 border-radius px-2">
-  <div class="toolbar px-0">
+  
     <label class="grow">
       {t('characters:builder.fields.name')}
       <input type="text" bind:value={$builder.name} placeholder={t('characters:builder.fields.namePlaceholder')} required />
     </label>
     <SystemSelect system={$builder.system} {setSystem} />
-  </div>
+  
     <label>
         {t('characters:builder.fields.description')}
         <textarea rows="3"
