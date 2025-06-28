@@ -24,32 +24,42 @@ const {
   onMoveDown,
 }: Props = $props();
 
-let mode = $state('view');
+let dialog: HTMLDialogElement;
 let editedFeature = $state({ ...feature });
 
-function setMode(m: 'view' | 'edit') {
-  if (m === 'edit') {
-    editedFeature = { ...feature };
-  }
-  mode = m;
+function openEditDialog() {
+  editedFeature = { ...feature };
+  dialog.showModal();
+}
+
+function closeDialog() {
+  dialog.close();
 }
 
 function handleSave() {
   onUpdate(editedFeature);
-  setMode('view');
+  closeDialog();
+}
+
+function handleDelete() {
+  onRemove();
+  closeDialog();
 }
 
 function handleCancel() {
   editedFeature = { ...feature };
-  setMode('view');
+  closeDialog();
 }
 </script>
 
 <div class="border-radius border p-1">
   <div class="toolbar">
-    <h4 class="downscaled grow">
-      {feature.name}
-    </h4>
+    <div class="grow">
+      <h4 class="downscaled">{feature.name}</h4>
+      {#if feature.description}
+        <p class="downscaled text-caption">{feature.description}</p>
+      {/if}
+    </div>
     <button class="text" 
       disabled={isFirst}
       onclick={onMoveUp} 
@@ -62,37 +72,66 @@ function handleCancel() {
       aria-label={t('characters:builder.editor.features.moveDown')}>
       <cn-icon noun="arrow-down"></cn-icon>
     </button>
-    <button class="text" onclick={onRemove} aria-label={t('characters:builder.editor.features.remove')}>
-      <cn-icon noun="delete"></cn-icon>
+    <button class="text" onclick={openEditDialog} aria-label={t('actions:edit')}>
+      <cn-icon noun="edit"></cn-icon>
     </button>
   </div>
+</div>
 
-  <!-- Edit mode -->
-  {#if mode === 'edit'}
-    <label>
-      {t('characters:builder.fields.name')}
-      <input type="text" bind:value={editedFeature.name} placeholder={t('characters:builder.fields.namePlaceholder')} required />
-    </label>
-    
-    <!-- Simple modifiers editing - for now just show count -->
-    <div class="modifiers-editor">
-      <p class="downscaled">
-        {t('characters:builder.editor.features.modifiersCount', { count: editedFeature.modifiers?.length || 0 })}
-      </p>
-      <!-- TODO: Add full modifier editor when needed -->
+<!-- Edit Dialog -->
+<dialog bind:this={dialog} class="border-radius">
+  <form method="dialog">
+    <header class="toolbar mb-2">
+      <h3>{t('characters:builder.editor.features.editFeature')}</h3>
+      <button type="button" onclick={closeDialog} aria-label={t('actions:close')}>
+        <cn-icon noun="close"></cn-icon>
+      </button>
+    </header>
+
+    <div class="form-fields">
+      <label>
+        {t('characters:builder.fields.name')}
+        <input 
+          type="text" 
+          bind:value={editedFeature.name} 
+          placeholder={t('characters:builder.fields.namePlaceholder')} 
+          required 
+        />
+      </label>
+
+      <label>
+        {t('characters:builder.fields.description')}
+        <textarea 
+          bind:value={editedFeature.description}
+          placeholder={t('characters:builder.fields.descriptionPlaceholder')}
+          rows="3"
+        ></textarea>
+      </label>
+
+      <!-- Simple modifiers info - for now just show count -->
+      <div class="modifiers-info">
+        <p class="downscaled text-caption">
+          {t('characters:builder.editor.features.modifiersCount', { count: editedFeature.modifiers?.length || 0 })}
+        </p>
+        <!-- TODO: Add full modifier editor when needed -->
+      </div>
     </div>
 
-    <div class="toolbar justify-end mt-1">
-      <button class="text" onclick={handleSave} aria-label={t('characters:builder.editor.features.save')}>
-        <cn-icon noun="save"></cn-icon>
-        <span>{t('actions:save')}</span>
+    <footer class="toolbar justify-end mt-2">
+      <button type="button" class="text danger" onclick={handleDelete} aria-label={t('actions:delete')}>
+        <cn-icon noun="delete"></cn-icon>
+        <span>{t('actions:delete')}</span>
       </button>
-      <button class="text" onclick={handleCancel} aria-label={t('actions:cancel')}>
+      <button type="button" class="text" onclick={handleCancel} aria-label={t('actions:cancel')}>
         <cn-icon noun="close"></cn-icon>
         <span>{t('actions:cancel')}</span>
       </button>
-    </div>
-  {/if}
-</div>
+      <button type="button" class="primary" onclick={handleSave} aria-label={t('actions:save')}>
+        <cn-icon noun="save"></cn-icon>
+        <span>{t('actions:save')}</span>
+      </button>
+    </footer>
+  </form>
+</dialog>
 
 
