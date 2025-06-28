@@ -2,18 +2,18 @@ import { z } from 'zod';
 
 export const CHARACTER_BUILDERS_COLLECTION_NAME = 'builders';
 
+export const CHARACTER_MODIFIER_TYPES = [
+  'BASE_STAT', // A base stat, like Strength, Dexterity, etc.
+  'STAT_BONUS', // A bonus to a stat, like +2 to Strength score
+  'FEATURE', // A generic feature, will be listed in the features array
+] as const;
+
 export const CharacterMofdifierSchema = z
   .object({
-    type: z
-      .enum([
-        'BASE_STAT', // A base stat, like Strength, Dexterity, etc.
-        'STAT_BONUS', // A bonus to a stat, like +2 to Strength score
-        'FEATURE', // A generic feature, will be listed in the features array
-      ])
-      .describe('Type of the modifier'),
+    type: z.enum(CHARACTER_MODIFIER_TYPES).describe('Type of the modifier'),
     target: z
       .string()
-      .default('')
+      .optional()
       .describe("Target of the modifier, e.g. 'strength' or 'dexterity'"),
     value: z
       .number()
@@ -35,6 +35,8 @@ export const CharacterMofdifierSchema = z
       .describe("Source stat, e.g. 'Proficiency Bonus' or 'Strength Bonus'"),
   })
   .describe('Schema for character modifiers profivded by a feature');
+
+export type CharacterMofdifier = z.infer<typeof CharacterMofdifierSchema>;
 
 export const CharacterFeatureSchema = z
   .object({

@@ -18,7 +18,7 @@ export const characters: Locale = {
       },
       features: {
         title: 'Valittavissa',
-        edit: 'Muokkaa ominaisuutta',
+        edit: 'Muokkaa vaihtoehtoa',
         save: 'Tallenna ominaisuus',
         remove: 'Poista ominaisuus',
         moveUp: 'Siirrä ylös',
@@ -26,8 +26,14 @@ export const characters: Locale = {
         empty:
           'Tälle vaiheelle ei ole vielä lisätty ominaisuuksia. Voit lisätä niitä alta.',
         defaultName: 'Uusi ominaisuus',
-        noModifiers: 'Ei muokkaimia määritetty',
-        modifiersCount: 'Muokkaimia: {count}',
+        noModifiers: 'Ei määreitä',
+        modifiersCount: 'Määreitä: {count}',
+      },
+      modifiers: {
+        type: 'Tyyppi',
+        target: 'Kohde',
+        value: 'Arvo',
+        description: 'Kuvaus',
       },
     },
     fields: {

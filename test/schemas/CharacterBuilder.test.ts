@@ -71,7 +71,7 @@ describe('CharacterMofdifierSchema', () => {
     };
 
     const parsed = CharacterMofdifierSchema.parse(modifier);
-    expect(parsed.target).toBe('');
+    expect(parsed.target).toBe(undefined);
   });
 });
 

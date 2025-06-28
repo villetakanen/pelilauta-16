@@ -8,12 +8,27 @@ import {
   wizardFeature,
 } from '../mocks/characterBuilderDummies';
 
+// Helper type for backward compatibility with function expectations
+type FeatureLike = Pick<
+  CharacterFeature,
+  'key' | 'name' | 'characterBuilderKey'
+> & {
+  modifiers?: Array<{
+    type: 'BASE_STAT' | 'STAT_BONUS' | 'FEATURE';
+    target: string;
+    value?: number;
+    title?: string;
+    description?: string;
+    source?: string;
+  }>;
+};
+
 describe('composeCharacterFeatures', () => {
   it('should create a character sheet from simple character build', () => {
     const characterBuild = createSimpleCharacterBuild();
     const result = composeCharacterFeatures(
       characterBuild.builder,
-      characterBuild.selectedFeatures,
+      characterBuild.selectedFeatures as FeatureLike[],
       'Thorin Ironforge',
     );
 
@@ -46,7 +61,7 @@ describe('composeCharacterFeatures', () => {
     const characterBuild = createSimpleCharacterBuild();
     const result = composeCharacterFeatures(
       characterBuild.builder,
-      characterBuild.selectedFeatures,
+      characterBuild.selectedFeatures as FeatureLike[],
     );
 
     expect(result.name).toBe('');
@@ -81,7 +96,7 @@ describe('composeCharacterFeatures', () => {
 
     const result = composeCharacterFeatures(
       characterBuild.builder,
-      characterBuild.selectedFeatures,
+      characterBuild.selectedFeatures as FeatureLike[],
     );
     const strengthStat = result.stats.find((s) => s.key === 'strength');
     expect(strengthStat?.value).toBe(3); // 2 + 1
@@ -95,13 +110,11 @@ describe('composeCharacterFeatures', () => {
       modifiers: [
         {
           type: 'FEATURE',
-          target: '',
           title: 'Special Ability',
           description: 'You have a special ability',
         },
         {
           type: 'FEATURE',
-          target: '',
           title: 'Another Ability',
           description: 'You have another ability',
         },
@@ -115,7 +128,7 @@ describe('composeCharacterFeatures', () => {
 
     const result = composeCharacterFeatures(
       characterBuild.builder,
-      characterBuild.selectedFeatures,
+      characterBuild.selectedFeatures as FeatureLike[],
     );
     expect(result.stats).toHaveLength(0);
     expect(result.extras).toHaveLength(1);
@@ -137,7 +150,7 @@ describe('composeCharacterFeatures', () => {
 
     const result = composeCharacterFeatures(
       characterBuild.builder,
-      characterBuild.selectedFeatures,
+      characterBuild.selectedFeatures as FeatureLike[],
     );
     expect(result.stats).toHaveLength(0);
     expect(result.extras).toHaveLength(0);
@@ -151,7 +164,7 @@ describe('composeCharacterFeatures', () => {
 
     const result = composeCharacterFeatures(
       characterBuild.builder,
-      characterBuild.selectedFeatures,
+      characterBuild.selectedFeatures as FeatureLike[],
       'Elrond Starweaver',
     );
 

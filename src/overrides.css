@@ -420,3 +420,15 @@ input[data-error] {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.px-1 {
+  padding-left: var(--cn-grid);
+  padding-right: var(--cn-grid);
+}
+.mb-1 {
+  margin-bottom: var(--cn-grid) !important;
+}
+@media (min-width: 740px) {
+  dialog {
+    min-width: 720px;
+  }
+}

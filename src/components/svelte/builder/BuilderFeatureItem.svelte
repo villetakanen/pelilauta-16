@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { CharacterFeature } from '@schemas/CharacterBuilderSchema';
 import { t } from '@utils/i18n';
+import ModifierForm from './ModifierForm.svelte';
 
 interface Props {
   feature: CharacterFeature;
@@ -56,9 +57,6 @@ function handleCancel() {
   <div class="toolbar">
     <div class="grow">
       <h4 class="downscaled">{feature.name}</h4>
-      {#if feature.description}
-        <p class="downscaled text-caption">{feature.description}</p>
-      {/if}
     </div>
     <button class="text" 
       disabled={isFirst}
@@ -76,16 +74,17 @@ function handleCancel() {
       <cn-icon noun="edit"></cn-icon>
     </button>
   </div>
+  <p class="text-caption px-1 mb-1">{feature.description}</p>
+  <p class="text-caption text-low px-1">
+    {t('characters:builder.editor.features.modifiersCount', { count: feature.modifiers?.length || 0 })}
+  </p>
 </div>
 
 <!-- Edit Dialog -->
-<dialog bind:this={dialog} class="border-radius">
+<dialog bind:this={dialog}>
   <form method="dialog">
     <header class="toolbar mb-2">
-      <h3>{t('characters:builder.editor.features.editFeature')}</h3>
-      <button type="button" onclick={closeDialog} aria-label={t('actions:close')}>
-        <cn-icon noun="close"></cn-icon>
-      </button>
+      <h3>{t('characters:builder.editor.features.edit')}</h3>
     </header>
 
     <div class="form-fields">
@@ -109,12 +108,36 @@ function handleCancel() {
       </label>
 
       <!-- Simple modifiers info - for now just show count -->
-      <div class="modifiers-info">
+      <div class="modifiers-info pt-1">
         <p class="downscaled text-caption">
           {t('characters:builder.editor.features.modifiersCount', { count: editedFeature.modifiers?.length || 0 })}
         </p>
         <!-- TODO: Add full modifier editor when needed -->
-      </div>
+
+        {#if editedFeature.modifiers?.length}
+            {#each editedFeature.modifiers as modifier}
+              <ModifierForm 
+                modifier={modifier} 
+                onUpdate={(updatedModifier) => {
+                  const index = editedFeature.modifiers?.indexOf(modifier) || -1;
+                  if (index !== -1) {
+                    if (!editedFeature.modifiers) throw new Error('Modifiers array is undefined');
+                    editedFeature.modifiers[index] = updatedModifier;
+                  }
+                }}/>
+            {/each}
+        {:else}
+          <p class="text-caption text-low">{t('characters:builder.editor.features.noModifiers')}</p>
+        {/if}
+        <button 
+          type="button" 
+          class="text" 
+          onclick={() => editedFeature.modifiers?.push({ type: 'FEATURE' })} 
+          aria-label={t('characters:builder.editor.features.addModifier')}>
+          <cn-icon noun="add"></cn-icon>
+          <span>{t('actions:add')}</span>
+        </button>
+      </div>    
     </div>
 
     <footer class="toolbar justify-end mt-2">
@@ -122,6 +145,7 @@ function handleCancel() {
         <cn-icon noun="delete"></cn-icon>
         <span>{t('actions:delete')}</span>
       </button>
+      <div class="grow"></div>
       <button type="button" class="text" onclick={handleCancel} aria-label={t('actions:cancel')}>
         <cn-icon noun="close"></cn-icon>
         <span>{t('actions:cancel')}</span>
