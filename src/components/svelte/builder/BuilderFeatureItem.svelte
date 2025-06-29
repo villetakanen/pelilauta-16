@@ -115,23 +115,29 @@ function handleCancel() {
         <!-- TODO: Add full modifier editor when needed -->
 
         {#if editedFeature.modifiers?.length}
-            {#each editedFeature.modifiers as modifier}
+            {#each editedFeature.modifiers as modifier, index}
               <ModifierForm 
                 modifier={modifier} 
                 onUpdate={(updatedModifier) => {
-                  const index = editedFeature.modifiers?.indexOf(modifier) || -1;
-                  if (index !== -1) {
+                  const modIndex = editedFeature.modifiers?.indexOf(modifier) || -1;
+                  if (modIndex !== -1) {
                     if (!editedFeature.modifiers) throw new Error('Modifiers array is undefined');
-                    editedFeature.modifiers[index] = updatedModifier;
+                    editedFeature.modifiers[modIndex] = updatedModifier;
                   }
-                }}/>
+                }}
+                onRemove={() => {
+                  if (!editedFeature.modifiers) return;
+                  editedFeature.modifiers.splice(index, 1);
+                  editedFeature.modifiers = editedFeature.modifiers;
+                }}
+              />
             {/each}
         {:else}
           <p class="text-caption text-low">{t('characters:builder.editor.features.noModifiers')}</p>
         {/if}
         <button 
           type="button" 
-          class="text" 
+          class="text flex-none" 
           onclick={() => editedFeature.modifiers?.push({ type: 'FEATURE' })} 
           aria-label={t('characters:builder.editor.features.addModifier')}>
           <cn-icon noun="add"></cn-icon>

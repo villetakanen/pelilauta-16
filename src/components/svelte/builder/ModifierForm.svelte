@@ -8,9 +8,10 @@ import { t } from '@utils/i18n';
 interface Props {
   modifier: CharacterMofdifier;
   onUpdate: (modifier: CharacterMofdifier) => void;
+  onRemove: () => void;
 }
 
-const { modifier }: Props = $props();
+const { modifier, onRemove }: Props = $props();
 
 function onsubmit(event: Event) {
   event.preventDefault();
@@ -63,5 +64,7 @@ function statTypeToString(type: string): string {
     </label>
   {/if}
 
-  
+  <button type="button" class="text flex-none" onclick={onRemove} aria-label={t('actions:remove')}>
+    <cn-icon noun="delete"></cn-icon>
+  </button>
 </form>
