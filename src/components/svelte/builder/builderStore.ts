@@ -102,65 +102,6 @@ export function unsubscribeFromBuilder() {
   clearBuilder();
 }
 
-export async function loadBuilder(builderKey: string) {
-  logDebug('builderStore', 'Loading builder', builderKey);
-  builderLoading.set(true);
-
-  try {
-    // TODO: Replace with actual Firestore subscription
-    // For now, using mock data
-    const mockBuilder = CharacterBuilderSchema.parse({
-      key: builderKey,
-      name: 'Löllöpulautin',
-      description: 'Tämä on testipulautin, joka ei vielä tee mitään.',
-      system: 'll',
-      steps: [
-        {
-          key: 'step1',
-          name: 'Character Origin',
-          description: "Choose your character's background and origin.",
-          min: 1,
-          max: 1,
-          features: [
-            {
-              key: 'noble',
-              characterBuilderKey: builderKey,
-              name: 'Noble',
-              modifiers: [
-                {
-                  type: 'FEATURE',
-                  title: 'Noble Heritage',
-                  description: 'You come from a wealthy family.',
-                },
-              ],
-            },
-            {
-              key: 'commoner',
-              characterBuilderKey: builderKey,
-              name: 'Commoner',
-              modifiers: [
-                {
-                  type: 'FEATURE',
-                  title: 'Street Smart',
-                  description: 'You know how to survive on the streets.',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    });
-
-    builder.set(mockBuilder);
-    logDebug('builderStore', 'Builder loaded successfully', mockBuilder);
-  } catch (error) {
-    logError('builderStore', 'Failed to load builder:', error);
-    builder.set(undefined);
-  } finally {
-    builderLoading.set(false);
-  }
-}
-
 export function clearBuilder() {
   builder.set(undefined);
   builderLoading.set(false);
