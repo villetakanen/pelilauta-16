@@ -21,7 +21,6 @@ const allow = $derived.by(() => $appMeta.admins.includes($uid));
 
 $effect(() => {
   // Builder key changed, re-subscribe
-  unsubscribeFromBuilder();
   subscribeToBuilder(builderKey);
 });
 
