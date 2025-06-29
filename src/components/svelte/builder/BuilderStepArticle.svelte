@@ -72,7 +72,7 @@ function handleSave() {
 
     <div class="toolbar">
     <p class="text-caption text-low">
-      Min: {step.min} | Max: {step.max} | Type: {step.key}
+      Min: {step.min} | Max: {step.max} | Type: {step.type || 'select'} | Count: {step.features.length}
     </p>
     <button class="text" onclick={() => toggleSteps()} aria-label={t('characters:builder.editor.steps.toggleFeatures')}>
       <cn-icon noun="chevron-left" class:rotate-90={showSteps} class:rotate-270={!showSteps}></cn-icon>

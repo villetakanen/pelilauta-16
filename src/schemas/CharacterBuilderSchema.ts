@@ -56,10 +56,18 @@ export const CharacterFeatureSchema = z
 
 export type CharacterFeature = z.infer<typeof CharacterFeatureSchema>;
 
+const STEP_TYPES = ['select', 'set_base', 'meta'] as const;
+
 export const CharacterBuilderStepSchema = z
   .object({
     key: z.string().default('').describe('Unique identifier for the step'),
     name: z.string().default('').describe('User-friendly name for the step'),
+    type: z
+      .enum(STEP_TYPES)
+      .optional()
+      .describe(
+        'Type of the step, e.g. "select" for feature selection, "set_base" for setting base stats, or "meta" for setting character metadata',
+      ),
     description: z
       .string()
       .describe('Instructions or flavor text for the user.'),

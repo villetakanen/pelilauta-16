@@ -52,6 +52,11 @@ async function testSSRNoAuth() {
       </a>
     </li>
     <li>
+      <a href="/admin/builder">
+        <cn-icon noun="compose" small></cn-icon> Character Builders
+      </a>
+    </li>
+    <li>
       <a href="/admin/messaging">
         <cn-icon noun="send" small></cn-icon> Social Media Poster
       </a>
@@ -87,11 +92,6 @@ async function testSSRNoAuth() {
   }
   document.querySelector("#error-button").addEventListener("click", handleClick);
 </script>
-    </li>
-    <li>
-      <a href="/admin/builder">
-        <cn-icon noun="builder" small></cn-icon> Builder Editor
-      </a>
     </li>
   </ul>
 </WithAuth>
