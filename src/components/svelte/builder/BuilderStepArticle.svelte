@@ -14,12 +14,17 @@ interface Props {
 
 const { index, step, onDelete, onAscend, onDescend }: Props = $props();
 let mode = $state('view');
+let showSteps = $state(false);
 
 const isLast = $derived(index === ($builder?.steps.length ?? 0) - 1);
 const isFirst = $derived(index === 0);
 
 function setMode(m: 'view' | 'edit') {
   mode = m;
+}
+
+function toggleSteps() {
+  showSteps = !showSteps;
 }
 
 function handleSave() {
@@ -65,12 +70,18 @@ function handleSave() {
   {#if mode === 'view'}
     <p class="downscaled">{step.description}</p>
 
+    <div class="toolbar">
     <p class="text-caption text-low">
       Min: {step.min} | Max: {step.max} | Type: {step.key}
     </p>
-    
-    <!-- Features List -->
-    <BuilderFeaturesList stepIndex={index} features={step.features} />
+    <button class="text" onclick={() => toggleSteps()} aria-label={t('characters:builder.editor.steps.toggleFeatures')}>
+      <cn-icon noun="chevron-left" class:rotate-90={showSteps} class:rotate-270={!showSteps}></cn-icon>
+    </button>
+    </div>
+    <div class:hidden={!showSteps} class="features-list">
+      <!-- Features List -->
+      <BuilderFeaturesList stepIndex={index} features={step.features} />
+    </div>
   {/if}
 
 
