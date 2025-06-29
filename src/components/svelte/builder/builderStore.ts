@@ -9,6 +9,7 @@ export const builder: WritableAtom<undefined | CharacterBuilder> =
 export const builderLoading: WritableAtom<boolean> = atom(false);
 
 let unsubscribe: (() => void) | null = null;
+let currentBuilderKey: string | null = null;
 
 /**
  * Updates the steps array in the database.
@@ -37,14 +38,17 @@ export async function setSteps(steps: CharacterBuilder['steps']) {
 }
 
 export async function subscribeToBuilder(builderKey: string) {
+  if (builderKey === currentBuilderKey) {
+    logDebug('builderStore', 'Already subscribed to builder', builderKey);
+    return;
+  }
+
+  // Unsubscribe from the previous builder and clear the state
+  unsubscribeFromBuilder();
+
   logDebug('builderStore', 'Subscribing to builder', builderKey);
   builderLoading.set(true);
-
-  // Clear any existing subscription
-  if (unsubscribe) {
-    unsubscribe();
-    unsubscribe = null;
-  }
+  currentBuilderKey = builderKey;
 
   try {
     // Dynamic import for code splitting
@@ -83,22 +87,22 @@ export async function subscribeToBuilder(builderKey: string) {
       },
       (error) => {
         logError('builderStore', 'Firestore subscription error:', error);
-        builder.set(undefined);
-        builderLoading.set(false);
+        clearBuilder();
       },
     );
   } catch (error) {
     logError('builderStore', 'Failed to subscribe to builder:', error);
-    builder.set(undefined);
-    builderLoading.set(false);
+    clearBuilder();
   }
 }
 
 export function unsubscribeFromBuilder() {
   if (unsubscribe) {
+    logDebug('builderStore', 'Unsubscribing from builder', currentBuilderKey);
     unsubscribe();
     unsubscribe = null;
   }
+  currentBuilderKey = null;
   clearBuilder();
 }
 
