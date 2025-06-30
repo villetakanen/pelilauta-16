@@ -14,5 +14,5 @@ const { builderKey } = Astro.params;
   title={t('characters:builder.title')}
   noun="experiment" noSharing>
 
-  <BuilderApp {builderKey} />
+  <BuilderApp {builderKey} client:only="svelte"/>
 </Page>

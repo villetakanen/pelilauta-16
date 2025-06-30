@@ -2,6 +2,10 @@ import type { Locale } from '@utils/i18n';
 
 export const characters: Locale = {
   builder: {
+    system: 'Järjestelmä',
+    step: 'Vaihe',
+    loading: 'Lataa hahmokonetta...',
+    comingSoon: 'Hahmonluontitoiminnot tulossa pian...',
     editor: {
       info: {
         title: 'Hahmokone',
@@ -35,6 +39,38 @@ export const characters: Locale = {
         value: 'Arvo',
         description: 'Kuvaus',
       },
+    },
+    steps: {
+      title: 'Hahmonluonnin Vaiheet',
+      choose: 'Valitse {count}',
+      chooseRange: 'Valitse {min}-{max}',
+      featuresAvailable: '{count} ominaisuutta saatavilla',
+      showFeatures: 'Näytä saatavilla olevat ominaisuudet',
+      noSteps: 'Tälle hahmokonelle ei ole määritetty vaiheita',
+    },
+    actions: {
+      title: 'Toiminnot',
+      startBuilding: 'Aloita Hahmon Luominen',
+      customize: 'Muokkaa Hahmokonetta',
+      browse: 'Selaa Kaikkia Hahmokoneita',
+    },
+    stats: {
+      title: 'Hahmokoneen Tiedot',
+      steps: 'Vaiheita',
+      totalFeatures: 'Ominaisuuksia Yhteensä',
+      system: 'Järjestelmä',
+    },
+    modifiers: {
+      count: '{count} määrettä',
+    },
+    notFound: {
+      title: 'Hahmokonetta Ei Löytynyt',
+      description:
+        'Etsimääsi hahmokonetta ei löytynyt. Se saattaa olla poistettu tai sinulla ei ole lupaa tarkastella sitä.',
+    },
+    noBuilder: {
+      title: 'Hahmokonetta Ei Valittu',
+      description: 'Valitse hahmokone aloittaaksesi hahmojen luomisen.',
     },
     fields: {
       name: 'Nimi',
