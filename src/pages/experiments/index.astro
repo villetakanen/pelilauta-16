@@ -1,0 +1,18 @@
+---
+import Page from '@layouts/Page.astro';
+import { t } from '@utils/i18n';
+---
+
+<Page title={import.meta.env.PUBLIC_APP_NAME} noSharing>
+  <div class="content-columns">
+    <cn-card
+      title={t("navigation:experiments")}
+      noun="experiment"
+      class="column-s"
+    >
+      <p>
+        {t("experiments:description")}
+      </p>
+    </cn-card>
+  </div>
+</Page>

@@ -7,4 +7,5 @@ export const navigation: Locale = {
   threads: 'Foorumi',
   library: 'Pelit',
   inbox: 'Inbox',
+  experiments: 'Kokeilut',
 };

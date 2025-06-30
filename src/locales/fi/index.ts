@@ -3,6 +3,7 @@ import { actions } from './actions';
 import { app } from './app';
 import { characters } from './characters';
 import { entries } from './entries';
+import { experiments } from './experiments';
 import { library } from './library';
 import { login } from './login';
 import { meta } from './meta';
@@ -19,6 +20,7 @@ export const fi: Locale = {
   app,
   characters,
   entries,
+  experiments,
   library,
   login,
   meta,
