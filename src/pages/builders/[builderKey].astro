@@ -1,0 +1,18 @@
+---
+import Page from '@layouts/Page.astro';
+import BuilderApp from '@svelte/builder/app/BuilderApp.svelte';
+import { t } from '@utils/i18n';
+
+export interface Props {
+  builderKey: string;
+}
+
+const { builderKey } = Astro.params;
+---
+
+<Page 
+  title={t('characters:builder.title')}
+  noun="experiment" noSharing>
+
+  <BuilderApp {builderKey} />
+</Page>

@@ -6,21 +6,22 @@ import AppRail from 'src/components/server/AppRail.astro';
 import BaseHead from '../components/server/BaseHead/BaseHead.astro';
 import BaseTail from '../components/server/BaseTail.astro';
 
-type Props = {
+export type Props = {
   title?: string;
+  noun?: string;
   shortTitle?: string;
   description?: string;
   image?: string;
   noSharing?: boolean;
 };
 
-const { title, description, image, shortTitle, noSharing } = Astro.props;
+const { title, description, image, shortTitle, noSharing, noun } = Astro.props;
 ---
 
 <html lang="fi">
   <BaseHead {title} {description} {image} {noSharing}/>
   <body>
-    <AppBar title={title} shortTitle={shortTitle} noSharing={noSharing}>
+    <AppBar title={title} shortTitle={shortTitle} {noun} noSharing={noSharing}>
       <slot name="app-bar" />
     </AppBar>
     <AppRail />

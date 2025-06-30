@@ -1,5 +1,6 @@
 ---
 import Page from '@layouts/Page.astro';
+import BuilderListSection from '@server/builder/BuilderListSection.astro';
 import { t } from '@utils/i18n';
 ---
 
@@ -14,5 +15,6 @@ import { t } from '@utils/i18n';
         {t("experiments:description")}
       </p>
     </cn-card>
+    <BuilderListSection />
   </div>
 </Page>

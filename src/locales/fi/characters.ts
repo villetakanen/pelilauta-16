@@ -46,5 +46,9 @@ export const characters: Locale = {
       saved: 'Hahmokone tallennettu onnistuneesti',
       saveError: 'Hahmokoneen tallentaminen epäonnistui',
     },
+    list: {
+      title: 'Hahmokoneet',
+    },
+    title: 'Hahmokone',
   },
 };

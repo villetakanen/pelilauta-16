@@ -1,0 +1,35 @@
+---
+import { serverDB } from '@firebase/server';
+import {
+  CHARACTER_BUILDERS_COLLECTION_NAME,
+  CharacterBuilderSchema,
+} from '@schemas/CharacterBuilderSchema';
+import { t } from '@utils/i18n';
+
+// Lists all the builders available in the DB
+
+const buildersRef = serverDB.collection(CHARACTER_BUILDERS_COLLECTION_NAME);
+// .where("active", "==", true); // Uncomment the line to filter for active builders only
+
+const buildersSnapshot = await buildersRef.get();
+
+const builders = buildersSnapshot.docs.map((doc) =>
+  CharacterBuilderSchema.parse({
+    key: doc.id,
+    ...doc.data(),
+  }),
+);
+---
+<section>
+  <h2>{t('characters:builder.list.title')}</h2>
+  <ul class="list-none">
+    {builders.map(builder => (
+      <li>
+        <a href={`/builders/${builder.key}`}>
+          <h3 class="downscaled">{builder.name}</h3>
+          <p>{builder.description}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
