@@ -29,6 +29,9 @@ export const app = {
     activeUsers: {
       title: 'Aktiivisena',
     },
+    other: {
+      title: 'Muutamia oikopolkuja',
+    },
   },
   settings: {
     title: 'Asetukset',

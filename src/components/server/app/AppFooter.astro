@@ -39,7 +39,12 @@ import ActiveUsersWidget from './ActiveUsersWidget.astro';
   </section>
 
   <section class="column-s">
-    <ActiveUsersWidget /> 
+    <ActiveUsersWidget />
+    <h4 class="downscaled">{t('app:footer.other.title')}</h4>
+    <p>
+      <a href="/docs">{t('navigation:docs')}</a> | 
+      <a href ="/experiments">{t('navigation:experiments')}</a>
+    </p> 
   </section>
   
 </footer>
