@@ -16,12 +16,17 @@ $effect(() => {
       name: $builder.name,
       description: $builder.description,
       system: $builder.system,
+      characterSheetBuilderKey: $builder.characterSheetBuilderKey,
     };
   }
 });
 
 function setSystem(system: string) {
   formData.system = system;
+}
+
+function setSheetBuilder(sheetBuilderKey: string) {
+  formData.characterSheetBuilderKey = sheetBuilderKey;
 }
 
 const hasChanges = $derived.by(() => {

@@ -57,6 +57,11 @@ async function testSSRNoAuth() {
       </a>
     </li>
     <li>
+      <a href="/admin/sheets">
+        <cn-icon noun="compose" small></cn-icon> Character Sheets
+      </a>
+    </li>
+    <li>
       <a href="/admin/messaging">
         <cn-icon noun="send" small></cn-icon> Social Media Poster
       </a>

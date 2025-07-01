@@ -91,6 +91,7 @@ export function composeCharacterFeatures(
   );
 
   return {
+    key: `${builder.key}-${Date.now()}`, // Unique key based on builder key and timestamp
     name: characterName,
     system: builder.system,
     stats,

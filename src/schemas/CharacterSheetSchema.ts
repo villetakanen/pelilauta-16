@@ -4,15 +4,30 @@
 import { z } from 'zod';
 import { CharacterFeatureSchema } from './CharacterBuilderSchema';
 
+export const CHARACTER_SHEETS_COLLECTION_NAME = 'sheets';
+
 export const CharacterStatSchema = z.object({
-  key: z.string().default('').describe('Unique identifier for the stat'),
-  value: z.number().default(0).describe('Value of the stat'),
+  key: z
+    .string()
+    .default('')
+    .describe(
+      'Unique identifier for the stat - must match the builder schema key for a stat',
+    ),
+  value: z.number().default(0).describe('Value of the stat, e.g. +1, -2, etc.'),
+  displayValue: z
+    .string()
+    .optional()
+    .describe('Optional display value for the stat, e.g. "17" or "Expert"'),
 });
 
 export type CharacterStat = z.infer<typeof CharacterStatSchema>;
 
 export const CharacterSheetSchema = z
   .object({
+    key: z
+      .string()
+      .default('')
+      .describe('Unique identifier for the character sheet'),
     name: z.string().default('').describe('Name of the character'),
     system: z
       .string()
