@@ -13,11 +13,17 @@ export const CharacterStatSchema = z.object({
     .describe(
       'Unique identifier for the stat - must match the builder schema key for a stat',
     ),
-  value: z.number().default(0).describe('Value of the stat, e.g. +1, -2, etc.'),
+  value: z.number().optional().describe('Value of the stat, e.g. +1, -2, etc.'),
   displayValue: z
     .string()
     .optional()
     .describe('Optional display value for the stat, e.g. "17" or "Expert"'),
+  description: z
+    .string()
+    .optional()
+    .describe(
+      'Optional description for the stat, e.g. "Strength" or "Dexterity"',
+    ),
 });
 
 export type CharacterStat = z.infer<typeof CharacterStatSchema>;

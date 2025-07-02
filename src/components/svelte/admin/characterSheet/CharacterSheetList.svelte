@@ -59,7 +59,7 @@ async function handleCreateCharacterSheet() {
     const newKey = await createCharacterSheet(newCharacterSheet);
 
     // Navigate to the new character sheet editor
-    window.location.href = `/admin/characterSheet/${newKey}`;
+    window.location.href = `/admin/sheets/${newKey}`;
 
     pushSnack('Character sheet created successfully');
   } catch (error) {
@@ -119,8 +119,14 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
     {:else}
         {#each characterSheets as characterSheet}
           <cn-card 
+            href={`/admin/sheets/${characterSheet.key}`}
             noun={systemToNoun(characterSheet.system)}
             title={characterSheet.name || 'Unnamed Sheet Schema'}>
+            
+            <p class="text-low">
+              <strong>System:</strong> {characterSheet.system || 'Unknown'} | Stats: {characterSheet.stats.length} | Extras: {characterSheet.extras.length}
+            </p>
+
             <div class="toolbar" slot="actions">
               <button 
                 onclick={() => deleteCharacterSheet(characterSheet.key, characterSheet.name)}
@@ -129,7 +135,7 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
               >
                 <cn-icon noun="delete"></cn-icon>
               </button>
-              <a href={`/admin/characterSheet/${characterSheet.key}`} class="button text">
+              <a href={`/admin/sheets/${characterSheet.key}`} class="button text">
                 <cn-icon noun="edit"></cn-icon>
                 <span>Edit</span>
               </a>
