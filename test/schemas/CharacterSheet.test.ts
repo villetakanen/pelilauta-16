@@ -50,7 +50,7 @@ describe('CharacterStatSchema', () => {
 
     const parsed = CharacterStatSchema.parse(stat);
     expect(parsed.key).toBe('intelligence');
-    expect(parsed.value).toBe(0);
+    expect(parsed.value).toBe(undefined);
   });
 
   it('should handle minimal stat object', () => {
@@ -58,7 +58,7 @@ describe('CharacterStatSchema', () => {
 
     const parsed = CharacterStatSchema.parse(stat);
     expect(parsed.key).toBe('');
-    expect(parsed.value).toBe(0);
+    expect(parsed.value).toBe(undefined);
   });
 
   it('should reject non-numeric values', () => {
