@@ -2,7 +2,6 @@
 import type { CharacterSheet } from '@schemas/CharacterSheetSchema';
 import { CHARACTER_SHEETS_COLLECTION_NAME } from '@schemas/CharacterSheetSchema';
 import { pushSnack } from '@utils/client/snackUtils';
-import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import { systemToNoun } from '@utils/schemaHelpers';
 import { createCharacterSheet } from './characterSheetStore';
@@ -18,13 +17,12 @@ $effect(() => {
 
 async function loadCharacterSheets() {
   try {
-    const { getFirestore, collection, getDocs } = await import(
-      'firebase/firestore'
-    );
+    const { db } = await import('@firebase/client');
+    const { collection, getDocs } = await import('firebase/firestore');
     const { CharacterSheetSchema } = await import(
       '@schemas/CharacterSheetSchema'
     );
-    const db = getFirestore();
+
     const snapshot = await getDocs(
       collection(db, CHARACTER_SHEETS_COLLECTION_NAME),
     );
@@ -82,12 +80,12 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
   }
 
   try {
-    const { getFirestore, doc, deleteDoc } = await import('firebase/firestore');
-    const db = getFirestore();
+    const { db } = await import('@firebase/client');
+    const { doc, deleteDoc } = await import('firebase/firestore');
     await deleteDoc(doc(db, CHARACTER_SHEETS_COLLECTION_NAME, sheetKey));
 
-    // Reload the list
-    await loadCharacterSheets();
+    // Optimistic update: remove from local array for instant UI feedback
+    characterSheets = characterSheets.filter((sheet) => sheet.key !== sheetKey);
 
     pushSnack('Character sheet deleted successfully');
   } catch (error) {
@@ -97,8 +95,8 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
 }
 </script>
 
-<div class="content-columns">
-  <section class="column-l">
+<section class="content-columns">
+  <article class="column-l">
     <h1>Character Sheets</h1>
     <p>Manage character sheets that contain character information, stats, and abilities.</p>
 
@@ -107,7 +105,9 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
         {creating ? 'Creating...' : 'Create New Character Sheet'}
       </button>
     </div>
-
+  </article>
+</section>
+<section  class="content-cards">
     {#if loading}
       <div class="p-4 text-center">
         <p>Loading character sheets...</p>
@@ -117,48 +117,26 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
         <h2 class="mb-2">No Character Sheets Found</h2>
       </div>
     {:else}
-      <div class="grid gap-3 mt-2" style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));">
         {#each characterSheets as characterSheet}
-          <div class="elevation-1 p-2 border-radius">
-
-              <h3 class="mb-1">
-                <cn-icon noun={systemToNoun(characterSheet.system)}></cn-icon>
-                <a href={`/admin/characterSheet/${characterSheet.key}`} class="text-accent">
-                  {characterSheet.name || 'Unnamed Sheet Schema'}
-                </a>
-              </h3>
- 
-           
-
-            <div class="mb-3">
-              <div class="flex gap-4 mb-2">
-                <div class="downscaled">
-                  <strong>{characterSheet.stats?.length || 0}</strong> stats
-                </div>
-                <div class="downscaled">
-                  <strong>{characterSheet.extras?.length || 0}</strong> features
-                </div>
-              </div>
-
-              
-            </div>
-
-            <div class="toolbar">
-              <a href={`/admin/sheets/${characterSheet.key}`} class="button">
-                Edit
-              </a>
+          <cn-card 
+            noun={systemToNoun(characterSheet.system)}
+            title={characterSheet.name || 'Unnamed Sheet Schema'}>
+            <div class="toolbar" slot="actions">
               <button 
                 onclick={() => deleteCharacterSheet(characterSheet.key, characterSheet.name)}
-                class="button text-error"
+                class="button text"
+                aria-label="Delete Character Sheet"
               >
-                Delete
+                <cn-icon noun="delete"></cn-icon>
               </button>
+              <a href={`/admin/characterSheet/${characterSheet.key}`} class="button text">
+                <cn-icon noun="edit"></cn-icon>
+                <span>Edit</span>
+              </a>
             </div>
-          </div>
+          </cn-card>
         {/each}
-      </div>
     {/if}
   </section>
-</div>
 
 
