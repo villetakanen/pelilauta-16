@@ -100,11 +100,11 @@ export const CharacterBuilderSchema = z
       .string()
       .default('')
       .describe('System Identifier for the builder, e.g. dd or homebrew'),
-    characterSheetBuilderKey: z
+    characterSheetKey: z
       .string()
       .optional()
       .describe(
-        'Key of the character sheet builder to use for displaying characters created with this builder',
+        'Key of the character sheet to use for displaying characters created with this builder',
       ),
     steps: z
       .array(CharacterBuilderStepSchema)

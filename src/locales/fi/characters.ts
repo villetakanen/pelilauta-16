@@ -75,6 +75,7 @@ export const characters: Locale = {
     fields: {
       name: 'Nimi',
       description: 'Kuvaus',
+      characterSheet: 'Hahmolomake',
       namePlaceholder: 'Kirjoita nimi...',
       descriptionPlaceholder: 'Kirjoita kuvaus...',
     },

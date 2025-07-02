@@ -215,3 +215,43 @@ export function clearCurrentSheet(): void {
 }
 
 // *** Character sheet CRUD operations ******************************************
+
+/**
+ * Fetches all character sheets from the database
+ */
+export async function getAllCharacterSheets(): Promise<CharacterSheet[]> {
+  try {
+    const { getFirestore, collection, getDocs } = await import(
+      'firebase/firestore'
+    );
+    const { db } = await import('@firebase/client');
+
+    const querySnapshot = await getDocs(
+      collection(db, CHARACTER_SHEETS_COLLECTION_NAME),
+    );
+    const sheets: CharacterSheet[] = [];
+
+    for (const doc of querySnapshot.docs) {
+      try {
+        const data = doc.data();
+        const sheet = CharacterSheetSchema.parse({
+          ...data,
+          key: doc.id,
+        });
+        sheets.push(sheet);
+      } catch (parseError) {
+        logError(
+          'characterSheetStore',
+          'Failed to parse character sheet:',
+          parseError,
+        );
+      }
+    }
+
+    logDebug('characterSheetStore', `Loaded ${sheets.length} character sheets`);
+    return sheets;
+  } catch (error) {
+    logError('characterSheetStore', 'Failed to load character sheets:', error);
+    throw error;
+  }
+}

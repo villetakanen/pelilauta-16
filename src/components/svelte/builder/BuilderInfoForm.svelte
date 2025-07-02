@@ -1,24 +1,50 @@
 <script lang="ts">
 import type { CharacterBuilder } from '@schemas/CharacterBuilderSchema';
+import type { CharacterSheet } from '@schemas/CharacterSheetSchema';
 import SystemSelect from '@svelte/sites/SystemSelect.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
+import { onMount } from 'svelte';
 import { builder } from './builderStore';
 
 let saving = $state(false);
+let loadingSheets = $state(false);
 let formData = $state<Partial<CharacterBuilder>>({});
+let characterSheets = $state<CharacterSheet[]>([]);
+
+let formDataInitialized = $state(false);
 
 $effect(() => {
   // When the builder from the store changes, update our local form data
-  if ($builder) {
+  if ($builder && !formDataInitialized) {
     formData = {
       name: $builder.name,
       description: $builder.description,
       system: $builder.system,
-      characterSheetBuilderKey: $builder.characterSheetBuilderKey,
+      characterSheetKey: $builder.characterSheetKey,
     };
+    formDataInitialized = true;
   }
+});
+
+async function loadCharacterSheets() {
+  loadingSheets = true;
+  try {
+    const { getAllCharacterSheets } = await import(
+      '../admin/characterSheet/characterSheetStore'
+    );
+    characterSheets = await getAllCharacterSheets();
+  } catch (error) {
+    logError('BuilderInfoForm', 'Failed to load character sheets:', error);
+    pushSnack('Failed to load character sheets');
+  } finally {
+    loadingSheets = false;
+  }
+}
+
+onMount(() => {
+  loadCharacterSheets();
 });
 
 function setSystem(system: string) {
@@ -26,7 +52,13 @@ function setSystem(system: string) {
 }
 
 function setSheetBuilder(sheetBuilderKey: string) {
-  formData.characterSheetBuilderKey = sheetBuilderKey;
+  formData.characterSheetKey = sheetBuilderKey;
+}
+
+function handleSheetChange(event: Event) {
+  const target = event.target as HTMLSelectElement;
+  logDebug('BuilderInfoForm', 'Character sheet changed:', target.value);
+  formData.characterSheetKey = target.value;
 }
 
 const hasChanges = $derived.by(() => {
@@ -36,7 +68,8 @@ const hasChanges = $derived.by(() => {
   return (
     formData.name !== $builder.name ||
     formData.description !== $builder.description ||
-    formData.system !== $builder.system
+    formData.system !== $builder.system ||
+    formData.characterSheetKey !== $builder.characterSheetKey
   );
 });
 
@@ -55,6 +88,7 @@ async function handleSubmit(event: Event) {
       name: formData.name,
       description: formData.description,
       system: formData.system,
+      characterSheetKey: formData.characterSheetKey,
     };
     logDebug('BuilderInfoForm', 'Saving builder info', updatePayload);
 
@@ -84,6 +118,20 @@ async function handleSubmit(event: Event) {
       <input type="text" bind:value={formData.name} placeholder={t('characters:builder.fields.namePlaceholder')} required />
     </label>
     <SystemSelect system={formData.system} {setSystem} />
+  
+    <label>
+      {t('characters:builder.fields.characterSheet')}
+      <select value={formData.characterSheetKey} onchange={handleSheetChange} disabled={loadingSheets}>
+        <option value="">Select a character sheet...</option>
+        {#if loadingSheets}
+          <option disabled>Loading sheets...</option>
+        {:else}
+          {#each characterSheets as sheet}
+            <option value={sheet.key}>{sheet.name} ({sheet.system})</option>
+          {/each}
+        {/if}
+      </select>
+    </label>
   
     <label>
         {t('characters:builder.fields.description')}

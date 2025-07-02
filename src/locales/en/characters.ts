@@ -68,6 +68,7 @@ export const characters: Locale = {
     fields: {
       name: 'Name',
       description: 'Description',
+      characterSheet: 'Character Sheet',
       namePlaceholder: 'Enter name...',
       descriptionPlaceholder: 'Enter description...',
     },
