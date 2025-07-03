@@ -94,4 +94,7 @@ export const characters: Locale = {
       saveError: 'Failed to save character builder',
     },
   },
+  sheet: {
+    defaultName: 'Character Sheet',
+  },
 };

@@ -103,4 +103,7 @@ export const characters: Locale = {
     },
     title: 'Hahmokone',
   },
+  sheet: {
+    defaultName: 'Hahmolomake',
+  },
 };
