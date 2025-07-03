@@ -1,0 +1,89 @@
+---
+import { serverDB } from '@firebase/server';
+import {
+  CHARACTER_BUILDERS_COLLECTION_NAME,
+  type CharacterBuilder,
+  CharacterBuilderSchema,
+} from '@schemas/CharacterBuilderSchema';
+import { t } from '@utils/i18n';
+import { logDebug, logError } from '@utils/logHelpers';
+import { systemToNoun } from '@utils/schemaHelpers';
+
+let builders: CharacterBuilder[] = [];
+let hasError = false;
+let errorMessage = '';
+
+try {
+  logDebug('CharacterBuilderListSection', 'Fetching character builders');
+
+  // Fetch all character builders from Firestore
+  const buildersRef = serverDB.collection(CHARACTER_BUILDERS_COLLECTION_NAME);
+  const buildersSnapshot = await buildersRef.get();
+
+  // Parse and validate each builder
+  builders = buildersSnapshot.docs
+    .map((doc) => {
+      try {
+        return CharacterBuilderSchema.parse({
+          key: doc.id,
+          ...doc.data(),
+        });
+      } catch (parseError) {
+        logError(
+          'CharacterBuilderListSection',
+          'Failed to parse builder:',
+          parseError,
+        );
+        return null;
+      }
+    })
+    .filter((builder): builder is CharacterBuilder => builder !== null);
+
+  logDebug(
+    'CharacterBuilderListSection',
+    `Successfully loaded ${builders.length} character builders`,
+  );
+} catch (error) {
+  hasError = true;
+  errorMessage = 'Failed to load character builders';
+  logError(
+    'CharacterBuilderListSection',
+    'Failed to fetch character builders:',
+    error,
+  );
+}
+---
+
+{hasError ? (
+  <section class="surface p-2 error">
+    <h2>{t('errors:generic.title')}</h2>
+    <p>{errorMessage}</p>
+    <button onclick="window.location.reload()" class="button">
+      {t('actions:retry')}
+    </button>
+  </section>
+) : builders.length === 0 ? (
+  <section class="surface p-2">
+    <h2>{t('characters:builder.noBuilders.title')}</h2>
+    <p>{t('characters:builder.noBuilders.description')}</p>
+  </section>
+) : (
+  <section>
+    <h2>{t('characters:builder.list.title')}</h2>
+    <div class="grid">
+      {builders.map((builder) => (
+        <article class="elevation-1 p-2">
+          <h3 class="downscaled">
+            <a href={`/create/characters/${builder.key}`}>
+              <cn-icon noun={systemToNoun(`${builder.system}`)}></cn-icon>
+              {builder.name}
+            </a>
+          </h3>
+          {builder.description && (
+            <p class="text-small">{builder.description}</p>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+)}

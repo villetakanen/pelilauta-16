@@ -1,7 +1,24 @@
 import type { Locale } from '@utils/i18n';
 
 export const characters: Locale = {
+  create: {
+    title: 'Create Character',
+    description: 'Choose a character builder to start creating your character.',
+  },
+  info: {
+    title: 'About Character Creation',
+    description:
+      'Character builders help you create detailed characters for role-playing games. Each builder is tailored to a specific game system and provides step-by-step guidance through the character creation process.',
+  },
   builder: {
+    noBuilders: {
+      title: 'No Character Builders Available',
+      description:
+        'There are currently no character builders available. Please check back later or contact an administrator.',
+    },
+    list: {
+      title: 'Available Character Builders',
+    },
     system: 'System',
     step: 'Step',
     loading: 'Loading character builder...',

@@ -1,0 +1,39 @@
+---
+import ModalPage from '@layouts/ModalPage.astro';
+import CharacterBuilderListSection from '@server/characters/CharacterBuilderListSection.astro';
+import { t } from '@utils/i18n';
+import { verifySession } from '@utils/server/auth/verifySession';
+
+// Check if the user is authenticated
+const session = await verifySession(Astro);
+
+if (!session) {
+  return Astro.redirect(
+    `/login?redirect=${encodeURIComponent(Astro.url.pathname)}`,
+  );
+}
+
+const title = `${t('app:shortname')} – ${t('characters:create.title')}`;
+const description = t('characters:create.description');
+---
+
+<ModalPage title={title} description={description}>
+  <div class="content-columns">
+    <article class="column-l">
+      <h1>{t('characters:create.title')}</h1>
+      <p>{t('characters:create.description')}</p>
+
+      <CharacterBuilderListSection />
+    </article>
+
+    <aside class="column-s">
+      <section class="elevation-1 p-2 border-radius">
+        <h3 class="downscaled">
+          <cn-icon noun="info"></cn-icon>
+          {t('characters:info.title')}
+        </h3>
+        <p class="text-small">{t('characters:info.description')}</p>
+      </section>
+    </aside>
+  </div>
+</ModalPage>

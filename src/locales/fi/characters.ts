@@ -1,7 +1,25 @@
 import type { Locale } from '@utils/i18n';
 
 export const characters: Locale = {
+  create: {
+    title: 'Luo Hahmo',
+    description:
+      'Hahmokoneet ovat vielä kokeelisia, mutta niillä voi jo luoda hahmoja. Valitse hahmokone aloittaaksesi.',
+  },
+  info: {
+    title: 'Huom!',
+    description:
+      'Hahmokoneen avulla voit luoda hahmoja, mutta niitä ei toistaiseksi voi tallentaa Pelilaudalle. Muista kopioida hahmosi tiedot talteen, jotta voit käyttää niitä myöhemmin.',
+  },
   builder: {
+    noBuilders: {
+      title: 'Hahmokoneita Ei Saatavilla',
+      description:
+        'Tällä hetkellä ei ole saatavilla hahmokoneita. Tarkista myöhemmin uudelleen tai ota yhteyttä ylläpitäjään.',
+    },
+    list: {
+      title: 'Koneet',
+    },
     system: 'Järjestelmä',
     step: 'Vaihe',
     loading: 'Lataa hahmokonetta...',
@@ -82,9 +100,6 @@ export const characters: Locale = {
     snacks: {
       saved: 'Hahmokone tallennettu onnistuneesti',
       saveError: 'Hahmokoneen tallentaminen epäonnistui',
-    },
-    list: {
-      title: 'Hahmokoneet',
     },
     title: 'Hahmokone',
   },
