@@ -43,10 +43,12 @@ export const CharacterSheetSchema = z
       .array(CharacterStatSchema)
       .default([])
       .describe('List of stats for the character'),
-    extras: z
+    features: z
       .array(CharacterFeatureSchema)
-      .default([])
-      .describe('List of additional features or abilities for the character'),
+      .optional()
+      .describe(
+        'List of features for the character, used to compose the sheet',
+      ),
     meta: z
       .record(z.string(), z.string())
       .optional()

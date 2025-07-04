@@ -41,10 +41,6 @@ export type CharacterMofdifier = z.infer<typeof CharacterMofdifierSchema>;
 export const CharacterFeatureSchema = z
   .object({
     key: z.string().default('').describe('Unique identifier for the feature'),
-    characterBuilderKey: z
-      .string()
-      .default('')
-      .describe('Key of the character builder this feature belongs to'),
     name: z.string().default('').describe('User-friendly name for the feature'),
     description: z.string().optional().describe('Description of the feature'),
     modifiers: z

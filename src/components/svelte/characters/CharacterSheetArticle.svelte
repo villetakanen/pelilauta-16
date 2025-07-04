@@ -32,6 +32,7 @@ const active = $derived.by(() => {
       </p>
     </div>
   {/if}
+  {$compiledCharacterSheet?.features?.length ?? 0}
 </article>
 
 

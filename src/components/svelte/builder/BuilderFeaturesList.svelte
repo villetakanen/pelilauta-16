@@ -18,7 +18,6 @@ function addFeature() {
 
   const newFeature = CharacterFeatureSchema.parse({
     key: `feature-${Date.now()}`,
-    characterBuilderKey: currentBuilder.key,
     name: t('characters:builder.editor.features.defaultName'),
     modifiers: [],
   });

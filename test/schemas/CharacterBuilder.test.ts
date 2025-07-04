@@ -79,7 +79,6 @@ describe('CharacterFeatureSchema', () => {
   it('should validate a complete feature with modifiers', () => {
     const feature = {
       key: 'elf-heritage',
-      characterBuilderKey: 'dnd5e-builder',
       name: 'Elf',
       modifiers: [
         {
@@ -108,7 +107,6 @@ describe('CharacterFeatureSchema', () => {
 
     const parsed = CharacterFeatureSchema.parse(feature);
     expect(parsed.key).toBe('');
-    expect(parsed.characterBuilderKey).toBe('');
     expect(parsed.name).toBe('Human');
     expect(parsed.modifiers).toBeUndefined();
   });
@@ -116,7 +114,6 @@ describe('CharacterFeatureSchema', () => {
   it('should validate a class feature with multiple modifiers', () => {
     const feature = {
       key: 'fighter-class',
-      characterBuilderKey: 'dnd5e-builder',
       name: 'Fighter',
       modifiers: [
         {
@@ -320,7 +317,6 @@ describe('CharacterBuilderSchema', () => {
           features: [
             {
               key: 'human',
-              characterBuilderKey: 'dnd5e-builder',
               name: 'Human',
               modifiers: [
                 {
@@ -342,7 +338,6 @@ describe('CharacterBuilderSchema', () => {
           features: [
             {
               key: 'fighter',
-              characterBuilderKey: 'dnd5e-builder',
               name: 'Fighter',
               modifiers: [
                 {
@@ -369,7 +364,6 @@ describe('CharacterBuilderSchema', () => {
           features: [
             {
               key: 'strength-score',
-              characterBuilderKey: 'dnd5e-builder',
               name: 'Strength Score',
               modifiers: [
                 {
@@ -381,7 +375,6 @@ describe('CharacterBuilderSchema', () => {
             },
             {
               key: 'dexterity-score',
-              characterBuilderKey: 'dnd5e-builder',
               name: 'Dexterity Score',
               modifiers: [
                 {

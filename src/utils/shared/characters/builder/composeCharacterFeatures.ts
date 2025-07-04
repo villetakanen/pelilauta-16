@@ -50,16 +50,6 @@ export function composeCharacterFeatures(
           break;
       }
     }
-
-    // If this feature has FEATURE-type modifiers, add it to extras
-    if (featureModifiers.length > 0) {
-      extras.push({
-        key: feature.key,
-        characterBuilderKey: feature.characterBuilderKey,
-        name: feature.name,
-        modifiers: featureModifiers,
-      });
-    }
   }
 
   // Convert stats map to CharacterStat array
@@ -75,7 +65,7 @@ export function composeCharacterFeatures(
     name: sheet.name || '',
     system: sheet.system,
     stats,
-    extras,
+    features: selectedFeatures,
     meta: sheet.meta || {},
   };
 }

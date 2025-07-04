@@ -108,7 +108,7 @@ describe('CharacterSheetSchema', () => {
     expect(parsed.name).toBe('');
     expect(parsed.system).toBe('');
     expect(parsed.stats).toEqual([]);
-    expect(parsed.extras).toEqual([]);
+    expect(parsed.features).toEqual(undefined);
   });
 
   it('should validate a character with only basic info', () => {
@@ -121,7 +121,7 @@ describe('CharacterSheetSchema', () => {
     expect(parsed.name).toBe('Gandalf the Grey');
     expect(parsed.system).toBe('dnd5e');
     expect(parsed.stats).toEqual([]);
-    expect(parsed.extras).toEqual([]);
+    expect(parsed.features).toEqual(undefined);
   });
 
   it('should validate a character with stats only', () => {
@@ -229,12 +229,12 @@ describe('CharacterSheetSchema', () => {
       name: 'Empty Character',
       system: 'test-system',
       stats: [],
-      extras: [],
+      features: [],
     };
 
     const parsed = CharacterSheetSchema.parse(characterSheet);
     expect(parsed.stats).toEqual([]);
-    expect(parsed.extras).toEqual([]);
+    expect(parsed.features).toEqual([]);
   });
 
   it('should reject invalid stat objects in stats array', () => {
@@ -254,7 +254,7 @@ describe('CharacterSheetSchema', () => {
     const characterSheet = {
       name: 'Invalid Character',
       system: 'test-system',
-      extras: [
+      features: [
         {
           key: 'valid-feature',
           name: 'Valid Feature',
@@ -305,7 +305,7 @@ describe('CharacterSheetSchema', () => {
         { key: 'strength', value: 16 },
         { key: 'dexterity', value: 14 },
       ],
-      extras: [humanFeature],
+      features: [humanFeature],
     };
 
     const parsed = CharacterSheetSchema.parse(originalSheet);
@@ -315,7 +315,7 @@ describe('CharacterSheetSchema', () => {
     expect(parsed.stats).toHaveLength(2);
     expect(parsed.stats[0].key).toBe('strength');
     expect(parsed.stats[0].value).toBe(16);
-    expect(parsed.extras).toHaveLength(1);
-    expect(parsed.extras[0].name).toBe('Human');
+    expect(parsed.features).toHaveLength(1);
+    expect(parsed.features?.[0].name).toBe('Human');
   });
 });

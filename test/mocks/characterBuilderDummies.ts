@@ -9,7 +9,6 @@ import type {
  */
 export const humanFeature: CharacterFeature = {
   key: 'human',
-  characterBuilderKey: 'basic-fantasy-builder',
   name: 'Human',
   modifiers: [
     {
@@ -37,7 +36,6 @@ export const humanFeature: CharacterFeature = {
 
 export const elfFeature: CharacterFeature = {
   key: 'elf',
-  characterBuilderKey: 'basic-fantasy-builder',
   name: 'Elf',
   modifiers: [
     {
@@ -72,7 +70,6 @@ export const elfFeature: CharacterFeature = {
 
 export const dwarfFeature: CharacterFeature = {
   key: 'dwarf',
-  characterBuilderKey: 'basic-fantasy-builder',
   name: 'Dwarf',
   modifiers: [
     {
@@ -108,7 +105,6 @@ export const dwarfFeature: CharacterFeature = {
 
 export const warriorFeature: CharacterFeature = {
   key: 'warrior',
-  characterBuilderKey: 'basic-fantasy-builder',
   name: 'Warrior',
   modifiers: [
     {
@@ -149,7 +145,6 @@ export const warriorFeature: CharacterFeature = {
 
 export const rogueFeature: CharacterFeature = {
   key: 'rogue',
-  characterBuilderKey: 'basic-fantasy-builder',
   name: 'Rogue',
   modifiers: [
     {
@@ -191,7 +186,6 @@ export const rogueFeature: CharacterFeature = {
 
 export const wizardFeature: CharacterFeature = {
   key: 'wizard',
-  characterBuilderKey: 'basic-fantasy-builder',
   name: 'Wizard',
   modifiers: [
     {
@@ -288,7 +282,6 @@ export const extendedFantasyCharacterBuilder: CharacterBuilder = {
       features: [
         {
           key: 'soldier',
-          characterBuilderKey: 'extended-fantasy-builder',
           name: 'Soldier',
           modifiers: [
             {
@@ -308,7 +301,6 @@ export const extendedFantasyCharacterBuilder: CharacterBuilder = {
         },
         {
           key: 'scholar',
-          characterBuilderKey: 'extended-fantasy-builder',
           name: 'Scholar',
           modifiers: [
             {
@@ -329,7 +321,6 @@ export const extendedFantasyCharacterBuilder: CharacterBuilder = {
         },
         {
           key: 'merchant',
-          characterBuilderKey: 'extended-fantasy-builder',
           name: 'Merchant',
           modifiers: [
             {
@@ -387,7 +378,6 @@ export function createComplexCharacterBuild() {
       // Background choice (scholar)
       {
         key: 'scholar',
-        characterBuilderKey: 'extended-fantasy-builder',
         name: 'Scholar',
         modifiers: [
           {
