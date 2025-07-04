@@ -1,6 +1,6 @@
 ---
 import { serverDB } from '@firebase/server';
-import ModalPage from '@layouts/ModalPage.astro';
+import Page from '@layouts/Page.astro';
 import {
   CHARACTER_BUILDERS_COLLECTION_NAME,
   type CharacterBuilder,
@@ -11,6 +11,10 @@ import {
   type CharacterSheet,
   CharacterSheetSchema,
 } from '@schemas/CharacterSheetSchema';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
+import CharacterSheetArticle from '@svelte/characters/CharacterSheetArticle.svelte';
+import CharacterBuilderApp from '@svelte/characters/builder/CharacterBuilderApp.svelte';
+import CharacterBuilderInfoSection from '@svelte/characters/builder/CharacterBuilderInfoSection.svelte';
 import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import { verifySession } from '@utils/server/auth/verifySession';
@@ -111,7 +115,7 @@ const description =
   builder?.description || t('characters:builder.notFound.description');
 ---
 
-<ModalPage title={title} description={description}>
+<Page title={title} description={description}>
   <div class="content-columns">
     <article class="column-l">
       {hasError ? (
@@ -138,116 +142,36 @@ const description =
           </div>
         </section>
       ) : (
-        <section>
-          <header class="mb-2">
-            <h1>{builder.name}</h1>
-            {builder.description && (
-              <p class="text-large">{builder.description}</p>
-            )}
-          </header>
-
-          <div class="surface p-2 mb-2">
-            <h2 class="downscaled">{t('characters:builder.stats.title')}</h2>
-            <div class="grid grid-cols-3 gap-2">
-              {builder.system && (
-                <div>
-                  <p class="text-caption">{t('characters:builder.stats.system')}</p>
-                  <p class="flex items-center gap-1">
-                    <cn-icon noun="game" xsmall></cn-icon>
-                    {builder.system}
-                  </p>
-                </div>
-              )}
-              
-              {builder.steps && (
-                <div>
-                  <p class="text-caption">{t('characters:builder.stats.steps')}</p>
-                  <p class="flex items-center gap-1">
-                    <cn-icon noun="steps" xsmall></cn-icon>
-                    {builder.steps.length}
-                  </p>
-                </div>
-              )}
-
-              {builder.steps && (
-                <div>
-                  <p class="text-caption">{t('characters:builder.stats.totalFeatures')}</p>
-                  <p class="flex items-center gap-1">
-                    <cn-icon noun="feature" xsmall></cn-icon>
-                    {builder.steps.reduce((total, step) => total + (step.features?.length || 0), 0)}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {characterSheet && (
-            <div class="surface p-2 mb-2">
-              <h2 class="downscaled">{t('characters:builder.fields.characterSheet')}</h2>
-              <div class="flex items-center gap-2">
-                <cn-icon noun="sheet" small></cn-icon>
-                <div>
-                  <p class="font-medium">{characterSheet.name || t('characters:sheet.defaultName')}</p>
-                  {characterSheet.system && (
-                    <p class="text-caption">{characterSheet.system}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div class="surface p-2">
-            <h2 class="downscaled">{t('characters:builder.actions.title')}</h2>
-            <p class="text-small mb-2">{t('characters:builder.comingSoon')}</p>
-            <div class="toolbar">
-              <button class="button primary" disabled>
-                {t('characters:builder.actions.startBuilding')}
-              </button>
-              <a href="/create/character" class="button">
-                {t('characters:builder.actions.browse')}
-              </a>
-            </div>
-          </div>
-        </section>
+        <!-- Character Builder App Component -->
+        <CharacterBuilderApp 
+          client:only="svelte"
+          builder={builder}
+          characterSheet={characterSheet}
+        />
       )}
     </article>
 
     <aside class="column-s">
-      {builder && builder.steps && builder.steps.length > 0 && (
-        <section class="surface p-2 mb-2">
-          <h3 class="downscaled">{t('characters:builder.steps.title')}</h3>
-          <ol class="list-none">
-            {builder.steps.map((step, index) => (
-              <li class="mb-1">
-                <div class="flex items-start gap-2">
-                  <span class="text-caption bg-surface-2 rounded-full w-6 h-6 flex items-center justify-center">
-                    {index + 1}
-                  </span>
-                  <div>
-                    <p class="text-small font-medium">{step.name}</p>
-                    {step.description && (
-                      <p class="text-caption">{step.description}</p>
-                    )}
-                    {step.features && step.features.length > 0 && (
-                      <p class="text-caption">
-                        {t('characters:builder.steps.featuresAvailable', { count: step.features.length })}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
+      <!-- Character Sheet Preview -->
+      <CharacterSheetArticle client:only="svelte" />
+      
+      <!-- Character Builder Info Section -->
+      {builder && (
+        <CharacterBuilderInfoSection 
+          client:only="svelte"
+          builder={builder}
+          characterSheet={characterSheet}
+        />
       )}
-
-      <section class="surface p-2">
-        <h3 class="downscaled">
-          <cn-icon noun="info"></cn-icon>
-          {t('characters:info.title')}
-        </h3>
-        <p class="text-small">{t('characters:info.description')}</p>
-      </section>
     </aside>
   </div>
-</ModalPage>
+
+  <BackgroundPoster
+    slot="app-background-poster"
+    src="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-2.webp"
+    md="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-2-960.webp"
+  />
+  <p class="text-caption text-center" style="opacity:0.44" slot="app-footer-credits">
+    Taustakuva © Juno Viinikka (<a href="https://linktr.ee/junowski">https://linktr.ee/junowski</a>)
+  </p>
+</Page>

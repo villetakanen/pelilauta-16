@@ -13,9 +13,7 @@ export async function createCharacterSheet(
   sheetData: Partial<CharacterSheet>,
 ): Promise<string> {
   try {
-    const { getFirestore, addDoc, collection } = await import(
-      'firebase/firestore'
-    );
+    const { addDoc, collection } = await import('firebase/firestore');
     const { db } = await import('@firebase/client');
 
     // Parse and validate the sheet data
@@ -56,7 +54,7 @@ export async function updateCharacterSheet(
   updates: Partial<CharacterSheet>,
 ): Promise<void> {
   try {
-    const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
+    const { doc, updateDoc } = await import('firebase/firestore');
     const { db } = await import('@firebase/client');
 
     const docRef = doc(db, CHARACTER_SHEETS_COLLECTION_NAME, sheetKey);
@@ -84,7 +82,7 @@ export async function loadCharacterSheet(
   sheetKey: string,
 ): Promise<CharacterSheet | null> {
   try {
-    const { getFirestore, doc, getDoc } = await import('firebase/firestore');
+    const { doc, getDoc } = await import('firebase/firestore');
     const { db } = await import('@firebase/client');
 
     const docRef = doc(db, CHARACTER_SHEETS_COLLECTION_NAME, sheetKey);
@@ -110,7 +108,7 @@ export async function loadCharacterSheet(
  */
 export async function deleteCharacterSheet(sheetKey: string): Promise<void> {
   try {
-    const { getFirestore, doc, deleteDoc } = await import('firebase/firestore');
+    const { doc, deleteDoc } = await import('firebase/firestore');
     const { db } = await import('@firebase/client');
 
     const docRef = doc(db, CHARACTER_SHEETS_COLLECTION_NAME, sheetKey);
@@ -221,9 +219,7 @@ export function clearCurrentSheet(): void {
  */
 export async function getAllCharacterSheets(): Promise<CharacterSheet[]> {
   try {
-    const { getFirestore, collection, getDocs } = await import(
-      'firebase/firestore'
-    );
+    const { collection, getDocs } = await import('firebase/firestore');
     const { db } = await import('@firebase/client');
 
     const querySnapshot = await getDocs(

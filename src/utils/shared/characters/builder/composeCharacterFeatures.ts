@@ -1,26 +1,8 @@
-import type {
-  CharacterBuilder,
-  CharacterFeature,
-} from '@schemas/CharacterBuilderSchema';
+import type { CharacterFeature } from '@schemas/CharacterBuilderSchema';
 import type {
   CharacterSheet,
   CharacterStat,
 } from '@schemas/CharacterSheetSchema';
-
-// More flexible type to handle both strict CharacterFeature and similar objects
-type FeatureLike = Pick<
-  CharacterFeature,
-  'key' | 'name' | 'characterBuilderKey'
-> & {
-  modifiers?: Array<{
-    type: 'BASE_STAT' | 'STAT_BONUS' | 'FEATURE';
-    target: string;
-    value?: number;
-    title?: string;
-    description?: string;
-    source?: string;
-  }>;
-};
 
 /**
  * Composes a character sheet from selected character features.
@@ -29,15 +11,13 @@ type FeatureLike = Pick<
  * - BASE_STAT and STAT_BONUS modifiers become stats in the character sheet
  * - FEATURE modifiers become extras (features with title/description only)
  *
- * @param builder - The character builder configuration
+ * @param sheet - The character sheet to populate, features not in the sheet will be added as extras
  * @param selectedFeatures - Array of selected character features
- * @param characterName - Optional name for the character (defaults to empty string)
  * @returns A complete character sheet object
  */
 export function composeCharacterFeatures(
-  builder: CharacterBuilder,
-  selectedFeatures: FeatureLike[],
-  characterName = '',
+  sheet: CharacterSheet,
+  selectedFeatures: CharacterFeature[],
 ): CharacterSheet {
   // Track stats with their values - using Map to handle cumulative bonuses
   const statsMap = new Map<string, number>();
@@ -91,9 +71,9 @@ export function composeCharacterFeatures(
   );
 
   return {
-    key: `${builder.key}-${Date.now()}`, // Unique key based on builder key and timestamp
-    name: characterName,
-    system: builder.system,
+    key: `${sheet.key}-${Date.now()}`, // Unique key based on builder key and timestamp
+    name: '',
+    system: sheet.system,
     stats,
     extras,
   };

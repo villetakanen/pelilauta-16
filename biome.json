@@ -15,9 +15,37 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "style": {
+        "noUnusedTemplateLiteral": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": "off"
+      },
+      "suspicious": {
+        "noAssignInExpressions": "off"
+      }
     }
   },
+  "overrides": [
+    {
+      "include": ["**/*.svelte"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          },
+          "style": {
+            "noParameterAssign": "off",
+            "useConst": "off"
+          },
+          "suspicious": {
+            "noAssignInExpressions": "off"
+          }
+        }
+      }
+    }
+  ],
   "files": {
     "ignore": [
       "node_modules/*",

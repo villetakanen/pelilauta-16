@@ -106,4 +106,10 @@ export const characters: Locale = {
   sheet: {
     defaultName: 'Hahmolomake',
   },
+  fields: {
+    name: 'Nimi',
+  },
+  placeHolders: {
+    name: 'Hahmon nimi',
+  },
 };
