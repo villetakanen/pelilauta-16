@@ -1,4 +1,7 @@
-import type { CharacterFeature } from '@schemas/CharacterBuilderSchema';
+import type {
+  CharacterFeature,
+  CharacterMofdifier,
+} from '@schemas/CharacterBuilderSchema';
 import type { CharacterSheet } from '@schemas/CharacterSheetSchema';
 import { logDebug } from '@utils/logHelpers';
 import { composeCharacterFeatures } from '@utils/shared/characters/builder/composeCharacterFeatures';
@@ -12,24 +15,42 @@ export const characterSheet: WritableAtom<CharacterSheet | null> = atom(null);
 // These features are added in order of the builder steps
 // Note, we do not expose the features directly, but rather use a computed value
 // to keep the logic centralized and avoid direct manipulation of the map
-const stepsArray: WritableAtom<Array<Array<CharacterFeature>>> = atom(
-  new Map(),
+export const stepsArray: WritableAtom<Array<Array<CharacterFeature>>> = atom(
+  [],
 );
 
 // Features list is a computed value that combines all features from the map, in order
-export const featuresList = computed(stepsArray, (steps) => {
-  const list: CharacterFeature[] = [];
-  for (const features of steps) {
-    list.push(...features);
+export const featuresArray = computed(stepsArray, (steps) => {
+  logDebug('featuresArray', 'Computing features array from steps', steps);
+  const features: CharacterFeature[] = [];
+  for (const step of steps) {
+    if (step && Array.isArray(step)) {
+      features.push(...step);
+    }
   }
-  return list;
+  return features;
+});
+
+export const modifiersArray = computed(stepsArray, (steps) => {
+  logDebug('modifiersArray', 'Computing modifiers array from steps', steps);
+  const modifiers: CharacterMofdifier[] = [];
+  for (const step of steps) {
+    if (step && Array.isArray(step)) {
+      for (const feature of step) {
+        if (feature.modifiers && Array.isArray(feature.modifiers)) {
+          modifiers.push(...feature.modifiers);
+        }
+      }
+    }
+  }
+  return modifiers;
 });
 
 // Compiled character sheet is a computed value that combines the character sheet
 // with the features list, processing all modifiers and creating a complete character sheet
 // This is used in the character sheet view to display the final character data
 export const compiledCharacterSheet = computed(
-  [characterSheet, featuresList],
+  [characterSheet, featuresArray],
   (sheet, features) => {
     logDebug(
       'compiledCharacterSheet',
@@ -51,15 +72,16 @@ export const compiledCharacterSheet = computed(
 
 export function updateStep(stepKey: number, features: CharacterFeature[]) {
   logDebug('updateStep', `Updating step ${stepKey} with features`, features[0]);
-  const currentFeatures = stepsArray.get() || [];
-  if (currentFeatures.length <= stepKey) {
-    // If the stepKey is out of bounds, we need to fill the array with empty arrays
-    for (let i = currentFeatures.length; i <= stepKey; i++) {
-      currentFeatures.push([]);
-    }
+  const currentSteps = stepsArray.get() || [];
+  const newSteps = [...currentSteps]; // Create a shallow copy to ensure change detection
+
+  // Ensure the array is long enough
+  while (newSteps.length <= stepKey) {
+    newSteps.push([]);
   }
-  currentFeatures[stepKey] = features;
-  stepsArray.set(currentFeatures);
+
+  newSteps[stepKey] = features;
+  stepsArray.set(newSteps);
 }
 
 export function resetFeatures() {

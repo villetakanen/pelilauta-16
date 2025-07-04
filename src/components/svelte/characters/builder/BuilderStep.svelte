@@ -6,19 +6,29 @@ import { t } from '@utils/i18n';
 export interface Props {
   builder: CharacterBuilder;
   step: number;
+  onNext?: () => void;
+  onPrevious?: () => void;
 }
 
-const { builder, step: stepKey }: Props = $props();
+const { builder, step: stepKey, onNext, onPrevious }: Props = $props();
 
 // The keys of the features selected in this step
 let chosenFeatures = $state<string[]>([]);
 
+// Get the step from the builder using the stepKey
 const step = $derived.by(() => {
   const step = builder.steps[stepKey];
   if (!step) {
     throw new Error(`Step "${stepKey}" not found in builder.`);
   }
   return step;
+});
+
+// Ensure we have selected enough features before proceeding
+const ready = $derived.by(() => {
+  if (!step) return false;
+  const selectedCount = chosenFeatures.length;
+  return selectedCount >= step.min && selectedCount <= step.max;
 });
 
 // Currently only supports selecting a feature
@@ -68,10 +78,26 @@ function selectFeature(featureKey: string) {
         class:elevation-1="{chosenFeatures.includes(feature.key)}"
         class:border="{!chosenFeatures.includes(feature.key)}"
         class="border-radius p-1">
-        <h4 class="downscaled">{feature.name}</h4>
+        <h4 class="downscaled m-0">{feature.name}</h4>
         <p class="text-caption">{feature.description}</p>
       </div>
     {/each}
+  </div>
+  <div class="toolbar">
+    <button 
+      class="text"
+      disabled={stepKey === 0}
+      onclick={onPrevious}
+    >
+      {t("actions:previous")}
+    </button>
+    <button 
+      class="text"
+      disabled={!ready}
+      onclick={onNext}
+    >
+      {t("actions:next")}
+    </button>
   </div>
 </div>
 {/if}
