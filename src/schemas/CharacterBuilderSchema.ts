@@ -52,7 +52,12 @@ export const CharacterFeatureSchema = z
 
 export type CharacterFeature = z.infer<typeof CharacterFeatureSchema>;
 
-const STEP_TYPES = ['select', 'set_base', 'meta'] as const;
+export const STEP_TYPES = [
+  'SELECT', // Standard step, where user selects 1 or more features
+  'META', // Step for setting character metadata
+  'LLSS_ARRAY', // L&L Suuri Seikkaily stats array, used for L&L Suuri Seikkailu
+  'STANDARD_ARRAY', // Standard array of stats, used for D&D 5e etc.
+] as const;
 
 export const CharacterBuilderStepSchema = z
   .object({

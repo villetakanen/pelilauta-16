@@ -1,8 +1,11 @@
 <script lang="ts">
-import type { CharacterBuilderStep } from '@schemas/CharacterBuilderSchema';
+import {
+  type CharacterBuilderStep,
+  STEP_TYPES,
+} from '@schemas/CharacterBuilderSchema';
 import { t } from '@utils/i18n';
-import BuilderFeaturesList from './BuilderFeaturesList.svelte';
-import { builder, setSteps } from './builderStore';
+import BuilderFeaturesList from '../../builder/BuilderFeaturesList.svelte';
+import { builder, setSteps } from '../../builder/builderStore';
 
 interface Props {
   index: number;
@@ -41,7 +44,7 @@ function handleSave() {
 }
 </script>
 
-<article class="builder-step elevation-1 p-2 border-radius full-width">
+<article class="elevation-1 p-2 border-radius full-width">
   <!-- top toolbar: index, (ascend), (descend), (edit), (remove)-->
   <div class="toolbar px-0 mx-0 border-b">
     <h4>{index + 1}. {step.name}</h4>
@@ -87,6 +90,7 @@ function handleSave() {
 
   <!-- Edit mode -->
   {#if mode === 'edit'}
+    <fieldset>
     <label>
       {t('characters:builder.fields.name')}
       <input type="text" bind:value={step.name} placeholder={t('characters:builder.fields.namePlaceholder')} required />
@@ -96,6 +100,20 @@ function handleSave() {
       <textarea bind:value={step.description} placeholder={t('characters:builder.fields.descriptionPlaceholder')}></textarea>
     </label>
 
+    <label>
+      {t('characters:builder.fields.type')}
+      <select bind:value={step.type} class="full-width">
+        {#each STEP_TYPES as type}
+          <option value={type}>{t(`characters:builder.step.types.${type}`)}</option>
+        {/each}
+      </select>
+    </label>
+
+    {#if step.type === 'SELECT'}
+      
+    <h4 class="downscaled mb-0 border-b">
+      {t('characters:builder.step.types.SELECT')}
+    </h4>
     <div class="flex flex-no-wrap">
       <label>
         Min
@@ -107,10 +125,14 @@ function handleSave() {
       </label>
     </div>
 
-    <div class="toolbar">
+    {/if}
+
+    <div class="toolbar justify-end">
       <button class="text" onclick={() => handleSave()} aria-label={t('characters:builder.editor.steps.save')}>
         <cn-icon noun='save'></cn-icon>
+        <span>{t('actions:save')}</span>
       </button>
     </div>
+    </fieldset>
   {/if}
 </article>

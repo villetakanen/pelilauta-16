@@ -24,6 +24,8 @@ export const actions: Locale = {
   import: 'Tuo',
   login: 'Kirjaudu sisään',
   logout: 'Kirjaudu ulos',
+  next: 'Seuraava',
+  previous: 'Edellinen',
   send: 'Lähetä',
   save: 'Tallenna',
   saving: 'Tallentaa...',

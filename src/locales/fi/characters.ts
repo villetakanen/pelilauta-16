@@ -25,6 +25,12 @@ export const characters: Locale = {
       title: 'Vaihe',
       choose: 'Valitse {count}',
       chooseRange: 'Valitse {min}-{max}',
+      types: {
+        SELECT: 'Valitse vaihtoehto',
+        META: 'Hahmon perustiedot',
+        LLSS_ARRAY: 'L&L Suuri Seikkailu -ominaisuudet',
+        STANDARD_ARRAY: 'D20 "standard array" -ominaisuudet',
+      },
     },
     loading: 'Lataa hahmokonetta...',
     comingSoon: 'Hahmonluontitoiminnot tulossa pian...',
@@ -100,6 +106,7 @@ export const characters: Locale = {
       characterSheet: 'Hahmolomake',
       namePlaceholder: 'Kirjoita nimi...',
       descriptionPlaceholder: 'Kirjoita kuvaus...',
+      type: 'Tyyppi',
     },
     snacks: {
       saved: 'Hahmokone tallennettu onnistuneesti',
