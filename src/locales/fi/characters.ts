@@ -21,7 +21,11 @@ export const characters: Locale = {
       title: 'Koneet',
     },
     system: 'Järjestelmä',
-    step: 'Vaihe',
+    step: {
+      title: 'Vaihe',
+      choose: 'Valitse {count}',
+      chooseRange: 'Valitse {min}-{max}',
+    },
     loading: 'Lataa hahmokonetta...',
     comingSoon: 'Hahmonluontitoiminnot tulossa pian...',
     editor: {
@@ -102,6 +106,7 @@ export const characters: Locale = {
       saveError: 'Hahmokoneen tallentaminen epäonnistui',
     },
     title: 'Hahmokone',
+    noCharacterSheet: 'Hahmolomake odottaa vielä tietoja.',
   },
   sheet: {
     defaultName: 'Hahmolomake',

@@ -72,9 +72,10 @@ export function composeCharacterFeatures(
 
   return {
     key: `${sheet.key}-${Date.now()}`, // Unique key based on builder key and timestamp
-    name: '',
+    name: sheet.name || '',
     system: sheet.system,
     stats,
     extras,
+    meta: sheet.meta || {},
   };
 }

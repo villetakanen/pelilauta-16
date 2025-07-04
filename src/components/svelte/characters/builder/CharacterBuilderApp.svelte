@@ -2,15 +2,15 @@
 import type { CharacterBuilder } from '@schemas/CharacterBuilderSchema';
 import type { CharacterSheet } from '@schemas/CharacterSheetSchema';
 import {
-  addStep,
   characterSheet,
   compiledCharacterSheet,
   featuresList,
   resetFeatures,
 } from '@stores/characters/sheetStore';
-import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import { onMount } from 'svelte';
+import CharacterSheetArticle from '../CharacterSheetArticle.svelte';
+import BuilderStep from './BuilderStep.svelte';
 import CharacterBuilderMetaForm from './CharacterBuilderMetaForm.svelte';
 
 interface Props {
@@ -59,9 +59,6 @@ const canProceed = $derived.by(() => {
 function nextStep() {
   if (!canProceed || isLastStep) return;
 
-  // Save current step selections to the store
-  saveCurrentStepSelections();
-
   currentStep++;
   logDebug('CharacterBuilderApp', 'Advanced to step:', currentStep);
 }
@@ -70,29 +67,6 @@ function previousStep() {
   if (isFirstStep) return;
   currentStep--;
   logDebug('CharacterBuilderApp', 'Went back to step:', currentStep);
-}
-
-function saveCurrentStepSelections() {
-  if (!currentStepData) return;
-
-  const stepKey = currentStepData.key;
-  const selectedFeatureKeys = stepSelections.get(stepKey) || [];
-
-  // Get the actual feature objects
-  const selectedFeatures =
-    currentStepData.features?.filter((feature) =>
-      selectedFeatureKeys.includes(feature.key),
-    ) || [];
-
-  // Add to the store
-  addStep(stepKey, selectedFeatures);
-
-  logDebug(
-    'CharacterBuilderApp',
-    'Saved selections for step:',
-    stepKey,
-    selectedFeatures,
-  );
 }
 
 // Feature selection handling
@@ -129,26 +103,18 @@ function isFeatureSelected(featureKey: string): boolean {
   const selections = stepSelections.get(stepKey) || [];
   return selections.includes(featureKey);
 }
-
-function completeBuilder() {
-  // Save final step selections
-  saveCurrentStepSelections();
-
-  logDebug('CharacterBuilderApp', 'Builder completed!');
-  logDebug('CharacterBuilderApp', 'Final features:', $featuresList);
-  logDebug(
-    'CharacterBuilderApp',
-    'Compiled character:',
-    $compiledCharacterSheet,
-  );
-
-  // TODO: Here you could navigate to a character sheet view or save the character
-}
 </script>
 
-<div class="character-builder">
+<div class="content-columns">
   <!-- Character Name Input -->
-  <CharacterBuilderMetaForm />
+  <section class="builder-state column flex flex-col">
+    <CharacterBuilderMetaForm />
+    <BuilderStep
+      builder={builder}
+      step={currentStep}
+    />
+  </section>
+  <CharacterSheetArticle />
   
   {#if currentStepData}
     <div class="surface p-2 mb-2">
@@ -232,7 +198,6 @@ function completeBuilder() {
       {#if isLastStep}
         <button 
           class="button primary" 
-          onclick={completeBuilder}
           disabled={!canProceed}
         >
           Complete Character
@@ -255,41 +220,3 @@ function completeBuilder() {
   {/if}
 </div>
 
-<style>
-  .character-builder {
-    max-width: 100%;
-  }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
-  }
-
-  .feature-card {
-    border: 2px solid transparent;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .feature-card:hover {
-    border-color: var(--color-primary);
-    transform: translateY(-1px);
-  }
-
-  .feature-card.selected {
-    border-color: var(--color-primary);
-    background: var(--color-primary-alpha);
-  }
-
-  .toolbar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .flex-1 {
-    flex: 1;
-  }
-</style>

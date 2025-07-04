@@ -116,55 +116,11 @@ const description =
 ---
 
 <Page title={title} description={description}>
-  <div class="content-columns">
-    <article class="column-l">
-      {hasError ? (
-        <section class="surface p-2 error">
-          <h1>{t('errors:generic.title')}</h1>
-          <p>{errorMessage}</p>
-          <div class="toolbar mt-2">
-            <button onclick="window.location.reload()" class="button">
-              {t('actions:retry')}
-            </button>
-            <a href="/create/character" class="button">
-              {t('actions:goBack')}
-            </a>
-          </div>
-        </section>
-      ) : !builder ? (
-        <section class="surface p-2">
-          <h1>{t('characters:builder.notFound.title')}</h1>
-          <p>{t('characters:builder.notFound.description')}</p>
-          <div class="toolbar mt-2">
-            <a href="/create/character" class="button">
-              {t('characters:builder.actions.browse')}
-            </a>
-          </div>
-        </section>
-      ) : (
-        <!-- Character Builder App Component -->
-        <CharacterBuilderApp 
-          client:only="svelte"
-          builder={builder}
-          characterSheet={characterSheet}
-        />
-      )}
-    </article>
-
-    <aside class="column-s">
-      <!-- Character Sheet Preview -->
-      <CharacterSheetArticle client:only="svelte" />
-      
-      <!-- Character Builder Info Section -->
-      {builder && (
-        <CharacterBuilderInfoSection 
-          client:only="svelte"
-          builder={builder}
-          characterSheet={characterSheet}
-        />
-      )}
-    </aside>
-  </div>
+  <CharacterBuilderApp 
+    client:only="svelte"
+    builder={builder}
+    characterSheet={characterSheet}
+  />
 
   <BackgroundPoster
     slot="app-background-poster"

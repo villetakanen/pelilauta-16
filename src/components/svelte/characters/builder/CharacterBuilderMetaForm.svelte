@@ -1,5 +1,5 @@
 <script lang="ts">
-import { setName } from '@stores/characters/sheetStore';
+import { setMeta } from '@stores/characters/sheetStore';
 import { t } from '@utils/i18n';
 
 // Character name input
@@ -8,7 +8,7 @@ let characterName = $state('');
 // Update character sheet name when character name changes
 $effect(() => {
   if (characterName) {
-    setName(characterName);
+    setMeta('characterName', characterName);
   }
 });
 </script>

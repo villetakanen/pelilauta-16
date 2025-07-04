@@ -1,5 +1,6 @@
 import type { CharacterFeature } from '@schemas/CharacterBuilderSchema';
 import type { CharacterSheet } from '@schemas/CharacterSheetSchema';
+import { logDebug } from '@utils/logHelpers';
 import { composeCharacterFeatures } from '@utils/shared/characters/builder/composeCharacterFeatures';
 import { type WritableAtom, atom, computed } from 'nanostores';
 
@@ -11,14 +12,14 @@ export const characterSheet: WritableAtom<CharacterSheet | null> = atom(null);
 // These features are added in order of the builder steps
 // Note, we do not expose the features directly, but rather use a computed value
 // to keep the logic centralized and avoid direct manipulation of the map
-const featuresMap: WritableAtom<Map<string, Array<CharacterFeature>>> = atom(
+const stepsArray: WritableAtom<Array<Array<CharacterFeature>>> = atom(
   new Map(),
 );
 
 // Features list is a computed value that combines all features from the map, in order
-export const featuresList = computed(featuresMap, (map) => {
+export const featuresList = computed(stepsArray, (steps) => {
   const list: CharacterFeature[] = [];
-  for (const features of map.values()) {
+  for (const features of steps) {
     list.push(...features);
   }
   return list;
@@ -30,6 +31,11 @@ export const featuresList = computed(featuresMap, (map) => {
 export const compiledCharacterSheet = computed(
   [characterSheet, featuresList],
   (sheet, features) => {
+    logDebug(
+      'compiledCharacterSheet',
+      'Computing compiled character sheet with features',
+      { sheet, features },
+    );
     if (!sheet) return null;
     return composeCharacterFeatures(sheet, features);
   },
@@ -43,26 +49,28 @@ export const compiledCharacterSheet = computed(
 //
 // This is intentional, to avoid complex and unnecessary logic.
 
-export function addStep(stepKey: string, features: CharacterFeature[]) {
-  const currentFeatures = featuresMap.get();
-  const existingFeatures = currentFeatures.get(stepKey) || [];
-  currentFeatures.set(stepKey, [...existingFeatures, ...features]);
-  featuresMap.set(currentFeatures);
-}
-
-export function updateStep(stepKey: string, features: CharacterFeature[]) {
-  const currentFeatures = featuresMap.get();
-  currentFeatures.set(stepKey, features);
-  featuresMap.set(currentFeatures);
+export function updateStep(stepKey: number, features: CharacterFeature[]) {
+  logDebug('updateStep', `Updating step ${stepKey} with features`, features[0]);
+  const currentFeatures = stepsArray.get() || [];
+  if (currentFeatures.length <= stepKey) {
+    // If the stepKey is out of bounds, we need to fill the array with empty arrays
+    for (let i = currentFeatures.length; i <= stepKey; i++) {
+      currentFeatures.push([]);
+    }
+  }
+  currentFeatures[stepKey] = features;
+  stepsArray.set(currentFeatures);
 }
 
 export function resetFeatures() {
-  featuresMap.set(new Map());
+  stepsArray.set([]);
 }
 
-export function setName(name: string) {
+export function setMeta(key: string, value: string) {
   const currentSheet = characterSheet.get();
+  const meta = currentSheet?.meta || {};
+  meta[key] = value;
   if (currentSheet) {
-    characterSheet.set({ ...currentSheet, name });
+    characterSheet.set({ ...currentSheet, meta });
   }
 }
