@@ -12,6 +12,7 @@ import CharacterSheetArticle from '../CharacterSheetArticle.svelte';
 import BuilderHistoryStep from './BuilderHistoryStep.svelte';
 import BuilderStep from './BuilderStep.svelte';
 import CharacterBuilderMetaForm from './CharacterBuilderMetaForm.svelte';
+import LlssStatArrayStep from './LlssStatArrayStep.svelte';
 
 interface Props {
   builder: CharacterBuilder;
@@ -35,6 +36,11 @@ onMount(() => {
 
   // Set the character sheet in the store
   characterSheet.set(initialSheet);
+});
+
+const steptType = $derived.by(() => {
+  const steps = builder.steps || [];
+  return steps[currentStep]?.type || 'SELECT';
 });
 
 // Step navigation
@@ -66,12 +72,26 @@ const historySteps = $derived.by(() => {
           step={index} />
       {/each}
     </div>
-    <BuilderStep
-      builder={builder}
-      step={currentStep}
-      onNext={nextStep}
-      onPrevious={previousStep}
+
+    <!-- Step type selector -->
+    {#if steptType === 'SELECT'}
+      <!-- Use default step -->
+      <BuilderStep
+        builder={builder}
+        step={currentStep}
+        onNext={nextStep}
+        onPrevious={previousStep}
     />
+    {:else if steptType === 'LLSS_ARRAY'}
+      <LlssStatArrayStep
+        builder={builder}
+        step={currentStep}
+        onNext={nextStep}
+        onPrevious={previousStep} />
+    {:else}
+      <p class="caption">Erroneous step type: {steptType}</p>
+    {/if}
+    
   </section>
   <CharacterSheetArticle />
 </div>

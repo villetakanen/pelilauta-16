@@ -4,6 +4,8 @@ import {
   type CharacterMofdifier,
 } from '@schemas/CharacterBuilderSchema';
 import { t } from '@utils/i18n';
+import { logDebug } from '@utils/logHelpers';
+import { currentSheet } from '../admin/characterSheet/characterSheetStore';
 
 interface Props {
   modifier: CharacterMofdifier;
@@ -23,6 +25,15 @@ function statTypeToString(type: string): string {
   const spaces = type.replace('_', ' ').toLowerCase();
   return spaces.charAt(0).toUpperCase() + spaces.slice(1);
 }
+
+const stats = $derived.by(() => {
+  logDebug(
+    'ModifierForm',
+    'Fetching stats from current sheet',
+    $currentSheet?.stats,
+  );
+  return $currentSheet?.stats.map((stat) => stat.key) || [];
+});
 </script>
 
 <form class="flex flex-no-wrap" {onsubmit}>
@@ -39,11 +50,20 @@ function statTypeToString(type: string): string {
   {#if modifier.type === 'BASE_STAT' || modifier.type === 'STAT_BONUS'}
     <label>
       {t('characters:builder.editor.modifiers.target')}
-      <input
+      <!--input
         type="text"
         bind:value={modifier.target}
         placeholder={t('characters:builder.editor.modifiers.targetPlaceholder')}
-      />
+      /-->
+      <select
+        bind:value={modifier.target}
+        class="full-width"
+        >
+        <option value="-">{t('characters:builder.editor.modifiers.targetPlaceholder')}</option>
+        {#each stats as stat}
+          <option value={stat}>{stat}</option>
+        {/each}
+      </select>
     </label>
     <label>
       {t('characters:builder.editor.modifiers.value')}

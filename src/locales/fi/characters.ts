@@ -31,6 +31,7 @@ export const characters: Locale = {
         LLSS_ARRAY: 'L&L Suuri Seikkailu -ominaisuudet',
         STANDARD_ARRAY: 'D20 "standard array" -ominaisuudet',
       },
+      unused: 'Käyttämättömät ominaisuudet: {unused}',
     },
     loading: 'Lataa hahmokonetta...',
     comingSoon: 'Hahmonluontitoiminnot tulossa pian...',

@@ -2,7 +2,12 @@
 import { appMeta } from '@stores/metaStore/metaStore';
 import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
+import { logDebug } from '@utils/logHelpers';
 import { onDestroy } from 'svelte';
+import {
+  currentSheet,
+  loadCurrentSheet,
+} from '../admin/characterSheet/characterSheetStore';
 import BuilderInfoForm from './BuilderInfoForm.svelte';
 import BuilderStepsSection from './BuilderStepsSection.svelte';
 import {
@@ -22,6 +27,16 @@ const allow = $derived.by(() => $appMeta.admins.includes($uid));
 $effect(() => {
   // Builder key changed, re-subscribe
   subscribeToBuilder(builderKey);
+});
+$effect(() => {
+  // If builder is loaded, load the character sheet
+  const key = $builder?.characterSheetKey;
+  if (key) {
+    logDebug('BuilderEditor', 'Loading character sheet for builder:', key);
+    loadCurrentSheet(key);
+  } else {
+    currentSheet.set(null); // Reset if no sheet key
+  }
 });
 
 onDestroy(() => {

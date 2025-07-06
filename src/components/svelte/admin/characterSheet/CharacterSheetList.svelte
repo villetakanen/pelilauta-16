@@ -124,7 +124,7 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
             title={characterSheet.name || 'Unnamed Sheet Schema'}>
             
             <p class="text-low">
-              <strong>System:</strong> {characterSheet.system || 'Unknown'} | Stats: {characterSheet.stats.length} | Extras: {characterSheet.extras.length}
+              <strong>System:</strong> {characterSheet.system || 'Unknown'} | Stats: {characterSheet.stats?.length ?? 0} | Features: {characterSheet.features?.length ?? 0}
             </p>
 
             <div class="toolbar" slot="actions">
