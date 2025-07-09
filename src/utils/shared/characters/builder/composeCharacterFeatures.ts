@@ -66,10 +66,16 @@ export function composeCharacterFeatures(
 
   // Convert final stats map to CharacterStat array
   const stats: CharacterStat[] = Array.from(finalStats.entries()).map(
-    ([key, value]) => ({
-      key,
-      value,
-    }),
+    ([key, value]) => {
+      // Find the original stat definition to preserve group and description
+      const originalStat = sheet.stats?.find((s) => s.key === key);
+      return {
+        key,
+        value,
+        description: originalStat?.description,
+        group: originalStat?.group,
+      };
+    },
   );
 
   return {
