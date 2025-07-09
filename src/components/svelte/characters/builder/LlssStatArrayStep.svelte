@@ -44,6 +44,11 @@ const { builder, step: stepKey, onNext, onPrevious }: Props = $props();
 const LLSS_ARRAY = [3, 2, 1, 0, 0, -1];
 let chosenStats = $state<number[]>([-1, -1, -1, -1, -1, -1]);
 
+// The step is ready when all stats have been chosen
+const ready = $derived.by(() => {
+  return chosenStats.every((stat) => stat !== -1);
+});
+
 // Get the step from the builder using the stepKey
 const step = $derived.by(() => {
   const step = builder.steps[stepKey];
@@ -154,4 +159,20 @@ function onselect(e: Event, statIndex: number) {
     
   </fieldset>
 </div>
+ <div class="toolbar">
+    <button 
+      class="text"
+      disabled={stepKey === 0}
+      onclick={onPrevious}
+    >
+      {t("actions:previous")}
+    </button>
+    <button 
+      class="text"
+      disabled={!ready}
+      onclick={onNext}
+    >
+      {t("actions:next")}
+    </button>
+  </div>
 {/if}

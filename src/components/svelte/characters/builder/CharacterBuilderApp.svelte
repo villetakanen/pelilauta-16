@@ -12,6 +12,7 @@ import CharacterSheetArticle from '../CharacterSheetArticle.svelte';
 import BuilderHistoryStep from './BuilderHistoryStep.svelte';
 import BuilderStep from './BuilderStep.svelte';
 import CharacterBuilderMetaForm from './CharacterBuilderMetaForm.svelte';
+import ChararterSheetDebug from './ChararterSheetDebug.svelte';
 import LlssStatArrayStep from './LlssStatArrayStep.svelte';
 
 interface Props {
@@ -94,5 +95,6 @@ const historySteps = $derived.by(() => {
     
   </section>
   <CharacterSheetArticle />
+  <ChararterSheetDebug />
 </div>
 

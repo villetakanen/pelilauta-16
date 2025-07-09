@@ -26,6 +26,18 @@ const active = $derived.by(() => {
         <cn-icon noun="adventurer"></cn-icon><br/>
         {$compiledCharacterSheet.meta?.characterName || t('characters:builder.characterSheet')}
       </p>
+
+      <hr>
+
+      {#each $compiledCharacterSheet.stats as stat}
+        <p class="text-caption mb-1 flex justify-space-between full-width">
+          <strong>{stat.key}</strong>
+          <span class="text-low">{stat.value}</span>
+        </p>
+      {/each}
+
+      <hr>
+
       <p>
         {$stepsArray.length} | {$featuresArray.length} | {$modifiersArray.length}
       </p>
