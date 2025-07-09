@@ -43,6 +43,10 @@ export const CharacterSheetSchema = z
       .array(CharacterStatSchema)
       .default([])
       .describe('List of stats for the character'),
+    statGroups: z
+      .array(z.string())
+      .default([])
+      .describe('List of stat group names for organizing stats in the UI'),
     features: z
       .array(CharacterFeatureSchema)
       .optional()

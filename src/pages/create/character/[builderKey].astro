@@ -12,9 +12,7 @@ import {
   CharacterSheetSchema,
 } from '@schemas/CharacterSheetSchema';
 import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
-import CharacterSheetArticle from '@svelte/characters/CharacterSheetArticle.svelte';
 import CharacterBuilderApp from '@svelte/characters/builder/CharacterBuilderApp.svelte';
-import CharacterBuilderInfoSection from '@svelte/characters/builder/CharacterBuilderInfoSection.svelte';
 import { t } from '@utils/i18n';
 import { logDebug, logError } from '@utils/logHelpers';
 import { verifySession } from '@utils/server/auth/verifySession';
@@ -37,8 +35,6 @@ if (!builderKey) {
 
 let builder: CharacterBuilder | null = null;
 let characterSheet: CharacterSheet | null = null;
-let hasError = false;
-let errorMessage = '';
 
 try {
   logDebug('CharacterBuilderPage', 'Loading builder:', builderKey);
@@ -103,8 +99,6 @@ try {
     }
   }
 } catch (error) {
-  hasError = true;
-  errorMessage = 'Failed to load character builder';
   logError('CharacterBuilderPage', 'Failed to fetch character builder:', error);
 }
 

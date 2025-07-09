@@ -41,6 +41,20 @@ function removeStat(index: number) {
   stats.splice(index, 1);
   updateCurrentSheetField('stats', stats);
 }
+
+function moveStatUp(index: number) {
+  if (!$currentSheet?.stats || index === 0) return;
+  const stats = [...$currentSheet.stats];
+  [stats[index - 1], stats[index]] = [stats[index], stats[index - 1]];
+  updateCurrentSheetField('stats', stats);
+}
+
+function moveStatDown(index: number) {
+  if (!$currentSheet?.stats || index === $currentSheet.stats.length - 1) return;
+  const stats = [...$currentSheet.stats];
+  [stats[index], stats[index + 1]] = [stats[index + 1], stats[index]];
+  updateCurrentSheetField('stats', stats);
+}
 </script>
 
 <form onsubmit={saveSheet}>
@@ -67,14 +81,34 @@ function removeStat(index: number) {
               oninput={(e) => updateStat(i, 'description', (e.target as HTMLInputElement).value)}
             />
           </label>
-          <button 
-            aria-label="Remove Stat"
-            type="button" 
-            class="button flex-none text" 
-            onclick={() => removeStat(i)}
-          >
-            <cn-icon noun="delete"></cn-icon>
-          </button>
+          <div class="flex flex-none gap-1">
+            <button 
+              aria-label="Move Stat Up"
+              type="button" 
+              class="button text" 
+              disabled={i === 0}
+              onclick={() => moveStatUp(i)}
+            >
+              <cn-icon noun="arrow-up"></cn-icon>
+            </button>
+            <button 
+              aria-label="Move Stat Down"
+              type="button" 
+              class="button text" 
+              disabled={i === ($currentSheet?.stats?.length || 0) - 1}
+              onclick={() => moveStatDown(i)}
+            >
+              <cn-icon noun="arrow-down"></cn-icon>
+            </button>
+            <button 
+              aria-label="Remove Stat"
+              type="button" 
+              class="button flex-none text" 
+              onclick={() => removeStat(i)}
+            >
+              <cn-icon noun="delete"></cn-icon>
+            </button>
+          </div>
         </div>
       {/each}
     {:else}

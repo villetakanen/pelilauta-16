@@ -24,13 +24,10 @@ export async function setSteps(steps: CharacterBuilder['steps']) {
 
   try {
     const { updateBuilder } = await import('@firebase/client/builders');
-    await updateBuilder(
-      {
-        key: currentBuilder.key,
-        steps,
-      },
-      false, // Not silent - this is a user action
-    );
+    await updateBuilder({
+      key: currentBuilder.key,
+      steps,
+    });
     logDebug('builderStore', 'Successfully updated steps in database');
   } catch (error) {
     logError('builderStore', 'Failed to update steps:', error);

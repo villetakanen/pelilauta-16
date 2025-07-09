@@ -12,7 +12,6 @@ import {
  */
 export async function updateBuilder(
   builder: Partial<CharacterBuilder>,
-  silent = false,
 ): Promise<void> {
   //  Check for required fields, throw error if not present
   if (!builder.key) {

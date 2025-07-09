@@ -79,5 +79,6 @@ export function composeCharacterFeatures(
     stats,
     features: selectedFeatures,
     meta: sheet.meta || {},
+    statGroups: sheet.statGroups || [],
   };
 }

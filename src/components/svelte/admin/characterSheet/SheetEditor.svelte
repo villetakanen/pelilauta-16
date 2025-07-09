@@ -7,9 +7,11 @@ import SystemSelect from '@svelte/sites/SystemSelect.svelte';
 import { logDebug, logError } from '@utils/logHelpers';
 import { onMount } from 'svelte';
 import CharacterStatsForm from './CharacterStatsForm.svelte';
+import StatGroupsForm from './StatGroupsForm.svelte';
 import {
   clearCurrentSheet,
   currentSheet,
+  isSheetDirty,
   loadCurrentSheet,
   isLoadingSheet as loading,
   saveCurrentSheet,
@@ -72,11 +74,17 @@ onMount(() => {
           <SystemSelect system={$currentSheet.system} {setSystem} />
         </fieldset>
         <div class="toolbar">
-          <button type="submit" class="button primary" disabled={$loading}>
-            {#if $loading} Saving... {:else} Save {/if}
+          <button type="submit" class="button primary" disabled={$loading || !$isSheetDirty}>
+            <cn-icon noun="save"></cn-icon>
+            <span>
+              {#if $loading} Saving... {:else} Save {/if}
+            </span>
           </button>
         </div>        
       </form>
+      
+      <StatGroupsForm />
+      
       {:else}
         <p>Sheet not found</p>
       {/if}
