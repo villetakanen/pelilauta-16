@@ -24,6 +24,10 @@ export const CharacterStatSchema = z.object({
     .describe(
       'Optional description for the stat, e.g. "Strength" or "Dexterity"',
     ),
+  group: z
+    .string()
+    .optional()
+    .describe('Optional group name for organizing stats in the UI'),
 });
 
 export type CharacterStat = z.infer<typeof CharacterStatSchema>;
