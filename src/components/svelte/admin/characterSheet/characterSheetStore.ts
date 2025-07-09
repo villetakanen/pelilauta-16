@@ -136,6 +136,9 @@ export const isLoadingSheet = atom<boolean>(false);
 // Current sheet key
 export const currentSheetKey = atom<string>('');
 
+// Dirty state for the current sheet
+export const isSheetDirty = atom<boolean>(false);
+
 /**
  * Loads a character sheet and sets it as the current sheet
  */
@@ -147,6 +150,7 @@ export async function loadCurrentSheet(sheetKey: string): Promise<void> {
 
   isLoadingSheet.set(true);
   currentSheetKey.set(sheetKey);
+  isSheetDirty.set(false); // Reset dirty state when loading
 
   try {
     const sheet = await loadCharacterSheet(sheetKey);
@@ -177,6 +181,7 @@ export async function saveCurrentSheet(): Promise<void> {
 
   try {
     await updateCharacterSheet(sheetKey, sheet);
+    isSheetDirty.set(false); // Reset dirty state after successful save
     logDebug('characterSheetStore', 'Current sheet saved successfully');
   } catch (error) {
     logError('characterSheetStore', 'Failed to save current sheet:', error);
@@ -201,6 +206,8 @@ export function updateCurrentSheetField<K extends keyof CharacterSheet>(
     ...sheet,
     [field]: value,
   });
+
+  isSheetDirty.set(true); // Mark as dirty when any field is updated
 }
 
 /**
@@ -210,6 +217,7 @@ export function clearCurrentSheet(): void {
   currentSheet.set(null);
   currentSheetKey.set('');
   isLoadingSheet.set(false);
+  isSheetDirty.set(false);
 }
 
 // *** Character sheet CRUD operations ******************************************
