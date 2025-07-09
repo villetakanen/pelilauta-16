@@ -27,13 +27,15 @@ const description = t('characters:create.description');
     </article>
 
     <aside class="column-s">
-      <section class="elevation-1 p-2 border-radius">
-        <h3 class="downscaled">
-          <cn-icon noun="info"></cn-icon>
-          {t('characters:info.title')}
-        </h3>
-        <p class="text-small">{t('characters:info.description')}</p>
-      </section>
+      <cn-card
+      title={t("navigation:experiments")}
+      noun="experiment"
+      class="column-s"
+    >
+      <p>
+        {t("experiments:description")}
+      </p>
+    </cn-card>
     </aside>
   </div>
 </ModalPage>
