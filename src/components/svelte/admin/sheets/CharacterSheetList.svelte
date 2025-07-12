@@ -66,15 +66,12 @@ async function deleteCharacterSheet(sheetKey: string, sheetName: string) {
   }
 }
 </script>
-
-<section class="content-columns">
-  <article class="column-l">
+<section  class="content-cards">
+   <header>
     <h1>Character Sheets</h1>
     <p class="text-low">Admin / Mod only prototype tooling for managing the models for character sheets</p>
-
-  </article>
-</section>
-<section  class="content-cards">
+    <br>
+   </header>
   {#if loading}
     <cn-loader></cn-loader>
   {:else if characterSheets.length === 0}
