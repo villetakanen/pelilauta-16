@@ -278,14 +278,12 @@ describe('CharacterBuilderStepSchema', () => {
     expect(() => CharacterBuilderStepSchema.parse(step)).toThrow();
   });
 
-  it('should default key and name to empty string', () => {
+  it('should require key and name fields', () => {
     const step = {
       description: 'A test step',
     };
 
-    const parsed = CharacterBuilderStepSchema.parse(step);
-    expect(parsed.key).toBe('');
-    expect(parsed.name).toBe('');
+    expect(() => CharacterBuilderStepSchema.parse(step)).toThrow();
   });
 
   it('should default features to empty array', () => {

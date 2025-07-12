@@ -77,9 +77,7 @@ export const CharacterBuilderStepSchema = z
       .describe(
         'Type of the step, e.g. "select" for feature selection, "set_base" for setting base stats, or "meta" for setting character metadata',
       ),
-    description: z
-      .string()
-      .describe('Instructions or flavor text for the user.'),
+    description: z.string(),
     min: z.number().int().min(0).default(1),
     max: z.number().int().min(1).default(1),
     features: z
