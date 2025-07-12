@@ -2,6 +2,7 @@
 import { CharacterBuilderStepSchema } from '@schemas/CharacterBuilderSchema';
 import BuilderStepArticle from '@svelte/admin/characterBuilders/BuilderStepArticle.svelte';
 import { t } from '@utils/i18n';
+import { v4 as uuidv4 } from 'uuid';
 import { builder, setSteps } from './builderStore';
 
 function addStep() {
@@ -9,6 +10,7 @@ function addStep() {
   if (!currentBuilder) return;
 
   const emptyStep = CharacterBuilderStepSchema.parse({
+    key: uuidv4(),
     name: `STEP ${currentBuilder.steps.length + 1}`, // Auto-increment step name
     description: '...',
   });

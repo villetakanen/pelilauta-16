@@ -59,10 +59,18 @@ export const STEP_TYPES = [
   'STANDARD_ARRAY', // Standard array of stats, used for D&D 5e etc.
 ] as const;
 
+export const StepTypeEnum = z.enum(STEP_TYPES);
+
+export const PrerequisiteSchema = z.object({
+  stepKey: z.string(),
+  featureKey: z.string(),
+});
+export type Prerequisite = z.infer<typeof PrerequisiteSchema>;
+
 export const CharacterBuilderStepSchema = z
   .object({
-    key: z.string().default('').describe('Unique identifier for the step'),
-    name: z.string().default('').describe('User-friendly name for the step'),
+    key: z.string(),
+    name: z.string().min(1).describe('User-friendly name for the step'),
     type: z
       .enum(STEP_TYPES)
       .optional()
@@ -72,18 +80,13 @@ export const CharacterBuilderStepSchema = z
     description: z
       .string()
       .describe('Instructions or flavor text for the user.'),
-    min: z
-      .number()
-      .default(1)
-      .describe('Minimum number of features choosable in this step'),
-    max: z
-      .number()
-      .default(1)
-      .describe('Maximum number of features choosable in this step'),
+    min: z.number().int().min(0).default(1),
+    max: z.number().int().min(1).default(1),
     features: z
       .array(CharacterFeatureSchema)
       .default([])
       .describe('List of features available in this step'),
+    prerequisite: PrerequisiteSchema.optional(),
   })
   .describe('Schema for character builder steps');
 
