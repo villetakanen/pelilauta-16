@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const CHARACTER_SHEETS_COLLECTION_NAME = 'charsheets';
+
 /**
  * The base schema for any type of character stat.
  * It includes common properties like key, description, and group.
