@@ -13,7 +13,7 @@ $effect(() => {
 });
 </script>
 
-<div class="surface p-2 mb-2">
+<div class="surface p-2">
     <label for="character-name" class="text-small font-medium mb-1 block">
       {t('characters:fields.name')}
     </label>
@@ -24,4 +24,4 @@ $effect(() => {
       placeholder={t('characters:placeHolders.name')}
       class="input w-full"
     />
-  </div>
+</div>

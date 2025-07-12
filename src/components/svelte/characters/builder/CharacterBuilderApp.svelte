@@ -66,13 +66,13 @@ const historySteps = $derived.by(() => {
   <!-- Character Name Input -->
   <section class="builder-state column flex flex-col">
     <CharacterBuilderMetaForm />
-    <div class="flex flex-col">
+    
       {#each historySteps as _historyStep, index}
         <BuilderHistoryStep 
           {builder}
           step={index} />
       {/each}
-    </div>
+    
 
     <!-- Step type selector -->
     {#if steptType === 'SELECT'}

@@ -89,7 +89,7 @@ function getOptionsForStat(statIndex: number) {
 
   const placeholder = {
     value: -1,
-    label: t('characters:builder.step.select_stat'),
+    label: '-',
   };
 
   if (currentChoice === -1) {
@@ -142,7 +142,7 @@ function onselect(e: Event, statIndex: number) {
     {#each statNames as statName, statIndex}
       <label class="flex-none">{statName}
         <select 
-          class="grow"
+          class="number"
           onchange={(e) => onselect(e, statIndex)}
         >
           {#each getOptionsForStat(statIndex) as option}
