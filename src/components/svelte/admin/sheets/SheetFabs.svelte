@@ -11,6 +11,7 @@ async function handleCreateCharacterSheet() {
 
   try {
     const newCharacterSheet = {
+      key: '',
       name: 'New Character Sheet Schema',
       system: '-',
       stats: [],
