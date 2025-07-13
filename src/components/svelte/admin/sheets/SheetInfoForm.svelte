@@ -2,9 +2,24 @@
 import { loading, sheet } from '@stores/characters/characterSheetStore';
 import { t } from '@utils/i18n';
 
+let name = $state('');
+let system = $state('');
+
 const dirty = $derived.by(() => {
-  return false;
+  return $sheet && ($sheet.name !== name || $sheet.system !== system);
 });
+
+$effect(() => {
+  // On update of the sheet, override the local state
+  if ($sheet) {
+    name = $sheet.name;
+    system = $sheet.system;
+  }
+});
+
+async function handleSubmit(event: SubmitEvent) {
+  event.preventDefault();
+}
 </script>
 
 <section class="surface">
@@ -12,7 +27,29 @@ const dirty = $derived.by(() => {
     <cn-loader></cn-loader>
   {:else if $sheet}
     <h2 class="downscaled">{t('characters:sheets.editor.info.title')}</h2>
-    <form >
+
+    <fieldset class:elevation-1={dirty}>
+      <label>
+        <span class="label">{t('characters:sheets.fields.name')}</span>
+        <input
+          type="text"
+          bind:value={name}
+          placeholder={t('characters:sheets.placeholders.name')}
+          required />
+      </label>
+
+      <label>
+        <span class="label">{t('characters:sheets.fields.system')}</span>
+        <input
+          type="text"
+          bind:value={system}
+          placeholder={t('characters:sheets.placeholders.system')}
+          required />
+      </label>
+
+   
+
+    <form onsubmit={handleSubmit}>
       <div class="toolbar justify-end">
         <button
           type="button"
@@ -29,6 +66,7 @@ const dirty = $derived.by(() => {
         </button>
       </div>
     </form>
+    </fieldset>
   {/if}
   <!-- note: error state for not-loading, but no sheet, is handled by the parent, thus we do not need
        to care about it here -->
