@@ -1,5 +1,6 @@
 <script lang="ts">
 import { loading, sheet } from '@stores/characters/characterSheetStore';
+import SystemSelect from '@svelte/sites/SystemSelect.svelte';
 import { t } from '@utils/i18n';
 
 let name = $state('');
@@ -38,16 +39,13 @@ async function handleSubmit(event: SubmitEvent) {
           required />
       </label>
 
-      <label>
-        <span class="label">{t('characters:sheets.fields.system')}</span>
-        <input
-          type="text"
-          bind:value={system}
-          placeholder={t('characters:sheets.placeholders.system')}
-          required />
-      </label>
 
-   
+        <SystemSelect 
+          system={system}
+          setSystem={(value: string) => {
+            system = value;
+          }} />
+
 
     <form onsubmit={handleSubmit}>
       <div class="toolbar justify-end">
