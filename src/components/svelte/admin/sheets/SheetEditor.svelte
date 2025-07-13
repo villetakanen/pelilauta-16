@@ -4,6 +4,7 @@ import { appMeta } from '@stores/metaStore/metaStore';
 import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
+import SheetInfoForm from './SheetInfoForm.svelte';
 
 export interface Props {
   sheetKey: string;
@@ -31,6 +32,7 @@ $effect(() => {
 <WithAuth {allow}>
   <div class="content-columns">
     <h1>Sheet Editor</h1>
+    <SheetInfoForm />
   </div>
 </WithAuth>
 
