@@ -1,5 +1,4 @@
 import type { Locale } from '@utils/i18n';
-import { characters } from './characters';
 
 export const library: Locale = {
   title: 'Kirjasto',
@@ -12,5 +11,6 @@ export const library: Locale = {
   characters: {
     title: 'Hahmot',
     description: 'Kokeelinen prototyyppi hahmojen hallintaan pelilaudalla',
+    empty: 'Ei hahmoja, voit luoda uuden hahmon altakulman painikkeesta.',
   },
 };
