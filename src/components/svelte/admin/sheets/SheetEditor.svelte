@@ -6,6 +6,7 @@ import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
 import SheetInfoForm from './SheetInfoForm.svelte';
 import SheetStatGroups from './SheetStatGroups.svelte';
+import SheetStats from './SheetStats.svelte';
 
 export interface Props {
   sheetKey: string;
@@ -34,6 +35,7 @@ $effect(() => {
   <div class="content-columns">
     <SheetInfoForm />
     <SheetStatGroups />
+    <SheetStats />
   </div>
 </WithAuth>
 

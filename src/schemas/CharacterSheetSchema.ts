@@ -44,6 +44,29 @@ const ToggledStatSchema = StatBaseSchema.extend({
 });
 
 /**
+ * Schema for a stat that is defined by the D20 Ability Score system.
+ * It includes a "base value" and a "modifier".
+ *
+ * For schema purposes, the "base value" is a descriptive field, while the
+ * "modifier" is a numeric value, as in "number" type stats.
+ */
+const D20AbilityScoreSchema = StatBaseSchema.extend({
+  type: z.literal('d20_ability_score'),
+  baseValue: z
+    .number()
+    .default(10)
+    .describe('The descriptive base value of the ability score, e.g., "10".'),
+  value: z
+    .number()
+    .default(0)
+    .describe(
+      'The numeric modifier for the ability score, e.g., +3 for Strength.',
+    ),
+}).describe(
+  'A stat that represents a D20 Ability Score, such as Strength or Dexterity, with a base value and a modifier.',
+);
+
+/**
  * Schema for a stat whose value is derived from a formula.
  * The formula can reference other stats using the "@key" notation.
  */
@@ -64,6 +87,7 @@ export const CharacterStatSchema = z.discriminatedUnion('type', [
   NumberStatSchema,
   ToggledStatSchema,
   DerivedStatSchema,
+  D20AbilityScoreSchema,
 ]);
 
 /**
