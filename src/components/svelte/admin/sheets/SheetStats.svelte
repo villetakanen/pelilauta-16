@@ -164,23 +164,6 @@ function handleTypeChange(e: Event, statIndex: number) {
                       <option value="d20_ability_score">D20 Ability Score</option>
                     </select>
                   </label>
-
-                  <cn-menu
-                    noun="move"
-                  >
-                    <cn-menu-item>
-                        <ul>
-                      {#each availableGroups as group}
-                        <li
-                          onclick={() => moveStatToGroup(statIndex, group)}
-                        >
-                          Move to {group}
-                        </li>
-                      {/each}
-                      </ul>
-                    </cn-menu-item>
-
-                  </cn-menu>
                   
                   <button 
                     aria-label="Remove Stat"
@@ -221,6 +204,8 @@ function handleTypeChange(e: Event, statIndex: number) {
               </div>
               
               <div class="flex flex-none gap-1">
+                <label>
+                Move to group:
                 <select 
                   value=""
                   onchange={(e) => moveStatToGroup(statIndex, (e.target as HTMLSelectElement).value)}
@@ -231,6 +216,7 @@ function handleTypeChange(e: Event, statIndex: number) {
                     <option value={group}>{group}</option>
                   {/each}
                 </select>
+                </label>
               </div>
             </div>
           {/each}
