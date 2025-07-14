@@ -1,6 +1,8 @@
 <script lang="ts">
+import { updateCharacterSheet } from '@firebase/client/characterSheets/updateCharacterSheet';
 import { loading, sheet } from '@stores/characters/characterSheetStore';
 import SystemSelect from '@svelte/sites/SystemSelect.svelte';
+import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 
 let name = $state('');
@@ -20,6 +22,19 @@ $effect(() => {
 
 async function handleSubmit(event: SubmitEvent) {
   event.preventDefault();
+  try {
+    const key = $sheet?.key;
+    if (!key) throw new Error('Sheet key is required for update');
+
+    await updateCharacterSheet({
+      key: $sheet?.key,
+      name,
+      system,
+    });
+  } catch (error) {
+    pushSnack(t('errors:firestore.write.generic'));
+    console.error('Failed to update character sheet:', error);
+  }
 }
 </script>
 
@@ -28,26 +43,23 @@ async function handleSubmit(event: SubmitEvent) {
     <cn-loader></cn-loader>
   {:else if $sheet}
     <h2 class="downscaled">{t('characters:sheets.editor.info.title')}</h2>
-
-    <fieldset class:elevation-1={dirty}>
-      <label>
-        <span class="label">{t('characters:sheets.fields.name')}</span>
-        <input
-          type="text"
-          bind:value={name}
-          placeholder={t('characters:sheets.placeholders.name')}
-          required />
-      </label>
-
-
+    <form onsubmit={handleSubmit}>
+      <fieldset class:elevation-1={dirty}>
+        <label>
+          <span class="label">{t('characters:sheets.fields.name')}</span>
+          <input
+            type="text"
+            bind:value={name}
+            placeholder={t('characters:sheets.placeholders.name')}
+            required />
+        </label>
+      
         <SystemSelect 
           system={system}
           setSystem={(value: string) => {
             system = value;
           }} />
 
-
-    <form onsubmit={handleSubmit}>
       <div class="toolbar justify-end">
         <button
           type="button"
@@ -63,8 +75,9 @@ async function handleSubmit(event: SubmitEvent) {
           <span>{t('actions:save')}</span>
         </button>
       </div>
+      </fieldset>
     </form>
-    </fieldset>
+    
   {/if}
   <!-- note: error state for not-loading, but no sheet, is handled by the parent, thus we do not need
        to care about it here -->

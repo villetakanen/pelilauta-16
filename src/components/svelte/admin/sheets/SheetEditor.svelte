@@ -1,10 +1,11 @@
 <script lang="ts">
-import { fetchCharacterSheet } from '@stores/characters/characterSheetStore';
+import { subscribeCharacterSheet } from '@stores/characters/characterSheetStore';
 import { appMeta } from '@stores/metaStore/metaStore';
 import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
 import SheetInfoForm from './SheetInfoForm.svelte';
+import SheetStatGroups from './SheetStatGroups.svelte';
 
 export interface Props {
   sheetKey: string;
@@ -13,16 +14,16 @@ const { sheetKey }: Props = $props();
 const allow = $derived.by(() => $appMeta.admins.includes($uid));
 
 /**
- * Load the character sheet data when the component is mounted, the sheet strore is used
- * by the children components to display and edit the sheet.
+ * Subscribe to the character sheet data when the component is mounted and the user is authorized.
+ * The sheet store is used by the children components to display and edit the sheet.
  */
 $effect(() => {
   if (allow) {
     try {
-      fetchCharacterSheet(sheetKey);
+      subscribeCharacterSheet(sheetKey);
     } catch (error) {
       pushSnack({
-        message: `Failed to fetch sheet: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        message: `Failed to subscribe to sheet: ${error instanceof Error ? error.message : 'Unknown error'}`,
       });
     }
   }
@@ -31,8 +32,8 @@ $effect(() => {
 
 <WithAuth {allow}>
   <div class="content-columns">
-    <h1>Sheet Editor</h1>
     <SheetInfoForm />
+    <SheetStatGroups />
   </div>
 </WithAuth>
 

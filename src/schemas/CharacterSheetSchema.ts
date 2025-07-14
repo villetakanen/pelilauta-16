@@ -94,6 +94,7 @@ export const CharacterSheetSchema = z
       .describe(
         'The roleplaying game system this sheet is for, e.g., "dnd5e".',
       ),
+    statGroups: z.array(z.string()).default([]),
     stats: z
       .array(CharacterStatSchema)
       .default([])

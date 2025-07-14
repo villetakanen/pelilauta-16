@@ -1,8 +1,36 @@
 import type { Entry } from '@schemas/EntrySchema';
-import { Timestamp, serverTimestamp } from 'firebase/firestore';
+import {
+  type DocumentData,
+  Timestamp,
+  serverTimestamp,
+} from 'firebase/firestore';
 
 export interface Params {
   silent?: boolean;
+}
+
+/**
+ * Firestore handles dates as Timestamps, so we need to convert them from Date/number to Timestamp
+ *
+ */
+export function convertDatesToTimestamps(record: DocumentData) {
+  const converted: DocumentData = { ...record };
+
+  if (converted.createdAt instanceof Date) {
+    converted.createdAt = new Timestamp(
+      converted.createdAt.getTime() / 1000,
+      0,
+    );
+  }
+
+  if (converted.updatedAt instanceof Date) {
+    converted.updatedAt = new Timestamp(
+      converted.updatedAt.getTime() / 1000,
+      0,
+    );
+  }
+
+  return converted;
 }
 
 /**
