@@ -4,7 +4,6 @@ import {
   type Character,
   CharacterSchema,
 } from '@schemas/CharacterSchema';
-import { CHARACTER_SHEETS_COLLECTION_NAME } from '@schemas/CharacterSheetSchema';
 import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug, logError } from '@utils/logHelpers';

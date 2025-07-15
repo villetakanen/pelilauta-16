@@ -5,15 +5,20 @@
  * This component subscribes to a character's data and mounts the components
  * to display and interact with the character.
  */
-import { subscribe } from '@stores/characters/characterStore';
+import { character, subscribe } from '@stores/characters/characterStore';
+import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
 import CharacterInfo from './CharacterInfo.svelte';
+import StatBlock from './StatBlock.svelte';
 
 interface Props {
   characterKey: string;
 }
 
 const { characterKey }: Props = $props();
+const statBlocks = $derived.by(() => {
+  return $character?.sheet?.statGroups || [];
+});
 
 $effect(() => {
   logDebug('CharacterApp', 'Subscribing to character:', characterKey);
@@ -23,6 +28,17 @@ $effect(() => {
 
 <div class="content-columns">
   <CharacterInfo />
+  
+  {#each statBlocks as group}
+    <StatBlock {group} />
+  {/each}
+
+  {#if !$character}
+    <section class="debug column-s">
+      {t('character:snacks:characterNotFound')}
+    </section>
+  {/if}
+
   <section class="debug column-s">
     {characterKey}
   </section>
