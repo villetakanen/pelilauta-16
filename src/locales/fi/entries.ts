@@ -79,4 +79,12 @@ export const entries: Locale = {
     tickSize: 'Koko',
     ticks: 'Askeleet',
   },
+  character: {
+    name: 'Hahmon nimi',
+    description: 'Kuvaus',
+    placeholders: {
+      name: 'Esim. Gandalf Harmaa',
+      description: 'Hahmon kuvaus tai taustatarina...',
+    },
+  },
 };

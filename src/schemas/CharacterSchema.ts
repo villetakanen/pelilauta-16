@@ -2,7 +2,7 @@ import { CharacterSheetSchema } from '@schemas/CharacterSheetSchema';
 import { EntrySchema } from '@schemas/EntrySchema';
 import { z } from 'zod';
 
-const CHARACTERS_COLLECTION_NAME = 'characters';
+export const CHARACTERS_COLLECTION_NAME = 'characters';
 
 /**
  * The schema for a player character.

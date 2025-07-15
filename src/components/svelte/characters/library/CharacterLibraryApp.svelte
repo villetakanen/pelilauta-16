@@ -13,6 +13,13 @@ import { t } from '@utils/i18n';
     <p class="downscaled low-emphasis">{t('library:characters.description')}</p>
   </header>
     {#if $userCharacters.length > 0}
+      {#each $userCharacters as character}
+        <cn-card
+          href={`/characters/${character.key}`}
+          title={character.name}
+          description={character.description || t('characters:create.noDescription')}
+        ></cn-card>
+      {/each}
       <p class="downscaled low-emphasis">
         {t('library:characters.count', { count: $userCharacters.length })}
       </p>

@@ -1,8 +1,13 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { type Character, CharacterSchema } from '@schemas/CharacterSchema';
+import {
+  CHARACTERS_COLLECTION_NAME,
+  type Character,
+  CharacterSchema,
+} from '@schemas/CharacterSchema';
 import { CHARACTER_SHEETS_COLLECTION_NAME } from '@schemas/CharacterSheetSchema';
 import { uid } from '@stores/session';
-import { logError } from '@utils/logHelpers';
+import { toClientEntry } from '@utils/client/entryUtils';
+import { logDebug, logError } from '@utils/logHelpers';
 import { type WritableAtom, effect } from 'nanostores';
 
 /**
@@ -42,6 +47,11 @@ function patchCharacterData(character: Character) {
 }
 
 async function subscribeToUserCharacters(uid: string) {
+  logDebug(
+    'userCharacters',
+    'subscribeToUserCharacters',
+    `Subscribing to user characters for ${uid}`,
+  );
   unsubscribe();
   try {
     const { db } = await import('@firebase/client');
@@ -50,7 +60,7 @@ async function subscribeToUserCharacters(uid: string) {
     );
 
     const q = query(
-      collection(db, CHARACTER_SHEETS_COLLECTION_NAME),
+      collection(db, CHARACTERS_COLLECTION_NAME),
       where('owners', 'array-contains', uid),
     );
 
@@ -58,10 +68,12 @@ async function subscribeToUserCharacters(uid: string) {
       for (const change of snapshot.docChanges()) {
         if (change.type === 'added' || change.type === 'modified') {
           const characterData = change.doc.data();
-          const character = CharacterSchema.parse({
-            ...characterData,
-            key: change.doc.id,
-          });
+          const character = CharacterSchema.parse(
+            toClientEntry({
+              ...characterData,
+              key: change.doc.id,
+            }),
+          );
           patchCharacterData(character);
         } else if (change.type === 'removed') {
           const currentCharacters = userCharacters.get();
