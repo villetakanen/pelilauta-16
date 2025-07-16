@@ -18,11 +18,11 @@ describe('CharacterSchema', () => {
   it('should validate a character with only the required fields', () => {
     const minimalCharacter = {
       name: 'Legolas',
+      owners: [],
     };
     const result = CharacterSchema.safeParse(minimalCharacter);
     expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data.key).toBe('');
       expect(result.data.owners).toEqual([]);
     }
   });

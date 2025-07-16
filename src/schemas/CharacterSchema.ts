@@ -1,6 +1,6 @@
 import { CharacterSheetSchema } from '@schemas/CharacterSheetSchema';
-import { EntrySchema } from '@schemas/EntrySchema';
 import { z } from 'zod';
+import { ContentEntrySchema } from './ContentEntry';
 
 export const CHARACTERS_COLLECTION_NAME = 'characters';
 
@@ -8,7 +8,7 @@ export const CHARACTERS_COLLECTION_NAME = 'characters';
  * The schema for a player character.
  * This is a specific type of Entry in the database.
  */
-export const CharacterSchema = EntrySchema.extend({
+export const CharacterSchema = ContentEntrySchema.extend({
   /** The name of the character. */
   name: z.string().min(1, 'Character name cannot be empty.'),
 
