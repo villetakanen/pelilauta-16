@@ -7,12 +7,14 @@
 
 import type { Character } from '@schemas/CharacterSchema';
 import type { CharacterSheet } from '@schemas/CharacterSheetSchema';
+import type { Site } from '@schemas/SiteSchema';
 import { uid } from '@stores/session';
 import WithAuth from '@svelte/app/WithAuth.svelte';
 import { pushSessionSnack, pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
 import CharacterSheetSelect from './CharacterSheetSelect.svelte';
+import SiteSelect from './SiteSelect.svelte';
 
 // Data states
 const characterData: Partial<Character> = $state({
@@ -24,6 +26,8 @@ const characterData: Partial<Character> = $state({
 // UX states
 let selectedSheetKey = $state('');
 let selectedSheet: CharacterSheet | null = $state(null);
+let selectedSiteKey = $state('');
+let selectedSite: Site | null = $state(null);
 
 const allow = $derived.by(() => {
   return !!$uid;
@@ -36,6 +40,11 @@ const valid = $derived.by(() => {
 function setSelectedSheet(sheetKey: string, sheet: CharacterSheet | null) {
   selectedSheetKey = sheetKey;
   selectedSheet = sheet;
+}
+
+function setSelectedSite(siteKey: string, site: Site | null) {
+  selectedSiteKey = siteKey;
+  selectedSite = site;
 }
 
 function setName(e: Event) {
@@ -60,6 +69,9 @@ async function onsubmit(e: Event) {
     };
     if (selectedSheet) {
       data.sheet = selectedSheet;
+    }
+    if (selectedSite) {
+      data.siteKey = selectedSite.key;
     }
 
     const key = await createCharacter(data);
@@ -87,18 +99,25 @@ async function onsubmit(e: Event) {
       <form onsubmit={onsubmit}>
 
         <label>
-          {t('characters:create.name.label')}
+          {t('entries:character.name')}
           <input 
             type="text" 
-            placeholder={t('characters:create.name.placeholder')} 
+            placeholder={t('entries:character.placeholders.name')} 
             value={characterData.name} 
             oninput={setName} 
             required />
         </label>
 
+
+
         <CharacterSheetSelect 
           {selectedSheetKey}
           {setSelectedSheet}
+        />
+
+        <SiteSelect 
+          {selectedSiteKey}
+          {setSelectedSite}
         />
         
         <div class="toolbar justify-end">

@@ -15,6 +15,9 @@ export const CharacterSchema = EntrySchema.extend({
   /** A public-facing summary or description of the character. */
   description: z.string().optional(),
 
+  /** The key of the site this character belongs to. */
+  siteKey: z.string().optional(),
+
   /** An optional, embedded character sheet defining the character's stats and structure. */
   sheet: CharacterSheetSchema.optional(),
 

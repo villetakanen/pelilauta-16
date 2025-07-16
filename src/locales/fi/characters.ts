@@ -10,6 +10,7 @@ export const characters: Locale = {
     title: 'Luo hahmo',
     description: 'Valitse alta hahmolomake, jota haluat käyttää. ',
     noSheet: 'Ei hahmolomaketta (vain nimi ja kuvaus)',
+    noSite: 'Ei sivustoa',
   },
   edit: {},
   sheets: {
@@ -23,12 +24,20 @@ export const characters: Locale = {
       none: 'Ei lomaketta',
       loading: 'Ladataan hahmolomakkeita...',
       empty: 'Ei hahmolomakkeita saatavilla.',
+      'feature-flagged':
+        'Tuki hahmolomakkeille on kokeellinen, ja sitä ei ole vielä otettu käyttöön.',
     },
     fields: {
       name: 'Lomakkeen nimi',
     },
     placeholders: {
       name: 'Esim. D&D 5e Taistelijat',
+    },
+  },
+  sites: {
+    select: {
+      description: 'Valitse pelisi tai sivustosi, johon hahmo liittyy.',
+      empty: 'Sinulla ei ole pelejä tai sivustoja.',
     },
   },
 };

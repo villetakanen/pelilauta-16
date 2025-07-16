@@ -65,13 +65,13 @@ function handleSelectionChange(event: Event) {
   setSelectedSheet(selectedKey, selectedSheet);
 }
 </script>
-
+<div style="opacity: 0.55" class="border p-1 mt-1">
 <label>
-  {t('characters:sheets.select.label')}
+  {t('entries:character.sheet')}
   <select
     value={selectedSheetKey || ''}
     onchange={handleSelectionChange}
-    disabled={loading}
+    disabled={true || loading}
   >
     <option value="">{loading ? t('actions:loading') : t('characters:create.noSheet')}</option>
     {#each characterSheets as sheet}
@@ -79,6 +79,9 @@ function handleSelectionChange(event: Event) {
     {/each}
   </select>
 </label>
+
+<p class="downscaled text-low">{t('characters:sheets.select.feature-flagged')}</p>
+</div>
 
 {#if loading}
   <p class="downscaled text-low">{t('characters:sheets.select.loading')}</p>
