@@ -80,7 +80,7 @@ export const entries: Locale = {
     ticks: 'Askeleet',
   },
   character: {
-    name: 'Hahmon nimi',
+    name: 'Nimi',
     description: 'Kuvaus',
     placeholders: {
       name: 'Esim. Gandalf Harmaa',

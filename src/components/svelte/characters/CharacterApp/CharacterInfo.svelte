@@ -37,20 +37,32 @@ async function saveChanges(e: Event) {
 }
 </script>
 {#if $character}
-<article class="column-s elevation-1 border-radius p-2">
-  <div class="toolbar">
-    <h2 class="downscaled">{$character.name}</h2>
-    {#if $canEdit && mode === 'view'}
-      <button class="text" onclick={toggleMode}>
+<article class="elevation-1 p-2">
+  <!-- View Mode!-->
+  {#if mode === 'view'}
+    <span class="text-caption">{t('entries:character.name')}</span>
+    <h2 class="downscaled m-0">
+      {$character.name || t('character:fields:noName')}
+    </h2>
+    <hr>
+    <span class="text-caption">{t('entries:character.description')}</span>
+    <p class="downscaled text-low">
+      {$character.description || t('character:fields:noDescription')}
+    </p>
+    <hr>
+    {#if $canEdit}
+      <div class="toolbar justify-end">
+      
+        <button class="text" onclick={toggleMode}>
           {t('actions:edit')}
-      </button>
+        </button>
+      </div>
     {/if}
-  </div>
-
-  {#if mode === 'edit'}
+  <!-- Edit Mode!-->
+  {:else}
     <form onsubmit={saveChanges}>
       <label>
-        {t('character:fields:name')}
+        {t('entries:character:name')}
         <input type="text" bind:value={name} />
       </label>
       <label>
@@ -66,10 +78,6 @@ async function saveChanges(e: Event) {
         </button>
         </div>
     </form>
-    {:else}
-    <p class="downscaled text-low">
-      <strong>{t('character:fields:description')}:</strong> {$character.description ?? t('character:fields:noDescription')}
-    </p>
   {/if}
 
 </article>
