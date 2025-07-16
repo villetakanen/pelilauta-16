@@ -9,6 +9,7 @@ import { loading, sheet } from '@stores/characters/characterSheetStore';
 import { logDebug, logError } from '@utils/logHelpers';
 
 let stats = $state<CharacterStat[]>([]);
+let expandedGroups = $state<Set<string>>(new Set());
 
 const dirty = $derived.by(() => {
   return $sheet && JSON.stringify($sheet.stats) !== JSON.stringify(stats);
@@ -67,6 +68,12 @@ function addStat(groupName: string) {
     group: groupName,
   };
   stats = [...stats, newStat];
+
+  // Expand the group so the user can see the newly added stat
+  if (!expandedGroups.has(groupName)) {
+    expandedGroups.add(groupName);
+    expandedGroups = new Set(expandedGroups);
+  }
 }
 
 function updateStat(index: number, updates: Partial<CharacterStat>) {
@@ -118,6 +125,19 @@ function handleTypeChange(e: Event, statIndex: number) {
     });
   }
 }
+
+function toggleGroup(groupName: string) {
+  if (expandedGroups.has(groupName)) {
+    expandedGroups.delete(groupName);
+  } else {
+    expandedGroups.add(groupName);
+  }
+  expandedGroups = new Set(expandedGroups);
+}
+
+function isGroupExpanded(groupName: string): boolean {
+  return expandedGroups.has(groupName);
+}
 </script>
 
 <form onsubmit={saveSheet} class="column-l">
@@ -136,14 +156,24 @@ function handleTypeChange(e: Event, statIndex: number) {
       {#each availableGroups as groupName}
         <div>
           <div class="toolbar align-center p-0 m-0">
-            <h4 class="m-0">{groupName}</h4>
-            <button type="button" class="text mb-2" onclick={() => addStat(groupName)}>
+            <h4 class="m-0 grow">{groupName} ({groupedStats.grouped[groupName]?.length || 0})</h4>
+            <button 
+              type="button" 
+              class="text"
+              onclick={() => toggleGroup(groupName)}
+              aria-expanded={isGroupExpanded(groupName)}
+            >
+              <cn-icon noun={isGroupExpanded(groupName) ? 'arrow-up' : 'arrow-down'}></cn-icon>
+              <span>{isGroupExpanded(groupName) ? 'Collapse' : 'Expand'}</span>
+            </button>
+            <button type="button" class="text" onclick={() => addStat(groupName)}>
               <cn-icon noun="add"></cn-icon>
               <span>Add</span>
             </button>
           </div>
           
-          {#if groupedStats.grouped[groupName] && groupedStats.grouped[groupName].length > 0}
+          {#if isGroupExpanded(groupName)}
+            {#if groupedStats.grouped[groupName] && groupedStats.grouped[groupName].length > 0}
             {#each groupedStats.grouped[groupName] as stat}
               {@const statIndex = getStatIndex(stat)}
               <div class="flex flex-no-wrap">
@@ -196,6 +226,7 @@ function handleTypeChange(e: Event, statIndex: number) {
             {/each}
           {:else}
             <p class="text-low mb-2">No stats in this group.</p>
+          {/if}
           {/if}
 
           
