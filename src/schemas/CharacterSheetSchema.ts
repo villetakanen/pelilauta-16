@@ -62,6 +62,12 @@ const D20AbilityScoreSchema = StatBaseSchema.extend({
     .describe(
       'The numeric modifier for the ability score, e.g., +3 for Strength.',
     ),
+  hasProficiency: z
+    .boolean()
+    .default(false)
+    .describe(
+      'Whether this ability score supports proficiency bonuses (e.g., for saving throws).',
+    ),
 }).describe(
   'A stat that represents a D20 Ability Score, such as Strength or Dexterity, with a base value and a modifier.',
 );

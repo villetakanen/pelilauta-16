@@ -1,4 +1,5 @@
 <script lang="ts">
+import { CyanToggleButton } from '@11thdeg/cyan-next';
 import { updateCharacterSheet } from '@firebase/client/characterSheets/updateCharacterSheet';
 import {
   type CharacterStat,
@@ -109,7 +110,12 @@ function handleTypeChange(e: Event, statIndex: number) {
   } else if (type === 'derived') {
     updateStat(statIndex, { type, formula: '' });
   } else if (type === 'd20_ability_score') {
-    updateStat(statIndex, { type, baseValue: 10, value: 0 });
+    updateStat(statIndex, {
+      type,
+      baseValue: 10,
+      value: 0,
+      hasProficiency: false,
+    });
   }
 }
 </script>
@@ -174,6 +180,18 @@ function handleTypeChange(e: Event, statIndex: number) {
                     <cn-icon noun="delete"></cn-icon>
                   </button>
                 </div>
+
+                <!-- Additional fields for D20 Ability Score stats -->
+                {#if stat.type === 'd20_ability_score'}
+                    <div class="border p-1 border-radius-small ml-2 mb-2">
+                      <cn-toggle-button 
+                        label="Proficiency"
+                        checked={stat.hasProficiency || false}
+                        onchange={(e:Event) => updateStat(statIndex, { hasProficiency: (e.target as CyanToggleButton).pressed })}
+                      ></cn-toggle-button>
+                      <p class="text-low text-caption m-0">Supports proficiency (e.g., saving throws)</p>
+                  </div>
+                {/if}
 
             {/each}
           {:else}
