@@ -1,4 +1,5 @@
 <script lang="ts">
+import CharacterCard from '@shared/CharacterCard.svelte';
 import { userCharacters } from '@stores/characters/userCharacters';
 import { t } from '@utils/i18n';
 
@@ -8,22 +9,19 @@ import { t } from '@utils/i18n';
 </script>
 
 <div class="content-cards">
+  <!-- Header for the list - should be moved to a child component and and have
+       sorting controls in place-->
   <header>
     <h2 class="downscaled m-0">{t('library:characters.title')}</h2>
-    <p class="downscaled low-emphasis">{t('library:characters.description')}</p>
+    <p class="downscaled text-low">{t('library:characters.description')}</p>
   </header>
-    {#if $userCharacters.length > 0}
-      {#each $userCharacters as character}
-        <cn-card
-          href={`/characters/${character.key}`}
-          title={character.name}
-          description={character.description || t('characters:create.noDescription')}
-        ></cn-card>
-      {/each}
-      <p class="downscaled low-emphasis">
-        {t('library:characters.count', { count: $userCharacters.length })}
-      </p>
-    {:else}
+
+  <!-- Display the characters as cards -->
+  {#if $userCharacters.length > 0}
+    {#each $userCharacters as character}
+      <CharacterCard {character} />
+    {/each}
+  {:else}
       <section class="secondary border-radius p-2 flex flex-column">
         <cn-icon noun="monsters" xlarge></cn-icon>
         <p class="downscaled">
@@ -31,9 +29,14 @@ import { t } from '@utils/i18n';
         </p>
       </section>
     {/if}
-  </div>
+  <footer>
+    <p class="downscaled text-low">
+      {t('library:characters.count', { count: $userCharacters.length })}
+    </p>
+  </footer>
+</div>
    <!--div class="full-width">
-      <div class="toolbar">
+    §  <div class="toolbar">
         <h4 class="grow">{t('library:sites.title')}</h4>
         <button class="text" aria-label={directionNoun} onclick={toggleOrder}>
           <cn-icon noun={directionNoun}></cn-icon>

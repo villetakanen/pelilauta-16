@@ -69,7 +69,7 @@ async function updateAvatar() {
   
   <section>
     <h3>{t('settings:authz.title')}</h3>
-    <p class="text-low-emphasis downscaled">{t('settings:authz.info')}</p>
+    <p class="text-text-low downscaled">{t('settings:authz.info')}</p>
   
     <div class="field-grid">
       <p><strong>{t('settings:authz.fields.uid')}</strong></p>
@@ -107,7 +107,7 @@ async function updateAvatar() {
       </div>
     </div>
   
-    <p class="text-low-emphasis downscaled mt-2">
+    <p class="text-text-low downscaled mt-2">
       <a href="/docs/04-authz">{t('actions:learnMore')}</a>
     </p>
   </section>

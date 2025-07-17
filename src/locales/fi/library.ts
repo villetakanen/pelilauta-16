@@ -10,7 +10,8 @@ export const library: Locale = {
   },
   characters: {
     title: 'Hahmot',
-    description: 'Kokeelinen prototyyppi hahmojen hallintaan pelilaudalla',
+    description:
+      'Vielä hieman kokeellinen toiminto hahmojen luomiseen ja muokkaamiseen.',
     empty: 'Ei hahmoja, voit luoda uuden hahmon altakulman painikkeesta.',
     count: '{count} hahmoa.',
   },
