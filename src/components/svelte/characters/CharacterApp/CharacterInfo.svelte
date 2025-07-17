@@ -1,19 +1,26 @@
 <script lang="ts">
+import type { Site } from '@schemas/SiteSchema';
 import { canEdit, character, update } from '@stores/characters/characterStore';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
+import CharacterCard from 'src/components/shared/CharacterCard.svelte';
+import SiteSelect from '../SiteSelect.svelte';
 
 type modes = 'view' | 'edit';
 
 let mode: modes = $state('view'); // Default mode is view
 let name = $state('');
 let description = $state('');
+let selectedSiteKey = $state('');
+let selectedSite: Site | null = $state(null);
 
 $effect(() => {
   if ($character) {
     name = $character.name;
     description = $character.description ?? '';
+    selectedSiteKey = $character.siteKey ?? '';
+    selectedSite = null; // Will be set by SiteSelect component
   }
 });
 
@@ -21,13 +28,27 @@ function toggleMode() {
   mode = mode === 'view' ? 'edit' : 'view';
 }
 
+function setSelectedSite(siteKey: string, site: Site | null) {
+  selectedSiteKey = siteKey;
+  selectedSite = site;
+}
+
 async function saveChanges(e: Event) {
   e.preventDefault();
   try {
-    await update({
+    const updates: { name: string; description: string; siteKey?: string } = {
       name,
       description,
-    });
+    };
+
+    // Add siteKey if a site is selected, or set to undefined to remove it
+    if (selectedSite) {
+      updates.siteKey = selectedSite.key;
+    } else {
+      updates.siteKey = undefined;
+    }
+
+    await update(updates);
     mode = 'view'; // Switch back to view mode after saving
     pushSnack(t('character:snacks:changesSaved'));
   } catch (error) {
@@ -37,48 +58,48 @@ async function saveChanges(e: Event) {
 }
 </script>
 {#if $character}
-<article class="elevation-1 p-2">
   <!-- View Mode!-->
   {#if mode === 'view'}
-    <span class="text-caption">{t('entries:character.name')}</span>
-    <h2 class="downscaled m-0">
-      {$character.name || t('character:fields:noName')}
-    </h2>
-    <hr>
-    <span class="text-caption">{t('entries:character.description')}</span>
-    <p class="downscaled text-low">
-      {$character.description || t('character:fields:noDescription')}
-    </p>
-    <hr>
-    {#if $canEdit}
-      <div class="toolbar justify-end">
-      
-        <button class="text" onclick={toggleMode}>
-          {t('actions:edit')}
-        </button>
-      </div>
-    {/if}
+    <CharacterCard character={$character}>
+      {#snippet actions()}
+        {#if $canEdit}
+          <div class="toolbar justify-end">
+            <button class="text" onclick={toggleMode}>
+              <cn-icon noun="edit" ></cn-icon>
+              <!-- Use cn-icon for consistent icon styling -->
+              <span>{t('actions:edit')}</span>
+            </button>
+          </div>
+        {/if}
+      {/snippet}
+    </CharacterCard>
   <!-- Edit Mode!-->
   {:else}
-    <form onsubmit={saveChanges}>
-      <label>
-        {t('entries:character:name')}
-        <input type="text" bind:value={name} />
-      </label>
-      <label>
-        {t('character:fields:description')}
-        <textarea bind:value={description}></textarea>
-      </label>
-      <div class="toolbar justify-end">
-        <button type="button" class="button text" onclick={toggleMode}>
-          {t('actions:cancel')}
-        </button>
-        <button type="submit" class="button primary">
-          {t('actions:save')}
-        </button>
+    <article class="elevation-1 p-2">
+      <form onsubmit={saveChanges}>
+        <label>
+          {t('entries:character:name')}
+          <input type="text" bind:value={name} />
+        </label>
+        <label>
+          {t('character:fields:description')}
+          <textarea bind:value={description}></textarea>
+        </label>
+        
+        <SiteSelect 
+          {selectedSiteKey}
+          {setSelectedSite}
+        />
+        
+        <div class="toolbar justify-end">
+          <button type="button" class="button text" onclick={toggleMode}>
+            {t('actions:cancel')}
+          </button>
+          <button type="submit" class="button primary">
+            {t('actions:save')}
+          </button>
         </div>
-    </form>
+      </form>
+    </article>
   {/if}
-
-</article>
 {/if}

@@ -27,8 +27,10 @@ $effect(() => {
 </script>
 
 <div class="content-columns">
-  <CharacterInfo />
-  
+  <div class="column-s">
+    <CharacterInfo />
+  </div>
+
   {#each statBlocks as group}
     <StatBlock {group} />
   {/each}
