@@ -8,9 +8,10 @@ import { uid } from '@stores/session';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { logDebug, logError } from '@utils/logHelpers';
 import { type WritableAtom, effect } from 'nanostores';
+import { z } from 'zod';
 
 /**
- * A nanostore for caching the user's sites.
+ * A nanostore for caching the user's characters.
  */
 export const userCharacters: WritableAtom<Character[]> = persistentAtom(
   'user-character-cache',
@@ -18,8 +19,26 @@ export const userCharacters: WritableAtom<Character[]> = persistentAtom(
   {
     encode: JSON.stringify,
     decode: (data) => {
-      const object = JSON.parse(data);
-      return object;
+      try {
+        const parsed = JSON.parse(data);
+        const validationResult = z.array(CharacterSchema).safeParse(parsed);
+        if (validationResult.success) {
+          return validationResult.data;
+        }
+        logError(
+          'userCharacters:decode',
+          'Invalid data in localStorage',
+          validationResult.error,
+        );
+        return [];
+      } catch (error) {
+        logError(
+          'userCharacters:decode',
+          'Failed to parse data from localStorage',
+          error,
+        );
+        return [];
+      }
     },
   },
 );
@@ -35,23 +54,28 @@ function patchCharacterData(character: Character) {
   const existingIndex = currentCharacters.findIndex(
     (c) => c.key === character.key,
   );
+
+  let updatedCharacters: Character[];
   if (existingIndex !== -1) {
-    // Update existing character
-    currentCharacters[existingIndex] = character;
+    // Update existing character immutably
+    updatedCharacters = [
+      ...currentCharacters.slice(0, existingIndex),
+      character,
+      ...currentCharacters.slice(existingIndex + 1),
+    ];
   } else {
     // Add new character
-    currentCharacters.push(character);
+    updatedCharacters = [...currentCharacters, character];
   }
-  userCharacters.set(currentCharacters);
+  userCharacters.set(updatedCharacters);
 }
 
-async function subscribeToUserCharacters(uid: string) {
+async function subscribeToUserCharacters(currentUid: string) {
   logDebug(
-    'userCharacters',
-    'subscribeToUserCharacters',
-    `Subscribing to user characters for ${uid}`,
+    'userCharacters:subscribe',
+    `Subscribing to user characters for ${currentUid}`,
   );
-  unsubscribe();
+  unsubscribe(); // Unsubscribe from any previous listener
   try {
     const { db } = await import('@firebase/client');
     const { onSnapshot, collection, query, where } = await import(
@@ -60,47 +84,50 @@ async function subscribeToUserCharacters(uid: string) {
 
     const q = query(
       collection(db, CHARACTERS_COLLECTION_NAME),
-      where('owners', 'array-contains', uid),
+      where('owners', 'array-contains', currentUid),
     );
 
     unsubscribe = onSnapshot(q, (snapshot) => {
       for (const change of snapshot.docChanges()) {
+        const docId = change.doc.id;
         if (change.type === 'added' || change.type === 'modified') {
-          const characterData = change.doc.data();
-          const character = CharacterSchema.parse(
-            toClientEntry({
-              ...characterData,
-              key: change.doc.id,
-            }),
-          );
-          patchCharacterData(character);
-        } else if (change.type === 'removed') {
-          const currentCharacters = userCharacters.get();
-          const index = currentCharacters.findIndex(
-            (c) => c.key === change.doc.id,
-          );
-          if (index !== -1) {
-            currentCharacters.splice(index, 1);
-            userCharacters.set(currentCharacters);
+          const entry = toClientEntry(change.doc.data());
+          // If you need to set the key, do it here:
+          if (entry && typeof entry === 'object') {
+            (entry as Character).key = docId;
           }
+          const result = CharacterSchema.safeParse(entry);
+
+          if (result.success) {
+            patchCharacterData(result.data);
+          } else {
+            logError(
+              'userCharacters:onSnapshot',
+              `Invalid character data received for doc ${docId}`,
+              result.error,
+            );
+          }
+        } else if (change.type === 'removed') {
+          userCharacters.set(
+            userCharacters.get().filter((c) => c.key !== docId),
+          );
         }
       }
     });
   } catch (error) {
     logError(
-      'userCharacters',
-      'subscribeToUserCharacters',
-      `Failed to subscribe to user characters for ${uid}:`,
+      'userCharacters:subscribe',
+      `Failed to subscribe to user characters for ${currentUid}`,
       error,
     );
-    return;
   }
 }
-effect(uid, (u) => {
+
+effect(uid, (currentUid) => {
   unsubscribe();
-  if (!u) {
-    userCharacters.set([]);
+  if (currentUid) {
+    subscribeToUserCharacters(currentUid);
   } else {
-    subscribeToUserCharacters(u);
+    userCharacters.set([]);
   }
 });
