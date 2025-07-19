@@ -20,6 +20,7 @@ export const canEdit = computed([_character, uid], (c, u) => {
   // Check if the character is editable by the current user
   return c?.owners?.includes(u) ?? false;
 });
+export const loading = atom(false);
 
 let unsubscribe: CallableFunction = () => {};
 
@@ -33,6 +34,8 @@ export async function subscribe(key: string) {
     // Already subscribed to this character
     return;
   }
+  loading.set(true);
+  unsubscribe();
 
   const { db } = await import('@firebase/client');
   const { onSnapshot, doc } = await import('firebase/firestore');
@@ -45,6 +48,7 @@ export async function subscribe(key: string) {
     } else {
       _character.set(null);
     }
+    loading.set(false);
   });
 }
 

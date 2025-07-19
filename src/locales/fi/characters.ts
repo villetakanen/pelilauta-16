@@ -5,6 +5,7 @@ export const characters: Locale = {
     title: 'Hahmot',
     description:
       'Hahmot ovat pelin pelaajien luomia pelihahmoja. Ne voivat sisältää tietoja, kuten nimen, kuvauksen ja hahmolomakkeen.',
+    markdown: 'Yleiskuvaus',
   },
   create: {
     title: 'Luo hahmo',

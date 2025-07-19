@@ -8,6 +8,7 @@
 import { character, subscribe } from '@stores/characters/characterStore';
 import { t } from '@utils/i18n';
 import { logDebug } from '@utils/logHelpers';
+import CharacterArticle from './CharacterArticle.svelte';
 import CharacterInfo from './CharacterInfo.svelte';
 import StatBlock from './StatBlock.svelte';
 
@@ -27,6 +28,9 @@ $effect(() => {
 </script>
 
 <div class="content-columns">
+
+  <CharacterArticle />
+
   <div class="column-s">
     <CharacterInfo />
   </div>
@@ -41,7 +45,4 @@ $effect(() => {
     </section>
   {/if}
 
-  <section class="debug column-s">
-    {characterKey}
-  </section>
 </div>
