@@ -57,10 +57,20 @@ describe('Reactions API Request Schema', () => {
   });
 });
 
+/**
+ * Helper to get a copy of the reaction array for a given type.
+ */
+function getReactionArray(
+  reactions: Reactions,
+  type: keyof Reactions,
+): string[] {
+  return [...(reactions[type] || [])];
+}
+
 describe('Reactions Logic', () => {
   test('adds user to empty reaction array', () => {
     const currentReactions: Reactions = { subscribers: ['owner1'] };
-    const reactionArray = [...(currentReactions.love || [])];
+    const reactionArray = getReactionArray(currentReactions, 'love');
     const uid = 'user123';
     const userIndex = reactionArray.indexOf(uid);
     const wasAdded = userIndex === -1;
@@ -79,7 +89,7 @@ describe('Reactions Logic', () => {
       subscribers: ['owner1'],
       love: ['user123', 'user456'],
     };
-    const reactionArray = [...(currentReactions.love || [])];
+    const reactionArray = getReactionArray(currentReactions, 'love');
     const uid = 'user123';
     const userIndex = reactionArray.indexOf(uid);
     const wasAdded = userIndex === -1;
@@ -98,7 +108,7 @@ describe('Reactions Logic', () => {
       subscribers: ['owner1'],
       love: ['user456', 'user789'],
     };
-    const reactionArray = [...(currentReactions.love || [])];
+    const reactionArray = getReactionArray(currentReactions, 'love');
     const uid = 'user123';
     const userIndex = reactionArray.indexOf(uid);
     const wasAdded = userIndex === -1;
