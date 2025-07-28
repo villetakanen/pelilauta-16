@@ -69,7 +69,7 @@ async function handleSubmit(event: Event) {
   {:else}
     <section class="elevation-1 border-radius p-2">
       <h1 class="mt-0">{t('characters:confirmDeletion.title')}</h1>
-      <p>{t('characters:snacks:characterNotFound')}</p>
+      <p>{t('characters:snacks.characterNotFound')}</p>
       <div class="toolbar justify-end">
         <a href="/library/characters" class="button text">
           <cn-icon noun="arrow-left"></cn-icon>
