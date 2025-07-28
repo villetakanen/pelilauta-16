@@ -112,7 +112,7 @@ async function logoutAction() {
     </div>
 
 
-    <p class="downscaled low-emphasis">
+    <p class="downscaled text-low">
       {t('settings:profile.info')}
     </p>
   </form>
