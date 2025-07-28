@@ -41,7 +41,7 @@ $effect(() => {
 
   {#if !$character}
     <section class="debug column-s">
-      {t('character:snacks:characterNotFound')}
+      {t('characters:snacks:characterNotFound')}
     </section>
   {/if}
 

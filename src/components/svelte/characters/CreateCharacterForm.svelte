@@ -76,7 +76,7 @@ async function onsubmit(e: Event) {
 
     const key = await createCharacter(data);
     pushSessionSnack(
-      t('character:snacks.characterCreated', {
+      t('characters:snacks.characterCreated', {
         charactername: `${characterData.name}`,
       }),
     );

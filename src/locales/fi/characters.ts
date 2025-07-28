@@ -7,6 +7,13 @@ export const characters: Locale = {
       'Hahmot ovat pelin pelaajien luomia pelihahmoja. Ne voivat sisältää tietoja, kuten nimen, kuvauksen ja hahmolomakkeen.',
     markdown: 'Yleiskuvaus',
   },
+  confirmDeletion: {
+    title: 'Poista hahmo',
+    description:
+      'Olet poistamassa hahmon "{characterName}". Toimintoa ei voi peruuttaa.',
+    success: 'Hahmo poistettiin onnistuneesti.',
+    error: 'Hahmon poistaminen epäonnistui. Yritä uudelleen.',
+  },
   create: {
     title: 'Luo hahmo',
     description: 'Valitse alta hahmolomake, jota haluat käyttää. ',
@@ -14,6 +21,12 @@ export const characters: Locale = {
     noSite: 'Ei sivustoa',
   },
   edit: {},
+  snacks: {
+    characterNotFound: 'Hahmoa ei löytynyt.',
+    changesSaved: 'Muutokset tallennettiin.',
+    changesSaveFailed: 'Muutosten tallennus epäonnistui.',
+    characterCreated: 'Hahmo {name} luotiin onnistuneesti.',
+  },
   sheets: {
     editor: {
       info: {

@@ -50,10 +50,10 @@ async function saveChanges(e: Event) {
 
     await update(updates);
     mode = 'view'; // Switch back to view mode after saving
-    pushSnack(t('character:snacks:changesSaved'));
+    pushSnack(t('characters:snacks:changesSaved'));
   } catch (error) {
     logError('CharacterInfo', 'Failed to save changes:', error);
-    pushSnack(t('character:snacks:changesSaveFailed'));
+    pushSnack(t('characters:snacks:changesSaveFailed'));
   }
 }
 </script>
@@ -69,6 +69,10 @@ async function saveChanges(e: Event) {
               <!-- Use cn-icon for consistent icon styling -->
               <span>{t('actions:edit')}</span>
             </button>
+            <a href ={`/characters/${$character.key}/delete`} class="text button">
+              <cn-icon noun="delete" ></cn-icon>
+              <span>{t('actions:delete')}</span>
+            </a>
           </div>
         {/if}
       {/snippet}
@@ -82,7 +86,7 @@ async function saveChanges(e: Event) {
           <input type="text" bind:value={name} />
         </label>
         <label>
-          {t('character:fields:description')}
+          {t('entries:character:description')}
           <textarea bind:value={description}></textarea>
         </label>
         
