@@ -7,9 +7,13 @@ import {
   type Reactions,
   reactionsSchema,
 } from '@schemas/ReactionsSchema';
+import { REPLIES_COLLECTION } from '@schemas/ReplySchema';
+import { SITES_COLLECTION_NAME } from '@schemas/SiteSchema';
+import { THREADS_COLLECTION_NAME } from '@schemas/ThreadSchema';
 import { logDebug, logError, logWarn } from '@utils/logHelpers';
 import { tokenToUid } from '@utils/server/auth/tokenToUid';
 import type { APIContext } from 'astro';
+import type { DocumentReference } from 'firebase-admin/firestore';
 import { z } from 'zod';
 
 export const reactionRequestSchema = z.object({
@@ -59,7 +63,8 @@ export async function POST(context: APIContext): Promise<Response> {
       currentReactions = reactionsSchema.parse(reactionsDoc.data());
     } else {
       // Create new reactions document with empty subscribers array
-      currentReactions = { subscribers: [] };
+      const owners = await getTargetEntryOwners(request.target, request.key);
+      currentReactions = { subscribers: [...owners] };
       logDebug(
         'ReactionsAPI',
         `Creating new reactions document for ${request.key}`,
@@ -196,4 +201,41 @@ async function sendReactionNotification(
     // Log but don't throw - notifications are non-critical
     logWarn('ReactionsAPI', 'Failed to send notifications:', error);
   }
+}
+
+async function getTargetEntryOwners(
+  target: 'thread' | 'site' | 'reply',
+  key: string,
+): Promise<string[]> {
+  const { serverDB } = await import('@firebase/server');
+
+  let docRef: null | DocumentReference;
+  switch (target) {
+    case 'thread':
+      docRef = serverDB.collection(THREADS_COLLECTION_NAME).doc(key);
+      break;
+    case 'site':
+      docRef = serverDB.collection(SITES_COLLECTION_NAME).doc(key);
+      break;
+    case 'reply': {
+      const [threadKey, replyKey] = key.split('-');
+      docRef = serverDB
+        .collection(THREADS_COLLECTION_NAME)
+        .doc(threadKey)
+        .collection(REPLIES_COLLECTION)
+        .doc(replyKey);
+      break;
+    }
+    default:
+      logError('ReactionsAPI', 'Invalid target type:', target);
+      return [];
+  }
+
+  const doc = await docRef.get();
+  if (!doc.exists) {
+    return [];
+  }
+
+  const data = doc.data();
+  return data?.owners || [];
 }
