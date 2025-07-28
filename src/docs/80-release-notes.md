@@ -5,7 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.9.x (ongoing)
+### 17.10.0 (2025-06-20)
+- FEAT: Added ability to link characters to a Game (or a Site) in the library.
+- FEAT: Ability to create, edit and delete Player Characters in the app. Edit limited to the markdown for the description. Other features disabled for now.
+- FEAT: Added experimental support for Player Characters in the models and the database.
 - FIX: Session state and token is now available for pages, in addition to authenticated API calls.
 - FIX: Page creation e2e test added to the test suite, which creates a page and verifies that the page is created successfully.
 
