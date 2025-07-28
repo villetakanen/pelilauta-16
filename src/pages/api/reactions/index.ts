@@ -1,12 +1,12 @@
 import {
+  NOTIFICATION_FIRESTORE_COLLECTION,
+  type NotificationRequest,
+} from '@schemas/NotificationSchema';
+import {
   REACTIONS_COLLECTION_NAME,
   type Reactions,
   reactionsSchema,
 } from '@schemas/ReactionsSchema';
-import {
-  NOTIFICATION_FIRESTORE_COLLECTION,
-  type NotificationRequest,
-} from '@schemas/NotificationSchema';
 import { logDebug, logError, logWarn } from '@utils/logHelpers';
 import { tokenToUid } from '@utils/server/auth/tokenToUid';
 import type { APIContext } from 'astro';
@@ -42,11 +42,16 @@ export async function POST(context: APIContext): Promise<Response> {
     const body = await context.request.json();
     const request = reactionRequestSchema.parse(body);
 
-    logDebug('ReactionsAPI', `Processing ${request.type} reaction for ${request.key} by ${uid}`);
+    logDebug(
+      'ReactionsAPI',
+      `Processing ${request.type} reaction for ${request.key} by ${uid}`,
+    );
 
     // 3. Get or create reactions document
     const { serverDB } = await import('@firebase/server');
-    const reactionsRef = serverDB.collection(REACTIONS_COLLECTION_NAME).doc(request.key);
+    const reactionsRef = serverDB
+      .collection(REACTIONS_COLLECTION_NAME)
+      .doc(request.key);
     const reactionsDoc = await reactionsRef.get();
 
     let currentReactions: Reactions;
@@ -55,7 +60,10 @@ export async function POST(context: APIContext): Promise<Response> {
     } else {
       // Create new reactions document with empty subscribers array
       currentReactions = { subscribers: [] };
-      logDebug('ReactionsAPI', `Creating new reactions document for ${request.key}`);
+      logDebug(
+        'ReactionsAPI',
+        `Creating new reactions document for ${request.key}`,
+      );
     }
 
     // 4. Toggle the reaction
@@ -152,9 +160,9 @@ async function sendReactionNotification(
     // inline the notification creation to avoid circular dependencies
     const { serverDB } = await import('@firebase/server');
     const { FieldValue } = await import('firebase-admin/firestore');
-    
+
     const base = notification.notification;
-    
+
     for (const recipient of notification.recipients) {
       // Skip self-notifications
       if (fromUid === recipient) {
@@ -177,7 +185,11 @@ async function sendReactionNotification(
           .set(n);
         logDebug('ReactionsAPI', `Notification sent to ${recipient}`);
       } catch (error) {
-        logError('ReactionsAPI', `Failed to send notification to ${recipient}:`, error);
+        logError(
+          'ReactionsAPI',
+          `Failed to send notification to ${recipient}:`,
+          error,
+        );
       }
     }
   } catch (error) {

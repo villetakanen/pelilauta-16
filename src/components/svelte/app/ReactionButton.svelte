@@ -1,4 +1,5 @@
 <script lang="ts">
+import { toggleReaction } from '@firebase/client/reactions';
 import { persistentAtom } from '@nanostores/persistent';
 import {
   REACTIONS_COLLECTION_NAME,
@@ -6,11 +7,10 @@ import {
   reactionsSchema,
 } from '@schemas/ReactionsSchema';
 import { uid } from '@stores/session';
+import { pushSnack } from '@utils/client/snackUtils';
+import { t } from '@utils/i18n';
 import { logDebug, logWarn } from '@utils/logHelpers';
-import { toggleReaction } from '@firebase/client/reactions';
 import { onMount } from 'svelte';
-    import { pushSnack } from '@utils/client/snackUtils';
-    import { t } from '@utils/i18n';
 
 /**
  * An universal "love" button for Pelilauta 16+. The functionality here might break 16 and lesser

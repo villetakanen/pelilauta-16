@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'vitest';
 import type { Reactions } from '@schemas/ReactionsSchema';
+import { describe, expect, test } from 'vitest';
 import { reactionRequestSchema } from '../../src/pages/api/reactions/index';
 
 describe('Reactions API Request Schema', () => {
@@ -66,7 +66,7 @@ describe('Reactions Logic', () => {
     const wasAdded = userIndex === -1;
 
     expect(wasAdded).toBe(true);
-    
+
     if (wasAdded) {
       reactionArray.push(uid);
     }
@@ -75,9 +75,9 @@ describe('Reactions Logic', () => {
   });
 
   test('removes user from existing reaction array', () => {
-    const currentReactions: Reactions = { 
+    const currentReactions: Reactions = {
       subscribers: ['owner1'],
-      love: ['user123', 'user456'] 
+      love: ['user123', 'user456'],
     };
     const reactionArray = [...(currentReactions.love || [])];
     const uid = 'user123';
@@ -85,7 +85,7 @@ describe('Reactions Logic', () => {
     const wasAdded = userIndex === -1;
 
     expect(wasAdded).toBe(false);
-    
+
     if (!wasAdded) {
       reactionArray.splice(userIndex, 1);
     }
@@ -94,9 +94,9 @@ describe('Reactions Logic', () => {
   });
 
   test('handles user not in reaction array', () => {
-    const currentReactions: Reactions = { 
+    const currentReactions: Reactions = {
       subscribers: ['owner1'],
-      love: ['user456', 'user789'] 
+      love: ['user456', 'user789'],
     };
     const reactionArray = [...(currentReactions.love || [])];
     const uid = 'user123';
@@ -104,7 +104,7 @@ describe('Reactions Logic', () => {
     const wasAdded = userIndex === -1;
 
     expect(wasAdded).toBe(true);
-    
+
     if (wasAdded) {
       reactionArray.push(uid);
     }

@@ -12,7 +12,7 @@ export interface ToggleReactionResponse {
 
 /**
  * Toggle a reaction (add if not present, remove if present) for the authenticated user.
- * 
+ *
  * @param request - The reaction request containing key, type, target, and optional title
  * @returns Promise containing the updated reactions data or error information
  */
@@ -21,7 +21,7 @@ export async function toggleReaction(
 ): Promise<ToggleReactionResponse> {
   try {
     const response = await authedPost('/api/reactions', request);
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       return {
