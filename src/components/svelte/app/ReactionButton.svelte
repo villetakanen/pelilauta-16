@@ -1,7 +1,5 @@
 <script lang="ts">
-import { authedPost } from '@firebase/client/apiClient';
 import { persistentAtom } from '@nanostores/persistent';
-import type { NotificationRequest } from '@schemas/NotificationSchema';
 import {
   REACTIONS_COLLECTION_NAME,
   type Reactions,
@@ -9,7 +7,10 @@ import {
 } from '@schemas/ReactionsSchema';
 import { uid } from '@stores/session';
 import { logDebug, logWarn } from '@utils/logHelpers';
+import { toggleReaction } from '@firebase/client/reactions';
 import { onMount } from 'svelte';
+    import { pushSnack } from '@utils/client/snackUtils';
+    import { t } from '@utils/i18n';
 
 /**
  * An universal "love" button for Pelilauta 16+. The functionality here might break 16 and lesser
@@ -92,66 +93,49 @@ async function onclick(e: Event) {
   if (!$uid) return;
 
   const currentReactions = reactions.get();
+
+  // Optimistic update - calculate what the new state should be
   const reaction = [...(currentReactions[type] || [])];
   const index = reaction.indexOf($uid);
   const wasAdded = index === -1;
 
-  // Optimistic update
   if (wasAdded) {
     reaction.push($uid);
   } else {
     reaction.splice(index, 1);
   }
 
-  reactions.set({
+  const optimisticReactions = {
     ...currentReactions,
     [type]: reaction,
-  });
-
-  try {
-    const { getFirestore, doc, updateDoc } = await import('firebase/firestore');
-    await updateDoc(
-      doc(getFirestore(), `${REACTIONS_COLLECTION_NAME}/${key}`),
-      {
-        [type]: reaction,
-      },
-    );
-
-    // Send notifications only when adding a reaction (not removing)
-    if (wasAdded && currentReactions.subscribers.length > 0) {
-      await sendReactionNotification(currentReactions.subscribers);
-    }
-  } catch (error) {
-    // Rollback on error
-    reactions.set(currentReactions);
-    logWarn('ReactionButton', 'Failed to update reaction, rolled back:', error);
-  }
-}
-
-async function sendReactionNotification(subscribers: string[]) {
-  if (!['thread', 'reply', 'site'].includes(target)) {
-    logWarn('ReactionButton', 'Invalid target for notification:', target);
-    return;
-  }
-
-  const notification: NotificationRequest = {
-    notification: {
-      key: '',
-      targetType: `${target}.loved`,
-      targetKey: key,
-      targetTitle: title || key,
-    },
-    recipients: subscribers,
-    from: $uid,
   };
 
+  // Apply optimistic update
+  reactions.set(optimisticReactions);
+
   try {
-    await authedPost('/api/notifications/send', {
-      body: notification,
+    // Call the server API
+    const result = await toggleReaction({
+      key,
+      type,
+      target,
+      title,
     });
+
+    if (result.success && result.reactions) {
+      // Update with the actual server response
+      reactions.set(result.reactions);
+    } else {
+      // Rollback on API error
+      reactions.set(currentReactions);
+      logWarn('ReactionButton', 'API error:', result.error);
+      pushSnack(t('app:errors.internal'));
+    }
   } catch (error) {
-    // Log but don't throw - notifications are non-critical
-    logWarn('ReactionButton', 'Failed to send notification:', error);
+    // Rollback on network error
+    reactions.set(currentReactions);
+    logWarn('ReactionButton', 'Failed to update reaction, rolled back:', error);
+    pushSnack(t('app:errors.internal'));
   }
 }
 </script>

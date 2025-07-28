@@ -5,7 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.10.0 (2025-06-20)
+### 17.10.x (ongoing)
+- FIX: Like button works even, if the reactions object has not been initialized yet (due to an internal error, or network issues)
+
+### 17.10.0 (2025-07-28)
 - FEAT: Added ability to link characters to a Game (or a Site) in the library.
 - FEAT: Ability to create, edit and delete Player Characters in the app. Edit limited to the markdown for the description. Other features disabled for now.
 - FEAT: Added experimental support for Player Characters in the models and the database.
