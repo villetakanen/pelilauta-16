@@ -8,20 +8,21 @@ import { visualizer } from 'rollup-plugin-visualizer';
 export default defineConfig({
   integrations: [
     svelte(),
-    sentry({
-      dsn: 'https://1fcabaabfe76dd246dea76e7e30b6ede@o4509229934968832.ingest.de.sentry.io/4509229941719120',
-      tracesSampleRate: 0,
-      replaysSessionSampleRate: 0,
-      replaysOnErrorSampleRate: 0,
-      // Setting this option to true will send default PII data to Sentry.
-      // For example, automatic IP address collection on events
-      sendDefaultPii: false,
-      sourceMapsUploadOptions: {
-        project: 'pelilauta',
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-      },
-    }),
-  ],
+    // Conditionally include Sentry based on the NODE_ENV
+    process.env.NODE_ENV === 'production'
+      ? sentry({
+          dsn: 'https://1fcabaabfe76dd246dea76e7e30b6ede@o4509229934968832.ingest.de.sentry.io/4509229941719120',
+          tracesSampleRate: 0,
+          replaysSessionSampleRate: 0,
+          replaysOnErrorSampleRate: 0,
+          sendDefaultPii: false,
+          sourceMapsUploadOptions: {
+            project: 'pelilauta',
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+          },
+        })
+      : null, // Don't include Sentry in development
+  ].filter(Boolean), // Filter out null values
   output: 'server',
   adapter: vercel({
     webAnalytics: { enabled: true },
