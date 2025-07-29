@@ -1,10 +1,10 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
 import { canEdit, character, update } from '@stores/characters/characterStore';
+import CharacterCard from '@svelte/characters/CharacterCard.svelte';
 import { pushSnack } from '@utils/client/snackUtils';
 import { t } from '@utils/i18n';
 import { logError } from '@utils/logHelpers';
-import CharacterCard from 'src/components/shared/CharacterCard.svelte';
 import SiteSelect from '../SiteSelect.svelte';
 
 type modes = 'view' | 'edit';
