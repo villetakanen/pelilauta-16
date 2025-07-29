@@ -1,6 +1,6 @@
 <script lang="ts">
-import CharacterCard from '@shared/CharacterCard.svelte';
 import { userCharacters } from '@stores/characters/userCharacters';
+import CharacterCard from '@svelte/characters/CharacterCard.svelte';
 import { t } from '@utils/i18n';
 
 /**

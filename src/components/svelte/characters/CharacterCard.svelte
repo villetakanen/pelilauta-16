@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { Character } from '@schemas/CharacterSchema';
+import SiteLink from '@svelte/sites/SiteLink.svelte';
 import { t } from '@utils/i18n';
 import type { Snippet } from 'svelte';
 
@@ -17,7 +18,7 @@ const { character, children, actions }: CharacterCardProps = $props();
 >
   {#if character.siteKey}
     <p class="downscaled">
-      {t('entries:character.site')}: <a href={`/sites/${character.siteKey}`}>{character.siteKey}</a>
+      <strong>{t('entries:character.site')}</strong>:<br /><SiteLink siteKey={character.siteKey} />
     </p>
   {/if}
 

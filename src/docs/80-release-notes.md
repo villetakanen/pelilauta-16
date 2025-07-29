@@ -5,7 +5,9 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.10.x (ongoing)
+### 17.11.0 (2025-07-28)
+- FEAT: Character site linking uses Site name instead of the site database key.
+- FEAT: Sites are cached locally in the same manner as user profiles, allowing offline access and better performance for site references.
 - FIX: Development build no longer includes Sentry, as it was causing ghost issues originating from the development environment.
 - FIX: Like button works even, if the reactions object has not been initialized yet (due to an internal error, or network issues)
 
