@@ -1,6 +1,7 @@
 import type { Locale } from '../../utils/i18n';
 import { characters } from './characters';
 import { entries } from './entries';
+import { site } from './site';
 
 export const en: Locale = {
   app: {
@@ -8,4 +9,5 @@ export const en: Locale = {
   },
   characters,
   entries,
+  site,
 };

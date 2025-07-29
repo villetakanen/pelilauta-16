@@ -33,6 +33,14 @@ const member = $derived.by(() => {
       </a>
     </li>
   {/if}
+  {#if $site.useCharacters }
+    <li>
+      <a href={`/sites/${$site?.key}/characters`} class="tray-button">
+        <cn-icon noun="adventurer" xsmall></cn-icon>
+        <span>{t('site:characters.title')}</span>
+      </a>
+    </li>
+  {/if}
   </ul>
 </nav>
           

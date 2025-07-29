@@ -5,6 +5,13 @@ noun: 'monsters'
 ---
 ## Version 17
 
+### 17.12.0 (ongoing)
+- FEAT: Add site setting for enabling/disabling display of characters linked to the site.
+- FEAT: Add site tray link to site characters, visible if the site setting to display characters is enabled.
+- FEAT: Add site setting for enabling/disabling display of characters linked to the site.
+- FEAT: Create an API route for `/api/sites/:siteId/characters`, which returns all characters linked to a specific site. Use cache of 30s, and stale-while-revalidate strategy.
+- FEAT: Create a route for site characters, allowing users to view all characters linked to a specific site. 
+
 ### 17.11.0 (2025-07-29)
 - FEAT: Character site linking uses Site name instead of the site database key.
 - FEAT: Sites are cached locally in the same manner as user profiles, allowing offline access and better performance for site references.
