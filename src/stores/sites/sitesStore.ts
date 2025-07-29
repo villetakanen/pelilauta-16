@@ -1,6 +1,6 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { type Site, SiteSchema } from '@schemas/SiteSchema';
-import { logDebug, logWarn } from '@utils/logHelpers';
+import { logDebug, logError, logWarn } from '@utils/logHelpers';
 import { type Atom, atom, computed } from 'nanostores';
 import { z } from 'zod';
 
@@ -16,7 +16,7 @@ export const sitesStorage = persistentAtom<Site[]>('local-sites', [], {
     try {
       return sitesStorageSchema.parse(JSON.parse(data));
     } catch (error) {
-      console.error('Failed to parse sites data:', error);
+      logError('sitesStore', 'Failed to parse sites data:', error);
       return [];
     }
   },
