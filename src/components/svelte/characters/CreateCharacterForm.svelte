@@ -16,6 +16,12 @@ import { logError } from '@utils/logHelpers';
 import CharacterSheetSelect from './CharacterSheetSelect.svelte';
 import SiteSelect from './SiteSelect.svelte';
 
+interface Props {
+  siteKey?: string;
+}
+
+const { siteKey }: Props = $props();
+
 // Data states
 const characterData: Partial<Character> = $state({
   name: '',
@@ -26,7 +32,7 @@ const characterData: Partial<Character> = $state({
 // UX states
 let selectedSheetKey = $state('');
 let selectedSheet: CharacterSheet | null = $state(null);
-let selectedSiteKey = $state('');
+let selectedSiteKey = $state(siteKey || '');
 let selectedSite: Site | null = $state(null);
 
 const allow = $derived.by(() => {
