@@ -20,6 +20,16 @@ $effect(() => {
   logDebug('SiteSelect', 'Available sites:', sites);
 });
 
+// Auto-select site when sites are loaded and selectedSiteKey is prefilled
+$effect(() => {
+  if (selectedSiteKey && sites.length > 0) {
+    const prefillSite = sites.find((site) => site.key === selectedSiteKey);
+    if (prefillSite) {
+      setSelectedSite(selectedSiteKey, prefillSite);
+    }
+  }
+});
+
 function handleSelectionChange(event: Event) {
   const select = event.target as HTMLSelectElement;
   const selectedKey = select.value;

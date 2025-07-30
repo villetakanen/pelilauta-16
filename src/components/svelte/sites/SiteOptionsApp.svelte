@@ -16,7 +16,8 @@ async function setOption(
     | 'useHandouts'
     | 'useRecentChanges'
     | 'useSidebar'
-    | 'usePlainTextURLs',
+    | 'usePlainTextURLs'
+    | 'useCharacters',
   value: boolean,
 ) {
   update({ [option]: value });
@@ -39,6 +40,12 @@ async function setOption(
       label={t('site:options.useHandouts')}
       pressed={$site.useHandouts || undefined}
       onchange={(e: Event) => setOption('useHandouts', (e.target as CyanToggleButton).pressed)}
+    ></cn-toggle-button>
+
+    <cn-toggle-button 
+      label={t('site:options.useCharacters')}
+      pressed={$site.useCharacters || undefined}
+      onchange={(e: Event) => setOption('useCharacters', (e.target as CyanToggleButton).pressed)}
     ></cn-toggle-button>
 
     <cn-toggle-button 

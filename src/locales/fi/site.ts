@@ -19,6 +19,9 @@ export const site: Locale = {
     },
     empty: 'Ei kelloja',
   },
+  characters: {
+    title: 'Hahmot',
+  },
   data: {
     title: 'Tuo & vie',
     description: 'Työkalut sivuston tietojen tuontiin ja vientiin',
@@ -70,6 +73,7 @@ export const site: Locale = {
       'Pelilauta / Mekanismi sisältää joukon pelinjohtamisen ja pelaamisen avuksi tarkoitettuja työkaluja. Voit ottaa työkalut käyttöön alla olevilla painikkeilla.',
     useClocks: 'Kellot',
     useHandouts: 'Salaisuudet',
+    useCharacters: 'Hahmot',
     useRecentChanges: 'Viimeisimmät muutokset -paneeli',
     useSidebar: 'Sivupalkki (Mekanismi SideBar)',
   },

@@ -74,6 +74,7 @@ export const SiteSchema = EntrySchema.extend({
   useRecentChanges: z.boolean().optional(),
   useSidebar: z.boolean().optional(), // Defaults to true if unset
   usePlainTextURLs: z.boolean().optional(),
+  useCharacters: z.boolean().optional(),
 });
 
 export type Site = z.infer<typeof SiteSchema>;
