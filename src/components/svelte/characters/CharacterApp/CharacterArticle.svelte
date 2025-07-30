@@ -16,7 +16,7 @@ const htmlContent = $derived.by(() => {
 </script>
 
 {#if $character && htmlContent}
-  <article class="column-l">
+  <article class="column-l surface p-2 border-radius">
     <div class="toolbar">
       <h2 class="downscaled">
         {t('characters:character.markdown')}
