@@ -8,6 +8,7 @@ import CharacterCard from '@svelte/characters/CharacterCard.svelte';
 import CharactersFab from '@svelte/characters/CharactersFab.svelte';
 import { toClientEntry } from '@utils/client/entryUtils';
 import { t } from '@utils/i18n';
+import { logWarn } from '@utils/logHelpers';
 
 interface Props {
   siteKey: string;
@@ -50,7 +51,7 @@ if (charactersResponse.ok) {
       try {
         return CharacterSchema.parse(characterData);
       } catch (error) {
-        console.warn('Failed to parse character:', error);
+        logWarn('Failed to parse character:', error);
         return null;
       }
     })

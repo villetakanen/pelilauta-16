@@ -5,6 +5,7 @@ import {
   CharacterSchema,
 } from '@schemas/CharacterSchema';
 import { toClientEntry } from '@utils/client/entryUtils';
+import { logError, logWarn } from '@utils/logHelpers';
 import type { APIContext } from 'astro';
 
 export async function GET({ params }: APIContext): Promise<Response> {
@@ -33,10 +34,7 @@ export async function GET({ params }: APIContext): Promise<Response> {
         characters.push(characterData);
       } catch (parseError) {
         // Skip invalid character data
-        console.warn(
-          `Failed to parse character ${characterDoc.id}:`,
-          parseError,
-        );
+        logWarn(`Failed to parse character ${characterDoc.id}:`, parseError);
       }
     }
 
@@ -50,7 +48,7 @@ export async function GET({ params }: APIContext): Promise<Response> {
       },
     });
   } catch (error) {
-    console.error('Error fetching characters:', error);
+    logError('Error fetching characters:', error);
     return new Response('Internal server error', { status: 500 });
   }
 }

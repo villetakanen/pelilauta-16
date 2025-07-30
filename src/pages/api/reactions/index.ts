@@ -218,8 +218,9 @@ async function getTargetEntryOwners(
       docRef = serverDB.collection(SITES_COLLECTION_NAME).doc(key);
       break;
     case 'reply': {
+      const REPLY_KEY_PARTS_COUNT = 2;
       const parts = key.split('-');
-      if (parts.length !== 2 || !parts[0] || !parts[1]) {
+      if (parts.length !== REPLY_KEY_PARTS_COUNT || !parts[0] || !parts[1]) {
         logError('ReactionsAPI', 'Invalid reply key format:', key);
         return [];
       }
