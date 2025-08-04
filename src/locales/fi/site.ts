@@ -50,6 +50,7 @@ export const site: Locale = {
     },
   },
   import: {
+    title: 'Tuo sivuja',
     preview: {
       title: 'Esikatselu',
       description: 'Tuodaan {count} sivua',
