@@ -19,5 +19,11 @@ export const site: Locale = {
     useCharacters: 'Characters',
     useRecentChanges: 'Recent changes panel',
     useSidebar: 'Sidebar (Mekanismi SideBar)',
+    sidebarPage: 'Custom sidebar page',
+    selectPage: 'Select page',
+    selectSidebarPage: 'Select custom page for sidebar (optional)',
+    sidebarPageDescription:
+      'Select a custom page to display in the sidebar. If no page is selected, the default sidebar will be used.',
+    useDefaultSidebar: 'Use default sidebar',
   },
 };

@@ -5,7 +5,8 @@ noun: 'monsters'
 ---
 ## Version 17
 
-### 17.12.x (ongoing)
+### 17.13.0 (2025-08-04)
+- FEAT: Support for Mekanismi (pmwiki) style custom sidebar pages for sites.
 - FIX: Small text overridden to work
 - FIX: Data upload functionality for site pages restored.
 - FIX: SSR character data fetching at route level.
