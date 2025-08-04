@@ -77,6 +77,12 @@ export const site: Locale = {
     useCharacters: 'Hahmot',
     useRecentChanges: 'Viimeisimmät muutokset -paneeli',
     useSidebar: 'Sivupalkki (Mekanismi SideBar)',
+    sidebarPage: 'Mukautettu sivupalkin sivu',
+    selectPage: 'Valitse sivu',
+    selectSidebarPage: 'Valitse mukautettu sivu sivupalkkiin (valinnainen)',
+    sidebarPageDescription:
+      'Valitse mukautettu sivu sivupalkkiin. Jos sivua ei valita, käytetään oletussivupalkkia.',
+    useDefaultSidebar: 'Käytä oletussivupalkkia',
   },
   page: {
     migrateContentInfo:

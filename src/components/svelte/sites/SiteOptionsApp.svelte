@@ -3,6 +3,7 @@ import { CyanToggleButton } from '@11thdeg/cyan-next';
 import type { Site } from '@schemas/SiteSchema';
 import { t } from '@utils/i18n';
 import { site, update } from '../../../stores/site';
+import SitePageSelect from './SitePageSelect.svelte';
 
 interface Props {
   site: Site;
@@ -21,6 +22,10 @@ async function setOption(
   value: boolean,
 ) {
   update({ [option]: value });
+}
+
+async function setSidebarKey(key: string) {
+  update({ sidebarKey: key });
 }
 </script>
 
@@ -59,6 +64,17 @@ async function setOption(
       pressed={$site.useSidebar || undefined}
       onchange={(e: Event) => setOption('useSidebar', (e.target as CyanToggleButton).pressed)}
     ></cn-toggle-button>
+
+    {#if $site.useSidebar}
+      <SitePageSelect 
+        site={$site}
+        selectedPageKey={$site.sidebarKey || ''}
+        setSelectedPageKey={setSidebarKey}
+        label={t('site:options.sidebarPage')}
+        placeholder={t('site:options.useDefaultSidebar')}
+      />
+      <p class="downscaled text-low">{t('site:options.sidebarPageDescription')}</p>
+    {/if}
 
     <cn-toggle-button 
       label={t('entries:site.customPageKeys')}

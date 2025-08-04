@@ -73,6 +73,7 @@ export const SiteSchema = EntrySchema.extend({
   useHandouts: z.boolean().optional(),
   useRecentChanges: z.boolean().optional(),
   useSidebar: z.boolean().optional(), // Defaults to true if unset
+  sidebarKey: z.string().optional(), // The page key to display in sidebar
   usePlainTextURLs: z.boolean().optional(),
   useCharacters: z.boolean().optional(),
 });
