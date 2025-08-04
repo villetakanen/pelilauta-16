@@ -81,7 +81,7 @@ export const site: Locale = {
     selectPage: 'Valitse sivu',
     selectSidebarPage: 'Valitse mukautettu sivu sivupalkkiin (valinnainen)',
     sidebarPageDescription:
-      'Valitse mukautettu sivu sivupalkkiin. Jos sivua ei valita, käytetään oletussivupalkkia.',
+    'Valitse mukautettu sivu sivupalkkia varten. Jos sivua ei valita, käytetään oletussivupalkkia.',
     useDefaultSidebar: 'Käytä oletussivupalkkia',
   },
   page: {
