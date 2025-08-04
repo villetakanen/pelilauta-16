@@ -1,4 +1,3 @@
-import { title } from 'node:process';
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {

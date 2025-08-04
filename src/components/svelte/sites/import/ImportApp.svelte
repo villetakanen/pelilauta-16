@@ -1,6 +1,8 @@
 <script lang="ts">
 import type { Site } from '@schemas/SiteSchema';
-import { site /* importStore */ } from '@stores/site';
+import { site } from '@stores/site';
+import PreviewImport from './PreviewImport.svelte';
+import UploadFilesForm from './UploadFilesForm.svelte';
 
 interface Props {
   site: Site;
@@ -15,7 +17,6 @@ $effect(() => {
 });
 </script>
 <div class="content-columns">
-  <h1>Import App</h1>
-  <!-- <UploadFilesForm /> -->
-  <!--<PreviewImport /> -->
+  <UploadFilesForm />
+  <PreviewImport />
 </div>
