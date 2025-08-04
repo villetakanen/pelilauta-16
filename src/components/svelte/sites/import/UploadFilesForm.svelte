@@ -141,7 +141,11 @@ function parseMdFile(content: string): {
       frontmatter[key] = true;
     } else if (value === 'false') {
       frontmatter[key] = false;
-    } else if (!Number.isNaN(Number(value)) && value !== '') {
+    } else if (
+      value.trim() !== '' &&
+      !Number.isNaN(Number(value)) &&
+      value.trim() === value
+    ) {
       frontmatter[key] = Number(value);
     } else {
       frontmatter[key] = value;
