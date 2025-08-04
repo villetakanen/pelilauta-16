@@ -6,6 +6,8 @@ noun: 'monsters'
 ## Version 17
 
 ### 17.12.x (ongoing)
+- FIX: Small text overriddent to work
+- FIX: Data upload funcitonality for site pages restored.
 - FIX: SSR character data fetching at route level.
 
 ### 17.12.0 (2025-07-30)

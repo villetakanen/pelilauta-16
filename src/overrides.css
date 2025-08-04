@@ -420,3 +420,7 @@ input[data-error] {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.text-small {
+  font-size: var(--cn-text-small-font-size);
+  line-height: var(--cn-text-small-line-height);
+}

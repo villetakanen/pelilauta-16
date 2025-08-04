@@ -1,4 +1,5 @@
 <script lang="ts">
+import { site } from '@stores/site';
 import { importStore } from '@stores/site/importsStore';
 import { logDebug, logError, logWarn } from '@utils/logHelpers';
 
@@ -53,7 +54,12 @@ async function processFiles(files: FileList) {
 
     uploadedFiles.splice(0, uploadedFiles.length, ...processedFiles);
 
-    // Add to import store
+    // Get existing page names from the site
+    const currentSite = $site;
+    const existingPageNames =
+      currentSite?.pageRefs?.map((ref) => ref.name) || [];
+
+    // Add to import store with existing page information
     importStore.addPages(
       processedFiles.map((file) => {
         const title =
@@ -67,22 +73,15 @@ async function processFiles(files: FileList) {
 
         return {
           name: title,
-          content: file.body,
           markdownContent: file.body,
           fileName: file.name,
           category:
             typeof file.frontmatter.category === 'string'
               ? file.frontmatter.category
               : undefined,
-          // Spread other frontmatter properties that are compatible with Page schema
-          ...(typeof file.frontmatter.description === 'string' && {
-            description: file.frontmatter.description,
-          }),
-          ...(typeof file.frontmatter.author === 'string' && {
-            author: file.frontmatter.author,
-          }),
         };
       }),
+      existingPageNames,
     );
   } catch (error) {
     logError('UploadFilesForm', 'Error processing files:', error);

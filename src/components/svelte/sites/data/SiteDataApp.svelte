@@ -20,8 +20,8 @@ $site = initialSite;
     </section>
     <ExportAsMdSection />
     <section class="column-s">
-      <a href="/site/{$site.key}/import-folder" class="button">
-        {t('site:import.legacy-folder-import.title')}
+      <a href="/sites/{$site.key}/import" class="button">
+      {t('site:import.title')} 
       </a>
     </section>
   </MembersOnly>
