@@ -5,6 +5,10 @@ noun: 'monsters'
 ---
 ## Version 17
 
+### 17.13.x (ongoing)
+- FIX: SideBar locale fix and small ux improvements.
+- FIX: Better separation of site options.
+
 ### 17.13.0 (2025-08-04)
 - FEAT: Support for Mekanismi (pmwiki) style custom sidebar pages for sites.
 - FIX: Small text overridden to work

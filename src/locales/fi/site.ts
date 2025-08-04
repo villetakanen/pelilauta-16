@@ -72,14 +72,17 @@ export const site: Locale = {
     title: 'Työkalut',
     description:
       'Pelilauta / Mekanismi sisältää joukon pelinjohtamisen ja pelaamisen avuksi tarkoitettuja työkaluja. Voit ottaa työkalut käyttöön alla olevilla painikkeilla.',
+    tools: 'Työkalut',
+    extras: 'Lisäasetukset',
     useClocks: 'Kellot',
     useHandouts: 'Salaisuudet',
+    sidebar: 'Sivupalkki',
     useCharacters: 'Hahmot',
     useRecentChanges: 'Viimeisimmät muutokset -paneeli',
-    useSidebar: 'Sivupalkki (Mekanismi SideBar)',
-    sidebarPage: 'Mukautettu sivupalkin sivu',
+    useSidebar: 'Käytä sivupalkkia',
+    sidebarPage: 'Sivupalkin sisältö',
     selectPage: 'Valitse sivu',
-    selectSidebarPage: 'Valitse mukautettu sivu sivupalkkiin (valinnainen)',
+    selectSidebarPage: 'Oletus',
     sidebarPageDescription:
       'Valitse mukautettu sivu sivupalkkia varten. Jos sivua ei valita, käytetään oletussivupalkkia.',
     useDefaultSidebar: 'Käytä oletussivupalkkia',
@@ -242,5 +245,8 @@ export const site: Locale = {
         'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fi',
       cc0: 'https://creativecommons.org/publicdomain/zero/1.0/deed.fi',
     },
+  },
+  navigation: {
+    sidebar: 'Sivulle {name}',
   },
 };
