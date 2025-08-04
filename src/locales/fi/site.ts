@@ -1,3 +1,4 @@
+import { title } from 'node:process';
 import type { Locale } from '@utils/i18n';
 
 export const site: Locale = {
@@ -50,6 +51,7 @@ export const site: Locale = {
     },
   },
   import: {
+    title: 'Tuo sivuja',
     preview: {
       title: 'Esikatselu',
       description: 'Tuodaan {count} sivua',
