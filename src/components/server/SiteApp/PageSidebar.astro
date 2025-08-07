@@ -51,10 +51,12 @@ if (site.useSidebar && site.sidebarKey) {
   
   {sidebarPage ? (
     <!-- Custom sidebar page content -->
-    <div set:html={sidebarPage.htmlContent} />
-    <div class="mt-2">
-      <a href={`/sites/${site.key}/pages/${sidebarPage.key}`} class="btn btn-secondary">
-        {t('site:sidebar.view')}
+    <div set:html={sidebarPage.htmlContent} class="border-t"/>
+    <div class="mt-2 flex justify-end text-small">
+      <a 
+        href={`/sites/${site.key}/pages/${sidebarPage.key}`}
+        class="text-right">
+        {t('site:navigation.sidebar', {name: sidebarPage.name})}
       </a>
     </div>
   ) : (

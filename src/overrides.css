@@ -424,3 +424,7 @@ input[data-error] {
   font-size: var(--cn-text-small-font-size);
   line-height: var(--cn-text-small-line-height);
 }
+fieldset {
+  border: solid 1px var(--color-border);
+  border-radius: var(--cn-border-radius);
+}

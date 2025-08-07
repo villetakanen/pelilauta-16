@@ -5,6 +5,11 @@ noun: 'monsters'
 ---
 ## Version 17
 
+### 17.13.x (ongoing)
+- FIX: Profile tag extension conflicts with GFM rendering fixed by moving the createProfileTagExtension to pre-process. This allows the extension to be applied before the GFM rendering, preventing conflicts with email auto-linking.
+- FIX: SideBar locale fix and small ux improvements.
+- FIX: Better separation of site options.
+
 ### 17.13.0 (2025-08-04)
 - FEAT: Support for Mekanismi (pmwiki) style custom sidebar pages for sites.
 - FIX: Small text overridden to work

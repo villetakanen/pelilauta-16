@@ -45,3 +45,10 @@ test('getMarked with site returns a function that can render wikilink shortcuts'
     '<a href="https://example.com/sites/test-site/test-link">obsidian style link</a>',
   );
 });
+
+test('getMarked should not convert a tag that is not preceded by whitespace', async () => {
+  const marked = getMarkedInstance('https://example.com', { site: mockSite });
+  const markdown = 'Anexample@tag';
+  const result = await marked.parse(markdown);
+  expect(result).toBe('<p>Anexample@tag</p>\n');
+});

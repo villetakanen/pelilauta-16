@@ -35,6 +35,8 @@ async function setSidebarKey(key: string) {
 
     <p class="downscaled">{t('site:options.description')}</p>
 
+    <fieldset>
+      <legend>{t('site:options.tools')}</legend>
     <cn-toggle-button 
       label={t('site:options.useClocks')}
       pressed={$site.useClocks || undefined}
@@ -58,23 +60,30 @@ async function setSidebarKey(key: string) {
       pressed={$site.useRecentChanges || undefined}
       onchange={(e: Event) => setOption('useRecentChanges', (e.target as CyanToggleButton).pressed)}
     ></cn-toggle-button>
+    </fieldset>
 
-    <cn-toggle-button 
-      label={t('site:options.useSidebar')}
-      pressed={$site.useSidebar || undefined}
-      onchange={(e: Event) => setOption('useSidebar', (e.target as CyanToggleButton).pressed)}
-    ></cn-toggle-button>
+    <fieldset>
+      <legend>{t('site:options.sidebar')}</legend>
+      <cn-toggle-button 
+        label={t('site:options.useSidebar')}
+        pressed={$site.useSidebar || undefined}
+        onchange={(e: Event) => setOption('useSidebar', (e.target as CyanToggleButton).pressed)}
+      ></cn-toggle-button>
 
-    {#if $site.useSidebar}
-      <SitePageSelect 
-        site={$site}
-        selectedPageKey={$site.sidebarKey || ''}
-        setSelectedPageKey={setSidebarKey}
-        label={t('site:options.sidebarPage')}
-        placeholder={t('site:options.useDefaultSidebar')}
-      />
-      <p class="downscaled text-low">{t('site:options.sidebarPageDescription')}</p>
-    {/if}
+      {#if $site.useSidebar}
+        <SitePageSelect 
+          site={$site}
+          selectedPageKey={$site.sidebarKey || ''}
+          setSelectedPageKey={setSidebarKey}
+          label={t('site:options.sidebarPage')}
+          placeholder={t('site:options.useDefaultSidebar')}
+        />
+        <p class="downscaled text-low">{t('site:options.sidebarPageDescription')}</p>
+      {/if}
+    </fieldset>
+
+    <fieldset>
+      <legend>{t('site:options.extras')}</legend>
 
     <cn-toggle-button 
       label={t('entries:site.customPageKeys')}
@@ -83,6 +92,6 @@ async function setSidebarKey(key: string) {
     ></cn-toggle-button>
 
     <p class="downscaled text-low">{t('site:create.plaintexturls.description')}</p>
-
+    </fieldset>
   </article>
 </div>
