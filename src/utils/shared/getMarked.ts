@@ -1,6 +1,7 @@
 import type { Site } from '@schemas/SiteSchema';
 import type { Thread } from '@schemas/ThreadSchema';
 import { Marked, type MarkedExtension, type Tokens } from 'marked';
+import { createProfileTagExtension } from './marked/createProfileTagExtension';
 
 /**
  * Returns a new, configured marked instance for rendering markdown.
@@ -24,6 +25,9 @@ export function getMarkedInstance(
     pedantic: false,
   });
 
+  // Use the profile tag extension
+  marked.use(createProfileTagExtension(origin));
+
   if (references?.site) {
     // Use the single, comprehensive extension for all link types.
     const wikilinkExtension = createWikilinkExtension(
@@ -37,14 +41,6 @@ export function getMarkedInstance(
   // if (references.thread) { ... }
 
   return marked;
-}
-
-// Helper function for creating slugs
-function toDashCase(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[\s/]+/g, '-');
 }
 
 /**
@@ -65,11 +61,13 @@ function createWikilinkExtension(
   currentSite: string,
 ): MarkedExtension {
   if (!baseUrl || !currentSite) {
-    throw new Error('baseUrl and currentSite are required.');
+    throw new Error(
+      'baseUrl and currentSite are required for wikilink extension.',
+    );
   }
 
   function rewriteUrl(linkTarget: string): string {
-    if (/^https?:\/\//.test(linkTarget)) {
+    if (/^https?:\/\//.test(linkTarget) || /^mailto:/.test(linkTarget)) {
       return linkTarget;
     }
     if (linkTarget.includes('/')) {
@@ -155,4 +153,14 @@ function createWikilinkExtension(
       },
     ],
   };
+}
+
+
+
+// Helper function for creating slugs
+function toDashCase(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[\s/]+/g, '-');
 }

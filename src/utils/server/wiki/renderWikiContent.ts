@@ -2,7 +2,6 @@ import type { Page } from '@schemas/PageSchema';
 import type { Site } from '@schemas/SiteSchema';
 import { renderAssetMarkup } from '../renderAssetMarkup';
 import { renderDice } from '../renderDice';
-import { renderProfileTags } from '../renderProfileTags';
 import { renderTags } from '../renderTags';
 
 export async function renderWikiContent(page: Page, site: Site, url: URL) {
@@ -13,11 +12,8 @@ export async function renderWikiContent(page: Page, site: Site, url: URL) {
   // contents saved by earlier versions of the App.
   if (!page.markdownContent) return page.htmlContent || page.content || '';
 
-  const profileLinks = renderProfileTags(
-    renderTags(page.markdownContent, url.origin),
-    url.origin,
-  );
-  const assetLinks = renderAssetMarkup(profileLinks, site, url.origin);
+  const hashTags = renderTags(page.markdownContent, url.origin);
+  const assetLinks = renderAssetMarkup(hashTags, site, url.origin);
   const diceLinks = renderDice(assetLinks);
   const htmlContent = await marked.parse(diceLinks || '');
 
