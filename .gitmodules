@@ -16,3 +16,6 @@
 [submodule "cn-d20-ability-score"]
 	path = cn-d20-ability-score
 	url = https://github.com/villetakanen/cn-d20-ability-score.git
+[submodule "src/cyan-design-system-4"]
+	path = src/cyan-design-system-4
+	url = https://github.com/villetakanen/cyan-design-system-4

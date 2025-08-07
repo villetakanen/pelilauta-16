@@ -1,7 +1,7 @@
 ---
 import BaseTail from '@server/BaseTail.astro';
-import BottomBar from '@server/BottomBar.astro';
 import AppFooter from '@server/app/AppFooter.astro';
+import BottomBar from '@server/app/BottomBar.astro';
 import AppBar from 'src/components/server/AppBar.astro';
 import AppRail from 'src/components/server/AppRail.astro';
 import BaseHead from '../components/server/BaseHead/BaseHead.astro';
@@ -28,7 +28,7 @@ const { title, description, image, noun, shortTitle, noSharing } = Astro.props;
     <BottomBar />
 
     <cn-tray-button></cn-tray-button> 
-    <nav class="cn-tray">
+    <nav id="tray">
       <slot name="app-tray" />
    </nav>
    
