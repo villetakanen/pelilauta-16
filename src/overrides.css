@@ -144,8 +144,10 @@ cn-bubble {
 cn-bubble {
   padding: var(--cn-gap);
 }
+
 a .decoration-none,
-.decoration-none {
+/* biome-ignore lint/style/noDescendingSpecificity: off */
+  .decoration-none {
   text-decoration: none;
 }
 .toolbar {
@@ -213,6 +215,7 @@ dialog {
 dialog li {
   margin-left: var(--cn-gap);
 }
+/* biome-ignore lint/style/noDescendingSpecificity: off */
 dialog li::before {
   content: "•";
   margin-left: calc(-1 * var(--cn-gap));

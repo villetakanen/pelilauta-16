@@ -5,7 +5,7 @@ import type { APIContext } from 'astro';
 import { type Site, siteFrom } from 'src/schemas/SiteSchema';
 
 export async function GET({ request }: APIContext) {
-  const publicSites = new Array<Site>();
+  const publicSites: Site[] = [];
 
   const searchParams = getAstroQueryParams(request);
 
