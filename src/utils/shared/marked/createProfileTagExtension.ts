@@ -1,4 +1,4 @@
-import type {MarkedExtension, Tokens } from 'marked';
+import type { MarkedExtension, Tokens } from 'marked';
 
 /**
  * Creates a marked extension to handle @profile tags.
@@ -30,14 +30,15 @@ export function createProfileTagExtension(baseUrl: string): MarkedExtension {
           while (index < src.length) {
             const atIndex = src.indexOf('@', index);
             if (atIndex === -1) return undefined;
-            
+
             // Check if it's at the start or preceded by whitespace
-            const isValidPosition = atIndex === 0 || /\s/.test(src[atIndex - 1]);
+            const isValidPosition =
+              atIndex === 0 || /\s/.test(src[atIndex - 1]);
             if (!isValidPosition) {
               index = atIndex + 1;
               continue;
             }
-            
+
             // Check if it looks like a profile tag (not email)
             const afterAt = src.substring(atIndex + 1);
             const profileMatch = /^[a-zA-Z0-9\u00C0-\u017F_-]+/.exec(afterAt);
@@ -45,16 +46,16 @@ export function createProfileTagExtension(baseUrl: string): MarkedExtension {
               index = atIndex + 1;
               continue;
             }
-            
+
             // Check if it's NOT an email (no dots followed by TLD)
             const fullMatch = profileMatch[0];
             const restAfterMatch = afterAt.substring(fullMatch.length);
             const isEmail = /^\.[a-zA-Z]{2,}/.test(restAfterMatch);
-            
+
             if (!isEmail) {
               return atIndex;
             }
-            
+
             index = atIndex + 1;
           }
           return undefined;

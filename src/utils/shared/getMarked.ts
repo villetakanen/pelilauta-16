@@ -155,8 +155,6 @@ function createWikilinkExtension(
   };
 }
 
-
-
 // Helper function for creating slugs
 function toDashCase(text: string): string {
   return text
