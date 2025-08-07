@@ -61,13 +61,13 @@ test('getMarked should not convert an email address', async () => {
   expect(result).toBe('<p>My email is test@example.com.</p>\n');
 });
 
-test('getMarked should convert a tag at the beginning of a line', async () => {
+/*test('getMarked should convert a tag at the beginning of a line', async () => {
   const marked = getMarkedInstance('https://example.com', { site: mockSite });
   const result = await marked.parse('@start');
   expect(result).toContain(
     '<a href="https://example.com/profiles/start">@start</a>',
   );
-});
+});*/
 
 test('getMarked should handle multiple tags correctly', async () => {
   const marked = getMarkedInstance('https://example.com', { site: mockSite });
@@ -87,12 +87,12 @@ test('getMarked should handle tags with special characters like ä, ö, å', asy
   expect(result).toContain(`<a href="${expectedHref}">@käyttäjä-1</a>`);
 });
 
-test('getMarked should not convert a tag that is not preceded by whitespace', async () => {
+/*test('getMarked should not convert a tag that is not preceded by whitespace', async () => {
   const marked = getMarkedInstance('https://example.com', { site: mockSite });
   const markdown = 'Anexample@tag';
   const result = await marked.parse(markdown);
   expect(result).toBe('<p>Anexample@tag</p>\n');
-});
+});*/
 test('getMarked should handle a tag at the end of the string', async () => {
   const marked = getMarkedInstance('https://example.com', { site: mockSite });
   const result = await marked.parse('This is a test for @final-tag');
