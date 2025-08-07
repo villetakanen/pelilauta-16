@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     // Include test files, test fot the test files, spec for playwright e2e tests
-    include: ['**/*.test.ts'],
+    include: ['test/**/*.test.ts'],
   },
 });
