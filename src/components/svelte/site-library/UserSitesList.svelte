@@ -19,7 +19,7 @@ onMount(() => {
 </script>
 
 <div class="content-cards">
-   <div class="full-width">
+   <header>
       <div class="toolbar">
         <h4 class="grow">{t('library:sites.title')}</h4>
         <button class="text" aria-label={directionNoun} onclick={toggleOrder}>
@@ -38,9 +38,9 @@ onMount(() => {
           {t('entries:site.flowTime')}
         </button>
       </div>
-   </div>
+   </header>
    <FilteredSites />
-   <div class="full-width mb-2">
+   <footer>
       <p>{t('library:sites.count', { count: $userSites.length })}</p>
-   </div>
+   </footer>
 </div>
