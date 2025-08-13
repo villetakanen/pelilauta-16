@@ -8,13 +8,7 @@
   gap: var(--cn-grid);
   align-items: flex-end;
 }
-article {
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-article + article {
-  margin-top: 0;
-}
+
 main {
   padding-bottom: calc(8 * var(--cn-grid));
 }
