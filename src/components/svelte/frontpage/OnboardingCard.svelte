@@ -8,10 +8,10 @@ import { t } from '@utils/i18n';
     noun="fox"
     cover="/myrrys-proprietary/public-domain/talk-to-me-by-wootha-620px.webp"
     href="/login"
-    class="secondary mb-2"
+    class="surface secondary"
     >
     <p>{t('app:onboarding.text')}</p>
-    <div slot="actions" class="toolbar justify-center">
+    <div slot="actions" class="toolbar items-center">
       <a href="/login" class="button cta">
         {t('actions:login')}
       </a>

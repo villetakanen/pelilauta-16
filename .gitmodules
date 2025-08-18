@@ -4,12 +4,6 @@
 [submodule "cn-dice"]
 	path = cn-dice
 	url = https://github.com/villetakanen/cn-dice.git
-[submodule "cn-lightbox"]
-	path = cn-lightbox
-	url = https://github.com/villetakanen/cn-lightbox.git
-[submodule "cn-story-clock"]
-	path = cn-story-clock
-	url = https://github.com/villetakanen/cn-story-clock.git
 [submodule "cn-d20-ability-score"]
 	path = cn-d20-ability-score
 	url = https://github.com/villetakanen/cn-d20-ability-score.git
