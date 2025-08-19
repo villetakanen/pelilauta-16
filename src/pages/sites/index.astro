@@ -1,10 +1,17 @@
 ---
 import Page from '@layouts/Page.astro';
+import BackgroundPoster from '@server/ui/BackgroundPoster.astro';
 import { t } from '@utils/i18n';
 import SiteListColumn from 'src/components/server/SiteList/SiteListColumn.astro';
 ---
 <Page title={t('site:siteList.title')}>
-  <div class="content-columns">
-    <SiteListColumn />
-  </div>
+  <SiteListColumn />
+  <BackgroundPoster
+      slot="app-background-poster"
+      src="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-2.webp"
+      md="/myrrys-proprietary/juno-viinikka/juno-viinikka-dragon-2-960.webp"
+    />
+    <p class="text-caption text-center" style="opacity:0.44" slot="app-footer-credits">
+      Taustakuva © Juno Viinikka (<a href="https://linktr.ee/junowski">https://linktr.ee/junowski</a>)
+    </p>
 </Page>

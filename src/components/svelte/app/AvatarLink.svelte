@@ -11,11 +11,11 @@ const profile = $derived($profileAtom);
 const isLoading = $derived($loading.includes(uid));
 </script>
 
+<div class="shadow-4">
 {#if isLoading}
   <cn-loader icon="avatar"></cn-loader>
 {:else if profile}
-  <a href="/profiles/{profile.key}" aria-label="{profile.nick}" 
-    style="display: block; text-decoration: none;margin-right: calc(-2 * var(--cn-grid));border:solid 2px var(--color-surface);border-radius:50%;">
+  <a href="/profiles/{profile.key}" aria-label="{profile.nick}">
     <cn-avatar
       src={profile.avatarURL} 
       nick={profile.nick}
@@ -28,3 +28,4 @@ const isLoading = $derived($loading.includes(uid));
     elevation="1"
     size="small"></cn-avatar>
 {/if}
+</div>

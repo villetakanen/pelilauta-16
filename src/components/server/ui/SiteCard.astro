@@ -11,6 +11,7 @@ const { site } = Astro.props;
 ---
 
 <cn-card
+  class="flex-none"
   href={`/sites/${site.key}`}
   noun={systemToNoun(site.system)}
   title={site.name}

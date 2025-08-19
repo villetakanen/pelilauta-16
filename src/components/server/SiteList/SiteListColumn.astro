@@ -26,14 +26,12 @@ try {
   // sites remains empty array, component will render without sites
 }
 ---
-<section class="column-l">
-  <div class="flex justify-space-between align-center">
-    <h2>{t('site:siteList.title')}</h2>
+<section class="content-cards">
+  <header class="flex space-between">
+    <h2 class="grow m-0">{t('site:siteList.title')}</h2>
     <MySitesButton client:only="svelte"/>
-  </div>
-  <div class="flex-col">
+  </header>
     {sites && sites.map((site) => (
       <SiteListItem site={site} />
-    ))}
-  </div>      
+    ))}      
 </section>

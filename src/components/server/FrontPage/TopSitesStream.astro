@@ -26,13 +26,13 @@ if (siteListResponse.ok) {
 }
 ---
 <section class="column-s">
-  <OnboardingCard client:only="svelte"/>
-  <div class="flex-col">
+  <div class="flex flex-col">
+    <OnboardingCard client:only="svelte"/>
     {sites.map((site) => (
       site && <SiteCard site={site}/>
     ))}
   </div>
-  <div class="flex items-center mt-2">
+  <div class="toolbar items-center mt-2">
     <a href="/sites" class="button">
       {t('actions:showMore')}
     </a>

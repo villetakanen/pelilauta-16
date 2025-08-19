@@ -6,7 +6,8 @@
     "e2e",
     "cn-dice/dist",
     "cn-editor/dist",
-    "cn-lightbox/dist"
+    "cn-lightbox/dist",
+    "src/cyan-design-system-4"
   ],
   "compilerOptions": {
     "baseUrl": ".",
