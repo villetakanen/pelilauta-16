@@ -43,7 +43,6 @@
     "lit": "^3.3.0",
     "marked": "^15.0.11",
     "marked-footnote": "^1.2.4",
-    "nanostores": "^1.0.1",
     "rss-parser": "^3.13.0",
     "svelte": "^5.33.18",
     "turndown": "^7.2.0",
@@ -70,7 +69,9 @@
     "workbox-cli": "^7.3.0"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": ["@firebase/util"],
+    "ignoredBuiltDependencies": [
+      "@firebase/util"
+    ],
     "onlyBuiltDependencies": [
       "@biomejs/biome",
       "@firebase/util",

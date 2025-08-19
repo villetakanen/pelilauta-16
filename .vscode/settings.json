@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    "**/cyan-design-system-4": true
+  },
+  "search.exclude": {
+    "**/cyan-design-system-4": true
+  }
+}

@@ -2,6 +2,8 @@ import svelte from '@astrojs/svelte';
 import vercel from '@astrojs/vercel';
 import sentry from '@sentry/astro';
 import { defineConfig } from 'astro/config';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://astro.build/config
@@ -46,5 +48,38 @@ export default defineConfig({
         filename: 'stats.html',
       }),
     ],
+    resolve: {
+      alias: [
+        {
+          find: 'cyan-lit',
+          replacement: path.resolve(
+            path.dirname(fileURLToPath(import.meta.url)),
+            'cyan-design-system-4/packages/cyan-lit',
+          ),
+        },
+        {
+          find: 'cyan-css',
+          replacement: path.resolve(
+            path.dirname(fileURLToPath(import.meta.url)),
+            'cyan-design-system-4/packages/cyan-css',
+          ),
+        },
+        {
+          find: 'cn-editor',
+          replacement: path.resolve(
+            path.dirname(fileURLToPath(import.meta.url)),
+            'cyan-design-system-4/packages/cn-editor',
+          ),
+        },
+        {
+          find: 'cn-story-clock',
+          replacement: path.resolve(
+            path.dirname(fileURLToPath(import.meta.url)),
+            'cyan-design-system-4/packages/cn-story-clock',
+          ),
+        },
+      ],
+    },
+
   },
 });

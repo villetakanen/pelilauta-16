@@ -26,12 +26,16 @@ const canonicalURL = Astro.url.origin;
   <title>{metaTitle}</title>
 
   <!-- Import Design System Web Components -->
-  <script>
-    import '@11thdeg/cyan-next'
-    import '../../../../cn-dice/src/cn-dice'
-    import '../../../../cn-editor/src/cn-editor'
-    import '../../../../cn-lightbox/src/cn-lightbox'
-  </script>
+  <!-- Import Design System Web Components -->
+ <script>
+  // Client only, import custom-elements
+  import 'cyan-lit';
+  
+  // Client only, import client-side design-system addons/plugins
+  import 'cn-editor';
+  import 'cn-story-clock';
+  
+</script>
 
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="canonical" href={canonicalURL} />
